@@ -1,0 +1,229 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Link Layer and LAN Roadmap
+Introduction
+Error detection, correction
+
+Multiple access protocols
+LANs
+addressing, ARP
+Ethernet
+Switches
+VLANs
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+COMPUTER NETWORKS
+Multiple access links, Protocols
+two types of “links”:
+point-to-point
+
+• point-to-point link between Ethernet switch, host
+• PPP, HDLC
+
+broadcast (shared wire or medium)
+
+• old-fashioned Ethernet
+• upstream HFC in cable-based access network
+• 802.11 wireless LAN, 4G/5G, satellite
+
+shared wire (e.g.,
+cabled Ethernet)
+
+shared radio: 4G/5G
+
+shared radio: WiFi
+
+As humans, we’ve evolved an elaborate set of protocols
+for sharing the broadcast channel:
+“Give everyone a chance to speak.”
+“Don’t speak until you are spoken to.”
+“Don’t monopolize the conversation.”
+“Raise your hand if you have a question.”
+“Don’t interrupt when someone is speaking.”
+“Don’t fall asleep when someone is talking.”
+
+shared radio: satellite
+
+humans at a cocktail party
+(shared air, acoustical)
+
+COMPUTER NETWORKS
+Multiple access protocols
+Single shared broadcast channel
+Two or more simultaneous transmissions by nodes: interference
+• collision if node receives two or more signals at the same time
+
+Multiple access protocol
+Distributed algorithm that determines how nodes share
+channel, i.e., determine when node can transmit
+Communication about channel sharing must use
+channel itself!
+• no out-of-band channel for coordination
+
+COMPUTER NETWORKS
+Two kinds of links
+Your
+Answer
+turn
+
+Shared or private? For each link, decide whether other nodes compete for the same channel.
+Link
+
+Shared or private?
+
+Your laptop's cable to a switch port
+
+Private (one at each end)
+
+The Wi-Fi in this classroom
+
+Shared (one radio channel)
+
+Cable-TV internet, homes sending upstream
+
+Shared (one cable)
+
+Your phone to a cell tower
+
+Shared (the tower schedules)
+
+COMPUTER NETWORKS
+An ideal Multiple access protocol
+Given: multiple access channel (MAC) of rate R bps
+desiderata(needed):
+1. when one node wants to transmit, it can send at rate R.
+2. when M nodes want to transmit, each can send at average rate R/M
+3. fully decentralized:
+• no special node to coordinate transmissions
+• no synchronization of clocks, slots
+4. simple
+
+COMPUTER NETWORKS
+MAC protocols : Taxonomy
+
+Three broad classes:
+channel partitioning (TDMA, FDMA,
+CDMA)
+• divide channel into smaller “pieces”
+(time slots, frequency, code)
+• allocate piece to node for exclusive use
+random access (ALOHA, slotted ALOHA,
+CSMA, CSMA/CD, CSMA/CA
+• channel not divided, allow collisions
+• “recover” from collisions
+“taking turns”
+• nodes take turns, but nodes with more
+to send can take longer turns
+
+Included in the syllabus
+
+COMPUTER NETWORKS
+CSMA (Carrier Sense Multiple Access)
+Simple CSMA: listen before transmit:
+• if channel sensed idle: transmit entire frame
+• if channel sensed busy: defer transmission
+Human analogy: don’t interrupt others!
+
+Listen before speaking – Carrier Sensing
+If someone else begins talking at the same
+time, stop talking – Collision Detection
+
+CSMA/CD: CSMA with collision detection
+• collisions detected within short time
+• colliding transmissions aborted, reducing channel wastage
+• collision detection easy in wired, difficult with wireless
+human analogy: the polite conversationalist
+
+COMPUTER NETWORKS
+CSMA Collisions
+collisions can still occur with carrier
+sensing:
+• propagation delay means two nodes may
+not hear each other’s just-started
+transmission
+
+collision: entire packet transmission
+time wasted
+• distance & propagation delay play role in in
+determining collision probability
+
+spatial layout of nodes
+
+COMPUTER NETWORKS
+CSMA/CD
+CSMA/CD reduces the amount of time
+wasted in collisions
+• transmission aborted on collision detection
+
+spatial layout of nodes
+
+COMPUTER NETWORKS
+Ethernet CSMA/CD Algorithm
+1. NIC receives datagram from network layer, creates frame
+2. If NIC senses channel:
+if idle: start frame transmission.
+if busy: wait until channel idle, then transmit
+
+3. If NIC transmits entire frame without collision, NIC is done with frame!
+4. If NIC detects another transmission while sending: abort, send jam
+signal
+5. After aborting, NIC enters binary (exponential) backoff:
+• after n collisions, NIC chooses K at random from {0,1,2, …, 2m-1}.
+NIC waits K·512 bit times, returns to Step 2
+• more collisions: longer backoff interval
+
+COMPUTER NETWORKS
+Is collision detection still used?
+■ Two ends per cable
+
+Then: one shared cable, or a hub
+Host
+
+Host
+
+Host
+
+A switch gives each cable to one device and one switch port. No
+third sender.
+
+Host
+
+■ Each direction has its own channel
+✕ clash
+
+any two can send at once
+
+■ Contention moves into the switch
+
+Now: a switch, one cable per device
+
+Host
+
+Switch
+
+Separate wires, or separated electronically on faster copper. Both
+ends send at once.
+
+Frames for the same output port wait in a queue. A full queue drops
+frames.
+Host
+
+■ Wi-Fi is still shared
+Everyone uses one radio channel, so clashes still happen (slide 110).
+
+Host
+
+each direction has its own channel
+
+Switched, full-duplex Ethernet has nothing to collide with, so collision detection is switched off.
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

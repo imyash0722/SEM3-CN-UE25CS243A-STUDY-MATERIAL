@@ -1,0 +1,334 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Link Layer and LAN Roadmap
+
+Introduction
+Error detection, correction
+Multiple access protocols
+Switched LANs
+addressing, ARP
+Ethernet
+Switches
+VLANs
+
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+COMPUTER NETWORKS
+Synthesis : A day in the life of a web request
+Our journey down the protocol stack is now complete!
+• application, transport, network, link
+Putting-it-all-together: synthesis!
+• Goal: identify, review, understand protocols (at all layers)
+involved in seemingly simple scenario: requesting www page
+• Scenario: student attaches laptop to campus network,
+requests/receives www.google.com
+
+COMPUTER NETWORKS
+A day in the life of a web request
+Scenario:
+Arriving mobile
+client attaches to
+network …
+
+DNS server
+
+browser
+
+Comcast network
+68.80.0.0/13
+
+Requests web
+page:
+www.google.com
+
+school network
+68.80.2.0/24
+web page
+
+web server
+64.233.169.105
+
+Google’s network
+64.233.160.0/19
+
+Sounds
+simple!
+
+COMPUTER NETWORKS
+A day in the life of a web request
+DHCP
+UDP
+IP
+Eth
+Phy
+
+DHCP
+DHCP
+DHCP
+DHCP
+
+arriving mobile:
+DHCP client
+
+DHCP request encapsulated in UDP,
+encapsulated in IP, encapsulated in 802.3
+Ethernet
+
+DHCP
+
+DHCP
+DHCP
+DHCP
+DHCP
+
+DHCP
+UDP
+IP
+Eth
+Phy
+
+Connecting laptop needs to get its own IP
+address, addr of first-hop router, addr of
+DNS server: use DHCP
+
+router has
+DHCP server
+
+Ethernet frame broadcast (dest:
+FFFFFFFFFFFF) on LAN, received at router
+running DHCP server
+Ethernet demuxed to IP demuxed, UDP
+demuxed to DHCP
+
+COMPUTER NETWORKS
+A day in the life : Connecting to the Internet
+DHCP
+DHCP
+DHCP
+DHCP
+
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+
+DHCP
+UDP
+IP
+Eth
+Phy
+
+DHCP
+UDP
+IP
+Eth
+Phy
+
+arriving mobile:
+DHCP client
+
+DHCP server formulates DHCP ACK
+containing client’s IP address, IP address of
+first-hop router for client, name & IP
+address of DNS server
+Encapsulation at DHCP server, frame
+forwarded (switch learning) through LAN,
+demultiplexing at client
+DHCP client receives DHCP ACK reply
+
+router has
+DHCP server
+
+Client now has IP address, knows name & addr of DNS
+server, IP address of its first-hop router
+
+COMPUTER NETWORKS
+A day in the life…. ARP (Before DNS, Before HTTP)
+DNS
+DNS
+DNS
+ARP query
+
+DNS
+UDP
+ARP IP
+Eth
+Phy
+
+arriving mobile:
+ARP client
+
+ARP
+ARP reply
+
+Eth
+Phy
+
+router has
+ARP server
+
+Before sending HTTP request, need IP
+address of www.google.com: DNS
+DNS query created, encapsulated in UDP,
+encapsulated in IP, encapsulated in Eth. To
+send frame to router, need MAC address of
+router interface: ARP
+ARP query broadcast, received by router,
+which replies with ARP reply giving MAC
+address of router interface
+
+Client now knows MAC address of first
+hop router, so can now send frame
+containing DNS query
+
+COMPUTER NETWORKS
+A day in the life…. Using DNS
+DNS
+DNS
+DNS
+DNS
+DNS
+
+DNS
+UDP
+IP
+Eth
+Phy
+
+DNS
+DNS
+DNS
+DNS
+DNS
+
+DNS
+UDP
+IP
+Eth
+Phy
+
+DNS
+server
+
+Comcast network
+68.80.0.0/13
+
+IP datagram
+containing DNS query
+forwarded via LAN
+switch from client to
+1st hop router
+
+IP datagram forwarded from campus
+network into Comcast network,
+routed (tables created by RIP, OSPF,
+IS-IS and/or BGP routing protocols)
+to DNS server
+
+Demuxed to DNS
+DNS replies to client
+with IP address of
+www.google.com
+
+COMPUTER NETWORKS
+A day in the life…. TCP Connection carrying HTTP
+HTTP
+SYNACK
+SYN
+SYNACK
+SYN
+SYNACK
+SYN
+
+SYNACK
+SYN
+SYNACK
+SYN
+SYNACK
+SYN
+
+HTTP
+TCP
+IP
+Eth
+Phy
+
+TCP
+IP
+Eth
+Phy
+Google web server
+64.233.169.105
+
+Comcast network
+68.80.0.0/13
+
+To send HTTP request, client
+first opens TCP socket to web
+server
+TCP SYN segment (step 1 in TCP 3way handshake) inter-domain
+routed to web server
+Web server responds with TCP
+SYNACK (step 2 in TCP 3-way
+handshake)
+TCP connection established!
+
+COMPUTER NETWORKS
+A day in the life…. HTTP Request / Reply
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+
+HTTP
+TCP
+IP
+Eth
+Phy
+
+HTTP request sent into TCP
+socket
+
+web page finally (!!!)
+displayed
+Comcast network
+68.80.0.0/13
+
+IP datagram containing HTTP
+request routed to
+www.google.com
+Web server responds with HTTP
+reply (containing web page)
+
+HTTP
+HTTP
+HTTP
+HTTP
+
+HTTP
+TCP
+IP
+Eth
+Phy
+Google web server
+64.233.169.105
+
+IP datagram containing
+HTTP reply routed
+back to client
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

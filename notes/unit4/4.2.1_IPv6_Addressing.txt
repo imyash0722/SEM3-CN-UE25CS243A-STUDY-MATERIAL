@@ -1,0 +1,463 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Network Layer and Internet Protocol
+4.5 Introduction to Network Layer
+Protocols
+• DHCP
+• ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+
+COMPUTER NETWORKS
+IPv6 Protocol: Rationale for Change
+Larger address space
+• initial motivation: 32-bit IPv4
+address space would be completely
+Better header format
+allocated
+New options
+Allowance for extension
+Support for resource allocation
+Support for more security
+checksum: removed entirely to reduce processing time at each hop
+options: allowed, but outside of header, indicated by “Next Header” field
+ICMPv6: new version of ICMP
+fragmentation/reassembly: no
+Additional motivation:
+speed processing/forwarding: 40-byte fixed length header
+enable different network-layer treatment of “flows”
+
+COMPUTER NETWORKS
+IPv6 Datagram Format
+
+priority: identify
+priority among
+datagrams in flow
+128-bit
+IPv6 addresses
+
+32 bits
+ver
+
+pri
+flow label
+hop limit
+payload len
+next hdr
+source address
+(128 bits)
+
+flow label: identify
+datagrams in same
+"flow.” (concept of
+“flow” not well defined).
+
+destination address
+(128 bits)
+payload (data)
+
+What’s missing (compared with IPv4):
+§ no checksum (to speed processing at routers)
+§ no fragmentation/reassembly
+§ no options (available as upper-layer, next-header protocol at router)
+
+COMPUTER NETWORKS
+Introduction to IPv6
+128 bits address
+340 undecillion address (340 + 33 digits)
+IPv6 address space is 296 times of the IPv4 address.
+Made up of eight 16-bit blocks (octet)
+Separated by ‘:’
+Hexadecimal, each hexadecimal character – 4 bits
+340,282,366,920,938,463,374,607,431,768,211,456
+
+Rules:
+Discard leading Zero(es)
+If two of more blocks contain consecutive Zero(es), omit them
+all and replace with double colon sign ::
+If Zero(es) are present in a discontinuous pattern, replace them
+with :: at only one joining.
+
+COMPUTER NETWORKS
+Introduction to IPv6
+
+Colon hexadecimal
+notation
+Zero compression
+
+CIDR address
+Rule 1
+Rule 2
+
+COMPUTER NETWORKS
+Introduction to IPv6
+Rule 3
+
+IPv6 compression rule #2 cannot be used more than once in an address or the result will be ambiguity about
+the full address the compressed version represents.
+
+Only a single contiguous string of all-0s segments can be represented with a double colon;
+otherwise, the address would be ambiguous, as shown in this example:
+
+Incorrect address using two double colons:
+2001::abcd::1234
+Possible ambiguous choices:
+2001:0000:0000:0000:0000:abcd:0000:1234
+2001:0000:0000:0000:abcd:0000:0000:1234
+2001:0000:0000:abcd:0000:0000:0000:1234
+2001:0000:abcd:0000:0000:0000:0000:1234
+
+COMPUTER NETWORKS
+IPv6 Addressing
+Show the unabbreviated colon hex notation for the following IPv6
+addresses:
+a. An address with 64 0s followed by 64 1s.
+b. An address with 128 0s.
+c. An address with 128 1s.
+d. An address with 128 alternative 1s and 0s.
+Solution
+a. 0000:0000:0000:0000:FFFF:FFFF:FFFF:FFFF
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+c. FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+d. AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA
+
+COMPUTER NETWORKS
+IPv6 Addressing
+The following shows the zero contraction version of addresses in
+previous example.
+a. :: FFFF:FFFF:FFFF:FFFF
+b. ::
+c. FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+d. AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA
+
+COMPUTER NETWORKS
+IPv6 Addressing
+Show abbreviations for the following addresses:
+a. 0000:0000:FFFF:0000:0000:0000:0000:0000
+b. 1234:2346:0000:0000:0000:0000:0000:1111
+c. 0000:0001:0000:0000:0000:0000:1200:1000
+d. 0000:0000:0000:0000:0000:FFFF:24.123.12.6
+Solution
+a. 0:0:FFFF::
+b. 1234:2346::1111
+c. 0:1::1200:1000
+d. ::FFFF:24.123.12.6
+
+COMPUTER NETWORKS
+IPv6 Addressing
+Decompress the following addresses and show the complete
+unabbreviated IPv6 address:
+a. 1111::2222
+b. ::
+c. 0:1::
+d. AAAA:A:AA::1234
+Solution
+a. 1111:0000:0000:0000:0000:0000:0000:2222
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+c. 0000:0001:0000:0000:0000:0000:0000:0000
+d. AAAA:000A:00AA:0000:0000:0000:0000:1234
+
+COMPUTER NETWORKS
+IPv6 Prefix Notation
+• The prefix length is a decimal value that indicates the number of leftmost bits of an IP address that constitute the
+network portion.
+For example, consider the IPv6 address 2001:aaaa:bbbb:cccc:0:0:0:10/64.
+• The prefix length 64 indicates that the first 64 bits represent the network portion, while the remaining 64 bits
+represent the host (interface) portion.
+• Therefore, the IPv6 subnet is 2001:aaaa:bbbb:cccc::/64, and 2001:aaaa:bbbb:cccc::10 represents a node within this
+subnet.
+
+IPv6 Prefix Notation Example
+
+COMPUTER NETWORKS
+Three Address Types
+In IPv6, a destination address belong to:
+Unicast Address (one-to-one) – defines a single interface
+(computer or router). Packets sent to a unicast address
+are delivered to the interface configured with that IPv6 address.
+Multicast Address (one-to-many) – also defines a group of
+computers, each member of the group receives a copy. Packets
+sent to a multicast address are delivered to all interfaces
+identified by that address.
+Anycast Address (one-to-nearest) – defines a group of
+computers that all share a single address. Packets sent to an
+anycast address are delivered to the "closest" interface identified
+by that address. "Closest" typically means the one with the best
+routing metric
+Broadcast Address (one-to-all) – × There are no broadcast
+addresses in IPv6. Broadcast functionality is implemented using
+multicast addresses.
+
+COMPUTER NETWORKS
+IPv6 Address Types
+
+COMPUTER NETWORKS
+Address Space Allocation
+
+COMPUTER NETWORKS
+IPv6 Datagram Format
+
+flow label: identify datagrams in
+same "flow.” (concept of “flow”
+not well defined).
+
+Format of the base header
+
+COMPUTER NETWORKS
+Transition from IPv4 to IPv6
+• not all routers can be upgraded simultaneously
+• no “flag days”
+• how will network operate with mixed IPv4 and IPv6 routers?
+tunneling: IPv6 datagram carried as payload in IPv4 datagram
+among IPv4 routers (“packet within a packet”)
+• tunneling used extensively in other contexts (4G/5G)
+IPv4 header fields
+IPv4 source, dest addr
+
+IPv6 header fields
+IPv6 source dest addr
+UDP/TCP payload
+
+IPv6 datagram
+IPv4 datagram
+
+IPv4 payload
+
+COMPUTER NETWORKS
+Tunneling and Encapsulation
+
+Ethernet connecting
+two IPv6 routers:
+
+A
+
+B
+
+IPv6
+
+IPv6
+
+Ethernet connects two
+IPv6 routers
+
+E
+
+F
+
+IPv6
+
+IPv6
+
+IPv6 datagram
+Link-layer frame
+
+IPv4 network
+connecting two
+IPv6 routers
+
+The usual: datagram as payload in link-layer frame
+
+A
+
+B
+
+E
+
+F
+
+IPv6
+
+IPv6/v4
+
+IPv6/v4
+
+IPv6
+
+IPv4 network
+
+COMPUTER NETWORKS
+Tunneling and Encapsulation
+Ethernet connecting
+two IPv6 routers:
+
+A
+
+B
+
+IPv6
+
+IPv6
+
+Ethernet connects two
+IPv6 routers
+
+E
+
+F
+
+IPv6
+
+IPv6
+
+IPv6 datagram
+Link-layer frame
+
+IPv4 tunnel
+connecting two
+IPv6 routers
+
+The usual: datagram as payload in link-layer frame
+
+A
+
+B
+
+IPv6
+
+IPv6/v4
+
+IPv4 tunnel
+connecting IPv6 routers
+
+E
+
+F
+
+IPv6/v4
+
+IPv6
+
+IPv6 datagram
+IPv4 datagram
+
+tunneling: IPv6 datagram as payload in a IPv4 datagram
+
+COMPUTER NETWORKS
+Tunneling
+logical view:
+physical view:
+
+B
+
+IPv6
+
+IPv6/v4
+
+A
+
+B
+
+C
+
+IPv6
+
+IPv6/v4
+
+IPv4
+
+flow: X
+src: A
+dest: F
+
+Note source and
+destination
+addresses!
+
+IPv4 tunnel
+connecting IPv6 routers
+
+A
+
+data
+
+A-to-B:
+IPv6
+
+E
+
+F
+
+IPv6/v4
+
+IPv6
+
+D
+
+E
+
+F
+
+IPv4
+
+IPv6/v4
+
+IPv6
+
+src:B
+dest: E
+
+src:B
+dest: E
+
+src:B
+dest: E
+
+Flow: X
+Src: A
+Dest: F
+
+Flow: X
+Src: A
+Dest: F
+
+Flow: X
+Src: A
+Dest: F
+
+data
+
+data
+
+data
+
+B-to-C:
+IPv6 inside
+IPv4
+
+C-to-D:
+IPv6 inside
+IPv4
+
+D-to-E:
+IPv6 inside
+IPv4
+
+flow: X
+src: A
+dest: F
+
+data
+
+E-to-F:
+IPv6
+
+COMPUTER NETWORKS
+IPv6 Adoption
+https://www.akamai.com/us/en/resources/our-thinking/state-of-the-internet-report/state-of-the-internet-ipv6adoption-visualization.jsp
+•
+
+Google1: ~ 40% of clients access services via IPv6 (2023)
+
+•
+
+NIST: 1/3 of all US government domains are IPv6 capable
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

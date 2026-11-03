@@ -1,0 +1,305 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+IP fragmentation, reassembly
+
+fragmentation:
+in: one large datagram
+out: 3 smaller datagrams
+
+…
+reassembly
+
+…
+
+• network links have MTU
+(max.transfer size) - largest
+possible link-level frame
+• different link types,
+different MTUs
+• large IP datagram divided
+(“fragmented”) within net
+• one datagram becomes
+several datagrams
+• “reassembled” only at final
+destination
+• IP header bits used to
+identify, order related
+fragments
+
+COMPUTER NETWORKS
+IP fragmentation, reassembly
+
+example:
+❖
+❖
+
+4000 byte datagram
+MTU = 1500 bytes
+
+1480 bytes
+in data field
+
+length
+=4000
+
+ID
+=x
+
+fragflag
+=0
+
+offset
+=0
+
+one large datagram becomes
+several smaller datagrams
+length
+=1500
+
+ID
+=x
+
+fragflag
+=1
+
+offset
+=0
+
+length
+=1500
+
+ID
+=x
+
+fragflag
+=1
+
+offset
+=185
+
+length
+=1060
+
+ID
+=x
+
+fragflag
+=0
+
+offset
+=370
+
+offset =1480/8
+
+COMPUTER NETWORKS
+IP fragmentation, reassembly
+Data to fragment: 4000 bytes
+Original payload = 4000 − 20 = 3980 bytes
+MTU (max total fragment size): 1500 bytes
+IP header size: 20 bytes → so max data per fragment = 1500 − 20 = 1480 bytes
+Step 1 — How many fragments are needed?
+4000 bytes ÷ 1480 bytes/fragment = 2.7 → so 3 fragments are needed: two full ones, and one smaller
+remainder.
+Step 2 — Fragment 1
+Carries the first 1480 bytes of data.
+Total length = 1480 (data) + 20 (header) = 1500
+Offset = 0 (it's the first piece) (0/8)
+More fragments follow → fragflag = 1
+Step 3 — Fragment 2
+Carries the next 1480 bytes of data (bytes 1480–2959 of the original).
+Total length = 1480 + 20 = 1500
+Offset = 1480 bytes ÷ 8 = 185 (i.e., this fragment's data starts 185×8 = 1480 bytes into the original)
+More fragments follow → fragflag = 1
+
+COMPUTER NETWORKS
+IP fragmentation, reassembly
+Step 4 — Fragment 3 (the remainder)
+Remaining data = 4000 − 1480 − 1480 = 1040 bytes
+Total length = 1040 + 20 = 1060
+Offset = (1480 + 1480) bytes ÷ 8 = 2960 ÷ 8 = 370
+This is the last fragment → fragflag = 0
+
+Fragment
+
+Data bytes
+(Payload)
+
+Total length
+
+Offset (/8 bytes)
+
+fragflag
+
+1
+
+1480
+
+1500
+
+0
+
+1
+
+2
+
+1480
+
+1500
+
+185
+
+1
+
+3
+
+1040
+
+1060
+
+370
+
+0
+
+Check = 1480+1480+1040 = 4000
+Total length add to 4060 bytes: 1500+1500+1060=4060
+
+COMPUTER NETWORKS
+Fragmentation – Example
+
+COMPUTER NETWORKS
+Fragmentation - Example
+Total Length = 5140 bytes → this includes the 20-byte IP header, so data payload = 5140 − 20 = 5120
+bytes
+Identifier = 345 (carried unchanged into every fragment — this is how the receiver knows which
+fragments belong together)
+MTU = 1500 bytes (standard Ethernet) → max data per fragment = 1500 − 20 = 1480 bytes
+Fragment
+
+Total Length
+
+Payload
+
+MF
+
+Offset
+
+0-0
+
+1500
+
+1480
+
+1
+
+0
+
+0-1
+
+1500
+
+1480
+
+1
+
+185
+
+0-2
+
+1500
+
+1480
+
+1
+
+370
+
+0-3
+
+700
+
+680
+
+0
+
+555
+
+Data sum check:
+1480 + 1480 +
+1480 + 680 =
+5120
+
+MF flag check
+Fragments 0-0, 0-1, 0-2: MF = 1 → correctly signals "more fragments still coming"
+Fragment 0-3: MF = 0 → correctly signals "this is the last one" — this is exactly how the receiver knows reassembly is complete rather than waiting for a
+fragment that never arrives.
+DF flag check
+All rows show DF = 0 throughout — correctly unchanged, since DF ("Don't Fragment") is a per-datagram policy set by the original sender, not something
+that changes as a result of the fragmentation process itself. The fact that this datagram was fragmented is itself consistent with DF=0 (a DF=1 datagram
+that didn't fit the MTU would have been dropped by the router, not fragmented).
+
+COMPUTER NETWORKS
+Fragmentation – Numerical Example
+An IP router with a Maximum Transmission Unit (MTU) of
+200 bytes has received an IP packet of size 520 bytes with
+an IP header of length 20 bytes. The values of the relevant
+fields in the IP header.
+
+The Fragment Offset field
+is
+in units of 8
+bytes. This means the
+amount of data in every
+fragment (except the
+last) must be a multiple
+of 8 — otherwise the
+offset of the next
+fragment wouldn't land
+on a whole number.
+180 is not a multiple of 8
+(180 ÷ 8 = 22.5). So we
+can't actually use the full
+180 bytes per fragment —
+we must round down to
+the nearest multiple of 8.
+So we choose 22 not 23.
+
+COMPUTER NETWORKS
+Why fragmentation is avoided
+■ One lost fragment loses them all
+
+IP never resends. If one fragment is missing, the destination throws away the rest.
+■ TCP sizes its segments to fit
+
+1,500 − 20 (IP) − 20 (TCP) = 1,460 bytes of data, so IP never needs to split.
+■ Senders ask routers not to split
+
+The DF bit is set. A router that can't forward the packet drops it and replies with the MTU it needs.
+■ IPv6 routers never fragment
+
+Only the sender may split an IPv6 packet. Routers just drop it and report back.
+
+Result: the sender learns the smallest MTU on the whole path and never sends anything bigger. This is called path
+MTU discovery, and it is why routers today almost never fragment.
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

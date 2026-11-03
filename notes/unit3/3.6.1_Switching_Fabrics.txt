@@ -1,0 +1,284 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching Fabrics
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+Switching Fabrics
+switching rate: rate at which packets can be transferred from
+inputs to outputs
+• often measured as multiple of input/output line rate
+• N inputs: switching rate N times line rate desirable
+
+R
+
+high-speed
+switching
+fabric
+
+...
+
+R
+
+...
+
+N input
+ports
+
+R
+
+(rate: NR,
+ideally)
+N output
+ports
+
+R
+
+COMPUTER NETWORKS
+Switching Fabrics
+
+transfer packet from input link to appropriate output link
+
+switching rate: rate at which packets can be transferred from inputs to outputs
+• often measured as multiple of input/output line rate
+• N inputs: switching rate N times line rate desirable
+
+three major types of switching fabrics:
+
+memory
+
+memory
+
+bus
+
+interconnection
+network
+
+COMPUTER NETWORKS
+Switching via Memory
+first generation routers:
+• traditional computers with switching under direct control of CPU
+• packet copied to system’s memory
+• speed limited by memory bandwidth (2 bus crossings per datagram)
+
+input
+port
+(e.g.,
+Ethernet)
+
+memory
+
+output
+port
+(e.g.,
+Ethernet)
+system bus
+
+COMPUTER NETWORKS
+Switching via a Bus
+datagram from input port memory to output port memory via a shared
+bus
+bus contention: switching speed limited by bus bandwidth
+32 Gbps bus, Cisco 5600: sufficient speed for access routers
+
+COMPUTER NETWORKS
+Switching via interconnection network
+Crossbar, Clos networks, other
+interconnection nets initially developed to
+connect processors in multiprocessor
+multistage switch: nxn switch from multiple
+stages of smaller switches
+
+3x3
+crossbar
+
+exploiting parallelism:
+• fragment datagram into fixed length cells on entry
+• switch cells through the fabric, reassemble datagram at
+exit
+8x8 multistage switch
+built from smaller-sized
+switches
+
+COMPUTER NETWORKS
+Switching via interconnection network
+scaling, using multiple switching “planes” in parallel:
+speedup, scaleup via parallelism
+
+fabric plane
+fabric plane
+0
+fabric
+plane
+1
+fabric plane
+2
+fabric plane
+3
+fabric plane
+4
+fabric
+plane
+5
+fabric
+plane
+6
+7
+
+....
+. . ......
+..
+. .
+. . ....
+. .
+
+basic unit: 8 switching
+planes
+each plane: 3-stage
+interconnection network
+up to 100’s Tbps
+switching capacity
+
+....
+. . ......
+..
+. .
+. . ....
+. .
+
+Cisco CRS router:
+
+COMPUTER NETWORKS
+Input port queuing
+• If switch fabric slower than input ports combined -> queueing may occur at input queues
+• queueing delay and loss due to input buffer overflow!
+• Head-of-the-Line (HOL) blocking: queued datagram at front of queue prevents others in queue from
+moving forward
+
+switch
+fabric
+
+switch
+fabric
+
+output port contention: only one red datagram can
+be transferred. lower red packet is blocked
+
+one packet time later: green packet
+experiences HOL blocking
+
+COMPUTER NETWORKS
+Output port queuing
+
+switch
+fabric
+(rate: NR)
+
+datagram
+Buffer
+
+queueing
+
+This is a really important slide
+
+link
+layer
+protocol
+(send)
+
+line
+termination
+
+Buffering required when datagrams arrive
+from fabric faster than link transmission
+rate. Drop policy: which datagrams to drop
+if no free buffers?
+Scheduling discipline chooses
+among queued datagrams for
+transmission
+
+R
+
+Datagrams can be lost due to
+congestion, lack of buffers
+Priority scheduling – who gets
+best performance, network
+neutrality
+
+COMPUTER NETWORKS
+Output port queuing
+
+switch
+fabric
+
+switch
+fabric
+
+at t, packets more
+from input to output
+
+one packet time later
+
+buffering when arrival rate via switch exceeds output line speed
+queueing (delay) and loss due to output port buffer overflow!
+
+COMPUTER NETWORKS
+How much buffering?
+• RFC 3439 rule of thumb: average buffering equal to “typical” RTT (say 250 msec)
+times link capacity C
+• e.g., C = 10 Gbps link: 2.5 Gbit buffer
+more recent recommendation: with N flows, buffering equal to
+RTT .C
+N
+
+but too much buffering can increase delays (particularly in home routers)
+• long RTTs: poor performance for realtime apps, sluggish TCP response
+• recall delay-based congestion control: “keep bottleneck link just full enough
+(busy) but no fuller”
+
+COMPUTER NETWORKS
+Buffer Management
+
+buffer management:
+drop: which packet to add, drop
+when buffers are full
+• tail drop: drop arriving packet
+• priority: drop/remove on
+priority basis
+
+Abstraction: queue
+packet
+arrivals
+
+R
+queue
+(waiting area)
+
+link
+(server)
+
+marking: which packets to mark
+
+packet
+departures
+
+to signal congestion (ECN, RED)
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

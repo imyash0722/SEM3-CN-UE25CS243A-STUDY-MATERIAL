@@ -1,0 +1,571 @@
+UE25CS243A: COMPUTER NETWORKS (4-0-0-4-4)
+Course Information
+# of Credits: 4
+Class
+#
+
+# of Slots: 56
+
+Chapter Title
+/Reference
+Literature
+
+Topics to be Covered
+
+% of Portion covered
+% of Syllabus
+
+Cumulative %
+
+Unit – 1: Computer Networks and the Internet, Application Layer-1
+
+1.1.1
+
+Introduction to computer networks, What
+is internet? A Nuts-and-Bolts description
+
+1.1.2, 1.1.3
+
+A services description, What is a Protocol?
+
+1
+
+2
+
+3
+
+1.2.1
+
+Network edge: Access networks
+
+1.2.2
+
+Physical media
+
+1.3.1
+
+Network core: Packet switching, Circuit
+switching
+
+Demo
+
+Demonstration of Basic Commands
+[ifconfig, ping, netstat, tcpdump, nmap
+etc.]
+
+1.3.3
+
+Network of Networks, Delay, Loss &
+Throughput
+
+4
+
+5
+
+6
+
+1.4.1
+
+Overview of delay in Packet-switched
+networks
+
+1.4.2
+
+Queuing delay, Packet loss
+
+1.4.3
+
+End-to-End delay, Throughput in computer
+networks
+
+1.4.4
+7
+
+The OSI model
+1.5(T1) 2.3 (R1)
+
+8
+9
+10
+
+TCP/IP protocol suite
+Introduction to Network devices
+
+L1 - Lab-1
+
+Lab-1 [Cisco Packet Tracer: Topology
+Creation]
+
+25%
+
+25%
+
+11
+
+12
+
+2.1.1
+
+Network application principles &
+architectures
+
+2.1.2
+
+Processes communication
+
+2.1.3
+
+Transport services available to applications
+
+2.1.4
+
+Transport services by Internet
+The web and HTTP, Non-persistent and
+Persistent connection, HTTP message
+format
+
+13
+
+2.2.1, 2.2.2
+
+14
+
+2.2.3
+
+Cookies, Web caching,
+HTTP vs HTTPS, TLS1.3
+Unit – 2: Application Layer-2, Transport Layer-UDP
+Lab-2 [ Exploring HTTP with
+Wireshark]
+
+15
+
+L2 - Lab-2
+
+16
+
+2.4.1
+
+DNS – Services provided
+
+17
+
+2.4.2
+
+Overview of how DNS works
+
+2.4.3
+
+DNS records and messages
+
+2.5.1
+
+Peer-to-Peer applications
+
+18
+
+19
+
+L1 - Lab-3
+
+Lab-3 [ Exploring UDP with DNS Wireshark]
+Introduction to transport layer
+
+20
+
+3.1
+
+Relationship b/w transport & network layer
+Overview of the transport layer in the
+Internet
+
+21
+
+3.2
+
+Multiplexing & Demultiplexing
+
+22
+
+2.7.1
+
+Socket Programming with UDP
+
+23
+
+2.7.2
+
+Socket Programming with TCP
+
+24
+
+3.3
+
+Connectionless transport: UDP
+Segment structure, Checksum
+
+3.4.1
+
+Principles of reliable data transferOverview
+
+3.4.3
+
+Go-Back-N protocol, Selective Repeat,
+Problems
+
+25
+
+25%
+
+50%
+
+26
+
+27
+
+28
+
+3.5.1, 3.5.2, 3.5.3
+
+Connection Oriented Transport: TCP, The
+TCP connection
+
+3.5.4
+
+TCP segment structure
+
+3.5.5
+
+Flow control
+
+3.5.6
+
+TCP connection management
+
+L3 - MiniProject-2
+[Session-1]
+
+Socket Programming/Simulation
+ISA1
+Unit – 3: Network Layer and Internet Protocol
+
+29
+
+3.6
+
+TCP congestion control
+
+30
+
+3.8
+
+QUIC Protocol
+
+31
+
+L2 - Lab-4
+
+Lab-4 [Understanding TCP Congestion
+Control - Wireshark]
+
+T1: 4.1
+
+Overview of network layer, Forwarding
+and routing, Network service models
+
+4.2.1,4.2.2
+
+Inside router: Input port processing and
+Destination-based forwarding, Switching
+
+32
+
+4.2.3, 4.2.4, 4.2.5
+
+Output port processing, Where does
+Queueing occur?, Packet scheduling
+25%
+
+33
+
+4.3.1
+
+The Internet Protocol – IPv4, Datagram
+format
+
+34
+
+4.3.2
+
+Fragmentation, Fragmentation- Problems
+
+4.3.3
+
+IPv4 Addressing
+
+4.3.3
+
+IPv4 Addressing - Problems-1
+
+4.3.3
+
+IPv4 Addressing - Problems-2
+
+4.3.3
+
+NAT
+
+4.4
+
+Introduction to SDN
+
+38
+
+4.4
+
+Overview of OpenFlow protocol, P4
+
+39
+
+L2 - Lab-5
+
+35
+36
+37
+
+Lab-5 [Analyzing Ethernet Protocol and
+ARP - Wireshark]
+
+75%
+
+40,
+41, 42
+
+L3 - MiniProject [Session2]
+
+Evaluation 1 - SDN + Socket
+Programming/Simulation
+
+Unit – 4 Network Layer and Internet Protocol, Link Layer and LAN
+26.1,
+26.2,26.3 (R1)
+43
+
+27.1
+27.2,27.3 (R1)
+
+44
+
+4.3.3
+
+45
+
+L2 - Lab-6
+
+46
+
+47
+
+50
+
+Address space allocation
+IPv6 Addressing: Packet format
+Transition from IPv4 to IPv6
+Transition from IPv4 to IPv6
+Network layer protocols: DHCP
+ICMP
+Lab-6 [Hardware Lab]
+
+5.2
+
+Introduction to routing algorithms: Link
+state
+
+5.2
+
+Link state - Problems
+
+5.2
+
+Distance vector
+
+5.2
+
+Distance vector - Problems
+
+T1: 6.1
+
+Introduction to link layer
+25%
+
+48
+
+49
+
+IPv6 Addressing: Introduction
+
+Error-detection and correction techniques:
+Parity Checks-Problems
+
+6.2, 6.2.1
+
+Cyclic redundancy check - Problems
+
+6.2.2
+
+Multiple access protocols: CSMA/CD
+
+6.2.3
+
+Switched LAN: Link layer addressing
+
+51
+
+6.2.3, 6.4.1
+
+52
+
+6.4.2
+
+Link-layer switches, VLAN
+
+6.4.3
+
+Retrospective: A day in the life of a web
+page request
+
+6.4.4
+
+Physical layer: Purpose, Signals to Packets
+
+6.7
+
+Transmission media
+
+53
+
+53
+
+7.3 (T1)
+
+ARP, Ethernet
+
+100%
+
+Wireless LANs: IEEE 802.11 LAN
+architecture
+
+3.2 (R1)
+54,
+55, 56
+
+L3- MiniProject [Session3]
+
+Evaluation 2 - SDN + Socket
+Programming/Simulation
+ISA2
+
+Publication Information
+Edition
+Publisher
+Year
+
+Book Type
+
+Code
+
+Title & Author
+
+Text Books
+
+T1
+
+“Computer Networking - A Top - Down
+Approach”, James F Kurose, Keith W.
+
+8
+
+Pearson
+
+2022
+
+Reference
+Books
+
+R1
+
+“TCP IP Protocol Suite”, Behrouz Forouzan
+
+4
+
+McGraw-Hill
+
+2010
+
+Conducted
+For
+
+Scaled
+To
+
+Evaluation Policy:
+
+Component
+
+Description
+
+ISA-1
+
+Unit-1 & Unit-2 (Hybrid Mode)
+
+40
+
+15
+
+ISA-2
+
+Unit-3 & Unit-4 (Hybrid Mode)
+
+40
+
+15
+
+Labs
+
+Individual –
+3 labs – level 1 (Banana type) [Cisco packet tracer,
+UDP with DNS, Ethernet/ARP]
+3 labs – Level 2 (Orange type) [ HTTP Persistent &
+Non-Persistent, TCP Congestion, Hardware]
+Level 3 (Jackfruit) – group of 3 students
+To choose from over 30 different projects with two
+deliverables each.
+SDN + Socket Programing – (Evaluated based on
+the Rubrics)
+ISA total
+
+60
+
+10
+
+40
+
+10
+
+Hybrid
+
+100
+
+Hackathon /
+Mini-Project
+
+ESA
+
+50
+
+Total
+
+50
+100
+
+

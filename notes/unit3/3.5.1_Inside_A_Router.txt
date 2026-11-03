@@ -1,0 +1,386 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+Router Architecture Overview
+
+high-level view of generic router architecture:
+routing
+processor
+
+routing, management
+control plane (software)
+operates in millisecond
+time frame
+forwarding data plane
+(hardware) operates
+in nanosecond
+timeframe
+
+high-speed
+switching
+fabric
+
+router input
+ports
+
+router output
+ports
+
+COMPUTER NETWORKS
+Input port functions
+
+line
+termination
+
+link
+layer
+protocol
+(receive)
+
+lookup,
+forwarding
+
+switch
+fabric
+
+queueing
+
+physical layer:
+bit-level reception
+link layer:
+e.g., Ethernet
+(chapter 6)
+
+decentralized switching:
+using header field values, lookup output port using forwarding
+table in input port memory (“match plus action”)
+goal: complete input port processing at ‘line speed’
+input port queuing: if datagrams arrive faster than forwarding
+rate into switch fabric
+
+COMPUTER NETWORKS
+Input port functions
+
+line
+termination
+
+link
+layer
+protocol
+(receive)
+
+lookup,
+forwarding
+
+switch
+fabric
+
+queueing
+
+physical layer:
+bit-level reception
+link layer:
+e.g., Ethernet
+(chapter 6)
+
+decentralized switching:
+using header field values, lookup output port using forwarding
+table in input port memory (“match plus action”)
+destination-based forwarding: forward based only on
+destination IP address (traditional)
+generalized forwarding: forward based on any set of header
+field values
+
+COMPUTER NETWORKS
+Destination-based Forwarding
+
+3
+
+Q: but what happens if ranges don’t divide up so nicely?
+
+COMPUTER NETWORKS
+Longest prefix matching
+
+longest prefix match
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+Destination Address Range
+
+Link interface
+
+11001000
+
+00010111
+
+00010 ***
+
+********
+
+0
+
+11001000
+
+00010111
+
+00011000
+
+********
+
+1
+
+11001000
+
+00010111
+
+00011 ***
+
+********
+
+2
+
+otherwise
+
+examples:
+
+3
+
+11001000
+
+00010111
+
+00010110
+
+10100001
+
+which interface?
+
+11001000
+
+00010111
+
+00011000
+
+10101010
+
+which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+longest prefix match
+when looking for forwarding table entry for given
+destination address, use longest address prefix that
+matches destination address.
+Link interface
+
+Destination Address Range
+********
+
+0
+
+00010111
+
+00010 **
+*
+00011000
+
+********
+
+1
+
+00010111
+match!
+
+00011 **
+
+********
+
+2
+
+11001000
+
+00010111
+
+11001000
+11001000
+
+*
+
+otherwise
+
+examples
+:
+
+3
+
+11001000
+
+00010111
+
+00010110
+
+10100001
+
+which interface?
+
+11001000
+
+00010111
+
+00011000
+
+10101010
+
+which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+
+longest prefix match
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+Destination Address Range
+
+Link interface
+
+11001000
+
+00010111
+
+00010*** ********
+
+0
+
+11001000
+
+00010111
+
+00011000 ********
+
+1
+
+11001000
+
+00010111
+
+00011*** ********
+
+2
+3
+
+otherwise
+
+examples:
+
+11001000
+11001000
+
+match!
+
+00010111
+
+00010110
+
+10100001 which interface?
+
+00010111
+
+00011000
+
+10101010 which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+
+longest prefix match
+when looking for forwarding table entry for given destination address, use
+longest address prefix that matches destination address.
+Destination Address Range
+
+Link interface
+
+11001000
+
+00010111
+
+00010 ***
+
+11001000
+
+00010111
+
+00011000
+
+11001000
+
+00010111
+
+00011 ***
+
+********
+
+0
+1
+
+otherwise
+
+********
+********
+
+2
+3
+
+match!
+examples:
+11001000
+
+00010111
+
+00010110
+
+10100001
+
+which interface?
+
+11001000
+
+00010111
+
+00011000
+
+10101010
+
+which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+• we’ll see why longest prefix matching is used shortly, when we study
+addressing
+• longest prefix matching: often performed using ternary content
+addressable memories (TCAMs)
+• content addressable: present address to TCAM: retrieve address in one clock cycle,
+regardless of table size
+• Cisco Catalyst: ~1M routing table entries in TCAM
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

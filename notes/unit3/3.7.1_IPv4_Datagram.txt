@@ -1,0 +1,119 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+Network Layer: Internet
+
+host, router network layer functions:
+transport layer: TCP, UDP
+
+network
+layer
+
+Path-selection
+algorithms:
+implemented in
+
+• routing protocols
+(OSPF, BGP)
+• SDN controller
+
+IP protocol
+forwarding
+table
+
+• datagram format
+• addressing
+• packet handling conventions
+
+ICMP protocol
+
+• error reporting
+• router “signaling”
+
+link layer
+physical layer
+
+COMPUTER NETWORKS
+IP Datagram Format
+32 bits
+IP protocol version number
+header length(bytes)
+“type” of
+service:
+diffserv (0:5)
+ECN (6:7)
+
+TTL: remaining max hops
+(decremented at each router)
+
+upper layer protocol (e.g., TCP or UDP)
+
+overhead
+20 bytes of TCP
+20 bytes of IP
+= 40 bytes + app
+layer overhead for
+TCP+IP
+
+ver head. type of
+len service
+
+length
+fragment
+16-bit identifier flgs
+offset
+upper
+time to
+header
+layer
+live
+checksum
+source IP address
+destination IP address
+options (if any)
+
+payload data
+(variable length,
+typically a TCP
+or UDP segment)
+
+total
+datagram
+length fragmentation/
+(bytes) reassembly
+header checksum
+32-bit source IP address
+Maximum length: 64K
+32-bit destination IP
+bytes
+address
+Typically:
+1500 bytes
+or
+e.g.,
+timestamp,
+record
+less taken
+route
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

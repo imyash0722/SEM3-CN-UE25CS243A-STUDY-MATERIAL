@@ -1,0 +1,590 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+IP addressing: Introduction
+223.1.1.1
+
+• IP address: 32-bit unique ID
+
+associated with each host or
+router interface
+
+223.1.2.1
+223.1.1.2
+223.1.1.4
+
+223.1.2.9
+
+• interface: connection between
+
+host/router and physical link
+• router’s typically have multiple interfaces
+• host typically has one or two interfaces
+
+223.1.3.27
+
+223.1.1.3
+
+223.1.2.2
+
+(e.g., wired Ethernet, wireless 802.11)
+223.1.3.1
+
+223.1.3.2
+
+dotted-decimal IP address notation:
+223.1.1.1 = 11011111 00000001 00000001 00000001
+223
+
+1
+
+1
+
+1
+
+COMPUTER NETWORKS
+IP addressing: Introduction
+Change the following IPv4 addresses from binary notation to dotteddecimal notation.
+
+Solution:
+We replace each group of 8 bits with its equivalent decimal number
+and add dots for separation.
+
+COMPUTER NETWORKS
+IP addressing: Introduction
+Change the following IPv4 addresses from dotted-decimal notation to
+binary notation.
+
+Solution:
+We replace each decimal number with its binary equivalent.
+
+COMPUTER NETWORKS
+IP addressing: Introduction
+223.1.1.1
+
+Q: how are interfaces
+actually connected?
+A: we’ll learn about that
+in chapters 6, 7
+
+223.1.2.1
+223.1.1.2
+
+A: wired
+Ethernet interfaces
+connected by
+Ethernet switches
+
+For now: don’t need to worry
+about how one interface is
+connected to another (with no
+intervening router)
+
+223.1.1.4
+
+223.1.1.3
+
+223.1.2.9
+
+223.1.3.27
+223.1.2.2
+
+223.1.3.1
+
+223.1.3.2
+
+A: wireless WiFi interfaces
+connected by WiFi base station
+
+COMPUTER NETWORKS
+Subnets
+223.1.1.1
+
+What’s a subnet ?
+• device interfaces that can
+physically reach each other
+without passing through an
+intervening router
+
+223.1.2.1
+223.1.1.2
+223.1.1.4
+
+223.1.1.3
+
+223.1.2.9
+
+223.1.3.27
+223.1.2.2
+
+IP addresses have structure:
+• subnet part: devices in same subnet
+have common high order bits
+• host part: remaining low order bits
+A portion of a network that shares
+a particular subnet address.
+
+223.1.3.1
+
+223.1.3.2
+
+network consisting of 3
+subnets
+
+COMPUTER NETWORKS
+Subnets
+Recipe for defining subnets:
+detach each interface from its
+host or router, creating “islands”
+of isolated networks
+each isolated network is called a
+subnet
+
+subnet 223.1.1.0/24
+subnet 223.1.2.0/24
+
+223.1.1.1
+
+223.1.2.1
+223.1.1.2
+223.1.1.4
+
+223.1.1.3
+
+subnet
+223.1.3.0/24
+
+223.1.2.9
+
+223.1.3.27
+223.1.2.2
+
+223.1.3.1
+
+223.1.3.2
+
+subnet mask: /24
+(high-order 24 bits: subnet part of IP address)
+
+COMPUTER NETWORKS
+Subnets
+
+223.1.1.2
+
+subnet 223.1.1/24
+
+where are the
+subnets?
+what are the /24
+subnet
+addresses?
+
+223.1.1.1
+
+223.1.1.4
+223.1.1.3
+
+223.1.9.2
+
+223.1.7.2
+
+subnet 223.1.9/24
+223.1.9.1
+
+223.1.7.1
+223.1.8.1
+
+subnet 223.1.2/24
+
+A 32-bit combination used to
+describe which portion of an 223.1.2.1
+address refers to the subnet and
+which part refers to the host.
+
+223.1.2.6
+
+subnet 223.1.7/24
+
+223.1.8.2
+
+subnet 223.1.8/24 223.1.3.27
+223.1.2.2
+
+223.1.3.1
+
+subnet 223.1.3/24
+223.1.3.2
+
+COMPUTER NETWORKS
+IP addressing: CIDR
+
+CIDR: Classless InterDomain Routing (pronounced “cider”)
+• subnet portion of address of arbitrary length
+• address format: a.b.c.d/x, where x is # bits in subnet portion of
+address
+subnet
+part
+
+host
+part
+
+11001000 00010111 00010000 00000000
+200.23.16.0/23
+
+COMPUTER NETWORKS
+IP addressing: CIDR
+
+COMPUTER NETWORKS
+IP addressing: Why not Classful Addressing?
+
+Network portion - 8, 16, or 24 bits in length – known as
+Class A, B and C networks respectively
+A class C (/24) - accommodate only up to 28 - 2 = 254
+hosts (two of the 28 = 256 addresses are reserved for
+special use)
+A class B (/16) subnet, supports up to 65,536 hosts
+
+too small for many
+organizations
+too large, poor
+utilization
+
+A class A (/8) subnet, up to 16,777,214 hosts
+Classful addressing, which is almost obsolete,
+is replaced with classless addressing.
+
+COMPUTER NETWORKS
+IP addressing: Classful Addressing
+
+COMPUTER NETWORKS
+IP addressing: Classful Addressing
+
+Class D: multicast, Class E: reserved (experimental)
+Broadcast Address: 255.255.255.255
+
+Network Masks
+Class A: 255.0.0.0
+Class B: 255.255.0.0
+Class C: 255.255.255.0
+
+COMPUTER NETWORKS
+IP addressing: Classful Subnet Masks
+
+COMPUTER NETWORKS
+IP addressing: introduction
+Find the class of each address.
+a. 00000001 00001011 00001011 11101111
+b. 11000001 10000011 00011011 11111111
+c. 14.23.120.8
+d. 252.5.15.111
+Solution
+a. The first bit is 0. This is a class A address.
+b. The first 2 bits are 1; the third bit is 0. This is a class C address.
+c. The first byte is 14; the class is A.
+d. The first byte is 252; the class is E.
+
+COMPUTER NETWORKS
+IP addressing: CIDR – Prefix Lengths
+
+The addresses in color are the default masks for classes A, B, and C.
+Thus, classful addressing is a special case of classless addressing.
+
+COMPUTER NETWORKS
+Stepwise Method for Designing Subnets
+Step 1: Determine the requirements
+• Identify the number of subnets required.
+• Determine the number of hosts needed per subnet.
+Step 2: Determine the subnet and host bits
+• Use the 2ⁿ − 2 formula to determine the number of subnet bits and host bits required.
+• If multiple subnet masks satisfy the requirements, choose the one that provides better
+future scalability.
+If more subnets are likely to be added → allocate more subnet bits.
+If more hosts are likely to be added to existing subnets → allocate more host bits.
+• Avoid using all available subnets or host addresses immediately. Leave room for future
+growth.
+
+COMPUTER NETWORKS
+Stepwise Method for Designing Subnets
+Step 3: Determine the subnet addresses
+• Work in binary and list all possible combinations of the subnet bits.
+• Set all host bits to 0 for each combination.
+• Convert the resulting addresses to dotted-decimal notation.
+• These are the subnet addresses.
+Step 4: Determine the host addresses
+• For each subnet, work in binary and list all possible combinations of the host bits.
+• Keep the subnet bits unchanged.
+• Convert the resulting addresses to dotted-decimal notation.
+• These are the host addresses available within each subnet.
+
+COMPUTER NETWORKS
+Example for Designing Subnets
+Consider the internetwork, with Class C network address 192.168.100.0. The internetwork has
+five data links, so at least five subnet addresses are required.
+The two Ethernet networks have the highest requirement, with 25 hosts each.
+Therefore, the subnetting requirements are:
+At least 5 subnets and at least 25 host addresses per subnet.
+Step 2:
+Applying the 2ⁿ − 2 formula, 3 subnet bits and 5 host bits satisfy the requirements:
+Subnets: 2³ − 2 = 6 subnets
+Hosts per subnet: 2⁵ − 2 = 30 hosts
+A Class C network with 3 bits borrowed for subnetting has the subnet mask:
+255.255.255.224
+= /27
+
+COMPUTER NETWORKS
+Example for Designing Subnets
+Step 3:
+The subnet bits are derived by marking the masked subnet bit space and then writing all
+possible bit combinations in the space by counting up from zero in binary.
+
+COMPUTER NETWORKS
+Example for Designing Subnets
+The subnet addresses are derived by filling in the network address to the left of the subnet
+space, setting all host bits to zero to the right of the subnet space, and converting the results to
+dotted decimal.
+
+COMPUTER NETWORKS
+Example for Designing Subnets
+Step 4: Calculate Host Addresses for Each Subnet
+• The final step is to determine the host addresses available in each subnet.
+• Choose a subnet and keep the network and subnet bits unchanged. Then, list all possible
+combinations of the host bits, starting from zero and counting upward in binary.
+For example, consider the subnet 192.168.100.32:
+• The first address, where all host bits are 0, is the subnet address.
+• The last address, where all host bits are 1, is the broadcast address.
+• The addresses between them are the host addresses available for that subnet.
+• After the broadcast address, the next address begins the next subnet, which is
+192.168.100.64.
+Thus, the addresses follow this pattern:
+Subnet address → Host addresses → Broadcast address → Next subnet
+
+COMPUTER NETWORKS
+Example for Designing Subnets
+The host addresses for a subnet
+are derived by writing all possible
+bit combinations in the host
+space. These are the host bits for
+subnet 192.168.100.32.
+
+COMPUTER NETWORKS
+IP addresses: how to get one?
+
+Q: how does network get subnet part of IP address?
+A: gets allocated portion of its provider ISP’s address space
+ISP's block
+
+11001000 00010111 00010000 00000000
+
+200.23.16.0/20
+
+ISP can then allocate out its address space in 8 blocks:
+Organization 0
+Organization 1
+Organization 2
+...
+
+11001000 00010111 00010000 00000000
+11001000 00010111 00010010 00000000
+11001000 00010111 00010100 00000000
+…..
+….
+
+200.23.16.0/23
+200.23.18.0/23
+200.23.20.0/23
+….
+
+Organization 7
+
+11001000 00010111 00011110 00000000
+
+200.23.30.0/23
+
+COMPUTER NETWORKS
+Hierarchical addressing: route aggregation
+hierarchical addressing allows efficient advertisement of routing
+information:
+Organization 0
+
+200.23.16.0/23
+Organization 1
+Organization 2
+Organization 7
+
+200.23.18.0/23
+200.23.20.0/23
+
+.
+.
+.
+
+.
+.
+.
+
+Fly-By-Night-ISP
+
+“Send me
+anything
+with addresses
+beginning
+200.23.16.0/20”
+
+200.23.30.0/23
+ISPs-R-Us
+
+“Send me
+anything
+with addresses
+beginning
+199.31.0.0/16”
+
+The ability to use a
+single prefix to
+advertise multiple
+Internet
+networks is often
+referred to as address
+aggregation (also
+route aggregation or
+route
+summarization).
+
+COMPUTER NETWORKS
+Hierarchical addressing: more specific routes
+Organization 1 moves from Fly-By-Night-ISP to ISPs-R-Us
+ISPs-R-Us now advertises a more specific route to Organization 1
+Organization 0
+
+200.23.16.0/23
+Organization 1
+
+200.23.18.0/23
+Organization 2
+
+200.23.20.0/23
+
+.
+.
+.
+
+Organization 7
+
+.
+.
+.
+
+Fly-By-Night-ISP
+
+“Send me
+anything
+with addresses
+beginning
+200.23.16.0/20”
+
+Internet
+
+200.23.30.0/23
+ISPs-R-Us
+Organization 1
+
+200.23.18.0/23
+
+“Send me
+anything
+with addresses
+beginning
+199.31.0.0/16” “or
+200.23.18.0/23”
+
+COMPUTER NETWORKS
+Hierarchical addressing: more specific routes
+Organization 1 moves from Fly-By-Night-ISP to ISPs-R-Us
+ISPs-R-Us now advertises a more specific route to Organization 1
+Organization 0
+
+200.23.16.0/23
+
+Organization 2
+
+200.23.20.0/23
+Organization 7
+
+.
+.
+.
+
+.
+.
+.
+
+Fly-By-Night-ISP
+
+“Send me
+anything
+with addresses
+beginning
+200.23.16.0/20”
+
+Internet
+
+200.23.30.0/23
+ISPs-R-Us
+Organization 1
+
+200.23.18.0/23
+
+“Send me
+anything
+with addresses
+beginning
+199.31.0.0/16” “or
+200.23.18.0/23”
+
+COMPUTER NETWORKS
+IP addressing: last words…
+Q: how does an ISP get block of addresses?
+A: ICANN: Internet Corporation for Assigned
+Names and Numbers
+http://www.icann.org/
+• allocates IP addresses, through 5
+regional registries (RRs) (who may then
+allocate to local registries)
+
+• manages DNS root zone, including
+delegation of individual TLD (.com, .edu,
+…) management
+
+Q: are there enough 32-bit IP
+addresses?
+ICANN allocated last chunk of IPv4
+addresses to RRs in 2011
+NAT (next) helps IPv4 address
+space exhaustion
+IPv6 has 128-bit address space
+"Who the hell knew how much address
+space we needed?" Vint Cerf (reflecting
+on decision to make IPv4 address 32 bits
+long)
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

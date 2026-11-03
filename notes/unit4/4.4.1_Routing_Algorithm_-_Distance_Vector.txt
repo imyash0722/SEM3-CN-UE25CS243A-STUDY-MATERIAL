@@ -1,0 +1,1430 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Network Layer and Internet Protocol
+4.5 Introduction to Network Layer
+Protocols
+• DHCP
+• ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector algorithm
+Based on Bellman-Ford (BF) equation (dynamic programming):
+Bellman-Ford equation
+
+Let Dx(y): cost of least-cost path from x to y.
+Then:
+
+Dx(y) = minv { cx,v + Dv(y) }
+
+min taken over all neighbors v of x
+
+v’s estimated least-cost-path cost to
+y
+direct cost of link from x to v
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Bellman-Ford: Example
+Suppose that u’s neighboring nodes, x,v,w, know that for destination z:
+Bellman-Ford equation says:
+Dw(z) = 3
+
+Dv(z) = 5
+5
+2
+
+u
+1
+
+Dx(z) = 3
+
+v
+2
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+Du(z) = min { cu,v + Dv(z),
+cu,x + Dx(z),
+cu,w + Dw(z) }
+= min {2 + 5,
+1 + 3,
+5 + 3} = 4
+
+node achieving minimum (x) is next
+hop on estimated least-cost path to
+destination (z)
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector algorithm:
+
+key idea:
+from time-to-time, each node sends its own distance vector estimate
+to neighbors
+when x receives new DV estimate from any neighbor, it updates its
+own DV using B-F equation:
+Dx(y) ← minv{cx,v + Dv(y)} for each node y ∊ N
+under minor, natural conditions, the estimate Dx(y) converge to the
+actual least cost dx(y)
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector algorithm:
+
+each node:
+wait for (change in local link
+cost or msg from neighbor)
+recompute DV estimates using
+DV received from neighbor
+if DV to any destination has
+changed, notify neighbors
+
+iterative, asynchronous: each local
+iteration caused by:
+local link cost change
+DV update message from neighbor
+
+distributed, self-stopping: each
+
+node notifies neighbors only when
+its DV changes
+neighbors then notify their
+neighbors – only if necessary
+no notification received, no
+actions taken!
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: example
+DV in a:
+
+t=0
+All nodes have
+distance
+estimates to
+nearest neighbors
+(only)
+All nodes send
+their local
+distance vector to
+their neighbors
+
+Da(a)=0
+Da(b) = 8
+Da(c) = ∞
+Da(d) = 1
+Da(e) = ∞
+Da(f) = ∞
+Da(g) = ∞
+Da(h) = ∞
+Da(i) = ∞
+
+a
+
+b
+
+8
+
+c
+
+1
+
+1
+
+1
+
+d
+
+e
+
+1
+
+1
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+
+A few asymmetries:
+missing link
+larger cost
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+a
+
+t=1
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+b
+
+8
+
+c
+
+1
+
+1
+
+1
+
+d
+
+e
+
+1
+
+1
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+a
+compute
+
+t=1
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+8
+
+1
+
+1
+
+g
+compute
+
+1
+
+compute
+c
+
+1
+
+1
+
+d
+compute
+
+compute
+b
+
+compute
+e
+
+1
+
+1
+
+1
+
+h
+compute
+
+compute
+f
+
+1
+
+1
+
+compute
+i
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+a
+
+t=1
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+b
+
+8
+
+c
+
+1
+
+1
+
+1
+
+d
+
+e
+
+1
+
+1
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+a
+
+t=2
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+b
+
+8
+
+c
+
+1
+
+1
+
+1
+
+d
+
+e
+
+1
+
+1
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+11
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+compute
+a
+
+t=2
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+2
+
+1
+
+1
+
+g
+compute
+
+1
+
+compute
+c
+
+1
+
+1
+
+d
+compute
+
+compute
+b
+
+compute
+e
+
+1
+
+1
+
+8
+
+compute
+h
+
+compute
+f
+
+1
+
+1
+
+compute
+i
+12
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+a
+
+t=2
+All nodes:
+receive distance
+vectors from
+neighbors
+compute their new
+local distance
+vector
+send their new
+local distance
+vector to neighbors
+
+b
+
+8
+
+c
+
+1
+
+1
+
+1
+
+d
+
+e
+
+1
+
+1
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+
+…. and so on
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+DV in b:
+
+Distance vector example: computation
+
+Db(a) = 8
+Db(c) = 1
+Db(d) = ∞
+Db(e) = 1
+
+DV in a:
+
+t=1
+b receives DVs
+from a, c, e
+
+Da(a)=0
+Da(b) = 8
+Da(c) = ∞
+Da(d) = 1
+Da(e) = ∞
+Da(f) = ∞
+Da(g) = ∞
+Da(h) = ∞
+Da(i) = ∞
+
+a
+
+c
+
+1
+
+1
+
+1
+
+d
+
+Let’s next take a look at
+the iterative
+computations at nodes
+
+b
+
+8
+
+Db(f) = ∞
+Db(g) = ∞
+Db(h) = ∞
+Db(i) = ∞
+
+1
+
+1
+
+f
+
+1
+
+1
+
+g
+
+Dc(a) = ∞
+Dc(b) = 1
+Dc(c) = 0
+Dc(d) = ∞
+Dc(e) = ∞
+Dc(f) = ∞
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = ∞
+
+DV in e:
+e
+
+1
+
+DV in c:
+
+1
+
+h
+
+1
+
+i
+
+De(a) = ∞
+De(b) = 1
+De(c) = ∞
+De(d) = 1
+De(e) = 0
+De(f) = 1
+De(g) = ∞
+De(h) = 1
+De(i) = ∞
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Db(a) = 8
+Db(c) = 1
+Db(d) = ∞
+Db(e) = 1
+
+DV in a:
+
+t=1
+b receives DVs
+from a, c, e,
+computes:
+
+Da(a)=0
+Da(b) = 8
+Da(c) = ∞
+Da(d) = 1
+Da(e) = ∞
+Da(f) = ∞
+Da(g) = ∞
+Da(h) = ∞
+Da(i) = ∞
+
+a
+
+DV in c:
+
+DV in b:
+
+8
+
+bb
+compute
+
+Db(f) = ∞
+Db(g) = ∞
+Db(h) = ∞
+Db(i) = ∞
+
+c
+
+1
+
+1
+
+1
+
+DV in e:
+e
+
+d
+
+1
+Db(a) = min{cb,a+Da(a), cb,c +Dc(a), cb,e+De(a)} = min{8,∞,∞}
+=8
+
+e
+
+f
+
+1
+
+Db(c) = min{cb,a+Da(c), cb,c +Dc(c), c b,e +De(c)} = min{∞,1,∞} = 1
+Db(d) = min{cb,a+Da(d), cb,c +Dc(d), c b,e +De(d)} = min{9,2,∞} = 2
+1
+1
+Db(e) = min{cb,a+Da(e), cb,c +Dc(e), c b,e +De(e)} = min{∞,∞,1} = 1
+
+1
+
+DV in b:
+
+Db(f) = min{cb,a+Da(f), cb,c +Dc(f), c b,e +De(f)} = min{∞,∞,2} = 2
+Db(g) = min{cb,a+Da(g), cb,c +Dc(g), c b,e+De(g)} = min{∞, ∞, ∞} = ∞
+
+g
+
+1 ∞, 2} = 2
+Db(h) = min{cb,a+Da(h), cb,c +Dc(h), c b,e+De(h)} = min{∞,
+Db(i) = min{cb,a+Da(i), cb,c +Dc(i), c b,e+De(i)} = min{∞, ∞, ∞} = ∞
+
+Dc(a) = ∞
+Dc(b) = 1
+Dc(c) = 0
+Dc(d) = ∞
+Dc(e) = ∞
+Dc(f) = ∞
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = ∞
+
+h
+
+Db(a) = 8
+D (c) = 1
+1Db(d) = 2
+b
+Db(e) = 1
+
+Db(f) =2
+Db(g)i = ∞
+Db(h) = 2
+Db(i) = ∞
+
+De(a) = ∞
+De(b) = 1
+De(c) = ∞
+De(d) = 1
+De(e) = 0
+De(f) = 1
+De(g) = ∞
+De(h) = 1
+De(i) = ∞
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Db(a) = 8
+Db(c) = 1
+Db(d) = ∞
+Db(e) = 1
+
+DV in a:
+
+t=1
+c receives DVs
+from b
+
+Da(a)=0
+Da(b) = 8
+Da(c) = ∞
+Da(d) = 1
+Da(e) = ∞
+Da(f) = ∞
+Da(g) = ∞
+Da(h) = ∞
+Da(i) = ∞
+
+a
+
+DV in c:
+
+DV in b:
+
+b
+
+8
+
+Db(f) = ∞
+Db(g) = ∞
+Db(h) = ∞
+Db(i) = ∞
+
+c
+
+1
+
+1
+
+1
+
+d
+
+1
+
+DV in e:
+e
+
+1
+
+1
+
+f
+
+1
+
+1
+
+g
+
+Dc(a) = ∞
+Dc(b) = 1
+Dc(c) = 0
+Dc(d) = ∞
+Dc(e) = ∞
+Dc(f) = ∞
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = ∞
+
+1
+
+h
+
+1
+
+i
+
+De(a) = ∞
+De(b) = 1
+De(c) = ∞
+De(d) = 1
+De(e) = 0
+De(f) = 1
+De(g) = ∞
+De(h) = 1
+De(i) = ∞
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+a
+
+t=1
+c receives DVs
+from b computes:
+
+DV in c:
+
+DV in b:
+
+b
+
+8
+
+1
+
+d b(a}} = 1 + 8 = 9
+Dc(a) = min{cc,b+D
+
+e
+
+Dc(d) = min{cc,b+Db(d)} = 1+ ∞ = ∞
+Dc(e) = min{cc,b+Db(e)} = 1 + 1 = 2
+Dc(f) = min{cc,b+Db(f)} = 1+ ∞ = ∞
+Dc(g) = min{cc,b+Db(g)} = 1+ ∞ = ∞
+Dc(i) = min{cc,b+Db(i)} = 1+ ∞ = ∞
+
+Db(f) = ∞
+Db(g) = ∞
+Db(h) = ∞
+Db(i) = ∞
+
+1
+
+c
+compute
+
+Dc(a) = ∞
+Dc(b) = 1
+Dc(c) = 0
+Dc(d) = ∞
+Dc(e) = ∞
+Dc(f) = ∞
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = ∞
+
+1
+
+Dc(b) = min{cc,b+Db(b)} = 1 + 0 = 1
+
+Dc(h) = min{cbc,bg
++Db(h)} = 1+ ∞ = ∞
+
+Db(a) = 8
+Db(c) = 1
+Db(d) = ∞
+Db(e) = 1
+
+h
+
+DV in c:
+Dc(a) = 9
+Dc(b) = 1
+Dc(c) = 0
+Dc(d) = 2
+Dc(e) = ∞
+Dc(f) = ∞
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = ∞
+
+f
+
+* Check out the online interactive
+exercises for more examples:
+i http://gaia.cs.umass.edu/kurose_ross/interactive/
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+DV in b:
+Db(a) = 8
+Db(c) = 1
+Db(d) = ∞
+Db(e) = 1
+
+DV in d:
+
+t=1
+e receives DVs
+from b, d, f, h
+
+Dc(a) = 1
+Dc(b) = ∞
+Dc(c) = ∞
+Dc(d) = 0
+Dc(e) = 1
+Dc(f) = ∞
+Dc(g) = 1
+Dc(h) = ∞
+Dc(i) = ∞
+
+a
+
+Dc(a) = ∞
+Dc(b) = ∞
+Dc(c) = ∞
+Dc(d) = ∞
+Dc(e) = 1
+Dc(f) = ∞
+Dc(g) = 1
+Dc(h) = 0
+Dc(i) = 1
+
+c
+
+1
+
+Q: what is new DV computed in e at
+1t=1?
+
+1
+
+d
+
+DV in h:
+
+b
+
+8
+
+Db(f) = ∞
+Db(g) = ∞
+Db(h) = ∞
+Db(i) = ∞
+
+1
+
+1
+
+compute
+e
+
+1
+
+g
+
+1
+
+f
+
+1
+
+1
+
+h
+
+1
+
+i
+
+DV in e:
+De(a) = ∞
+De(b) = 1
+De(c) = ∞
+De(d) = 1
+De(e) = 0
+De(f) = 1
+De(g) = ∞
+De(h) = 1
+De(i) = ∞
+
+DV in f:
+Dc(a) = ∞
+Dc(b) = ∞
+Dc(c) = ∞
+Dc(d) = ∞
+Dc(e) = 1
+Dc(f) = 0
+Dc(g) = ∞
+Dc(h) = ∞
+Dc(i) = 1
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Distance vector: state information diffusion
+Iterative communication, computation steps diffuses information through network:
+t=0
+t=1
+
+t=2
+
+t=3
+
+c’s state at t=0 is at c only
+c’s state at t=0 has propagated to b, and
+may influence distance vector
+computations up to 1 hop away, i.e., at b
+
+a
+
+c’s state at t=0 may influence distance vector
+computations up to 3 hops away, i.e., at b,a,e
+and now at c,f,h as well
+
+c’s state at t=0 may influence distance vector
+t=4 computations up to 4 hops away, i.e., at
+b,a,e, c, f, h and now at g,i as well
+
+1
+
+1
+
+1
+
+c’s state at t=0 may now influence distance
+vector computations up to 2 hops away, i.e.,
+at b and now at a, e as well
+
+b
+
+8
+
+d
+
+1
+
+t=1
+t=2
+e
+
+1
+
+1
+
+1
+
+f
+
+1 t=3
+
+1
+
+g
+
+c
+
+h
+
+1
+
+i
+
+t=4
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Distance vector: link cost changes
+link cost changes:
+node detects local link cost change
+updates routing info, recalculates local DV
+if DV changes, notify neighbors
+
+1
+
+x
+
+4
+
+y
+
+1
+
+50
+
+t0 : y detects link-cost change, updates its DV, informs its neighbors.
+“good news
+travels fast”
+
+t1 : z receives update from y, updates its table, computes new least
+cost to x , sends its neighbors its DV.
+t2 : y receives z’s update, updates its distance table. y’s least costs
+do not change, so y does not send a message to z.
+
+z
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Distance vector: link cost changes
+
+link cost changes:
+
+60
+
+node detects local link cost change
+“bad news travels slow” – count-to-infinity problem:
+
+x
+
+4
+
+y
+50
+
+1
+
+z
+
+• y sees direct link to x has new cost 60, but z has said it has a path at cost of 5. So
+y computes “my new cost to x will be 6, via z); notifies z of new cost of 6 to x.
+• z learns that path to x via y has new cost 6, so z computes “my new cost to
+x will be 7 via y), notifies y of new cost of 7 to x.
+• y learns that path to x via z has new cost 7, so y computes “my new cost to
+x will be 8 via y), notifies z of new cost of 8 to x.
+• z learns that path to x via y has new cost 8, so z computes “my new cost to
+x will be 9 via y), notifies y of new cost of 9 to x.
+
+…
+see text for solutions. Distributed algorithms are tricky!
+
+COMPUTER NETWORKS
+Distance Vector - Example
+cost to
+
+cost to
+
+x 0 2 7
+y ∞∞ ∞
+z ∞∞ ∞
+
+x 0 2 3
+y 2 0 1
+z 7 1 0
+
+from
+
+Dy() xcosty toz
+x ∞ ∞ ∞
+y 2 0 1
+z ∞∞ ∞
+
+from
+
+x y z
+
+from
+
+Dx() x y z
+
+Dx(z) = min{cx,y+ Dy(z), cx,z+ Dz(z)}
+= min{2+1 , 7+0} = 3
+
+2
+
+Dx(y) = min{cx,y + Dy(y), cx,z+ Dz(y)}
+= min{2+0 , 7+1} = 2
+
+x
+
+cost to
+
+from
+
+Dz() x y z
+x ∞∞ ∞
+y ∞∞ ∞
+z 7 1 0
+
+time
+
+y
+7
+
+1
+
+z
+
+COMPUTER NETWORKS
+Distance Vector Example
+cost to
+
+cost to
+
+x y z
+
+x 0 2 7
+y ∞∞ ∞
+z ∞∞ ∞
+
+x 0 2 3
+y 2 0 1
+z 7 1 0
+
+x 0 2 3
+y 2 0 1
+z 3 1 0
+
+cost to
+
+from
+
+from
+
+x y z
+
+from
+
+Dx() x y z
+
+cost to
+
+x y z
+
+x ∞ ∞ ∞
+y 2 0 1
+z ∞∞ ∞
+
+x 0 2 7
+y 2 0 1
+z 7 1 0
+
+x 0 2 3
+y 2 0 1
+z 3 1 0
+
+cost to
+
+from
+
+from
+
+x y z
+
+from
+
+Dy() xcosty toz
+
+cost to
+
+x y z
+
+x ∞∞ ∞
+y ∞∞ ∞
+z 7 1 0
+
+x 0 2 7
+y 2 0 1
+z 3 1 0
+
+x 0 2 3
+y 2 0 1
+z 3 1 0
+
+from
+
+Dz() x y z
+
+x y z
+from
+
+x
+
+cost to
+
+cost to
+
+from
+
+2
+
+time
+
+y
+7
+
+1
+
+z
+
+COMPUTER NETWORKS
+Distance Vector vs Link State
+Distance Vector
+
+Link State
+
+Primary
+principle
+
+Send entire routing table to
+its neighbors
+
+Only provides link state
+information
+
+Learning about
+network
+Building the
+routing table
+
+Learn about network only
+from neighbors
+
+Learn about network from all
+routers
+
+Based on inputs from only
+neighbors
+
+Based on complete database
+collected from all routers
+
+Advertisement Sends periodic updates every Use triggered updates, only
+30-90 seconds – Broadcasts when there is a change –
+of updates
+Routing loops
+
+updates
+
+Multicasts updates
+
+Vulnerable
+
+Less prone to routing loops
+
+COMPUTER NETWORKS
+Distance Vector vs Link State
+Distance vector
+Convergence
+Slow
+(stabilization)
+Resources
+
+Less CPU power and memory
+
+Link State
+Fast
+More CPU power and memory
+required
+
+Cost
+
+More than Distance vector
+
+Scalability
+
+More scalable than distance
+vector
+
+Examples
+
+RIP, IGRP
+
+OSPF, IS-IS
+
+COMPUTER NETWORKS
+Suggested Readings
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

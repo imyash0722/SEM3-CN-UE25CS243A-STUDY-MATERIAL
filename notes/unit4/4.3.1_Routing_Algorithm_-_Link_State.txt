@@ -1,0 +1,1321 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Network Layer and Internet Protocol
+4.5 Introduction to Network Layer
+Protocols
+• DHCP
+• ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+
+COMPUTER NETWORKS
+Routing Protocols
+
+Routing protocol goal: determine “good”
+
+mobile network
+
+paths (equivalently, routes), from sending hosts
+to receiving host, through network of routers
+
+• path: sequence of routers packets
+traverse from given initial source host to
+final destination host
+• “good”: least “cost”, “fastest”, “least
+congested”
+• routing: a “top-10” networking challenge!
+
+national or global ISP
+
+application
+transport
+network
+link
+physical
+network
+link
+physical
+
+network
+link
+physical
+
+enterprise
+network
+
+network
+link
+physical
+
+network
+link
+physical
+
+network
+link
+physical
+
+datacenter
+network
+
+application
+transport
+network
+link
+physical
+
+COMPUTER NETWORKS
+Routing Algorithms
+
+COMPUTER NETWORKS
+Routing Protocols
+
+Graph abstraction: link costs
+ca,b: cost of direct link connecting a and b
+e.g., cw,z = 5, cu,z = ∞
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+graph: G = (N,E)
+
+cost defined by network operator:
+could always be 1, or inversely related
+to bandwidth, or inversely related to
+congestion
+
+N: set of routers = { u, v, w, x, y, z }
+E: set of links ={ (u,v), (u,x), (v,x), (v,w), (x,w), (x,y), (w,y), (w,z), (y,z) }
+Network Layer: 5-5
+
+COMPUTER NETWORKS
+Routing Protocols
+
+Routing algorithm classification
+global: all routers have complete
+How fast
+do routes
+change?
+
+topology, link cost info
+• “link state” algorithms
+
+static: routes
+
+change slowly over
+time
+
+decentralized: iterative process of
+
+dynamic: routes change
+more quickly
+• periodic updates or in
+response to link cost
+changes
+
+computation, exchange of info with neighbors
+• routers initially only know link costs to
+attached neighbors
+• “distance vector” algorithms
+global or decentralized information?
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+Dijkstra’s link-state routing algorithm
+centralized: network topology, link
+costs known to all nodes
+
+notation
+
+• accomplished via “link state
+broadcast”
+• all nodes have same info
+
+node x to y; = ∞ if not direct
+neighbors
+D(v): current estimate of
+cost of least-cost-path from
+source to destination v
+p(v): predecessor node
+along path from source to v
+N': set of nodes whose leastcost-path definitively known
+
+computes least cost paths from
+one node (“source”) to all other
+nodes
+• gives forwarding table for that node
+
+iterative: after k iterations, know
+least cost path to k destinations
+
+cx,y: direct link cost from
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+1 Initialization:
+
+2 N' = {u}
+/* compute least cost path from u to all other nodes */
+3 for all nodes v
+4 if v adjacent to u
+/* u initially knows direct-path-cost only to direct neighbors */
+5
+then D(v) = cu,v
+/* but may not be minimum cost!
+*/
+6 else D(v) = ∞
+7
+8 Loop
+9 find w not in N' such that D(w) is a minimum
+10 add w to N'
+11 update D(v) for all v adjacent to w and not in N' :
+D(v) = min ( D(v), D(w) + cw,v )
+12
+13 /* new least-path-cost to v is either old least-cost-path to v or known
+14 least-cost-path to w plus direct-cost from w to v */
+15 until all nodes in N'
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+
+N'
+u
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+
+Initialization (step 0):
+For all a: if a adjacent to u then D(a) = cu,a
+
+5
+
+v
+
+w
+
+2
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+
+N'
+u
+ux
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+
+5
+
+v
+
+w
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+
+N'
+u
+ux
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+w
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+11 update D(b) for all b adjacent to a and not in N' :
+D(b) = min ( D(b), D(a) + ca,b )
+
+D(v) = min ( D(v), D(x) + cx,v ) = min(2, 1+2) = 2
+D(w) = min ( D(w), D(x) + cx,w ) = min (5, 1+3) = 4
+D(y) = min ( D(y), D(x) + cx,y ) = min(inf,1+1) = 2
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+
+N'
+u
+ux
+uxy
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+
+5
+
+v
+
+w
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+
+N'
+u
+ux
+uxy
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+w
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+11 update D(b) for all b adjacent to a and not in N' :
+D(b) = min ( D(b), D(a) + ca,b )
+
+D(w) = min ( D(w), D(y) + cy,w ) = min (4, 2+1) = 3
+D(z) = min ( D(z), D(y) + cy,z ) = min(inf,2+2) = 4
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+
+5
+
+v
+
+w
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+w
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+11 update D(b) for all b adjacent to a and not in N' :
+D(b) = min ( D(b), D(a) + ca,b )
+
+D(w) = min ( D(w), D(v) + cv,w ) = min (3, 2+3) = 3
+
+Dijkstra’s algorithm: an example
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+uxyvw
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+
+5
+
+v
+
+w
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+uxyvw
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+w
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+4,y
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+11 update D(b) for all b adjacent to a and not in N' :
+D(b) = min ( D(b), D(a) + ca,b )
+
+D(z) = min ( D(z), D(w) + cw,z ) = min (4, 3+5) = 4
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+uxyvw
+uxyvwz
+
+2
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+4,y
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+
+5
+
+v
+
+w
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+v
+Step
+0
+1
+2
+3
+4
+5
+
+D(v),p(v) D(w),p(w)
+5,u
+2,u
+2,u
+4,x
+2,u
+3,y
+3,y
+
+N'
+u
+ux
+uxy
+uxyv
+uxyvw
+uxyvwz
+
+5
+2
+
+u
+
+v
+2
+
+1
+
+x
+
+3
+
+w
+3
+
+1
+
+5
+
+z
+
+1
+
+y
+
+w
+
+2
+
+x
+
+y
+
+D(x),p(x)
+1,u
+
+z
+
+D(y),p(y)
+
+D(z),p(z)
+
+∞
+
+∞
+∞
+
+2,x
+
+4,y
+4,y
+4,y
+
+8 Loop
+find a not in N' such that D(a) is a minimum
+9
+10 add a to N'
+11 update D(b) for all b adjacent to a and not in N' :
+D(b) = min ( D(b), D(a) + ca,b )
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+
+Example contd..
+5
+2
+
+v
+
+u
+
+2
+1
+
+x
+
+3
+
+w
+
+y
+
+resulting least-cost-path tree from u:
+v
+
+w
+
+u
+y
+
+2
+
+resulting forwarding table in u:
+destination outgoing link
+
+z
+x
+
+z
+
+1
+
+3
+1
+
+5
+
+v
+x
+y
+w
+x
+
+(u,v)
+(u,x)
+(u,x)
+(u,x)
+(u,x)
+
+route from u to v directly
+route from u to all
+other destinations
+via x
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm
+Another example:
+v
+
+Step
+
+N'
+
+D(v),
+p(v)
+
+0
+
+u
+
+7,u
+
+1
+
+uw
+
+6,w
+
+2
+
+uwx
+
+6,w
+
+3
+
+uwxv
+
+4
+
+uwxvy
+
+5 uwxvyz
+
+w
+
+D(w),
+p(w)
+
+3,u
+
+x
+
+D(x),
+p(x)
+
+5,u
+
+y
+
+D(y),
+p(y)
+
+∞
+
+z
+
+x
+
+D(z),
+p(z)
+
+5
+
+∞
+
+9
+4
+
+∞
+
+5,u
+11,w
+
+14,x
+
+10,v
+
+14,x
+12,y
+
+7
+8
+
+3
+
+u
+
+w
+
+y
+3
+
+7
+
+v
+
+notes:
+construct least-cost-path tree by tracing predecessor nodes
+ties can exist (can be broken arbitrarily)
+
+4
+
+2
+
+z
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

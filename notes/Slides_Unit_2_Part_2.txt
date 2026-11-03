@@ -1,0 +1,3422 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Transport Layer
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+2.5 Socket Programming with UDP and TCP (From Chapter 2)
+3.3 Connectionless Transport: UDP
+3.4 Principles of reliable data transfer
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+2.5 Socket Programing with UDP and TCP (From chapter 2)
+3.3 Connectionless Transport: UDP
+3.4 Principles of reliable data transfer
+
+COMPUTER NETWORKS
+Transport Services and Protocols
+provide logical communication
+between application processes
+running on different hosts
+
+application
+transport
+network
+mobile network
+data link
+physical
+
+lo g
+l en
+d-e
+ort
+
+home network
+
+nsp
+tra
+
+local or
+regional ISP
+
+nd
+
+two transport protocols
+available to Internet applications
+• TCP, UDP
+
+ica
+
+transport protocols actions in
+end systems:
+• sender: breaks application
+messages into segments, passes to
+network layer
+• receiver: reassembles segments
+into messages, passes to
+application layer
+
+national or global ISP
+
+content
+provider
+network
+
+datacenter
+
+application
+network
+transport
+network
+data link
+physical
+
+enterprise
+network
+
+COMPUTER NETWORKS
+Transport vs. Network Layer Services and Protocols
+
+household analogy:
+12 kids in Ann’s house
+sending letters to 12 kids
+in Bill’s house:
+hosts = houses
+processes = kids
+app messages = letters in
+envelopes
+
+COMPUTER NETWORKS
+Transport vs. Network Layer Services and Protocols
+
+transport layer: logical
+communication between
+processes
+• relies on, enhances, network
+layer services
+
+network layer: logical
+communication between
+hosts
+
+household analogy:
+12 kids in Ann’s house
+sending letters to 12 kids
+in Bill’s house:
+hosts = houses
+processes = kids
+app messages = letters in
+envelopes
+
+COMPUTER NETWORKS
+Transport Layer Actions
+
+Sender:
+application
+transport
+network (IP)
+link
+physical
+
+§ is passed an applicationlayer message
+§ determines segment
+header fields values
+§ creates segment
+§ passes segment to IP
+
+app. msg
+application
+TThh app.
+msg
+transport
+
+network (IP)
+link
+physical
+
+COMPUTER NETWORKS
+Transport Layer Actions
+
+Receiver:
+application
+app. msg
+transport
+
+network (IP)
+link
+Th
+
+physical
+
+app. msg
+
+§ receives segment from IP
+§ checks header values
+§ extracts application-layer
+message
+§ demultiplexes message up
+to application via socket
+
+application
+transport
+network (IP)
+link
+physical
+
+COMPUTER NETWORKS
+Principal Internet Transport Layer protocols
+
+§ TCP: Transmission Control Protocol
+
+ica
+l en
+d-e
+content
+provider
+network
+
+datacenter
+
+applicationnetwork
+transport
+network
+data link
+physical
+
+§ services not available:
+• delay guarantees
+• bandwidth guarantees
+
+ort
+nsp
+tra
+
+home network
+
+nd
+
+local or
+regional ISP
+
+§ UDP: User Datagram Protocol
+• unreliable, unordered delivery
+• no-frills extension of “best-effort” IP
+
+national or global ISP
+
+lo g
+
+• reliable, in-order delivery
+• congestion control
+• flow control
+• connection setup
+
+application
+transport
+network
+mobile network
+data link
+physical
+
+enterprise
+network
+
+COMPUTER NETWORKS
+TCP or UDP ?
+•
+
+Downloading a PDF from a course website
+• TCP
+Every byte must arrive, order matters, no rush
+
+•
+
+A live video call on Skype/Zoom
+• UDP
+A dropped frame is fine; waiting for a retransmit makes the call worse, not better
+
+•
+
+Sending an email
+• TCP
+Reliability matters more than speed
+
+•
+
+An online multiplayer game's position updates
+• UDP
+Stale data is useless anyway — better to get the next update fast
+
+•
+
+A DNS query
+• UDP (mostly)
+delivery
+
+•
+
+Small, one-shot request/response, speed matters more than guaranteed
+
+Streaming Netflix/YouTube
+• TCP - Video streaming today is delivered as HTTP chunks (DASH/HLS) — reliability of each chunk
+matters more than raw speed, so it rides on TCP despite being "real-time-ish" media
+
+COMPUTER NETWORKS
+Suggested Readings
+Transport Layer – Explained –
+https://youtu.be/FxFJ1XlWtdI
+Transport Layer Services – IIT Kharagpur –
+https://youtu.be/8-3CSAkscYU
+Transport Layer – Process to Process Delivery –
+https://youtu.be/9e4vTcaEYCg
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+3.3 Connectionless Transport: UDP
+
+Extending host-to-host delivery
+to process-to-process delivery
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+HTTP server
+client
+application
+
+HTTP msg
+
+application
+
+transport
+transport
+
+network
+
+transport
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+HTTP server
+client
+application
+
+HTTP msg
+
+application
+
+Ht
+HTTP msg
+transport
+
+transport
+
+network
+
+transport
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+HTTP server
+client
+application
+
+HTTP msg
+
+application
+
+H
+transport
+t HTTP msg
+
+transport
+
+Hn Ht
+HTTP msg
+network
+
+transport
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+HTTP server
+client
+application
+
+application
+transport
+transport
+
+network
+
+transport
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+physical
+
+Hn Ht HTTP msg
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+HTTP server
+client1
+application
+
+client2
+P-client1
+
+P-client2
+
+application
+
+transport
+transport
+
+network
+
+transport
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+Multiplexing and Demultiplexing
+
+multiplexing at sender:
+
+demultiplexing at receiver:
+
+handle data from multiple
+sockets, add transport header
+(later used for demultiplexing)
+
+use header info to deliver
+received segments to correct
+socket
+application
+
+application
+
+P1
+
+P2
+
+application
+
+P3
+
+transport
+
+P4
+
+transport
+
+network
+
+transport
+
+network
+
+link
+
+network
+
+physical
+
+link
+
+link
+physical
+
+physical
+
+socket
+process
+
+COMPUTER NETWORKS
+How demultiplexing works
+
+host receives IP datagrams
+• each datagram has source
+IP address, destination IP
+address
+• each datagram carries one
+transport-layer segment
+• each segment has source,
+destination port number
+host uses IP addresses & port
+numbers to direct segment to
+appropriate socket
+
+32 bits
+source port #
+
+dest port #
+
+other header fields
+
+application
+data
+(payload)
+
+TCP/UDP segment format
+
+• Each port number - ranges from 0 to 65535.
+• Port numbers ranging from 0 to 1023 are called well-known port numbers
+(restricted/reserved)
+
+COMPUTER NETWORKS
+Connectionless demultiplexing
+
+Recall:
+when creating socket, must
+specify host-local port #:
+DatagramSocket mySocket1
+= new DatagramSocket(12534);
+
+when creating datagram to
+send into UDP socket, must
+specify
+• destination IP address
+• destination port #
+
+when receiving host receives UDP
+segment:
+• checks destination port # in
+segment
+• directs UDP segment to socket
+with that port #
+IP/UDP datagrams with same dest.
+port #, but different source IP
+addresses and/or source port
+numbers will be directed to same
+socket at receiving host
+
+COMPUTER NETWORKS
+Connectionless demultiplexing: example
+DatagramSocket
+serverSocket = new
+DatagramSocket mySocket2
+DatagramSocket
+= new DatagramSocket
+(6428);
+(9157);
+
+DatagramSocket mySocket1 =
+new DatagramSocket (5775);
+
+application
+
+application
+
+application
+
+P1
+
+P3
+
+P4
+
+transport
+transport
+
+transport
+
+network
+
+network
+
+link
+
+link
+
+physical
+
+network
+link
+physical
+
+physical
+source port: 6428
+dest port: 9157
+
+source port: 9157
+dest port: 6428
+
+source port: ?
+dest port: ?
+
+source port: ?
+dest port: ?
+
+COMPUTER NETWORKS
+Connection-oriented demultiplexing
+TCP socket identified by 4-tuple:
+• source IP address
+• source port number
+• dest IP address
+• dest port number
+demux: receiver uses all four
+values (4-tuple) to direct
+segment to appropriate socket
+
+server host may support many
+simultaneous TCP sockets:
+• each socket identified by its
+own 4-tuple
+web servers have different
+sockets for each connecting
+client
+• non-persistent HTTP will have
+different socket for each
+request
+
+COMPUTER NETWORKS
+Connection-oriented demultiplexing: example
+application
+application
+
+P1
+
+P4
+
+P5
+
+application
+
+P6
+
+P3
+
+P2
+
+transport
+network
+
+network
+
+link
+
+network
+
+link
+
+physical
+
+link
+
+physical
+
+host: IP
+address A
+
+transport
+
+transport
+
+server: IP
+address B
+source IP,port: B,80
+dest IP,port: A,9157
+source IP,port: A,9157
+dest IP, port: B,80
+
+physical
+
+source IP,port: C,5775
+dest IP,port: B,80
+source IP,port:
+C,9157
+dest IP,port: B,80
+
+host: IP
+address C
+
+Three segments, all destined to IP address: B, dest port: 80 are demultiplexed
+to different sockets
+
+COMPUTER NETWORKS
+Summary
+Multiplexing, demultiplexing: based on segment, datagram header field values
+UDP: demultiplexing using destination port number (only)
+TCP: demultiplexing using 4-tuple: source and destination IP addresses, and port
+numbers
+Multiplexing/demultiplexing happen at all layers
+Given everything we just covered — why does UDP get away with just checking
+the destination port, while TCP needs the full 4-tuple?
+UDP has no notion of an ongoing "connection" to distinguish; every datagram is
+independent. TCP tracks per-connection state, so it needs the full tuple to know
+which connection's state a segment belongs to
+
+COMPUTER NETWORKS
+Quiz
+How many TCP connections can a server handle?
+https://medium.com/@in10se/how-servers-handle-more-than-65-536-connections-simultaneously-3a77189a160e
+
+A server can handle a large number of TCP connections,
+usually limited by RAM (memory), file descriptors, and CPU,
+rather than a fixed port limit. A server identifies incoming
+connections using a 4-tuple (server IP, server port, client IP,
+client port), allowing many more total connections (not
+restricted to 65535 TCP connections)
+
+COMPUTER NETWORKS
+Well-Known Port Numbers – Quick Reference
+Port
+
+Service
+
+Transport
+
+Where you've seen it
+
+20 / 21
+
+FTP (data / control)
+
+TCP
+
+Application Layer session — FTP slide
+
+22
+
+SSH
+
+TCP
+
+Application Layer session — Telnet & SSH slide
+
+23
+
+Telnet
+
+TCP
+
+Application Layer session — Telnet & SSH slide
+
+25
+
+SMTP (email)
+
+TCP
+
+Application Layer session — SMTP slide
+
+53
+
+DNS
+
+TCP/UDP
+
+Last session, in full — every dig query hit this port
+
+67 / 68
+
+DHCP (server / client)
+
+UDP
+
+Application Layer session — DHCP + DORA slides
+
+80
+
+HTTP
+
+TCP
+
+Application Layer session — HTTP block
+
+443
+
+HTTPS
+
+TCP
+
+Application Layer session — HTTPS/TLS block
+
+COMPUTER NETWORKS
+TCP vs UDP – Which One, and When?
+TCP
+
+UDP
+
+Reliability
+
+Guaranteed delivery, retransmits losses
+
+No guarantee — lost is lost
+
+Ordering
+
+In-order delivery, always
+
+No ordering guarantee
+
+Setup cost
+
+Connection setup (handshake) first
+
+None — just send
+
+Extra features
+
+Congestion & flow control
+
+None — “no-frills” over IP
+
+Use when...
+
+Every byte matters more than speed
+
+Speed / freshness matters more than a
+dropped piece
+
+Real examples
+
+Web pages, email, file downloads,
+Netflix/YouTube streaming (HTTP-based)
+
+Live voice/video calls, online gaming, DNS
+queries
+
+COMPUTER NETWORKS
+Multiplexing & Demultiplexing – At Every Layer
+
+Layer
+
+What sorts traffic here
+
+Analogy
+
+Transport
+
+Port numbers (or the 4-tuple, for TCP)
+
+Mailbox number inside a building
+
+Network (IP)
+
+Protocol field in the IP header — routes to TCP, UDP, or
+ICMP
+
+Sorting mail vs. packages vs. flyers at
+the front desk
+
+Link (Ethernet)
+
+EtherType field — routes to IPv4, IPv6, ARP, etc.
+
+The building's street address,
+handed to the right delivery service
+
+COMPUTER NETWORKS
+Questions
+1.
+
+Why does TCP need a connection "setup" step before any data flows, while UDP just sends?
+• TCP has to establish shared state between sender and receiver first (for reliability, ordering,
+flow/congestion control to work) — UDP has no such state to set up, which is exactly why it's
+called a "no-frills" extension of IP. (Slide 10)
+
+2.
+
+Name two things neither TCP nor UDP guarantees, no matter which one you pick.
+• Delay guarantees and bandwidth guarantees
+
+3.
+
+A segment header's first 32 bits hold two fields. What are they, and how wide is each?
+• Source port # and destination port #, 16 bits each
+
+4.
+
+If two different applications on your laptop both tried to bind to port 5775 at the same time,
+what would happen?
+• The second bind attempt would fail — a given port number can only be owned by one socket
+on a host at a time
+
+5.
+
+Why is a DNS query typically sent over UDP rather than TCP?
+• It's a small, one-shot request/response — the overhead of a TCP connection setup isn't worth
+it for a single quick exchange, so UDP's speed wins out
+
+COMPUTER NETWORKS
+Questions
+1.
+
+What would break if TCP demultiplexed using only the destination port, the same way
+UDP does?
+• Every client connecting to the same server on the same port (e.g. port 80) would collide
+into a single socket, since destination port alone can't tell two different clients apart —
+this is exactly why TCP needs the full 4-tuple instead.
+
+2.
+
+In the connection-oriented example, two segments came from the same source IP (C) but
+different source ports, and still landed on different sockets. What does that prove about
+how TCP demultiplexes?
+• It proves TCP looks at the entire 4-tuple, not just the IP address — a single client machine
+can have multiple independent connections to the same server, each tracked as its own
+socket.
+
+3.
+
+Your laptop opens two browser tabs to the same website at the same time. Do they use
+the same source port or different ones?
+• Different ephemeral source ports — each new outgoing connection gets its own randomly
+assigned port above 1023, which is also why the 4-tuple stays unique even though the
+destination IP and port are identical for both tabs.
+
+COMPUTER NETWORKS
+Suggested Readings
+Transport Layer Multiplexing and Demultiplexing
+https://youtu.be/hgWCMry9EYo
+Transport Layer – Process to Process Delivery –
+https://youtu.be/9e4vTcaEYCg
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+2.5 Socket Programing with UDP and TCP (From chapter 2)
+3.3 Connectionless Transport: UDP
+3.4 Principles of reliable data transfer
+
+COMPUTER NETWORKS
+Socket Programming
+goal: learn how to build client/server applications that
+communicate using sockets
+socket: door between application process and end-end-transport
+protocol
+
+application
+
+process
+
+socket
+
+application
+
+process
+
+transport
+
+transport
+
+network
+
+network
+
+link
+physical
+
+Internet
+
+link
+physical
+
+controlled by
+app developer
+controlled
+by OS
+
+COMPUTER NETWORKS
+Socket Programming
+
+Two socket types for two transport services:
+UDP: unreliable datagram
+TCP: reliable, byte stream-oriented
+Application Example:
+
+1. client reads a line of characters (data) from its keyboard
+
+and sends data to server
+2. server receives the data and converts characters to
+uppercase
+3. server sends modified data to client
+4. client receives modified data and displays line on its screen
+
+COMPUTER NETWORKS
+Socket Programming with UDP
+
+UDP: no “connection” between client & server
+• no handshaking before sending data
+• sender explicitly attaches IP destination address and port # to each
+packet
+• receiver extracts sender IP address and port# from received packet
+
+UDP: transmitted data may be lost or received out-of-order
+Application viewpoint:
+
+• UDP provides unreliable transfer of groups of bytes (“datagrams”)
+between client and server
+
+COMPUTER NETWORKS
+Client/Server socket interaction: UDP
+
+server (running on serverIP)
+create socket, port= x:
+serverSocket =
+socket(AF_INET,SOCK_DGRAM)
+
+read datagram from
+serverSocket
+write reply to
+serverSocket
+specifying
+client address,
+port number
+
+client
+create socket:
+clientSocket =
+socket(AF_INET,SOCK_DGRAM)
+Create datagram with serverIP address
+And port=x; send datagram via
+clientSocket
+
+read datagram from
+clientSocket
+close
+clientSocket
+
+COMPUTER NETWORKS
+Example app: UDP client
+Python UDPClient
+include Python’s socket library
+
+create UDP socket
+
+get user keyboard input
+attach server name, port to message; send into socket
+
+from socket import *
+serverName = 'hostname'
+serverPort = 12000
+clientSocket = socket(AF_INET,
+SOCK_DGRAM)
+message = input('Input lowercase sentence:')
+clientSocket.sendto(message.encode(),
+(serverName, serverPort))
+
+read reply data (bytes) from socket
+
+print out received string and close socket
+
+modifiedMessage, serverAddress =
+clientSocket.recvfrom(2048)
+print(modifiedMessage.decode())
+clientSocket.close()
+
+COMPUTER NETWORKS
+Example app: UDP server
+Python UDPServer
+
+create UDP socket
+bind socket to local port number 12000
+
+loop forever
+Read from UDP socket into message, getting
+client’s address (client IP and port)
+send upper case string back to this client
+
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_DGRAM)
+serverSocket.bind(('', serverPort))
+print('The server is ready to receive')
+while True:
+message, clientAddress = serverSocket.recvfrom(2048)
+modifiedMessage = message.decode().upper()
+serverSocket.sendto(modifiedMessage.encode(),
+clientAddress)
+
+COMPUTER NETWORKS
+Socket programming with TCP
+Client must contact server
+• server process must first be
+running
+• server must have created socket
+(door) that welcomes client’s
+contact
+
+Client contacts server by:
+
+when contacted by client, server
+TCP creates new socket for server
+process to communicate with that
+particular client
+
+• allows server to talk with multiple clients
+• client source port # and IP address used
+to distinguish clients (more in Chap 3)
+
+• Creating TCP socket, specifying IP
+address, port number of server
+process
+
+Application viewpoint
+
+• when client creates socket: client
+TCP establishes connection to
+server TCP
+
+TCP provides reliable, in-order
+byte-stream transfer (“pipe”)
+between client and server processes
+
+COMPUTER NETWORKS
+The TCPServer Process has Two Sockets
+
+COMPUTER NETWORKS
+Client/server socket interaction: TCP
+
+server (running on hostid)
+
+client
+
+create socket,
+port=x, for incoming
+request:
+serverSocket = socket()
+wait for incoming
+TCP
+connection request
+connectionSocket = connection setup
+serverSocket.accept()
+read request from
+connectionSocket
+write reply to
+connectionSocket
+close
+connectionSocket
+
+create socket,
+connect to hostid, port=x
+clientSocket = socket()
+send request using
+clientSocket
+
+read reply from
+clientSocket
+close
+clientSocket
+
+COMPUTER NETWORKS
+Example app: TCP client
+Python TCPClient
+
+create TCP socket for server,
+remote port 12000
+
+No need to attach server name, port
+
+from socket import *
+serverName = 'servername'
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket.connect((serverName,serverPort))
+sentence = input('Input lowercase sentence:')
+clientSocket.send(sentence.encode())
+modifiedSentence = clientSocket.recv(1024)
+print ('From Server:', modifiedSentence.decode())
+clientSocket.close()
+
+COMPUTER NETWORKS
+Example app: TCP server
+Python TCPServer
+
+create TCP welcoming socket
+server begins listening for
+incoming TCP requests
+loop forever
+server waits on accept() for incoming
+requests, new socket created on return
+read bytes from socket (but
+not address as in UDP)
+
+close connection to this client (but not
+welcoming socket)
+
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET,SOCK_STREAM)
+serverSocket.bind(('',serverPort))
+serverSocket.listen(1)
+print('The server is ready to receive')
+while True:
+connectionSocket, addr = serverSocket.accept()
+sentence = connectionSocket.recv(1024).decode()
+capitalizedSentence = sentence.upper()
+connectionSocket.send(capitalizedSentence.
+encode())
+connectionSocket.close()
+
+COMPUTER NETWORKS
+Questions
+1.
+
+Name the four fields of the UDP header, in order.
+• Source port #, destination port #, length, checksum.
+
+2.
+
+How many bytes is a UDP header, and how does that compare with TCP?
+• 8 bytes (four 16-bit fields), versus a minimum of 20 for TCP.
+
+3.
+
+The header is always exactly 8 bytes. So why is a length field needed?
+• The payload is variable-length, and UDP keeps no connection state anywhere — each
+datagram must be entirely self-describing about where its data ends.
+
+4.
+
+What does the length field actually count?
+• The whole UDP segment in bytes, header included — not just the payload.
+
+5.
+
+Why transmit the complement rather than the sum itself?
+• So the receiver can add up everything including the checksum and simply test for all ones,
+instead of recomputing and comparing.
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+3.3 Connectionless Transport: UDP
+3.4 Principles of reliable data transfer
+
+COMPUTER NETWORKS
+UDP: User Datagram Protocol
+“no frills,” “bare bones” Internet
+transport protocol
+“best effort” service, UDP
+segments may be:
+• lost
+• delivered out-of-order to app
+connectionless:
+• no handshaking between UDP
+sender, receiver
+• each UDP segment handled
+independently of others
+
+Why is there a UDP?
+§ no connection
+establishment (which can
+add RTT delay)
+§ simple: no connection state
+at sender, receiver
+§ small header size
+§ no congestion control
+§ UDP can blast away as fast as
+desired!
+§ can function in the face of
+congestion
+
+COMPUTER NETWORKS
+UDP: User Datagram Protocol [RFC 768]
+
+UDP use:
+streaming multimedia apps (loss tolerant, rate
+sensitive)
+DNS
+SNMP
+HTTP/3
+
+if reliable transfer needed over UDP (e.g., HTTP/3):
+add needed reliability at application layer
+add congestion control at application layer
+
+COMPUTER NETWORKS
+Popular Internet Applications using TCP/UDP
+
+COMPUTER NETWORKS
+UDP: User Datagram Protocol [RFC 768]
+
+COMPUTER NETWORKS
+UDP: Transport Layer Actions
+
+SNMP client
+
+SNMP server
+
+application
+
+application
+
+transport
+(UDP)
+
+transport
+(UDP)
+
+network (IP)
+
+network (IP)
+
+link
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+UDP: Transport Layer Actions
+
+SNMP client
+
+SNMP server
+
+application
+
+application
+
+transport
+(UDP)
+
+transport
+(UDP)
+
+network (IP)
+
+network (IP)
+
+link
+
+link
+
+physical
+
+physical
+
+COMPUTER NETWORKS
+UDP: Transport Layer Actions
+
+SNMP client
+application
+transport
+(UDP)
+network (IP)
+link
+physical
+
+UDP sender actions:
+§ is passed an applicationlayer message
+§ determines UDP segment
+header fields values
+§ creates UDP segment
+§ passes segment to IP
+
+SNMP server
+SNMP msg
+application
+
+transport
+UDP
+UDPhh SNMP msg
+(UDP)
+
+network (IP)
+link
+physical
+
+COMPUTER NETWORKS
+UDP: Transport Layer Actions
+
+SNMP client
+application
+transport
+SNMP msg
+(UDP)
+UDPh
+SNMP(IP)
+msg
+network
+
+link
+physical
+
+UDP receiver actions:
+§ receives segment from IP
+§ checks UDP checksum
+header value
+§ extracts application-layer
+message
+§ demultiplexes message up
+to application via socket
+
+SNMP server
+application
+transport
+(UDP)
+network (IP)
+link
+physical
+
+COMPUTER NETWORKS
+UDP: segment header
+32 bits
+source port #
+
+dest port #
+
+length
+
+checksum
+
+application
+data
+(payload)
+
+UDP segment format
+
+length, in bytes of
+UDP segment,
+including header
+
+data to/from
+application layer
+
+COMPUTER NETWORKS
+UDP Checksum
+
+Goal: detect “errors” (e.g., flipped bits) in transmitted segment
+1st number
+
+2nd number
+
+sum
+
+Transmitted:
+
+5
+
+6
+
+11
+
+Received:
+
+4
+
+6
+
+11
+
+receiver-computed
+checksum
+
+=
+
+sender-computed
+checksum (as received)
+
+COMPUTER NETWORKS
+UDP Checksum
+
+Goal: detect errors (i.e., flipped bits) in transmitted segment
+sender:
+treat contents of UDP segment
+
+(including UDP header fields and IP
+addresses) as sequence of 16-bit
+
+integers
+checksum: addition (one’s
+complement sum) of segment
+content
+checksum value put into UDP
+checksum field
+
+receiver:
+compute checksum of
+received segment
+check if computed checksum
+equals checksum field value:
+• Not equal - error detected
+• Equal - no error detected. But
+maybe errors nonetheless? More
+later ….
+
+COMPUTER NETWORKS
+Computing UDP Checksum – 5 Steps
+
+1
+
+Split the segment into 16-bit words
+
+Header fields and data, all treated as plain 16-bit integers
+
+2
+
+Add the words together
+
+Ordinary binary addition, one word at a time
+
+3
+
+Handle the wraparound carry
+
+Any carry out of the most significant bit is added back into the low end
+— this is the step everyone forgets
+
+4
+
+That result is the SUM
+
+Keep going until every word has been added in
+
+5
+
+Flip every bit — that is the CHECKSUM One's complement of the sum; this is what goes in the header field
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+example: add two 16-bit integers
+1 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0
+1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+wraparound
+
+1 1 0 1 1 1 0 1 1 1 0 1 1 1 0 1 1
+
+sum
+
+1 0 1 1 1 0 1 1 1 0 1 1 1 1 0 0
+0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 1
+
+checksum
+
+Note: when adding numbers, a carryout from the most
+significant bit needs to be added to the result
+* Check out the online interactive exercises for more examples: http://gaia.cs.umass.edu/kurose_ross/interactive/
+
+COMPUTER NETWORKS
+Internet Checksum: Weak protection!
+
+example: add two 16-bit integers
+1 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0
+1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+wraparound
+
+1 1 0 1 1 1 0 1 1 1 0 1 1 1 0 1 1
+
+sum
+
+1 0 1 1 1 0 1 1 1 0 1 1 1 1 0 0
+0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 1
+
+checksum
+
+0 1
+1 0
+Even though
+numbers have
+changed (bit
+flips), no change
+in checksum!
+
+COMPUTER NETWORKS
+What the Checksum Catches – What it Misses
+ALWAYS CAUGHT
+
+•
+
+Any single bit flip, anywhere in the segment
+
+•
+
+ANY pattern of 1 to 15 bit flips confined to a single 16bit word
+
+•
+
+Any burst error shorter than 16 bits
+
+•
+
+Most multi-word errors — they only cancel in very
+specific offsetting patterns
+
+CAN SLIP THROUGH
+
+•
+
+Two bits flipping in OPPOSITE directions in DIFFERENT
+words — the errors cancel in the sum (the deck's
+“weak protection” example)
+
+•
+
+Any set of errors across words whose net effect on
+the sum is zero
+
+•
+
+One degenerate case: flipping all 16 bits of a word
+that was all-zeros or all-ones
+
+The checksum is STRONG within a word and WEAK across words. Errors
+confined to one 16-bit word are essentially always caught — the vulnerability
+needs errors spread over two or more words in offsetting directions.
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Internet Checksum: example
+
+COMPUTER NETWORKS
+Suggested Readings
+UDP – RFC 768 https://tools.ietf.org/html/rfc768
+Networking - DNS and UDP
+https://youtu.be/vuyQ1PW6AwY
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.1 Transport-layer Services
+3.2 Multiplexing and Demultiplexing
+3.3 Connectionless Transport: UDP
+3.4 Principles of reliable data transfer
+
+COMPUTER NETWORKS
+Why do we need reliable data transfer?
+
+Deliver application data correctly even when the network is
+unreliable.
+Challenges in an unreliable network
+• Bit errors (packet corruption)
+• Packet loss
+• ACK loss
+• Packet duplication
+• Unknown receiver state
+•
+
+COMPUTER NETWORKS
+Principles of reliable data transfer
+
+receiving
+process
+
+sending
+process
+application
+transport
+
+data
+
+data
+
+reliable
+channel
+
+reliable service abstraction
+
+COMPUTER NETWORKS
+Principles of reliable data transfer
+
+receiving
+process
+
+sending
+process
+applicatio
+ntranspo
+rt
+
+data
+
+data
+
+reliable
+channel
+
+reliable service abstraction
+
+receiving
+process
+
+sending
+process
+application
+transport
+
+sender-side of
+reliable data
+transfer protocol
+transport
+network
+
+data
+
+data
+
+receiver-side
+of reliable data
+transfer protocol
+
+unreliable channel
+
+reliable service implementation
+
+COMPUTER NETWORKS
+Principles of reliable data transfer
+
+receiving
+process
+
+sending
+process
+application
+transport
+
+Complexity of reliable data transfer
+protocol will depend (strongly) on
+characteristics of unreliable channel
+(lose, corrupt, reorder data?)
+
+sender-side of
+reliable data
+transfer protocol
+transport
+network
+
+data
+
+data
+
+receiver-side
+of reliable data
+transfer protocol
+
+unreliable channel
+
+reliable service implementation
+
+COMPUTER NETWORKS
+Principles of reliable data transfer
+
+receiving
+process
+
+sending
+process
+application
+transport
+
+Sender, receiver do not know
+the “state” of each other, e.g.,
+was a message received?
+
+unless communicated via a
+message
+
+sender-side of
+reliable data
+transfer protocol
+transport
+network
+
+data
+
+data
+
+receiver-side
+of reliable data
+transfer protocol
+
+unreliable channel
+
+reliable service implementation
+
+COMPUTER NETWORKS
+Why do we need reliable data transfer?
+
+Deliver application data correctly even
+when the network is unreliable.
+Challenges in an unreliable network
+• Bit errors (packet corruption)
+• Packet loss
+• ACK loss
+• Packet duplication
+• Unknown receiver state
+•
+
+Mechanism
+
+Purpose
+
+Checksum
+
+Detect bit errors
+
+ACK
+
+Positive acknowledgement
+
+NAK
+
+Negative acknowledgement
+
+Sequence Number
+
+Detect duplicates
+
+Timer & Timeout
+
+Recover from lost packets
+
+Retransmission
+
+Resend missing packets
+
+COMPUTER NETWORKS
+Summary of Reliable Data Transfer (RDT) Foundations
+
+COMPUTER NETWORKS
+Operation of RDT3.0, Alternating Protocol
+receiver
+
+sender
+send pkt0
+rcv ack0
+send pkt1
+rcv ack1
+send pkt0
+
+pkt0
+ack0
+pkt1
+ack1
+pkt0
+ack0
+
+send pkt0
+rcv pkt0
+send ack0
+rcv pkt1
+send ack1
+rcv pkt0
+send ack0
+
+(a) no loss
+RDT 3.0 – how the protocol operates with no lost or delayed
+packets, and how it handles lost data packets is shown here.
+A receive time for a packet is necessarily later than the send time
+for a packet as a result of transmission and propagation delays.
+
+receiver
+
+sender
+
+rcv ack0
+send pkt1
+
+pkt0
+ack0
+
+rcv pkt0
+send ack0
+
+pkt1
+
+X
+
+loss
+
+timeout
+
+resend pkt1
+
+rcv ack1
+send pkt0
+
+pkt1
+ack1
+pkt0
+ack0
+
+rcv pkt1
+send ack1
+rcv pkt0
+send ack0
+
+(b) packet loss
+
+COMPUTER NETWORKS
+Operation of RDT3.0, Alternating Protocol
+receiver
+
+sender
+sender
+send pkt0
+
+pkt0
+
+rcv ack0
+send pkt1
+
+ack0
+pkt1
+ack1
+
+X
+
+receiver
+
+send pkt0
+
+rcv pkt0
+send ack0
+
+rcv ack0
+send pkt1
+
+rcv pkt1
+send ack1
+
+loss
+
+timeout
+
+resend pkt1
+
+rcv ack1
+send pkt0
+
+pkt1
+ack1
+pkt0
+ack0
+
+(c) ACK loss
+
+(detect duplicate)
+
+send ack1
+
+rcv pkt0
+send ack0
+
+ack0
+pkt1
+
+rcv pkt0
+send ack0
+rcv pkt1
+send ack1
+
+ack1
+
+timeout
+
+resend pkt1
+rcv pkt1
+
+pkt0
+
+rcv ack1
+send pkt0
+rcv ack1
+(ignore)
+
+pkt1
+
+rcv pkt1
+(detect duplicate)
+
+pkt0
+
+send ack1
+
+ack1
+
+rcv pkt0
+send ack0
+
+ack0
+pkt1
+
+(d) premature timeout/ delayed ACK
+
+The key elements of a
+data transfer protocol
+– Checksums,
+sequence numbers,
+timers, and positive
+and negative
+acknowledgement
+packets each play a
+crucial and necessary
+role in the operation
+of the protocol.
+Since packet
+sequence numbers
+alternate between 0
+and 1,
+protocol rdt3.0 is
+sometimes known as
+the alternating bit
+protocol.
+
+COMPUTER NETWORKS
+Performance of rdt3.0 (stop-and-wait)
+U sender: utilization – fraction of time sender busy sending
+example: 1 Gbps link, 15 ms prop. delay, 8000 bit packet
+•
+
+time to transmit packet into channel:
+Dtrans =
+
+L
+R
+
+=
+
+8000 bits
+109 bits/sec
+
+= 8 microsecs
+
+COMPUTER NETWORKS
+rdt3.0: stop-and-wait operation
+sender
+
+receiver
+
+first packet bit transmitted, t = 0
+
+RTT
+
+ACK arrives, send next
+packet, t = RTT + L / R
+
+first packet bit arrives
+last packet bit arrives, send
+ACK
+
+COMPUTER NETWORKS
+rdt3.0: stop-and-wait operation
+sender
+
+Usender=
+
+L/R
+
+receiver
+
+L/R
+
+RTT + L / R
+
+.008
+=
+30.008
+
+RTT
+
+= 0.00027
+rdt 3.0 protocol performance stinks!
+Protocol limits performance of underlying infrastructure
+(channel)
+
+COMPUTER NETWORKS
+rdt3.0: pipelined protocol operations
+The solution to the performance problem is a simple one: rather than operate in a stop-and-wait manner,
+the sender is allowed to send multiple packets without waiting for acknowledgements
+Since the many in-transit sender-to-receiver packets can be visualized as filling a pipeline, this technique is
+known as pipelining.
+pipelining: sender allows multiple, “in-flight”, yet-to-be-acknowledged packets
+• range of sequence numbers must be increased (must have a unique sequence number and there may
+be multiple, in-transit, unacknowledged packets).
+• buffering at sender and/or receiver
+
+COMPUTER NETWORKS
+Pipelining: increased utilization
+sender
+
+receiver
+
+first packet bit transmitted, t = 0
+last bit transmitted, t = L / R
+
+RTT
+
+first packet bit arrives
+last packet bit arrives, send ACK
+last bit of 2nd packet arrives, send ACK
+last bit of 3rd packet arrives, send ACK
+
+ACK arrives, send next
+packet, t = RTT + L / R
+
+3-packet pipelining increases
+utilization by a factor of 3!
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+Go-Back-N: Sender
+
+GBN Applet https://computerscience.unicam.it/marcantoni/reti/applet/GoB
+ackProtocol/goback.html
+https://www.tkn.tu-berlin.de/teaching/rn/animations/gbn_sr/
+
+sender: “window” of up to N, consecutive transmitted but unACKed pkts
+• k-bit seq # in pkt header
+0, base-1
+
+nextseqnum, base+N-1
+
+base, nextseqnum-1
+
+base+N
+
+cumulative ACK: ACK(n): ACKs all packets up to, including seq # n
+• on receiving ACK(n): move window forward to begin at n+1
+timer for oldest in-flight packet
+timeout(n): retransmit packet n and all higher seq # packets in window
+
+COMPUTER NETWORKS
+Go-Back-N: Receiver
+ACK-only: always send ACK for correctly-received packet so far,
+with highest in-order seq #
+• may generate duplicate ACKs
+• need only remember rcv_base
+
+on receipt of out-of-order packet:
+• can discard (don’t buffer) or buffer: an implementation decision
+• re-ACK pkt with highest in-order seq #
+
+Receiver view of sequence number space:
+
+…
+
+…
+rcv_base
+
+received and ACKed
+Out-of-order: received but not ACKed
+Not received
+
+GBN Applet https://computerscience.unicam.it/marcantoni/reti
+/applet/GoBackProtocol/goback.html
+
+COMPUTER NETWORKS
+Go-Back-N in action
+receiver
+
+sender window (N=4)
+012345678
+012345678
+012345678
+012345678
+
+012345678
+012345678
+
+send pkt0
+send pkt1
+send pkt2
+send pkt3
+(wait)
+rcv ack0, send pkt4
+rcv ack1, send pkt5
+ignore duplicate ACK
+
+pkt 2 timeout
+012345678
+012345678
+012345678
+012345678
+
+send pkt2
+send pkt3
+send pkt4
+send pkt5
+
+Xloss
+
+receive pkt0, send ack0
+receive pkt1, send ack1
+receive pkt3, discard,
+(re)send ack1
+receive pkt4, discard,
+(re)send ack1
+receive pkt5, discard,
+(re)send ack1
+
+rcv pkt2, deliver, send ack2
+rcv pkt3, deliver, send ack3
+rcv pkt4, deliver, send ack4
+rcv pkt5, deliver, send ack5
+
+COMPUTER NETWORKS
+Go-Back-N: example
+In GBN, if every 5th packet that is transmitted is lost and if we
+have to send 10 packets, then how many transmissions are
+required? Assume Window size of 10.
+
+COMPUTER NETWORKS
+Go-Back-N: example
+In GBN, if every 5th packet that is transmitted is lost and if we
+have to send 10 packets, then how many transmissions are
+required? Assume Window size of 10.
+
+18
+
+COMPUTER NETWORKS
+Go-Back-N: example
+Round 1 — send packets 1–10 (transmissions 1–10)
+Transmission Packet
+Outcome
+1–4
+1, 2, 3, 4
+delivered
+5
+5
+LOST
+6–9
+6, 7, 8, 9
+arrive, but discarded
+10
+10
+LOST
+Receiver has 1–4. Sender times out and goes back to packet 5.
+Round 2 — resend 5–10 (transmissions 11–16)
+Transmission Packet
+Outcome
+11–14
+5, 6, 7, 8
+delivered
+15
+9
+LOST
+16
+10
+discarded
+Receiver now has 1–8. Go back to packet 9.
+Round 3 — resend 9–10 (transmissions 17–18)
+Neither 17 nor 18 is a multiple of 5, so both succeed. Done.
+Total = 18.
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+Selective Repeat
+pipelining: multiple packets in flight
+receiver individually acknowledges all correctly received packets
+• buffers packets, as needed, for eventual in-order delivery to upper layer
+
+§ sender:
+• maintains (conceptually) a timer for each unACKed pkt
+• timeout: retransmits single unACKed packet associated with
+timeout
+• maintains (conceptually) “window” over N consecutive seq #s
+• limits pipelined, “in flight” packets to be within this window
+
+Selective Repeat Applet https://computerscience.unicam.it/marcantoni/reti/applet/Sel
+ectiveRepeatProtocol/selRepProt.html
+https://www.tkn.tu-berlin.de/teaching/rn/animations/gbn_sr/
+
+COMPUTER NETWORKS
+Selective Repeat: sender, receiver windows
+
+COMPUTER NETWORKS
+Selective Repeat: sender, receiver
+
+sender
+
+data from above:
+if next available seq # in window,
+send packet
+
+timeout(n):
+resend packet n, restart timer
+ACK(n) in [sendbase,sendbase+N]:
+mark packet n as received
+if n smallest unACKed packet,
+advance window base to next
+unACKed seq #
+
+receiver
+packet n in [rcvbase, rcvbase+N-1]
+send ACK(n)
+out-of-order: buffer
+in-order: deliver (also deliver buffered,
+in-order packets), advance window to
+next not-yet-received packet
+packet n in [rcvbase-N,rcvbase-1]
+ACK(n)
+
+otherwise:
+ignore
+
+COMPUTER NETWORKS
+Selective Repeat in action
+sender window (N=4)
+012345678
+012345678
+012345678
+012345678
+
+012345678
+012345678
+
+sender
+send pkt0
+send pkt1
+send pkt2
+send pkt3
+(wait)
+
+receiver
+
+Xloss
+
+rcv ack0, send pkt4
+rcv ack1, send pkt5
+record ack3 arrived
+
+pkt 2 timeout
+012345678
+012345678
+012345678
+012345678
+
+receive pkt0, send ack0
+receive pkt1, send ack1
+receive pkt3, buffer,
+send ack3
+receive pkt4, buffer,
+send ack4
+receive pkt5, buffer,
+send ack5
+
+send pkt2
+
+(but not 3,4,5)
+
+Q: what happens when ack2 arrives?
+
+rcv pkt2; deliver pkt2,
+pkt3, pkt4, pkt5; send ack2
+
+COMPUTER NETWORKS
+Selective Repeat in action
+
+Q: What happens when ack2 arrives?
+•
+
+When ack2 arrives
+•
+•
+•
+•
+•
+•
+
+The window lurches forward by four positions in one step.
+Packet 2 is marked ACKed and its timer stops
+The base now advances past every consecutively-ACKed packet: 2 ✓, 3 ✓, 4 ✓,
+5✓
+base moves from 2 → 6
+The window becomes [6, 7, 8, 9]
+The sender can immediately transmit pkt6, pkt7, pkt8 and pkt9 — four new
+packets at once
+
+COMPUTER NETWORKS
+Selective Repeat: example
+In SR, if every 5th packet that is transmitted is lost and if we
+have to send 10 packets, then how many transmissions are
+required? Assume Window size of 10.
+
+COMPUTER NETWORKS
+Selective Repeat: example
+In SR, if every 5th packet that is transmitted is lost and if we
+have to send 10 packets, then how many transmissions are
+required? Assume Window size of 10
+
+12
+
+COMPUTER NETWORKS
+Selective repeat: a dilemma!
+
+example:
+seq #s: 0, 1, 2, 3 (base 4 counting)
+window size=3
+receiver window
+(after receipt)
+
+sender window
+(after receipt)
+0123012
+
+pkt0
+
+0123012
+
+pkt1
+
+0123012
+
+0123012
+
+pkt2
+
+0123012
+
+0123012
+0123012
+
+pkt3
+
+0123012
+
+X
+
+pkt0
+
+(a) no problem
+
+will accept packet
+with seq number 0
+
+0123012
+
+pkt0
+
+0123012
+
+pkt1
+
+0123012
+
+pkt2
+
+timeout
+retransmit pkt0
+pkt0
+0123012
+
+(b) oops!
+
+0123012
+
+X
+X
+X
+
+0123012
+0123012
+
+will accept packet
+with seq number 0
+
+COMPUTER NETWORKS
+Selective repeat: a dilemma!
+
+example:
+seq #s: 0, 1, 2, 3 (base 4 counting)
+window size=3
+
+Q: what relationship is needed
+between sequence # size and
+window size to avoid problem
+in scenario (b)?
+
+receiver window
+(after receipt)
+
+sender window
+(after receipt)
+012301
+2
+012301
+2
+012301
+2
+
+pkt0
+pkt1
+
+0123012
+
+pkt2
+
+0123012
+
+012301
+2
+0123012
+
+pkt3
+
+receiver can’t see
+pkt0
+sender side
+(a) nobehavior
+problem
+receiver
+identical in both
+cases!
+something’s
+(very)0 1wrong!
+pkt0
+23012
+0123012
+
+pkt1
+
+0123012
+
+pkt2
+
+timeout
+retransmit pkt0
+0123012
+
+(b) oops!
+
+pkt0
+
+0123012
+
+X
+will accept packet
+with seq number 0
+
+0123012
+
+X
+X
+X
+
+0123012
+0123012
+
+will accept packet
+with seq number 0
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+TCP: Overview RFCs: 793,1122,1323, 2018, 2581
+
+• one sender, one receiver
+
+cumulative ACKs
+pipelining:
+
+reliable, in-order byte
+steam:
+
+• TCP congestion and flow control
+set window size
+
+point-to-point:
+
+• no “message boundaries"
+
+connection-oriented:
+
+full duplex data:
+
+• handshaking (exchange of control
+messages) initializes sender,
+receiver state before data exchange
+
+• bi-directional data flow in same
+connection
+• MSS: maximum segment size
+
+flow controlled:
+• sender will not overwhelm receiver
+
+GBN and SR. TCP had to pick one. Which do you think it chose?
+neither — it's a hybrid. Cumulative ACKs like GBN, but a single retransmission on
+timeout and (with SACK - TCP Selective Acknowledgment) selective recovery like SR.
+
+COMPUTER NETWORKS
+Go-Back-N vs Selective Repeat vs Real TCP
+Go-Back-N
+
+Selective Repeat
+
+Real TCP
+
+ACK style
+
+Cumulative
+
+Individual
+
+Cumulative (+ SACK option)
+
+Receiver buffers out-oforder?
+
+No — discards
+
+Yes
+
+Yes, in practice
+
+Timers
+
+One
+
+One per packet
+
+One (for the oldest unACKed)
+
+On timeout
+
+Resend the whole window Resend just that packet
+
+Resend just the oldest
+
+Extra recovery
+
+—
+
+Fast retransmit on 3 duplicate
+ACKs
+
+—
+
+TCP is a hybrid, not a choice between the two:
+It takes GBN's cumulative ACKs and single timer, but retransmits selectively like SR. The
+SACK (TCP Selective Acknowledgment) option (RFC 2018) lets the receiver report exactly
+which blocks arrived, pushing TCP further toward Selective Repeat behaviour.
+
+COMPUTER NETWORKS
+TCP segment structure
+32 bits
+
+ACK: seq # of next expected
+
+byte; A bit: this is an ACK
+
+length (of TCP header)
+Internet checksum
+C, E: congestion notification
+TCP options
+
+RST, SYN, FIN: connection
+management
+
+source port #
+dest port #
+sequence number
+acknowledgement number
+head not
+len used C E U A P R S F
+
+receive window
+
+checksum
+
+Urg data pointer
+
+segment seq #: counting
+bytes of data into bytestream
+(not segments!)
+
+flow control: # bytes
+
+receiver willing to accept
+
+options (variable length)
+application
+data
+(variable length)
+
+data sent by application
+into TCP socket
+
+COMPUTER NETWORKS
+TCP sequence numbers and ACKs
+Sequence numbers:
+• byte stream “number” of
+first byte in segment’s
+data
+Acknowledgements:
+• seq # of next byte
+expected from other side
+• cumulative ACK
+Q: how receiver handles out-oforder segments
+• A: TCP spec doesn’t say, - up
+to implementor
+
+window size
+
+N
+
+sender sequence number space
+sent
+ACKed
+
+sent, not- usable not
+yet ACKed but not usable
+(“in-flight”) yet sent
+
+COMPUTER NETWORKS
+TCP sequence numbers and ACKs
+Host A
+User types‘C’
+
+host ACKs receipt
+of echoed ‘C’
+
+Host B
+
+Seq=42, ACK=79, data = ‘C’
+
+host ACKs receipt of‘C’,
+echoes back ‘C’
+
+Seq=79, ACK=43, data = ‘C’
+
+Seq=43, ACK=80
+
+simple telnet scenario
+
+Check out the online interactive exercises for more examples:
+https://gaia.cs.umass.edu/kurose_ross/interactive/tcp_segloss.php
+
+COMPUTER NETWORKS
+TCP round trip time, time out
+Q: how to set TCP timeout value?
+longer than RTT, but RTT varies!
+too short: premature timeout,
+unnecessary retransmissions
+too long: slow reaction to segment
+loss
+
+Q: how to estimate RTT?
+SampleRTT:measured time
+from segment transmission
+until ACK receipt
+• ignore retransmissions
+
+SampleRTT will vary, want
+estimated RTT “smoother”
+• average several recent
+measurements, not just
+current SampleRTT
+
+COMPUTER NETWORKS
+TCP round trip time, time out
+EstimatedRTT = (1- α)*EstimatedRTT + α*SampleRTT
+
+RTT: gaia.cs.umass.edu to fantasia.eurecom.fr
+
+RTT
+(milliseconds)
+
+exponential weighted
+moving average (EWMA)
+influence of past sample
+decreases exponentially
+fast
+typical value: α = 0.125
+
+sampleRTT
+EstimatedRTT
+
+time (seconds)
+
+COMPUTER NETWORKS
+TCP round trip time, time out
+timeout interval: EstimatedRTT plus “safety margin”
+• large variation in EstimatedRTT: want a larger safety margin
+TimeoutInterval = EstimatedRTT + 4*DevRTT
+estimated RTT
+
+“safety margin”
+
+DevRTT: EWMA of SampleRTT deviation from EstimatedRTT:
+DevRTT = (1-β)*DevRTT + β*|SampleRTT-EstimatedRTT|
+(typically, β = 0.25)
+
+COMPUTER NETWORKS
+TCP round trip time, time out
+Why not just set the timeout to the measured RTT?
+→ RTT varies constantly; too short causes needless retransmissions that add load
+to an already-struggling network, too long wastes time. The 4×DevRTT margin is
+a safety cushion that widens automatically when the network gets erratic.
+Why 4 times the deviation rather than 1 or 2?
+→ it's an engineering constant, tuned empirically for a conservative margin.
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+TCP Sender (simplified)
+event: data received from
+application
+create segment with seq #
+seq # is byte-stream number of
+first data byte in segment
+start timer if not already
+running
+• think of timer as for oldest
+unACKed segment
+• expiration interval:
+TimeOutInterval
+
+event: timeout
+retransmit segment that caused
+timeout
+restart timer
+event: ACK received
+if ACK acknowledges
+previously unACKed
+segments
+• update what is known to be
+ACKed
+• start timer if there are still
+unACKed segments
+
+COMPUTER NETWORKS
+TCP Receiver: ACK Generation
+
+Event at receiver
+
+TCP receiver action
+
+arrival of in-order segment with
+expected seq #. All data up to
+expected seq # already ACKed
+
+delayed ACK. Wait up to 500ms
+for next segment. If no next segment,
+send ACK
+
+arrival of in-order segment with
+expected seq #. One other
+segment has ACK pending
+
+immediately send single cumulative
+ACK, ACKing both in-order segments
+
+arrival of out-of-order segment
+higher-than-expect seq. # .
+Gap detected
+
+immediately send duplicate ACK,
+indicating seq. # of next expected byte
+
+arrival of segment that
+partially or completely fills gap
+
+immediate send ACK, provided that
+segment starts at lower end of gap
+
+COMPUTER NETWORKS
+TCP: retransmission scenarios
+Host B
+
+Host A
+
+X
+
+ACK=100
+
+timeout
+
+timeout
+
+SendBase=92
+Seq=92, 8 bytes of
+data
+
+Host B
+
+Host A
+
+Seq=92, 8 bytes of
+data
+Seq=100, 20 bytes of data
+ACK=100
+ACK=120
+
+Seq=92, 8 bytes of
+data
+ACK=100
+
+SendBase=100
+
+Seq=92, 8
+bytes of data
+
+SendBase=120
+ACK=120
+SendBase=120
+
+lost ACK scenario
+
+premature timeout
+
+send cumulative
+ACK for 120
+
+COMPUTER NETWORKS
+TCP: retransmission scenarios
+Host B
+
+Host A
+
+Seq=92, 8 bytes of
+data
+Seq=100, 20 bytes of data
+
+X
+
+Check out the online interactive exercises for more examples:
+https://gaia.cs.umass.edu/kurose_ross/interactive/tcp_retrans.php
+
+ACK=100
+
+ACK=120
+
+Seq=120, 15 bytes of data
+
+cumulative ACK covers
+for earlier lost ACK
+
+116
+
+COMPUTER NETWORKS
+TCP fast retransmit
+TCP fast retransmit
+
+if sender receives 3 additional
+ACKs for same data (“triple duplicate
+ACKs”), resend unACKed segment
+with smallest seq #
+
+Seq=92
+,
+
+8 bytes
+of data
+Seq=1
+00, 20
+bytes
+of data
+
+likely that unACKed segment lost, so
+don’t wait for timeout
+
+=100
+K
+C
+A
+
+time
+out
+
+Receipt of three duplicate ACKs
+indicates 3 segments received after a
+missing segment – lost segment is
+likely. So retransmit!
+
+Host B
+
+Host A
+
+=100
+A CK
+=100
+K
+C
+A
+=100
+A CK
+Seq=100, 20 bytes of data
+
+X
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+TCP flow control
+
+Q: What happens if
+network layer delivers
+data faster than
+application layer removes
+data from socket buffers?
+
+Application removing
+data from TCP socket
+buffers
+
+application
+process
+
+TCP socket
+receiver buffers
+
+TCP
+code
+
+Network layer
+delivering IP datagram
+payload into TCP
+socket buffers
+
+IP
+code
+
+from sender
+
+receiver protocol stack
+
+COMPUTER NETWORKS
+TCP flow control
+Q: What happens if
+network layer delivers
+data faster than
+application layer
+removes data from
+socket buffers?
+
+Application removing
+data from TCP socket
+buffers
+
+application
+process
+
+TCP socket
+receiver buffers
+
+TCP
+code
+
+Network layer
+delivering IP datagram
+payload into TCP
+socket buffers
+
+IP
+code
+
+from sender
+
+receiver protocol stack
+
+COMPUTER NETWORKS
+TCP flow control
+Q: What happens if
+network layer delivers
+data faster than
+application layer
+removes data from
+socket buffers?
+
+Application removing
+data from TCP socket
+buffers
+
+application
+process
+
+TCP socket
+receiver buffers
+
+TCP
+code
+
+flow control
+receiver controls sender, so
+sender won’t overflow
+receiver’s buffer by
+transmitting too much, too fast
+
+IP
+code
+
+from sender
+
+receiver protocol stack
+
+COMPUTER NETWORKS
+TCP flow control
+TCP receiver “advertises” free
+buffer space in rwnd field in
+TCP header
+• RcvBuffer size set via socket
+options (typical default is 4096
+bytes)
+• many operating systems
+autoadjust RcvBuffer
+
+sender limits amount of
+unACKed (“in-flight”) data to
+received rwnd
+guarantees receive buffer will
+not overflow
+
+to application process
+RcvBuffer
+
+buffered data
+
+rwnd
+
+free buffer space
+
+TCP segment payloads
+
+TCP receiver-side buffering
+LastByteRcvd – LastByteRead ≤ RcvBuffer
+rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]
+
+COMPUTER NETWORKS
+TCP flow control
+TCP receiver “advertises” free
+buffer space in rwnd field in TCP
+header
+• RcvBuffer size set via socket
+options (typical default is 4096
+bytes)
+• many operating systems autoadjust
+RcvBuffer
+
+flow control: # bytes receiver willing to accept
+
+receive window
+
+sender limits amount of
+unACKed (“in-flight”) data to
+received rwnd
+guarantees receive buffer will
+not overflow
+
+TCP segment format
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.4 principles of reliable data transfer
+3.5 connection-oriented transport: TCP
+• segment structure
+• reliable data transfer
+• flow control
+• connection management
+3.6 principles of congestion control
+3.7 TCP congestion control
+
+COMPUTER NETWORKS
+TCP connection management
+
+before exchanging data, sender/receiver “handshake”:
+agree to establish connection (each knowing the other willing to establish connection)
+agree on connection parameters (e.g., starting seq #s)
+application
+
+application
+
+connection state: ESTAB
+connection variables:
+seq # client-to-server
+server-to-client
+rcvBuffer size
+at server,client
+
+connection state: ESTAB
+connection Variables:
+seq # client-to-server
+server-to-client
+rcvBuffer size
+at server,client
+
+network
+
+network
+
+Socket clientSocket =
+newSocket("hostname","port number");
+
+Socket connectionSocket =
+welcomeSocket.accept();
+
+COMPUTER NETWORKS
+TCP 3-way handshake
+
+Server state
+Client state
+
+serverSocket = socket(AF_INET,SOCK_STREAM)
+serverSocket.bind((‘’,serverPort))
+serverSocket.listen(1)
+connectionSocket, addr = serverSocket.accept()
+
+clientSocket = socket(AF_INET, SOCK_STREAM)
+
+LISTEN
+
+LISTEN
+
+clientSocket.connect((serverName,serverPort))
+
+choose init seq num, x
+send TCP SYN msg
+
+SYNSENT
+
+received SYNACK(x)
+indicates server is live;
+ESTAB
+send ACK for SYNACK;
+this segment may contain
+client-to-server data
+
+SYNbit=1, Seq=x
+
+choose init seq num, y
+send TCP SYNACK
+SYN RCVD
+msg, acking SYN
+
+SYNbit=1, Seq=y
+ACKbit=1; ACKnum=x+1
+
+ACKbit=1, ACKnum=y+1
+received ACK(y)
+indicates client is live
+
+ESTAB
+
+COMPUTER NETWORKS
+Closing a TCP connection
+client, server each close their side of connection
+• send TCP segment with FIN bit = 1
+
+respond to received FIN with ACK
+• on receiving FIN, ACK can be combined with own FIN
+
+simultaneous FIN exchanges can be handled
+
+COMPUTER NETWORKS
+Closing a TCP connection
+client state
+
+server state
+
+ESTAB
+
+ESTAB
+clientSocket.close()
+
+FIN_WAIT_1
+
+FIN_WAIT_2
+
+can no longer
+send but can
+receive data
+wait for server
+close
+
+FINbit=1, seq=x
+CLOSE_WAIT
+ACKbit=1;
+ACKnum=x+1
+
+FINbit=1, seq=y
+TIMED_WAIT
+timed wait
+for 2*max
+segment
+lifetime
+
+CLOSED
+
+ACKbit=1;
+ACKnum=y+1
+
+can still
+send data
+
+LAST_ACK
+can no longer
+send data
+
+CLOSED
+
+COMPUTER NETWORKS
+Suggested Readings
+
+THANK YOU
+Department of Computer Science and Engineering
+
+

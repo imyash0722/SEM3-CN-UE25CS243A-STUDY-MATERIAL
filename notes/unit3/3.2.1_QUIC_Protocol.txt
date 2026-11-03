@@ -1,0 +1,531 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Transport Layer
+
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Transport Layer - Roadmap
+
+3.6 Principles of congestion control
+3.7 TCP congestion control
+3.8 Evolution of Transport-layer functionality – QUIC
+Protocol
+
+COMPUTER NETWORKS
+Evolving Transport-Layer Functionality
+• TCP, UDP: principal transport protocols for 40 years
+• different “flavors” of TCP developed, for specific scenarios:
+Scenario
+Long, fat pipes (large data
+transfers)
+Wireless networks
+Long-delay links
+Data center networks
+Background traffic flows
+
+•
+
+Challenges
+Many packets “in flight”; loss shuts down
+pipeline
+Loss due to noisy wireless links, mobility;
+TCP treat this as congestion loss
+Extremely long RTTs
+Latency sensitive
+Low priority, “background” TCP flows
+
+How it was fixed
+CUBIC: Grow the sending window much faster
+
+Don't treat every loss as congestion
+Grow by the clock, not by round trips (RFC
+3135)
+Let routers warn before queues fill (RFC 8257)
+Yield as soon as other traffic appears (RFC
+6817)
+
+moving transport–layer functions to application layer, on top of UDP
+• HTTP/3: QUIC
+
+Every fix means changing TCP itself — and TCP lives inside the operating system kernel. It helps nobody
+until every machine is upgraded.
+
+COMPUTER NETWORKS
+QUIC - Quick UDP Internet Connections
+• QUIC (Quick UDP Internet Connections) is a modern, secure transport protocol
+developed by Google in 2012 and standardized by the IETF.
+• QUIC provides many of the reliable transport features of TCP, but runs over UDP and
+integrates TLS 1.3 security directly into the protocol.
+• It serves as the foundational transport layer for HTTP/3
+• Application-layer protocol, on top of UDP
+increase performance of HTTP
+deployed on many Google servers, apps (Chrome, mobile YouTube app)
+• QUIC defined in RFC 9000 - https://datatracker.ietf.org/doc/rfc9000/
+
+COMPUTER NETWORKS
+QUIC: Quick UDP Internet Connections
+
+Application
+
+HTTP/2
+
+HTTP/2 (slimmed)
+
+TLS
+
+QUIC
+
+Transport
+
+TCP
+
+UDP
+
+Network
+
+IP
+
+IP
+
+HTTP/2 over TCP
+
+HTTP/3 over UDP
+
+HTTP/3
+
+Why was QUIC introduced?
+• TCP connection establishment
+adds latency.
+• TLS adds another handshake.
+• TCP provides one ordered byte
+stream.
+• Packet loss in one TCP stream can
+delay delivery of data that is
+otherwise independent.
+• A TCP connection is tied to the
+IP/port 4-tuple, making network
+changes such as Wi-Fi → cellular
+disruptive.
+
+COMPUTER NETWORKS
+Why QUIC uses UDP?
+• Since TCP is hardcoded into operating system kernels and worldwide network
+middleboxes (like routers and firewalls), upgrading it globally is nearly impossible.
+• By building on top of UDP—which is universally accepted by all network hardware—
+QUIC implements its advanced reliability, congestion control, and packet recovery
+directly in user space (application layer) without requiring OS kernel updates.
+• Using UDP also makes QUIC easier to deploy without changing the underlying IP
+stack.
+• QUIC implements its own: Reliability, Acknowledgments, Retransmission, Congestion
+control, Flow control, Connection management, Stream multiplexing, Security
+
+COMPUTER NETWORKS
+QUIC: Quick UDP Internet Connections
+• adopts approaches we’ve studied in this chapter for connection establishment, error
+control, congestion control
+• error and congestion control: “Readers familiar with TCP’s loss detection and
+congestion control will find algorithms here that parallel well-known TCP ones.”
+[from QUIC specification]
+• connection establishment: reliability, congestion control, authentication,
+encryption, state established in one (or even zero) RTT (recall HTTP3 discussion in
+Chapter 2)
+• multiple application-level “streams” multiplexed over single QUIC connection
+• separate reliable data transfer, security
+• common congestion control
+• HTTP/3 specifically maps HTTP semantics onto QUIC
+
+COMPUTER NETWORKS
+QUIC Streams
+• A QUIC connection can contain multiple independent streams.
+QUIC supports:
+• Bidirectional streams
+• Unidirectional streams
+• Each stream is an ordered sequence of bytes.
+QUIC Connection
+|
+┌────────────┼────────────┐
+↓
+↓
+↓
+Stream 1
+Stream 2
+Stream 3
+HTML
+Image
+Video
+
+The loss in Stream 2 does not
+inherently block delivery of
+data from Streams 1 and 3.
+This reduces head-of-line
+blocking across streams.
+
+application
+
+COMPUTER NETWORKS
+QUIC: streams: parallelism, no HOL Blocking
+HTTP
+GET
+
+HTTP
+GET
+HTTP
+GET
+HTTP
+GET
+
+TLS encryption
+
+TCP RDT
+
+error! RDT
+TCP
+
+TCP Cong. Contr.
+
+TCP Cong. Contr.
+
+(a) HTTP 1.1/2
+
+HTTP
+GET
+
+QUIC QUIC QUIC
+
+QUIC QUIC QUIC
+
+QUIC QUIC QUIC
+RDT
+
+QUIC QUIC
+QUIC
+error!
+
+QUIC Cong. Cont.
+
+QUIC Cong. Cont.
+
+UDP
+
+UDP
+
+encrypt
+
+TLS encryption
+
+HTTP
+GET
+
+RDT
+
+encrypt
+
+RDT
+
+encrypt
+
+encrypt
+
+RDT
+
+(b) With QUIC: no HOL blocking
+
+encrypt
+
+RDT
+
+encrypt
+
+RDT
+
+COMPUTER NETWORKS
+Head-of-line blocking: what QUIC does and does not fix
+Between streams: fixed
+QUIC tracks delivery per stream, so a
+gap in one stream never holds up
+another.
+
+Within a stream: unchanged
+Each stream is still an ordered byte
+sequence. Lose a packet mid-stream
+and that stream's later bytes still wait.
+
+Why HTTP/2 could not fix this on its own
+HTTP/2 already multiplexed many requests over one connection — but it did so above TCP, and TCP delivers a single ordered byte stream.
+One lost segment makes TCP withhold every later byte, including bytes belonging to completely unrelated HTTP/2 streams. The multiplexing
+was real; the transport underneath knew nothing about it. You cannot fix this from above TCP, which is precisely why QUIC had to replace
+the transport rather than sit on top of it.
+
+COMPUTER NETWORKS
+QUIC: Connection Establishment
+
+TCP handshake
+(transport layer)
+
+QUIC
+1RTT handshake
+
+data
+
+TLS handshake
+(security)
+
+data
+
+TCP (reliability, congestion
+control state) + TLS
+(authentication, crypto state)
+§ 2 serial handshakes
+
+QUIC: reliability, congestion control,
+authentication, crypto state
+§ 1 handshake
+
+COMPUTER NETWORKS
+QUIC: 0-RTT Connection Establishment
+The client sends encrypted
+application data alongside its
+initial connection request,
+eliminating handshake wait times
+entirely.
+
+TLS session ticket
+sent by server, cached
+at client
+
+data
+end of first QUIC
+connection
+
+Client uses last session
+ticket for encryption,
+authentication for new
+connection
+§ 0 RTT handshake delay
+
+start of second QUIC
+connection
+
+data
+
+COMPUTER NETWORKS
+QUIC Handshake: From Table to Mechanism
+Connection Path
+
+RTT Cost
+
+What Actually Happens
+
+See
+
+TCP + TLS (traditional)
+
+~2 RTT
+
+TCP handshake completes, then TLS 1.3 handshake runs on top — two
+negotiations, done serially
+
+Slide 40 (left)
+
+QUIC, first connection
+
+~1 RTT
+
+Transport params + TLS 1.3 hello messages travel in the same flight —
+one negotiation, done concurrently
+
+Slide 40 (right)
+
+QUIC, returning to same
+server
+
+0 RTT
+
+Client reuses a cached TLS session ticket; encrypted app data rides with
+the very first packet
+
+Slide 41
+
+Caveat: 0-RTT data
+
+—
+
+0-RTT data is replayable — safe only for idempotent requests (GET),
+never a POST with a side effect
+
+Security note
+
+0-RTT lets a client send actual application data in its very first packet, before any handshake completes — that's the whole speed
+benefit. But to do that, the client has to encrypt that data using key material left over from a previous connection (the cached
+session ticket), not a fresh key negotiated for this connection.
+Example: Suppose the 0-RTT data is an HTTP request:
+GET /product/42 — fetching a product page. If an attacker replays this 10 times, the server just serves the same page 10 times.
+Annoying at worst, harmless.
+POST /orders {item: 42, qty: 1} — placing an order. If an attacker replays this, the server may create the order 10 times — 10
+charges, 10 shipments.
+QUIC/TLS 1.3 specs put the responsibility on the application, not the protocol: only send data in the 0-RTT flight if it's safe to have
+processed more than once. A browser or server implementation typically restricts what's allowed to go in that first flight for exactly
+this reason.
+
+COMPUTER NETWORKS
+QUIC and TLS 1.3
+• QUIC integrates TLS 1.3 into its connection establishment. This does not mean QUIC replaces TLS.
+• TLS provides: Authentication, Confidentiality, Integrity, Key establishment
+• Decoupled Responsibilities:
+• TLS 1.3 provides cryptographic state machines and key exchange secrets.
+• QUIC handles the framing, reliability, retransmissions, and delivery of those handshake
+messages.
+• Secret Isolation:
+• QUIC separates its encryption keys to limit damage if a breach occurs. It derives distinct keys
+for:
+• Handshake Secrets: Used only to protect initial configuration packets.
+• Application Secrets: Used to encrypt the actual web traffic.
+• Header Protection Secrets: Used exclusively to obfuscate packet numbers [encrypting the
+sequence numbers written in the packet headers so that outside observers (like hackers,
+Internet Service Providers, or middleboxes) cannot read them].
+
+COMPUTER NETWORKS
+Connection migration: the feature TCP cannot have
+The connection ID
+An identifier the two endpoints choose
+for the connection itself, carried in the
+QUIC packet header and completely
+independent of any IP address or port.
+
+What the server does
+Recognises the ID, checks the new path
+is real, and carries on — no new
+handshake, no re-request.
+
+And for privacy
+IDs are rotated, so observers cannot use
+them to track a device.
+
+TCP cannot be patched to do this. A TCP connection IS its 4-tuple — surviving an address change is not a missing feature, it is a
+contradiction in terms.
+
+COMPUTER NETWORKS
+How does a browser even know to use HTTP/3?
+The starting problem
+A browser cannot simply start speaking
+QUIC. The server may not support it, or
+the network may not carry it — and a
+failed attempt costs a long wait.
+
+So it asks, over TCP
+The server mentions in its reply that it
+also speaks HTTP/3. The browser
+remembers that, and uses QUIC next
+time.
+Or from DNS
+A DNS answer can name HTTP/3 too,
+skipping TCP entirely.
+
+Two independent reasons your very first visit to a site is never 0-RTT: nothing is stored from a previous connection, and the
+browser has not yet learned the server speaks HTTP/3.
+
+COMPUTER NETWORKS
+Where QUIC falls short
+UDP is not always allowed
+Many campus and company firewalls block it, so the browser quietly falls back to TCP.
+
+It costs more processing power
+The work happens in the application rather than the operating system, and every packet is encrypted.
+
+It is harder to troubleshoot
+Almost everything is encrypted, so network staff cannot see inside a slow connection.
+
+A spoofed request could be abused
+With no handshake to prove who is asking, a server must not reply with much until the address is checked.
+
+Fallback hides the problem
+Everything keeps working over TCP, so nobody notices that QUIC was never used at all.
+
+About 39% of websites say they support HTTP/3, and almost every browser does — yet only about 21% of real
+traffic uses it. Supporting a protocol and actually carrying traffic on it are very different things.
+
+COMPUTER NETWORKS
+QUIC vs TCP
+Feature
+
+TCP + TLS (Traditional)
+
+QUIC (Modern)
+
+Runs over
+
+IP
+
+UDP
+
+Reliable delivery
+
+Yes
+
+Yes
+
+Ordered delivery
+
+Yes, single byte stream
+
+Per stream
+
+Connection setup
+
+TCP handshake
+
+QUIC + TLS handshake (1RTT)
+
+Security
+
+TLS added separately
+
+TLS 1.3 integrated
+
+Multiplexing
+
+Limited by single TCP stream
+
+Multiple streams
+
+Connection migration
+
+Difficult
+
+Supported
+
+0-RTT
+
+No, Requires new handshake
+
+Supported
+
+Congestion control
+
+Yes
+
+Yes
+
+Flow control
+
+Yes
+
+Yes
+
+Network IP Switching
+
+Connection drops and
+terminates
+
+Connection persists
+seamlessly
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

@@ -1,0 +1,119 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Link Layer and LAN Roadmap
+
+Introduction
+Error detection, correction
+Multiple access protocols
+Switched LANs
+addressing, ARP
+Ethernet
+Switches
+VLANs
+
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+COMPUTER NETWORKS
+Physical Layer – OSI Reference Model
+
+Implemented
+in Software
+
+Implemented
+in Hardware
+
+COMPUTER NETWORKS
+Purpose of Physical Layer
+
+COMPUTER NETWORKS
+Physical Layer Services
+The role of Physical Layer is to:
+encode the binary digits that represent data link layer frames into
+signals
+
+Analog signal – continuousto transmit and receive these signals cross the physical media
+valued (amplitudes,
+frequencies)
+copper wires, optical fiber, and wireless that connect network devices.
+Digital signal – discrete-valued
+Physical medium - conduct a signal in the form of voltage, light, or (0s & 1s)
+
+radio waves from one device to another.
+
+COMPUTER NETWORKS
+Physical Layer Services
+
+The delivery of frames across the local media requires the
+following physical layer elements:
+The physical media and associated connectors
+A representation of bits on the media
+Encoding of data and control information
+Transmitter and receiver circuitry on the network
+devices
+Components to understand Physical Layer functions includes:
+Physical components
+Encoding
+Signaling
+
+Physical Layer
+Devices
+• Hub
+• Repeater
+• Modem
+• Cables
+• Network Adapters
+
+COMPUTER NETWORKS
+Physical Layer Services
+
+Physical Layer Encoding
+
+COMPUTER NETWORKS
+Physical Layer Principles
+
+COMPUTER NETWORKS
+Signalling Bits for the Media
+
+COMPUTER NETWORKS
+Signalling Methods
+
+NRZ (Non Return to Zero) Encoding – A
+low voltage being 0 and a higher voltage
+representing a 1.
+
+Manchester Encoding
+• A voltage change from low to high within the
+bit time represents a 1.
+• A voltage drop within the bit time from a
+high to a low voltage represents a 0.
+
+COMPUTER NETWORKS
+Physical Layer Standards
+
+Some of the key organizations:
+The International Organization for Standardization
+(ISO)
+The Institute of Electrical and Electronics Engineers
+(IEEE)
+The American National Standards Institute (ANSI)
+The International Telecommunication Union (ITU)
+The Electronics Industry
+Alliance/Telecommunications Industry Association
+(EIA/TIA)
+National telecommunications authorities such as the
+Federal Communications Commission (FCC) in the
+United States
+
+COMPUTER NETWORKS
+Types of Physical Transmission Media
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

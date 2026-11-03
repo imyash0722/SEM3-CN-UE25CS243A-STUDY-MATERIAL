@@ -1,0 +1,96 @@
+site_name: Computer Networks Exam Prep — UE25CS243A
+site_description: Complete study guide for Computer Networks (UE25CS243A) covering Units 1-4
+site_url: https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/
+repo_url: https://github.com/imyash0722/SEM3-CN-UE25CS243A-STUDY-MATERIAL
+repo_name: SEM3-CN-UE25CS243A-STUDY-MATERIAL
+
+theme:
+  name: zensical
+  custom_dir: overrides
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - content.tabs.link
+    - color.mode
+
+extra_javascript:
+  - assets/javascripts/theme-toggle.js
+
+nav:
+  - Home: index.md
+  - "Unit 1: Internet & Application Layer":
+      - "Overview & Syllabus": unit1/00_overview.md
+      - "Chapter 1: Computer Networks & the Internet": unit1/01_chapter1_network_fundamentals.md
+      - "Chapter 2: Application Layer": unit1/02_chapter2_application_layer.md
+      - "Complete Unit 1 Notes": unit1/unit1_complete.md
+  - "Unit 2: Transport Layer":
+      - Overview: unit2/00_overview.md
+      - "Chapter 3: Transport Layer": unit2/03_chapter3_transport_layer.md
+      - "Complete Unit 2 Notes": unit2/unit2_complete.md
+  - "Unit 3: Network Layer":
+      - Overview: unit3/00_overview.md
+      - "Complete Unit 3 Notes": unit3/unit3_complete.md
+  - "Unit 4: Link Layer & LAN":
+      - Overview: unit4/00_overview.md
+      - "Complete Unit 4 Notes": unit4/unit4_complete.md
+  - "Formulae Sheet": formulae_sheet.md
+  - "Master Index & Study Checklist": MASTER_INDEX.md
+
+markdown_extensions:
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+
+copyright: |
+  &copy; 2026 Computer Networks (UE25CS243A) — PES University, Semester 3
+  <br>
+  Based on Kurose & Ross, "Computer Networking: A Top-Down Approach", 9th Edition
+  <br>
+  Built with <a href="https://github.com/zensical/zensical">Zensical</a> and <a href="https://github.com/imyash0722">GitHub Pages</a>
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/imyash0722
+    - icon: fontawesome/brands/gitlab
+      link: https://gitlab.com/imyash0722
+  version:
+    provider: mike
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX

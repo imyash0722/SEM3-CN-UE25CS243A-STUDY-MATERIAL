@@ -1,0 +1,73 @@
+UE25CS243A – Aug – Dec 2026
+III Semester
+Evaluation Policy
+Component
+
+Description
+
+ISA-1
+
+Unit-1 & Unit-2 (Hybrid Mode)
+
+40
+
+15
+
+ISA-2
+
+Unit-3 & Unit-4 (Hybrid Mode)
+
+40
+
+15
+
+Labs
+
+Individual –
+3 labs – level 1 (Banana type) [Cisco packet
+tracer, UDP with DNS, Ethernet/ARP]
+3 labs – Level 2 (Orange type) [ HTTP Persistent
+& Non-Persistent, TCP Congestion, Hardware]
+Level 3 (Jackfruit) – group of 2 students
+To choose from over 30 different projects with
+two deliverables each.
+SDN + Socket Programing – (Evaluated based
+on the Rubrics)
+ISA total
+
+60
+
+10
+
+40
+
+10
+
+Hybrid
+
+100
+
+Hackathon /
+Mini-Project
+
+ESA
+
+Conducted For
+
+Scaled To
+
+50
+50
+Total
+
+Grading Policy for Labs:
+Plagiarism of Lab reports = 0 marks (for both who have shared and copied)
+Submission on the date = graded out of complete 10 Marks
+1 day late = -1
+2 day late = -2
+3 = -5
+No late submissions will be entertained
+
+100
+
+

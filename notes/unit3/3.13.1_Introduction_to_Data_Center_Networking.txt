@@ -1,0 +1,578 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+Introduction to Datacenter Networking
+
+10’s to 100’s of thousands of hosts, often closely
+coupled, in close proximity:
+§ e-business (e.g. Amazon)
+§ content-servers (e.g., YouTube, Akamai, Apple,
+Microsoft)
+§ search engines, data mining (e.g., Google)
+• challenges:
+• multiple applications, each serving massive numbers
+Inside a 40-ft Microsoft container, Chicago data center
+of clients
+• reliability
+• managing/balancing load, avoiding processing,
+networking, data bottlenecks
+•
+
+COMPUTER NETWORKS
+Introduction to Datacenter Networking
+What is Data Center Networking?
+• Connects servers, storage, applications, virtual machines, and external networks.
+• Designed for high bandwidth, low latency, reliability, scalability, and security.
+• Modern data centers increasingly handle large volumes of server-to-server (east-west)
+traffic.
+Types of Data Center Traffic:
+North–South traffic
+User → Internet → Data Center → Server
+Traffic entering or leaving the data center. Example: User accessing a web application.
+East–West traffic
+Server A ↔ Server B ↔ Database ↔ Storage
+Traffic between resources inside the data center.
+Very important for distributed applications, cloud platforms, microservices, and AI
+workloads.
+
+COMPUTER NETWORKS
+North–south or east–west?
+Classify each flow of traffic
+
+You open a shopping website from your phone
+
+North–south — enters the datacenter from outside
+
+The web server asks the database for your cart
+
+East–west — server to server inside
+
+An AI model is trained across 1,000 GPU servers
+
+East–west — and the heaviest kind
+
+The page is sent back to your phone
+
+North–south — leaves the datacenter
+
+COMPUTER NETWORKS
+What a datacenter network must deliver
+Before choosing a design, decide what “good” means. These five tests are used to judge every design
+that follows.
+Bandwidth between any two
+servers
+Most traffic is east–west, so any server
+may need to talk fast to any other.
+
+Short, predictable delay
+
+No single point of failure
+
+A web page may wait on hundreds of
+internal requests. The slowest one sets
+the page time.
+
+With 100,000 servers, something is
+always broken. The network must
+route around it.
+
+Grow in small steps
+
+Built from cheap, identical switches
+
+Add racks without rebuilding the network or buying one giant
+switch.
+
+Many simple switches cost less and are easier to run than a
+few huge ones.
+
+Which of these does your hostel Wi-Fi network need?
+Mostly 3 and 5, barely 1 and 2 - a datacenter is a very different problem.
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+Border routers
+§ connections outside datacenter
+
+Tier-1 (Core) switches
+
+§ connecting to ~16 T-2s below
+
+Tier-2 (Aggregation) switches
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+§ connecting to ~16 TORs below
+
+Top of Rack (TOR) (Access)
+switches
+§ one per rack, 100G-400G
+Ethernet to blades
+
+Server racks
+
+§ 20- 40 server blades: hosts
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+•
+•
+•
+•
+•
+•
+
+Traditional 3-Tier Architecture (also known as the hierarchical network design)
+was the gold standard for enterprise and early data center networks for
+decades.
+It uses a top-down, rigid structure designed to manage data traveling between
+the internal network and the outside world.
+Access layer → connects servers.
+Aggregation layer → combines access switches.
+Core layer → provides high-speed connectivity.
+Limitation: hierarchical design can create bottlenecks and blocked/suboptimal
+paths, particularly for heavy east-west traffic
+
+COMPUTER NETWORKS
+Why the three-tier design struggles
+
+core
+
+agg
+
+Traffic funnels upward
+
+core
+
+agg
+
+agg
+
+Traffic between racks in different parts of the network must climb to the few
+core switches and come back down. The links near the top become the
+bottleneck — fails test 1.
+agg
+
+Spare links sit idle
+These networks usually use spanning tree, which switches off redundant links
+to prevent loops. Half the cables carry nothing until something breaks — fails
+tests 1 and 3.
+
+ToR
+
+ToR ToR
+
+ToR
+
+ToR
+
+ToR
+
+ToR
+
+ToR
+
+dashed red = link switched off by spanning tree
+server → server in another pod: up to core and back down
+
+Growing means buying bigger boxes
+More traffic needs a bigger, costlier core switch (“scale up”), and the core is a
+shared weak point — fails tests 3 and 5.
+
+What we want instead: every rack equally close to every other, every link in use, and growth by adding more of the same
+cheap switch. That is leaf–spine.
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+Two-layer leaf/spine datacenter interconnection network:
+Spine
+switches
+
+Leaf
+switches
+
+...
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+A leaf–spine network is a modern data-center architecture designed to provide
+high bandwidth, low and predictable latency, redundancy, and scalable serverto-server communication.
+• It is based on a Clos topology (multi-stage network architecture).
+• Leaf switches – sits at the top of each server rack
+• Connect directly to servers, storage systems, firewalls, load balancers, etc.
+• Usually act as Top-of-Rack (ToR) switches.
+• Every leaf connects to every spine.
+• Leaf switches generally do not connect directly to other leaf switches.
+• Spine switches
+• Form the high-speed backbone of the data-center fabric.
+• Every spine connects to every leaf.
+• They provide paths between different leaf switches.
+• They normally do not directly connect to servers, connect only to leaf switches
+•
+
+COMPUTER NETWORKS
+Oversubscription: sharing the way out of a rack
+Definition
+
+4 spines above
+
+4 uplinks × 100 Gbps = 400 Gbps
+
+What it means
+
+top-of-rack switch
+
+40 servers × 25 Gbps = 1,000 Gbps
+
+40 servers
+
+Bandwidth the servers could send ÷ bandwidth available to
+leave the rack. Here 1,000 ÷ 400 = 2.5 : 1.
+
+If every server sends off-rack at once, each gets 400 ÷ 40 =
+10 Gbps, not 25. Traffic that stays in the rack is unaffected.
+
+Why accept it?
+All servers rarely send off-rack together, and 1 : 1 (“nonblocking”) needs far more spine ports. About 3 : 1 is
+common.
+
+The design lever: add uplinks or spines to lower the ratio — or place services that talk a lot in the same rack, so their traffic
+never needs the uplinks.
+
+COMPUTER NETWORKS
+Growing the fabric: from leaf–spine to pods
+The limit
+
+super-spine
+
+super-spine
+
+super-spine
+
+super-spine
+
+Every leaf needs one port on every spine. A spine switch with 64
+ports can therefore connect at most 64 leaves — about 2,500
+servers at 40 per rack.
+pod 1
+
+Two ways to grow
+More spines add bandwidth between racks. More racks than
+spine ports need another layer: group racks into pods, and join
+the pods with a layer of super-spines.
+
+pod 2
+
+spine
+
+spine
+
+spine
+
+spine
+
+leaf
+
+leaf
+
+leaf
+
+leaf
+
+leaf
+
+leaf
+
+racks
+
+racks
+
+racks
+
+racks
+
+racks
+
+racks
+
+Same idea, one level up
+Each pod is a small leaf–spine; the pods form a leaf–spine of
+their own.
+
+Next Slide is exactly this: Facebook’s F16 design uses the same layers — rack switches, fabric switches, spines — at much
+larger scale.
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+Facebook F16 data center
+network topology:
+§ each Top-of-Rack
+(ToR) switch connects
+to 16 Fabric switches
+§ each Fabric switch
+connects to 16 Spine
+switches
+
+Spine switches
+
+Fabric switches
+
+Top of Rack (ToR)
+switches
+
+Adapted from https://engineering.fb.com/data-center-engineering/f16-minipack
+
+COMPUTER NETWORKS
+Datacenter Networks: Multipath
+§ rich interconnection among switches, racks:
+• increased throughput between racks (multiple routing paths possible)
+• increased reliability via redundancy
+•
+Multipath routing – A technique that splits or balances unicast traffic across several parallel physical paths
+between a single sender and a single receiver to maximize total bandwidth, prevent link congestion, and
+provide rapid failover resilience. Core Purpose: Load balancing, congestion avoidance, and fault tolerance.
+
+COMPUTER NETWORKS
+Using all the paths: equal-cost multipath (ECMP)
+Every switch routes
+spine 1
+
+spine 2
+
+spine 3
+
+spine 4
+
+Leaf A sees four routes to leaf B, all the same length. None is
+switched off, unlike spanning tree.
+
+Hash the flow, not the packet
+It computes a hash of the flow’s source and destination addresses,
+ports and protocol, and uses it to pick one of the four.
+leaf A
+
+leaf B
+
+flow X → spine 2
+flow Y → spine 4
+
+Same flow, same path
+Every packet of flow X takes spine 2, so none overtake each other.
+Flow Y hashes to spine 4.
+
+A spine fails?
+Leaf A drops it from the set and re-hashes onto the other three.
+Traffic moves in milliseconds.
+
+Why not per packet? Packets on different paths arrive out of order; TCP reads that as loss and halves its window. Per-flow
+hashing avoids it.
+
+COMPUTER NETWORKS
+Datacenter Networks: Application-layer Routing
+Internet
+
+load balancer:
+application-layer
+routing
+Load
+balancer
+
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+…
+
+§ receives external
+client requests
+§ directs workload
+within data center
+§ returns results to
+external client
+(hiding data center
+internals from client)
+
+COMPUTER NETWORKS
+Putting it together: the life of one request
+1
+
+Your phone sends a request to the service’s one public address
+
+north–south
+
+2
+
+Border router brings it into the datacenter
+
+north–south
+
+3
+
+Load balancer owns that public address and picks a front-end server that is not busy
+
+4
+
+Front-end server asks dozens of internal services: cart, prices, stock, recommendations
+
+5
+
+Leaf–spine + ECMP carry every internal request, each flow hashed onto one path
+
+6
+
+Answers return the front end builds the page; the load balancer sends it back to you
+
+east–west
+
+north–south
+
+One click, two kinds of traffic: one request in and one page out (north–south), and dozens of requests between servers in
+the middle (east–west). Every design choice in this topic serves steps 4 and 5.
+
+COMPUTER NETWORKS
+Why Internet-style TCP struggles inside a datacenter
+Standard TCP was designed for the Internet: long distances, unknown routers, and no one in charge. A
+datacenter is the opposite.
+Problem
+
+What happens
+
+Fixed by (slides 130–131)
+
+Incast
+
+One request fans out to many servers; they all answer at the
+same instant and overflow the rack switch’s buffer.
+
+ECN marking + DCTCP; hop-by-hop
+backpressure
+
+Queues build up
+
+Long transfers keep buffers full, so short, urgent requests
+wait behind them.
+
+DCTCP keeps queues short
+
+A lost packet is a disaster
+
+Round trips take tens of microseconds, but TCP’s minimum
+retransmission timeout is usually 200 ms — thousands of
+times longer.
+
+Avoid loss: ECN; lossless Ethernet
+for RDMA
+
+The CPU is too slow
+
+At 100 Gbps, the operating system’s network stack can’t
+keep up.
+
+RDMA over Ethernet (RoCE)
+
+Why the fixes are possible here: one organisation owns every switch and server, so it can change them all at once — which
+the Internet can never do.
+
+COMPUTER NETWORKS
+Data Center Networking: Protocol Innovations
+Layer / Aspect
+
+Data center innovation
+
+Why it works inside a DC
+
+Link layer
+
+RoCE — RDMA over Converged Ethernet:
+NIC writes directly to remote memory,
+bypassing the CPU/OS stack
+
+Single vendor, single admin domain — can
+run PFC for a (near-)lossless fabric that RDMA
+assumes
+
+Transport layer
+
+DCTCP / DCQCN — use the fraction of ECNmarked packets as a multi-bit signal, scale
+the window cut proportionally
+
+Homogeneous switches all support ECN
+consistently; short, stable queues matter for
+microsecond RTTs
+
+Transport layer
+
+Hop-by-hop backpressure — each switch
+signals the link immediately upstream to
+slow down
+
+Every switch is owned by the same operator,
+so it can hold state and react faster than a
+full RTT
+
+Routing / mgmt
+
+SDN — centralized controller computes
+routes; switches just forward
+
+One operator, uniform hardware — enables
+global traffic engineering and fast
+coordinated failover
+
+Placement
+
+Locality-aware placement — keep chatty
+services/data in the same or nearby rack
+
+Clos topology is oversubscribed higher up;
+staying under one ToR/pod avoids the scarce,
+congested core links
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

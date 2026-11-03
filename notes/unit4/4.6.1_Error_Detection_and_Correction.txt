@@ -1,0 +1,345 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 4 Link Layer and LAN Roadmap
+Introduction
+
+Error detection, correction
+Multiple access protocols
+LANs
+addressing, ARP
+Ethernet
+Switches
+VLANs
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+COMPUTER NETWORKS
+Error detection
+
+EDC: error detection and correction bits (e.g., redundancy)
+D: data protected by error checking, may include header fields
+datagram
+
+datagram
+
+otherwise
+
+d data bits
+D
+
+EDC
+bit-error prone link
+
+all
+bits in D’
+OK
+?
+
+detected
+error
+
+D’
+
+EDC’
+
+N
+
+Error detection not 100%
+reliable!
+protocol may miss some
+errors, but rarely
+larger EDC field yields
+better detection and
+correction
+
+COMPUTER NETWORKS
+Parity checking
+
+single bit parity:
+
+detect single bit
+errors
+0111000110101011 1
+
+two-dimensional bit parity:
+
+detect and correct single bit
+row parity
+errors
+
+d data bits
+parity
+bit
+Even parity: set parity bit so there
+is an even number of 1’s
+
+At receiver:
+§ compute parity of d received
+bits
+§ compare with received parity
+bit – if different than error
+detected
+
+d1,j
+d2,j
+
+d1,j+1
+d2,j+1
+
+di,1
+
+...
+...
+...
+...
+
+di,j
+
+di,j+1
+
+di+1,1
+
+...
+
+di+1,j di+1,j+1
+
+d1,1
+d2,1
+...
+
+column
+parity
+
+no errors: 1 0 1 0 1 1
+11110 0
+01110 1
+00101 0
+
+...
+
+...
+
+detected
+and
+correctable
+single-bit
+error:
+
+10101 1
+10110 0
+01110 1
+10101 0
+parity
+error
+
+parity
+error
+
+COMPUTER NETWORKS
+Parity checking
+Your
+Answer
+turn
+
+We send 1011 0110 with an even-parity bit. Two bits flip on the way. What does the receiver
+conclude?
+a Error detected, and the frame is dropped
+
+b Error detected, and the bad bit is fixed
+
+c No error detected: the parity still matches
+
+d Error detected, but only if the flips are adjacent
+
+Step 1 Data has 5 ones → parity bit = 1 → 6 ones in total (even).
+Step 2 Two flips change the count by −2, 0 or +2 → still even → check passes.
+Answer: (c). One parity bit catches any odd number of flips and misses any even number.
+
+COMPUTER NETWORKS
+Two dimensional bit parity check - Example
+
+* Check out the online interactive exercises for more examples: http://gaia.cs.umass.edu/kurose_ross/interactive/
+
+COMPUTER NETWORKS
+Internet checksum (review)
+Goal: detect errors (i.e., flipped bits) in transmitted segment
+Sender:
+treat contents of UDP segment
+(including UDP header fields and
+IP addresses) as sequence of 16bit integers
+checksum: addition (one’s
+complement sum) of segment
+content
+checksum value put into UDP
+checksum field
+
+Receiver:
+compute checksum of received segment
+check if computed checksum equals
+checksum field value:
+• not equal - error detected
+• equal - no error detected. But maybe errors
+nonetheless? More later ….
+
+COMPUTER NETWORKS
+Two dimensional bit parity check - Example
+
+COMPUTER NETWORKS
+Cyclic Redundancy Check (CRC Codes)
+more powerful error-detection coding
+D: data bits (given, think of these as a binary number)
+G: bit pattern (generator), of r+1 bits (given)
+r CRC bits
+d data bits
+D
+
+R
+
+<D,R> = D*2r XOR R
+
+bit pattern
+formula for bit pattern
+
+goal: compute r CRC bits, R, such that <D,R> exactly divisible by G (mod 2)
+• receiver knows G, divides <D,R> by G. If non-zero remainder: error detected!
+• can detect all burst errors less than r+1 bits
+• widely used in practice (Ethernet, 802.11 WiFi)
+
+COMPUTER NETWORKS
+Sender Side – Calculation of CRC
+A string of n 0’s is appended to the
+data unit to be transmitted.
+Here, n is one less than the number
+of bits in CRC generator.
+Binary division is performed of the
+resultant string with the CRC
+generator.
+After division, the remainder so
+obtained is called as CRC.
+It may be noted that CRC also
+consists of n bits.
+
+COMPUTER NETWORKS
+Receiver Side – Check
+The received code word is divided
+with the same CRC generator.
+On division, the remainder so
+obtained is checked.
+Case-1: Remainder = 0,
+• No error
+• Receiver accepts the data
+Case-2: Remainder ≠ 0
+• Receiver assumes that some error
+occurred
+• Receiver rejects the data and asks
+the sender for retransmission.
+
+COMPUTER NETWORKS
+CRC Generator
+an algebraic polynomial represented as a bit pattern
+Rule - The power of each term gives the position of the
+bit and the coefficient gives the value of the bit.
+Consider the CRC generator is x7 + x6 + x4 + x3 + x + 1.
+
+COMPUTER NETWORKS
+Cyclic Redundancy Check (CRC): Example
+Calculation for the case of:
+D = 101110, d = 6,
+G = 1001, and r = 3.
+
+G
+
+1 0 1 0 1 1
+1 0 0 1 1 0 1 1 1 0 0 0 0
+1 0 0 1
+1 0 1
+Sender wants to compute R such that:
+D
+* 2r
+0 0 0
+D . 2r XOR R = nG
+1 0 1 0
+... or equivalently (XOR R both sides):
+1 0 0 1
+r
+.
+D 2 = nG XOR R
+1 1 0
+... which says:
+0 0 0
+r
+.
+if we divide D 2 by G, we want remainder R
+1 1 0 0
+to satisfy:
+1 0 0 1
+1 0 1 0
+. 2r
+D
+algorithm
+for
+R = remainder [
+]
+1 0 0 1
+computing
+R
+G
+0 1 1
+
+* Check out the online interactive exercises for more examples: http://gaia.cs.umass.edu/kurose_ross/interactive/
+
+R
+
+COMPUTER NETWORKS
+CRC – Numerical Example
+A bit stream 1101011011 is
+transmitted using the standard
+CRC method. The generator
+polynomial is x4+x+1.
+What is the actual bit string
+transmitted?
+Solution
+Generator polynomial G(x) = x4 + x + 1 is
+encoded as 10011.
+G(x) consists of 5 bits. So, a string of 4 zeroes is
+appended to the bit stream to be transmitted.
+The resulting bit stream is 11010110111110.
+
+COMPUTER NETWORKS
+CRC – Numerical Example
+A bit stream 10011101 is transmitted using the
+standard CRC method. The generator
+polynomial is x3+1.
+• What is the actual bit string transmitted?
+• Suppose the third bit from the left is inverted during
+transmission. How will receiver detect this error?
+
+Solution
+Generator polynomial G(x) = x3 + 1 is encoded as 1001.
+G(x) consists of 4 bits. 4 zeroes is appended now.
+The resulting bit stream is 10011101100.
+Solution (Part-1)
+Code word to be transmitted is obtained by replacing
+the last 3 zeroes of 10011101000 with the CRC.
+Code word transmitted to the receiver = 10011101100.
+
+COMPUTER NETWORKS
+CRC – Numerical Example
+Solution (Part-2)
+According to the question,
+The bit stream received by the receiver =
+10111101100.
+Receiver performs the binary division with
+the same G(x).
+Remainder obtained on division is a nonzero value.
+Error occurred
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+

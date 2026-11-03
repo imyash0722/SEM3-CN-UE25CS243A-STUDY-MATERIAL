@@ -1,0 +1,1357 @@
+COMPUTER NETWORKS
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+COMPUTER NETWORKS
+Unit – 3 Network Layer and Internet Protocol
+4.1 Overview of Network Layer
+4.2 What’s Inside a Router?
+4.3 Switching
+4.4 The Internet Protocol (IP)
+• Datagram format
+• Fragmentation
+• IPv4 addressing
+• NAT
+
+4.5 Software Defined Networking (SDN)
+Introduction to Data Center Networking
+
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+Internet network layer: historically implemented via distributed, perrouter control approach:
+monolithic router contains switching hardware, runs proprietary
+implementation of Internet standard protocols (IP, RIP, IS-IS, OSPF,
+BGP) in proprietary router OS (e.g., Cisco IOS)
+different “middleboxes” for different network layer functions:
+firewalls, load balancers, NAT boxes, ..
+~2005: renewed interest in rethinking network control plane
+
+COMPUTER NETWORKS
+Per-router Control Plane
+Individual routing algorithm components in each and every router interact in the
+control plane to compute forwarding tables
+Routing
+Algorithm
+
+control
+plane
+data
+plane
+
+values in arriving
+packet header
+1
+
+0111
+3
+
+2
+
+COMPUTER NETWORKS
+Software-Defined Networking (SDN) Control Plane
+Remote controller computes, installs forwarding tables in routers
+Remote Controller
+control
+plane
+data
+plane
+
+CA
+CA
+
+values in arriving
+packet header
+1
+
+0111
+3
+
+2
+
+CA
+
+CA
+
+CA
+
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+Why a logically centralized control plane?
+•
+•
+
+•
+
+easier network management: avoid router misconfigurations, greater flexibility
+of traffic flows
+table-based forwarding (OpenFlow API) allows “programming” routers
+•
+
+centralized “programming” easier: compute tables centrally and distribute
+
+•
+
+distributed “programming” more difficult: compute tables as result of
+distributed algorithm (protocol) implemented in each-and-every router
+
+open (non-proprietary) implementation of control plane
+•
+
+foster innovation: let 1000 flowers bloom
+
+COMPUTER NETWORKS
+SDN Analogy: Mainframe to PC revolution
+
+Specialized
+Applications
+Specialized
+Operating
+System
+Specialized
+Hardware
+
+A A A A A A A A A A
+pp pp pp pp pp pp pp pp pp pp
+
+App
+
+Open Interface
+
+or
+
+or
+Windows
+
+Linux
+
+MAC OS
+
+Open Interface
+Microprocessor
+
+Vertically integrated
+Closed, proprietary
+Slow innovation
+Small industry
+* Slide courtesy: N. McKeown
+
+Horizontal
+Open interfaces
+Rapid innovation
+Huge industry
+
+COMPUTER NETWORKS
+Software-Defined Networking (SDN)
+4. programmable
+control
+applications
+
+routing
+
+…
+
+access
+control
+
+. control plane
+functions external to
+data-plane switches
+
+3
+
+load
+balance
+
+Remote Controller
+control
+plane
+data
+plane
+
+CA
+CA
+
+1: generalized “flow-based”
+forwarding (e.g.,
+OpenFlow)
+
+CA
+
+CA
+
+CA
+
+2. control, data
+plane separation
+
+COMPUTER NETWORKS
+Key Characteristics of SDN
+1: Generalized “flow-based” forwarding (e.g., OpenFlow) –
+
+Packet forwarding by SDN-controlled switches can be based on any number of header field values
+in the transport-layer, network-layer, or link-layer header. OpenFlow abstraction allows forwarding
+based on eleven different header field values. This contrasts sharply with the traditional approach
+to router-based forwarding where forwarding of IP datagrams was based solely on a datagram’s
+destination IP address. Here, packet forwarding rules are specified in a switch’s flow table; and it is
+the job of the SDN control plane to compute, manage and install flow table entries in all of the
+network’s switches.
+
+2: Control and Data plane separation –
+
+The data plane consists of the network’s switches—relatively simple (but fast) devices that execute
+the “match plus action” rules in their flow tables. The control plane consists of servers and software
+that determine and manage the switches’ flow tables.
+
+COMPUTER NETWORKS
+Key Characteristics of SDN
+3. Network control plane functions: external to data-plane switches –
+
+SDN control plane is implemented in software. Unlike traditional routers, however, this software executes on
+servers that are both distinct and remote from the network’s switches. As shown in Figure, the control plane
+itself consists of two components—an SDN controller (or network operating system [Gude 2008]) and a set of
+network-control applications. The controller maintains accurate network state information (e.g., the state of
+remote links, switches, and hosts); provides this information to the network-control applications running in
+the control plane; and provides the means through which these applications can monitor, program, and
+control the underlying network devices. Although the controller in Figure is shown as a single central server,
+in practice the controller is only logically centralized; it is typically implemented on several servers that
+provide coordinated, scalable performance and high availability.
+
+4. Programmable control applications –
+
+The network is programmable through the network-control applications running in the control plane. These
+applications represent the “brains” of the SDN control plane, using the APIs provided by the SDN controller to
+specify and control the data plane in the network devices.
+For example, a routing network-control application might determine the end-end paths between sources and
+destinations. Yet another application might have switches forward packets in a manner that performs server
+load balancing
+
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+Data-plane switches:
+• fast, simple, commodity switches
+implementing generalized data-plane
+forwarding (Section 4.4) in hardware
+• flow (forwarding) table computed,
+installed under controller supervision
+• API for table-based switch control (e.g.,
+OpenFlow)
+• defines what is controllable, what is
+not
+• protocol for communicating with
+controller (e.g., OpenFlow)
+
+network-control
+applications
+
+…
+
+routing
+access
+control
+
+load
+balance
+
+northbound API
+
+control
+plane
+
+SDN Controller
+(network operating system)
+southbound API
+
+data
+plane
+SDN-controlled switches
+
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+SDN controller (network OS):
+• maintain network state information
+• interacts with network control
+applications “above” via northbound
+API
+• interacts with network switches
+“below” via southbound API
+• implemented as distributed system for
+performance, scalability, faulttolerance, robustness
+
+network-control
+applications
+
+…
+
+routing
+access
+control
+
+load
+balance
+
+northbound API
+
+control
+plane
+
+SDN Controller
+(network operating system)
+southbound API
+
+data
+plane
+
+SDN-controlled switches
+
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+Network-control apps:
+• “brains” of control: implement
+control functions using lowerlevel services, API provided by
+SDN controller
+• unbundled: can be provided by
+3rd party: distinct from routing
+vendor, or SDN controller
+
+network-control
+applications
+
+…
+
+routing
+access
+control
+
+load
+balance
+
+northbound API
+
+control
+plane
+
+SDN Controller
+(network operating system)
+southbound API
+
+data
+plane
+SDN-controlled switches
+
+COMPUTER NETWORKS
+Components of SDN Controller
+access
+control
+
+routing
+
+interface layer to network
+control apps: abstractions
+API
+network-wide state
+management : state of
+networks links, switches,
+services: a distributed
+database
+communication:
+communicate between SDN
+controller and controlled
+switches
+
+load
+balance
+
+Interface, abstractions for network control apps
+network
+graph
+
+RESTful
+API
+
+statistics
+
+…
+
+…
+
+intent
+
+flow tables
+
+Network-wide distributed, robust state management
+Link-state info
+
+host info
+
+OpenFlow
+
+…
+
+… switch info
+SNMP
+
+Communication to/from controlled devices
+
+SDN
+controller
+
+COMPUTER NETWORKS
+Components of SDN
+A communication layer: Communicating between the SDN controller and controlled
+network devices. Clearly, if an SDN controller is going to control the operation of a remote
+SDN-enabled switch, host, or other device, a protocol is needed to transfer information
+between the controller and that device. In addition, a device must be able to communicate
+locally-observed events to the controller (for example, a message indicating that an
+attached link has gone up or down, that a device has just joined the network, or a heartbeat
+indicating that a device is up and operational). These events provide the SDN controller with
+an up-to-date view of the network’s state. This protocol constitutes the lowest layer of the
+controller architecture, as shown in Figure. The communication between the controller and
+the controlled devices cross what has come to be known as the controller’s “southbound”
+interface. OpenFlow is implemented in most, if not all, SDN controllers.
+
+COMPUTER NETWORKS
+Components of SDN
+A network-wide state-management layer: The ultimate control decisions made by the SDN control
+plane—for example, configuring flow tables in all switches to achieve the desired end-end
+forwarding, to implement load balancing, or to implement a particular firewalling capability—will
+require that the controller have up-to-date information about state of the networks’ hosts, links,
+switches, and other SDN-controlled devices. A switch’s flow table contains counters whose values
+might also be profitably used by network-control applications; these values should thus be available
+to the applications. Since the ultimate aim of the control plane is to determine flow tables for the
+various controlled devices, a controller might also maintain a copy of these tables.
+The interface to the network-control application layer: The controller interacts with networkcontrol applications through its “northbound” interface. This API allows network-control applications
+to read/write network state and flow tables within the state-management layer. Applications can
+register to be notified when state-change events occur, so that they can take actions in response to
+network event notifications sent from SDN-controlled devices.
+
+COMPUTER NETWORKS
+OpenFlow Protocol
+§
+
+Operates between controller & switch
+
+§
+
+Operates over TCP, default port no. 6653
+
+§
+
+TCP used to exchange messages
+•
+
+§
+
+§
+
+optional encryption
+
+Three classes of OpenFlow messages:
+•
+
+controller-to-switch
+
+•
+
+asynchronous (switch to controller)
+
+•
+
+symmetric (misc.)
+
+Distinct from OpenFlow API
+•
+
+API used to specify generalized forwarding
+actions
+
+OpenFlow Controller
+
+COMPUTER NETWORKS
+OpenFlow: Controller-to-switch messages
+
+Key controller-to-switch messages
+§ features: controller queries switch
+features, switch replies
+§ configure: controller queries/sets
+switch configuration parameters
+§ modify-state: add, delete, modify
+flow entries in the OpenFlow tables
+§ packet-out: controller can send this
+packet out of specific switch port
+
+OpenFlow Controller
+
+COMPUTER NETWORKS
+OpenFlow: Switch-to-Controller messages
+
+Key switch-to-controller messages
+
+OpenFlow Controller
+
+§ packet-in: transfer packet (and its
+control) to controller. See packet-out
+message from controller
+§ flow-removed: flow table entry deleted
+at switch
+§ port status: inform controller of a
+change on a port.
+Fortunately, network operators don’t “program” switches by
+creating/sending OpenFlow messages directly. Instead use higher-level
+abstraction at controller
+
+COMPUTER NETWORKS
+Which OpenFlow message?
+Name the OpenFlow message for each event.
+
+A packet arrives that matches no rule in the switch
+
+packet-in (switch → controller)
+
+The controller installs a new rule in a switch
+
+modify-state, often called flow-mod (controller →
+switch)
+
+A link attached to the switch goes down
+
+port-status (switch → controller)
+
+A rule expires because no packet has used it for a while
+
+flow-removed (switch → controller)
+
+COMPUTER NETWORKS
+Generalized forwarding: match plus action
+
+Review: each router contains a forwarding table (aka: flow table)
+
+• “match plus action” abstraction: match bits in arriving packet, take action
+values in arriving
+• destination-based
+forwarding: forward based on dest. IP address
+packet header
+1
+0111
+• generalized forwarding:
+2
+3
+• many header fields can determine action
+• many action possible: drop/copy/modify/log packet
+
+forwarding table
+(aka: flow table)
+
+COMPUTER NETWORKS
+Flow Table Abstraction
+•
+
+flow: defined by header field values (in link-, network-, transport-layer fields)
+
+•
+
+generalized forwarding: simple packet-handling rules
+•
+•
+•
+•
+
+match: pattern values in packet header fields
+actions: for matched packet: drop, forward, modify, matched packet or send matched packet to
+controller
+priority: disambiguate overlapping patterns
+counters: #bytes and #packets
+
+Flow table
+match action
+
+Router’s flow table define
+router’s match+action rules
+
+COMPUTER NETWORKS
+Flow Table Abstraction
+•
+
+flow: defined by header fields
+
+•
+
+generalized forwarding: simple packet-handling rules
+match: pattern values in packet header fields
+actions: for matched packet: drop, forward, modify, matched packet or send matched packet
+to controller
+priority: disambiguate overlapping patterns
+counters: #bytes and #packets
+
+•
+•
+•
+•
+
+src = *.*.*.*, dest=3.4.*.*
+src=1.2.*.*, dest=*.*.*.*
+src=10.1.2.3, dest=*.*.*.*
+
+Flow table
+match action
+
+1
+
+* : wildcard
+
+4
+3
+
+forward(2)
+drop
+send to controller
+
+COMPUTER NETWORKS
+OpenFlow: Flow table Entries
+Match
+
+Action
+
+Stats
+
+Packet + byte counters
+1. Forward packet to port(s)
+2. Drop packet
+3. Modify fields in header(s)
+4. Encapsulate and forward to controller
+Header fields to match:
+Ingress
+Port
+
+Src
+MAC
+
+Dst
+MAC
+
+Eth
+Type
+
+VLAN
+ID
+
+Link layer
+
+VLAN
+Pri
+
+IP
+Src
+
+IP
+Dst
+
+IP
+Prot
+o
+
+Network layer
+
+IP
+ToS
+
+TCP/UDP
+Src Port
+
+TCP/UDP
+Dst Port
+
+Transport layer
+
+COMPUTER NETWORKS
+OpenFlow Abstraction
+•
+
+match+action: abstraction unifies different kinds of devices
+
+Router
+
+Firewall
+
+Switch
+
+NAT
+
+• match: longest
+destination IP prefix
+• action: forward out a
+link
+• match: destination MAC
+address
+• action: forward or flood
+
+• match: IP addresses and
+TCP/UDP port numbers
+• action: permit or deny
+• match: IP address and port
+• action: rewrite address and
+port
+
+COMPUTER NETWORKS
+OpenFlow Examples
+Destination-based forwarding:
+Switch MAC
+src
+Port
+*
+
+*
+
+MAC
+dst
+
+Eth
+type
+
+*
+
+*
+
+MAC
+dst
+
+Eth
+type
+
+*
+
+*
+
+MAC
+dst
+
+Eth
+type
+
+*
+
+*
+
+VLAN VLAN
+ID
+Pri
+*
+
+*
+
+IP
+Src
+
+IP
+Dst
+
+IP
+Prot
+
+IP
+ToS
+
+*
+
+51.6.0.8
+
+*
+
+*
+
+IP
+Src
+
+IP
+Dst
+
+IP
+Prot
+
+IP
+ToS
+
+*
+
+*
+
+*
+
+*
+
+IP
+Src
+
+IP
+Dst
+
+IP
+Prot
+
+IP
+ToS
+
+128.119.1.1
+
+*
+
+*
+
+*
+
+TCP TCP
+s-port d-port Action
+port6
+*
+*
+
+IP datagrams destined to IP address 51.6.0.8 should be forwarded to router output port 6
+
+Firewall:
+Switch MAC
+src
+Port
+*
+
+*
+
+VLAN VLAN
+ID
+Pri
+*
+
+*
+
+TCP TCP
+s-port d-port Action
+drop
+22
+*
+
+Block (do not forward) all datagrams destined to TCP port 22 (ssh port #)
+Switch MAC
+src
+Port
+*
+
+*
+
+VLAN VLAN
+ID
+Pri
+*
+
+*
+
+Block (do not forward) all datagrams sent by host 128.119.1.1
+
+TCP TCP
+s-port d-port Action
+drop
+*
+*
+
+COMPUTER NETWORKS
+OpenFlow Examples
+Layer 2 destination-based forwarding:
+Switch MAC
+src
+Port
+*
+
+*
+
+MAC
+dst
+
+Eth
+type
+
+22:A7:23:
+11:E1:02
+
+*
+
+VLAN VLAN
+ID
+Pri
+*
+
+*
+
+IP
+Src
+
+IP
+Dst
+
+IP
+Prot
+
+IP
+ToS
+
+TCP TCP
+s-port d-port Action
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+port3
+
+layer 2 frames with destination MAC address 22:A7:23:11:E1:02 should be forwarded to
+output port 3
+
+COMPUTER NETWORKS
+OpenFlow Examples
+
+Orchestrated tables can
+create network-wide behavior,
+e.g.,:
+§ datagrams from hosts h5 and
+h6 should be sent to h3 or h4,
+via s1 and from there to s2
+
+Host h6
+10.3.0.6
+1
+2
+3
+
+s3
+
+controller
+
+4
+
+Host h5
+10.3.0.5
+
+1
+
+Host h1
+10.1.0.1
+
+s1
+
+2
+
+4
+3
+
+Host h2
+10.1.0.2
+
+s2
+
+1
+
+4
+
+2
+3
+
+Host h3
+10.2.0.3
+
+Host h4
+10.2.0.4
+
+COMPUTER NETWORKS
+OpenFlow Examples
+match
+
+action
+
+Orchestrated tables can
+create network-wide behavior,
+e.g.,:
+§ datagrams from hosts h5 and
+h6 should be sent to h3 or h4,
+via s1 and from there to s2
+
+Host h6
+10.3.0.6
+
+IP Src = 10.3.*.*
+forward(3)
+IP Dst = 10.2.*.*
+1
+2
+3
+
+s3
+
+controller
+
+4
+
+Host h5
+10.3.0.5
+
+1
+
+Host h1
+10.1.0.1
+
+s1
+
+2
+
+4
+3
+
+match
+
+action
+
+ingress port = 1
+IP Src = 10.3.*.*
+IP Dst = 10.2.*.*
+
+forward(4)
+
+Host h2
+10.1.0.2
+
+s2
+
+1
+
+4
+
+2
+3
+
+Host h3
+10.2.0.3
+
+match
+
+Host h4
+10.2.0.4
+
+action
+
+ingress port = 2
+forward(3)
+IP Dst = 10.2.0.3
+ingress port = 2
+forward(4)
+IP Dst = 10.2.0.4
+
+COMPUTER NETWORKS
+SDN: How the Controller Learns the Network
+1 Switches check in
+
+Controller
+
+holds the whole network map
+
+Each switch connects to the controller and lists its ports.
+
+2 Links are discovered
+
+Controller sends a probe out of a port; the receiver reports it.
+
+3 Hosts are discovered
+
+A new host's first packet is passed up to the controller.
+
+4 Changes are reported
+
+Port up/down is reported at once; traffic counts are read often.
+
+Switch A
+
+Switch B
+▲ what I see
+
+Switch C
+
+▼ flow rules
+
+Learn → Build map → Compute paths → Install rules
+
+Each switch reports only what it sees locally. Only the controller sees the whole map — so it, not the switches,
+decides the routes.
+
+COMPUTER NETWORKS
+SDN: Control/Data Plane Interaction Example
+1 S1, experiencing link failure uses
+
+Dijkstra’s link-state
+routing
+
+4
+
+network
+graph
+
+RESTful
+API
+
+…
+
+3
+statistics
+Link-state info
+
+host info
+
+2
+
+…
+
+OpenFlow
+
+… intent
+flow tables
+
+… switch info
+SNMP
+
+1
+
+4 Dijkstra’s routing algorithm
+
+s2
+s1
+s3
+
+OpenFlow port status message to
+notify controller using the
+OpenFlow port-status message
+2 SDN controller receives
+OpenFlow message, updates
+link status info
+3 Dijkstra’s routing algorithm
+application has previously
+registered to be called when ever
+link status changes. It is called.
+
+s4
+
+access network graph info, link
+state info in controller,
+computes new routes
+
+COMPUTER NETWORKS
+SDN: Control/Data Plane Interaction Example
+Dijkstra’s link-state
+routing
+
+5
+
+4
+
+network
+graph
+
+RESTful
+API
+
+…
+
+3
+statistics
+Link-state info
+
+host info
+
+2
+
+…
+
+OpenFlow
+
+1
+
+… intent
+flow tables
+
+… switch info
+SNMP
+
+s2
+s3
+
+with flow-table-computation
+component in SDN controller,
+which computes new flow
+tables needed
+6 controller uses OpenFlow to
+
+install new tables in
+switches that need updating
+
+6
+
+s1
+
+5 link state routing app interacts
+
+s4
+
+COMPUTER NETWORKS
+Generalized Forwarding: Summary
+
+§ “match plus action” abstraction: match bits in arriving packet header(s) in
+any layers, take action
+• matching over many fields (link-, network-, transport-layer)
+• local actions: drop, forward, modify, or send matched packet to
+controller
+• “program” network-wide behaviors
+§ simple form of “network programmability”
+• programmable, per-packet “processing”
+• historical roots: active networking
+• today: more generalized programming:
+P4 (see p4.org).
+
+COMPUTER NETWORKS
+P4 (Programming Protocol-independent Packet Processors)
+
+§ P4 (Programming Protocol-independent Packet Processors) is a domain-specific
+programming language used to program the data plane (packet forwarding
+behavior) of network devices such as switches, routers, NICs, and programmable
+ASICs.
+§ Unlike SDN controllers like Ryu or ONOS, which decide where packets should go,
+P4 defines how packets are processed inside the switch.
+§ P4 is protocol-independent, where you can define your own protocol
+§ P4 lets you program the switch itself. Can define: Packet headers, Packet parser,
+Match-action tables, Metadata, Packet processing pipeline; which are in turn
+interpreted and processed by the compiled program and target device.
+Introducing P4 https://www.youtube.com/embed/bfSDrznBQSQ?feature=oembed#
+
+COMPUTER NETWORKS
+Traditional to Programmable Networking
+
+Transition from
+the Traditional
+Architecture (left)
+to SDN
+Architecture
+(middle) and SDN
+Architecture with
+a Programmable
+Data Plane (right)
+using P4.
+
+COMPUTER NETWORKS
+Traditional to Programmable Networks
+
+§ Traditional architecture had tightly bound control and data plane, called
+‘‘tightly coupled.’’
+§ As SDN came into the picture, control, and data plane, are separated and had a
+bottom-up design. The information is shared using the OpenFlow Protocol.
+§ Currently, the new architecture seeks programmable data planes in SDN that
+followed a top-down approach. The programmable chip can be userconfigured, whereas the SDN architecture has a fixed set of functions.
+§ All major cloud providers and data centers use SDN.
+§ In the evolution of SDN virtualization, the king of virtualization called
+‘‘VMware’’, acquired Nicira and renamed it as VMware NSX, which is the SDNstyle network. NSX, which represents SDN, is used by hundreds of thousands of
+virtual machines in data centers worldwide
+
+COMPUTER NETWORKS
+Where is SDN important
+§ SDN is significant and allows network operators to combine software and hardware from
+multiple vendors and create customized network services and infrastructure.
+§ Improves network connectivity for sales, customer service, internal communication,
+and document-sharing.
+§ Enables organizations to create customized network services and infrastructure by
+combining software and hardware from multiple vendors.
+§ A virtual network combines SDN, network function virtualization, and white boxes.
+§ Allows for faster deployment of new applications, services, and business models.
+§ P4 programmability opens up entirely new possibilities for network stack flexibility from
+7-layered OSI or 5-layered TCP/IP modeling.
+§ If there is a need for upgradability (hardware solutions will never have), which allows
+adding functions and protocols to network devices by updating the P4 software
+running on them rather than purchasing new switches and their frameworks.
+
+COMPUTER NETWORKS
+P4 Architecture
+P4 Abstract
+Forwarding
+Model
+(PISA)
+
+§ P4 architecture is called as ‘‘P4 Abstract Forwarding Model’’ - Targeted PISA-like (Protocol Independent
+Switch Architecture) devices.
+§ The PISA architecture is a protocol-independent switch architecture that is a single-pipeline forwarding
+architecture. It consists an input block, ingress match-action, buffers, egress match-action, deparser, and an
+output block connected to each other in a linear pipeline.
+§ The limitation of this architecture is that it does not know to express the packets which are processed in the
+pipeline.
+
+COMPUTER NETWORKS
+P4 Architecture
+(P4 Portable Switch Architecture)
+
+§ P4 portable switch architecture, allows to target multiple programmable devices with different architectures. It
+has outgrown PISA
+§ It uses a programmable parser and performs a multistage matching-action process to forward incoming packets,
+which can be either serial or parallel.
+§ This architecture is widely used as it makes use of additional constraints to solve the problems. Can be
+implemented on any switch target.
+§ The multiple networking functions implemented in the PSA are combined into a single pipeline. The pipeline has
+the following components: parser, checksum validate, ingress match-action, packet buffer, egress matching
+action, checksum update, deparser, and buffer queuing engine.
+
+COMPUTER NETWORKS
+Workflow of P4 Program
+
+Ref: B. Goswami, M. Kulkarni and J. Paulose, "A Survey on P4 Challenges in Software Defined
+Networks: P4 Programming," in IEEE Access, vol. 11, pp. 54373-54387, 2023,
+https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10130445&tag=1
+
+COMPUTER NETWORKS
+Workflow of P4 Program
+§ Each section of the P4 program is linked to a different block that performs a specific
+function.
+§ The P4 program is divided into four major sections: data declaration, parser logic, a matchaction table with control flow, and deparser logic. A parser, ingress, scheduler, egress, and
+deparser are required to run the P4 program successfully.
+§ The packet parser is the first to process the arriving data packets and search for specific
+areas from the packet header, specifying switch protocol support.
+§ Data packets contain metadata, which is extra information that can be passed between
+processing stages.
+§ Examples of metadata include ingress port numbers, transmission destinations and
+queues, timestamps used for packet scheduling, and data passed between the
+tables.
+
+COMPUTER NETWORKS
+Workflow of P4 Program
+
+§ The match-action table received the extracted header area.
+There are two sections in the match action table: the entry and
+exit tables.
+§ The entry table determines the queue in which a data packet is
+placed. Data packets can be forwarded, copied, discarded, or
+triggered by flow-control-based ingress processing. An action
+table is linked to tracking the status of each frame.
+
+COMPUTER NETWORKS
+Suggested Readings
+Reading Material:
+Software Defined Networks A Comprehensive Approach https://ridhanegara.staff.telkomuniversity.ac.id/files/2017/04/PaulGoransson-and-Chuck-Black-Auth.-Software-Defined-Networks.-AComprehensive-Approach.pdf
+
+Software-Defined-Networks.A Systems Approach.pdf
+https://sdn.systemsapproach.org/intro.html
+
+Textbook: Refer Chapter 4 & 5 - 4.4 & 5.5
+
+THANK YOU
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+
