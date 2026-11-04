@@ -1,0 +1,9 @@
+labs/
+*.deb
+*.mp4
+*.pkt
+*.pcapng
+*.iso
+*.ova
+*.vdi
+*.vmdk
