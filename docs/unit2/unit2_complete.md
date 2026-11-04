@@ -1,11 +1,148 @@
-# Unit 2: Transport Layer (Chapter 3)
+# Unit 2: Complete Study Guide — Transport Layer
 
-## Overview
-This unit covers Chapter 3 of Kurose & Ross (9th Edition): Transport Layer
+# Computer Networks (UE25CS243A) — Unit 2
 
-**Course Hours**: 14 hours
+## Transport Layer
+
+**Course**: UE25CS243A | **Semester**: III (Aug-Dec 2026) | **Credits**: 4
+**Textbook**: Kurose & Ross, *Computer Networking: A Top-Down Approach*, 9th Edition (2026)
+**Chapter**: 3 | **Hours**: 14 | **Evaluation**: ISA-1 (40 marks → 15%)
 
 ---
+
+## 📚 Unit Overview
+
+| Topic | Section | Key Concepts |
+|-------|---------|--------------|
+| Transport Services | 3.1 | Process-to-process delivery, multiplexing/demultiplexing, TCP vs UDP |
+| Multiplexing | 3.2 | UDP (2-tuple), TCP (4-tuple), port numbers, well-known ports |
+| UDP | 3.3 | 8-byte header, checksum (1's complement + pseudo-header) |
+| Reliable Data Transfer | 3.4 | RDT 1.0→3.0, stop-and-wait, pipelining, GBN vs SR |
+| Go-Back-N | 3.4.3 | Cumulative ACK, window N ≤ 2ᵏ⁻¹, retransmit all on timeout |
+| Selective Repeat | 3.4.4 | Per-packet timers, N ≤ 2ᵏ⁻¹, buffer out-of-order |
+| TCP Connection | 3.5.1 | Full-duplex, point-to-point, 3-way handshake, 4-way teardown |
+| TCP Segment | 3.5.2 | Sequence/ACK numbers (byte-oriented), flags, window, options (MSS) |
+| RTT Estimation | 3.5.3 | EWMA (α=0.125), DevRTT (β=0.25), Timeout = EstRTT + 4×DevRTT, Karn's Algorithm |
+| Reliable Transfer | 3.5.4 | Sender events, fast retransmit (3 dup ACKs), fast recovery |
+| Flow Control | 3.5.5 | rwnd = RcvBuffer - (LastByteRcvd - LastByteRead), sender constraint |
+| Connection Mgmt | 3.5.6 | SYN/SYN+ACK/ACK, FIN/ACK, TIME_WAIT (2×MSL ≈ 2 min) |
+| Congestion Control | 3.6-3.7 | Slow Start → CA → Fast Recovery, AIMD, Tahoe/Reno/CUBIC/Vegas/BBR |
+| ECN | 3.7.3 | IP ECN bits (ECT0/ECT1/CE), TCP CWR/ECE response |
+| QUIC/HTTP/3 | 3.8 | 1-RTT/0-RTT, connection migration, stream independence |
+
+---
+
+## 📖 Quick Navigation
+
+- [Chapter 3: Transport Layer](03_chapter3_transport_layer.md)
+- [Complete Unit 2 Notes](unit2_complete.md)
+
+---
+
+## ✅ Study Checklist (ISA-1)
+
+### Transport Services & UDP
+- [ ] Process-to-process delivery via ports (multiplexing/demultiplexing)
+- [ ] UDP: 2-tuple demux; TCP: 4-tuple demux
+- [ ] UDP header: src/dst port (16b), length (16b), checksum (16b) = 8 bytes
+- [ ] UDP checksum: 1's complement sum of 16-bit words + pseudo-header
+
+### Reliable Data Transfer (RDT)
+- [ ] RDT evolution: 1.0 (reliable) → 2.0 (bit errors, ACK/NAK) → 2.1 (corrupt ACK) → 2.2 (NAK-free) → 3.0 (loss + errors, timers)
+- [ ] Stop-and-wait utilization: U = (L/R) / (RTT + L/R)
+- [ ] Pipelining: sender allows multiple in-flight packets
+- [ ] GBN: cumulative ACK, window bound N ≤ 2ᵏ⁻¹, retransmit ALL on timeout
+- [ ] SR: selective ACK, per-packet timers, N ≤ 2ᵏ⁻¹, buffer out-of-order
+
+### TCP
+- [ ] Segment structure: seq# (byte of first data), ACK# (next expected byte), flags (SYN, ACK, FIN, RST, PSH, URG, ECE, CWR), window (rwnd)
+- [ ] MSS = MTU - 40 (typically 1460 bytes)
+- [ ] RTT estimation: EstRTT = 0.875×EstRTT + 0.125×SampleRTT, DevRTT = 0.75×DevRTT + 0.25×|SampleRTT-EstRTT|
+- [ ] Timeout = EstRTT + 4×DevRTT, exponential backoff on timeout
+- [ ] Karn's Algorithm: don't measure SampleRTT for retransmitted segments
+- [ ] Sender: data from app → create segment, start timer if first; timeout → retransmit oldest, restart; ACK(y>SendBase) → SendBase=y, restart if unACKed remain
+- [ ] Fast retransmit: 3 dup ACKs → retransmit missing immediately, enter fast recovery
+- [ ] Fast recovery: ssthresh=cwnd/2, cwnd=ssthresh+3MSS, per dup ACK cwnd+=1MSS, on new ACK cwnd=ssthresh
+- [ ] Flow control: rwnd = RcvBuffer - (LastByteRcvd - LastByteRead), sender limits unACKed to min(cwnd, rwnd)
+- [ ] 3-way handshake: SYN(x) → SYN+ACK(y, x+1) → ACK(x+1, y+1)
+- [ ] 4-way teardown: FIN(u) → ACK(u+1) → FIN(v) → ACK(v+1), TIME_WAIT = 2×MSL
+
+### Congestion Control
+- [ ] Slow Start: cwnd=1 MSS (10 MSS per RFC 3390), per ACK cwnd+=1 MSS (doubles/RTT), exit when cwnd≥ssthresh
+- [ ] Congestion Avoidance: per RTT cwnd+=1 MSS (linear), per ACK cwnd+=MSS×(MSS/cwnd)
+- [ ] Timeout: ssthresh=cwnd/2, cwnd=1 MSS, enter Slow Start
+- [ ] 3 Dup ACKs: ssthresh=cwnd/2, cwnd=ssthresh+3 MSS, Fast Recovery
+- [ ] AIMD: Additive Increase (1 MSS/RTT), Multiplicative Decrease (÷2)
+- [ ] Macroscopic throughput: 0.75×W/RTT (W = cwnd at loss)
+- [ ] Loss rate model: Throughput ≈ 1.22×MSS/(RTT×√L)
+- [ ] CUBIC: cwnd = C×(t-K)³ + W_max, less RTT-dependent
+- [ ] Vegas: delay-based, Expected = cwnd/RTT_min, Actual = cwnd/RTT_curr
+- [ ] BBR: model-based, BDP = BW×RTT_min, pacing = BDP×gain, ignores loss
+- [ ] ECN: IP ECN bits (ECT0/ECT1/CE), TCP response: cwnd/=2, ssthresh=cwnd, set CWR
+
+### QUIC/HTTP/3
+- [ ] TCP+TLS 1.3 = 2 RTT; QUIC+TLS 1.3 = 1 RTT; QUIC 0-RTT resume
+- [ ] Connection ID survives IP change (migration)
+- [ ] Stream independence: lost packet blocks only that stream
+
+---
+
+## 🧠 Key Formulas (Memorize)
+
+| Formula | Equation |
+|---------|----------|
+| Stop-and-Wait Utilization | `U = (L/R) / (RTT + L/R)` |
+| Pipelined Utilization | `U = N × (L/R) / (RTT + L/R)` |
+| Optimal Window | `N_optimal = 1 + (RTT × R) / L` |
+| BDP | `BDP = R × RTT` |
+| GBN Window Bound | `N ≤ 2ᵏ - 1` |
+| SR Window Bound | `N ≤ 2ᵏ⁻¹` |
+| EstimatedRTT | `0.875 × EstRTT + 0.125 × SampleRTT` |
+| DevRTT | `0.75 × DevRTT + 0.25 × |SampleRTT - EstRTT|` |
+| TimeoutInterval | `EstimatedRTT + 4 × DevRTT` |
+| rwnd | `RcvBuffer - (LastByteRcvd - LastByteRead)` |
+| Sender Constraint | `LastByteSent - LastByteAcked ≤ min(cwnd, rwnd)` |
+| Slow Start | `cwnd += 1 MSS` per ACK |
+| Congestion Avoidance | `cwnd += 1 MSS` per RTT |
+| Timeout Reaction | `ssthresh = cwnd/2; cwnd = 1 MSS` |
+| 3 Dup ACKs | `ssthresh = cwnd/2; cwnd = ssthresh + 3 MSS` |
+| Macroscopic Throughput | `0.75 × W / RTT` |
+| Loss Rate (Padhye) | `1.22 × MSS / (RTT × √L)` |
+| TIME_WAIT | `2 × MSL ≈ 2 minutes` |
+
+---
+
+## ❓ Quick Self-Test
+
+1. **Difference between GBN and SR?**
+2. **Why is SR window size ≤ 2ᵏ⁻¹?**
+3. **TCP sequence number = ?**
+4. **TCP ACK number = ?**
+5. **How does TCP flow control work?**
+6. **Slow Start vs Congestion Avoidance?**
+7. **Fast Retransmit trigger?**
+8. **Timeout vs 3 Dup ACKs reaction?**
+9. **What is BBR?**
+10. **What is ECN?**
+
+---
+
+## 🎯 Exam-Relevant MCQ Patterns
+
+- Numerical: Calculate EstimatedRTT, DevRTT, TimeoutInterval from SampleRTT sequence
+- Numerical: GBN/SR transmission count for given loss pattern (e.g., "every 5th packet lost, N=10")
+- Numerical: Macroscopic throughput from loss rate
+- Conceptual: TCP state machine transitions (handshake, teardown)
+- Conceptual: Identify congestion control phase from cwnd behavior
+- Conceptual: QUIC advantage over TCP+TLS
+
+---
+
+*Unit 2 covers Chapter 3. ISA-1 evaluates Units 1 & 2 (40 marks → 15%).*
+
+---
+
+# Unit 2: Transport Layer (Chapter 3)
 
 ## 3.1 Introduction and Transport-Layer Services
 
@@ -364,7 +501,7 @@ Client                    Server
 - `EffectiveWindow = min(cwnd, rwnd)`
 
 #### Slow Start (SS)
-- Initial: `cwnd = 1 MSS` (up to 10 MSS per RFC 3390)
+- Initial: `cwnd = 1 MSS` (up to 10 MSS per RFC 3390/RFC 6928)
 - **Per ACK received**: `cwnd += 1 MSS` (doubles per RTT)
 - Exponential growth
 - **Exit condition**: `cwnd ≥ ssthresh` → enter Congestion Avoidance
@@ -389,27 +526,24 @@ On new ACK (ack > previous): cwnd = ssthresh; exit to CA
 
 **Sawtooth Pattern**: cwnd increases linearly, drops multiplicatively on loss
 
-### 3.7.2 Recent End-End TCP Congestion Control Algorithms
+### 3.7.2 TCP Variants: Tahoe, Reno, CUBIC
 
-#### CUBIC (Default in Linux since 2.6.19)
-- **Function**: `cwnd = C × (t - K)³ + W_max`
+| Feature | Tahoe (1988) | Reno (1990) | CUBIC (2008) |
+|---------|--------------|-------------|--------------|
+| Growth before loss | Slow start, then +1 MSS/RTT | Slow start, then +1 MSS/RTT | Slow start, then cubic in time since last loss |
+| On timeout | cwnd = 1 MSS, slow start | cwnd = 1 MSS, slow start | cwnd = 1 MSS, slow start |
+| On 3 dup ACKs | cwnd = 1 MSS, slow start | cwnd = ssthresh + 3 (fast recovery), then ssthresh | cwnd × 0.7 during fast recovery |
+| Fast recovery | No | Yes | Yes |
+| Reference | First congestion control that worked | Textbook model | Default in Linux/Windows/macOS (RFC 9438) |
+
+**CUBIC Details**:
+- Function: `cwnd = C × (t - K)³ + W_max`
 - `t` = time since last congestion event
 - `K` = cubic root of `(W_max × (1 - β) / C)`
 - `β = 0.7` (multiplicative decrease factor)
 - Less RTT-dependent; more aggressive after loss
-
-#### TCP Vegas
-- **Delay-based**: Measures `Expected = cwnd/RTT_min`, `Actual = cwnd/RTT_curr`
-- If `Actual < Expected - α`: increase cwnd
-- If `Actual > Expected + β`: decrease cwnd
-- Prevents congestion before loss occurs
-
-#### BBR (Bottleneck Bandwidth and Round-trip propagation time) - Google
-- **Model-based**: Estimates `BW` (bottleneck bandwidth) and `RTT_min`
-- **BDP = BW × RTT_min**
-- **Pacing rate = BDP × gain** (gain cycles: 1.25, 0.75, 1, 1...)
-- **cwnd = BDP + headroom**
-- Does not react to loss; reacts to bandwidth/delay measurements
+- Under Reno: 20ms flow grows 10× faster than 200ms flow
+- Under CUBIC: both follow same time-based curve
 
 ### 3.7.3 Network-Assisted Explicit Congestion Notification (ECN)
 
@@ -430,6 +564,8 @@ Set CWR (Congestion Window Reduced) flag in TCP header
 ```
 **Receiver**: Echoes CE back via ECE flag in TCP ACK
 
+**History**: Specified in 1999, took two decades for real deployment. Cost: feedback still costs full RTT, network modification required.
+
 ### 3.7.4 Fairness
 **Fair Share**: `R / K` for K flows sharing bottleneck rate R
 **AIMD Convergence**: Additive Increase (1 MSS/RTT), Multiplicative Decrease (÷2) → converges to fairness
@@ -440,22 +576,6 @@ Set CWR (Congestion Window Reduced) flag in TCP header
 - **TCP**: Monolithic in kernel; hard to evolve
 - **QUIC**: User-space (UDP); rapid evolution; includes TLS 1.3
 - **HTTP/3 over QUIC**: Stream-level multiplexing; 0-RTT; connection migration
-
----
-
-## 3.9 Summary
-
-### Key Concepts
-1. **Transport services**: Process-to-process delivery via ports
-2. **Multiplexing/Demultiplexing**: UDP (2-tuple), TCP (4-tuple)
-3. **UDP**: Minimal, 8-byte header, checksum
-4. **RDT principles**: ACK/NAK, sequence numbers, timers, pipelining
-5. **GBN vs SR**: GBN = cumulative ACK, retransmit all; SR = selective ACK, retransmit one
-6. **TCP**: Reliable byte stream, flow control (rwnd), congestion control (cwnd)
-7. **RTT estimation**: EWMA for EstimatedRTT and DevRTT; Timeout = EstRTT + 4×DevRTT
-8. **TCP Congestion Control**: Slow Start → CA → Fast Recovery; AIMD
-9. **Modern variants**: CUBIC, Vegas, BBR
-10. **ECN**: Explicit congestion marking
 
 ---
 
@@ -471,7 +591,7 @@ Set CWR (Congestion Window Reduced) flag in TCP header
 | GBN Window Bound | `N ≤ 2ᵏ - 1` |
 | SR Window Bound | `N ≤ 2ᵏ⁻¹` |
 | EstimatedRTT | `0.875 × EstRTT + 0.125 × SampleRTT` |
-| DevRTT | `0.75 × DevRTT + 0.25 × |SampleRTT - EstRTT|` |
+| DevRTT | `0.75 × DevRTT + 0.25 × \|SampleRTT - EstRTT\|` |
 | TimeoutInterval | `EstimatedRTT + 4 × DevRTT` |
 | rwnd | `RcvBuffer - (LastByteRcvd - LastByteRead)` |
 | Sender Constraint | `LastByteSent - LastByteAcked ≤ min(cwnd, rwnd)` |
@@ -485,6 +605,168 @@ Set CWR (Congestion Window Reduced) flag in TCP header
 | Loss Rate Model (Padhye) | `Throughput ≈ 1.22 × MSS / (RTT × √L)` |
 | Mathis Bound | `Throughput ≤ MSS / (RTT × √L)` |
 | TIME_WAIT | `2 × MSL ≈ 2 minutes` |
+
+---
+
+## Complete Questions, Examples, and MCQs from Slides and Textbook
+
+### Numerical Problems (Exam Practice)
+
+**Q1. Stop-and-Wait Utilization**: L=1000 bits, R=1 Mbps, RTT=20ms
+- U = (1000/1e6) / (0.02 + 1000/1e6) = 0.001 / 0.021 = 0.0476 = 4.76%
+
+**Q2. GBN Transmissions (from slides)**: N=10, every 5th packet lost
+- Round 1: Send 1-10, lose 5,10 → ACK 4, timeout → 18 total transmissions
+
+**Q3. SR Transmissions (from slides)**: N=10, every 5th packet lost
+- Round 1: 10 tx, Round 2: 2 tx = **12 total** (only retransmit lost packets)
+
+**Q4. RTT Estimation**: SampleRTT sequence: 100ms, 120ms, 110ms, 90ms, 130ms
+- Start: EstRTT=1000ms, DevRTT=5ms
+- After 1st: EstRTT=0.875×1000+0.125×100=887.5, DevRTT=0.75×5+0.25×|100-1000|=230
+- Continue...
+
+**Q5. TCP Throughput (Padhye)**: MSS=1460, RTT=100ms, L=0.001 (0.1% loss)
+- Throughput ≈ 1.22 × 1460 / (0.1 × √0.001) = 1781 / 0.00316 = 563 Kbps
+
+**Q6. Window Size Bounds**: k=4 bits sequence numbers
+- GBN max N = 2⁴ - 1 = 15
+- SR max N = 2³ = 8
+
+**Q7. Congestion Window Evolution**: Initial cwnd=1 MSS, ssthresh=8 MSS
+- Round 1: 1, 2: 2, 3: 4, 4: 8 → hit ssthresh, enter CA
+- Round 5: 9, 6: 10, 7: 11, 8: 12
+- Loss at round 8 via 3 dup ACKs: ssthresh=6, cwnd=9 (Reno) or cwnd=1 (Tahoe)
+
+### Review Questions
+
+1. **Difference between GBN and SR?**
+   - GBN: cumulative ACK, retransmit all from base on timeout
+   - SR: individual ACK, per-packet timer, retransmit only timed-out packet
+
+2. **Why is SR window size ≤ 2ᵏ⁻¹?**
+   - Prevents overlap between sender and receiver windows (2N ≤ 2ᵏ)
+
+3. **TCP sequence number = ?**
+   - Byte number of FIRST data byte in segment
+
+4. **TCP ACK number = ?**
+   - Next expected byte (cumulative)
+
+5. **How does TCP flow control work?**
+   - Receiver advertises rwnd = buffer - unread data
+   - Sender limits unACKed data to min(cwnd, rwnd)
+
+6. **Slow Start vs Congestion Avoidance?**
+   - SS: exponential growth (per ACK: cwnd += 1 MSS)
+   - CA: linear growth (per RTT: cwnd += 1 MSS)
+
+7. **Fast Retransmit trigger?**
+   - 3 duplicate ACKs
+
+8. **Timeout vs 3 Dup ACKs reaction?**
+   - Timeout: cwnd = 1 MSS, Slow Start
+   - 3 Dup ACKs: cwnd = ssthresh + 3 MSS, Fast Recovery
+
+9. **What is BBR?**
+   - Model-based congestion control using BW and RTT_min estimates
+
+10. **What is ECN?**
+    - Router marks packets CE instead of dropping; sender reacts by halving cwnd
+
+---
+
+## Multiple Choice Questions (from Slides)
+
+**Q1. Congestion vs Flow Control:**
+- Congestion: too many senders, sending too fast for network
+- Flow control: one sender too fast for one receiver
+
+**Q2. Causes/Costs of Congestion - Scenario 1 (Infinite buffers):**
+- As λin approaches R/2: throughput λout approaches R/2, delay → ∞
+
+**Q3. Causes/Costs of Congestion - Scenario 2 (Finite buffers, retransmissions):**
+- Idealization 1 (perfect knowledge): throughput = λin, capped at R/2
+- Idealization 2 (resends only if known lost): throughput < R/2 (wasted retransmissions)
+- Realistic (unneeded duplicates): further decreases throughput
+
+**Q4. Scenario 3 (Multi-hop, 4 senders):**
+- As λin' increases, all arriving blue pkts at upper queue are dropped → blue throughput → 0
+- Another cost: when packet dropped, upstream capacity/buffering wasted
+
+**Q5. Congestion Control Approaches:**
+- End-end: no explicit feedback, inferred from loss/delay (TCP)
+- Network-assisted: routers provide explicit feedback (ECN, ATM, DECbit)
+
+**Q5. ECN Steps:**
+1. Router congested → sets CE bit in IP ToS field (2 bits), packet still delivered
+2. Receiver sees CE → sets ECE flag in TCP ACK
+3. Sender sees ECE → halves cwnd, sets CWR flag
+4. All three must support ECN
+
+**Q6. TCP Sender Behavior:**
+- Roughly: send cwnd bytes, wait RTT for ACKs, then send more
+- TCP rate ~ cwnd bytes/sec / RTT
+- LastByteSent - LastByteAcked < cwnd (also min(cwnd, rwnd))
+
+**Q7. TCP Congestion Control Guiding Principles:**
+- Lost segment → congestion → decrease rate
+- Acknowledged segment → network delivering → increase rate
+- Bandwidth probing
+
+**Q8. AIMD:**
+- Additive Increase: +1 MSS per RTT
+- Multiplicative Decrease: cut rate in half at each loss event
+- Optimizes congested flow rates network-wide, desirable stability
+
+**Q9. Slow Start:**
+- Initially cwnd = 1 MSS (practice: 10 MSS per RFC 6928)
+- Double cwnd every RTT (increment for every ACK)
+- Initial rate slow, ramps up exponentially fast
+
+**Q10. Loss Detection/Reaction:**
+- Timeout: cwnd = 1 MSS, grows exponentially to threshold, then linearly
+- 3 dup ACKs (Reno): dup ACKs indicate network delivering some segments, cwnd cut in half, grows linearly
+- Tahoe always sets cwnd = 1 (timeout or 3 dup ACKs)
+
+**Q11. State Machine (from slides):**
+
+| State | On New ACK | On Dup ACK | On DupACK=3 | On Timeout |
+|-------|------------|------------|-------------|------------|
+| Slow Start | cwnd+=MSS; dupACK=0; transmit | dupACK++ | ssthresh=cwnd/2; cwnd=ssthresh+3; retransmit → fast recovery | ssthresh=cwnd/2; cwnd=1; dupACK=0; retransmit → slow start |
+| Congestion Avoidance | cwnd+=MSS×(MSS/cwnd); dupACK=0; transmit | dupACK++ | ssthresh=cwnd/2; cwnd=ssthresh+3; retransmit → fast recovery | ssthresh=cwnd/2; cwnd=1; dupACK=0; retransmit → slow start |
+| Fast Recovery | cwnd=ssthresh; dupACK=0 → congestion avoidance | cwnd+=MSS; transmit | — | ssthresh=cwnd/2; cwnd=1; dupACK=0; retransmit → slow start |
+
+**Q12. TCP Variants Comparison:**
+- Tahoe: first working congestion control, 1986 collapse solved
+- Reno: triple-dup-ACK loss is mild; don't restart from scratch
+- CUBIC: +1 MSS/RTT too slow on long, fast paths; default in Linux/Windows/macOS
+
+**Q13. CUBIC Curve:**
+- Cube function: steep → flat → steep
+- Flat point at W_max
+- K = time to return to W_max (further drop → further K)
+- Time-based, not ACK-based (RTT-fair)
+
+---
+
+## Textbook End-of-Chapter Problems (Chapter 3)
+
+**P1.** Explain the difference between multiplexing and demultiplexing in transport layer.
+**P2.** Calculate UDP checksum for given data (with pseudo-header).
+**P3.** Trace rdt 3.0 protocol for a scenario with packet loss and corruption.
+**P4.** Compare GBN and SR for N=4, k=3, with packet 2 lost.
+**P5.** Draw TCP segment structure and explain each field.
+**P6.** Given SampleRTT values, compute EstimatedRTT, DevRTT, TimeoutInterval.
+**P7.** Explain TCP 3-way handshake and 4-way teardown with sequence numbers.
+**P8.** Describe TCP flow control with rwnd calculation example.
+**P9.** Trace TCP congestion control: slow start, congestion avoidance, fast recovery for given loss pattern.
+**P10.** Compare Tahoe, Reno, and CUBIC congestion control algorithms.
+**P11.** Explain ECN operation and why it took decades to deploy.
+**P12.** Prove AIMD converges to fairness for two competing flows.
+**P13.** Calculate throughput using Padhye formula for given MSS, RTT, loss rate.
+**P14.** Describe QUIC advantages over TCP+TLS.
+**P15.** What is the count-to-infinity problem in distance vector routing? How is it solved?
 
 ---
 

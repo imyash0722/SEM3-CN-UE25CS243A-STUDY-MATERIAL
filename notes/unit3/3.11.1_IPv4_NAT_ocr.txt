@@ -1,0 +1,185 @@
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+PES
+
+UNIVERSITY
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+* IPv4 addressing
+* NAT
+COMPUTER NETWORKS @
+
+i PES
+NAT: Network Address Translation
+
+UNIVERSITY
+
+NAT: all devices in local network share just one IPv4
+address as far as outside world is concerned
+
+rest of > local network (e.g., home ,
+Internet network) 10.0.0/24
+
+138.76.29.7 10.0.04
+
+all datagrams leaving local network have  datagrams with source or destination in
+same source NAT IP address: 138.76.29.7, this network have 10.0.0/24 address for
+but different source port numbers  source, destination (as usual)
+COMPUTER NETWORKS
+. %g PES
+NAT: Network Address Translation
+
+all devices in local network have 32-bit addresses in a “private” IP
+address space (10/8, 172.16/12, 192.168/16 prefixes) that can only be
+used in local network
+
+advantages:
+just one IP address needed from provider ISP for all devices
+
+can change addresses of host in local network without notifying
+outside world
+
+can change ISP without changing addresses of devices in local
+network
+
+security: devices inside local net not directly addressable, visible by
+outside world
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS A
+NAT: Network Address Translation ‘%
+
+implementation: NAT router must (transparently):
+
+outgoing datagrams: replace (source IP address, port #) of every outgoing
+datagram to (NAT IP address, new port #)
+
+* remote clients/servers will respond using (NAT IP address, new port #) as
+destination address
+
+remember (in NAT translation table) every (source IP address, port #) to
+(NAT IP address, new port #) translation pair
+
+incoming datagrams: replace (NAT IP address, new port #) in destination
+fields of every incoming datagram with corresponding (source IP address,
+port #) stored in NAT table
+COMPUTER NETWORKS
+PES
+NAT: Network Address Translation
+
+UNIVERSITY
+
+NAT translation table
+
+2: NAT router changes WAN side addr _ [LAN side addr
+datagram source address
+
+from 10.0.0.1, 3345 to 138.76.29.7, 5001 }(LQ./L 3345
+138.76.29.7,5001, | S | e
+updates table
+
+1: host 10.0.0.1 sends
+
+datagram to
+128.119.40.186, 80
+
+$:10.0.0.9, 3345
+D:128.119.40.186,
+
+$:138.76.29.7, 5001
+D:128.119.40.186, 80
+
+138.76.29.7
+
+$:128.119.40.186, 80
+D:10.0.0.1, 3345
+
+$:128.119.40.186, 80
+D:138.76.29.7, 5001
+
+3: reply arrives, destination
+address: 138.76.29.7, 5001
+COMPUTER NETWORKS
+Trace a NAT translation
+
+Host 10.0.0.2, port 4000, connects to a web server at 93.184.216.34, port 443. The NAT
+router (138.76.29.7) picks port 5002. Fill in each packet.
+
+@ Leaves the host: S=? D=?
+) Leaves the NAT router: S=? D=?
+@ Reply reaches the NAT router: S=? D=7
+
+@ Reply reaches the host: S=? D=?
+
+PES
+
+UNIVERSITY
+
+$10.0.0.2:4000 D 93.184.216.34:443
+
+$138.76.29.7 : 5002 D 93.184.216.34 : 443
+
+$93.184.216.34:443 D 138.76.29.7 : 5002
+
+$93.184.216.34:443 D 10.0.0.2: 4000
+
+COMPUTER NETWORKS
+. %% PES
+NAT: Network Address Translation
+
+NAT has been controversial:
+
+* routers “should” only process up to layer 3
+
+ address “shortage” should be solved by IPv6
+
+* violates end-to-end argument (port # manipulation by network-layer device)
+* NAT traversal: what if client wants to connect to server behind NAT?
+but NAT is here to stay:
+
+* extensively used in home and institutional nets, 4G/5G cellular nets
+COMPUTER NETWORKS
+. %% PES
+NAT: Network Address Translation
+
+client
+
+g?
+
+Solution: statically configure NAT
+to forward incoming connection
+
+requests at given port to server
+e.g., (123.76.29.7, port 25000)
+
+NAT
+router always forwarded to 10.0.0.1 port
+
+25000
+
+138.76.29.7
+
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY

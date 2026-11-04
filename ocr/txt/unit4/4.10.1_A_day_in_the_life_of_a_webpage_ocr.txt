@@ -1,0 +1,233 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+A day in the life of a web request
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Synthesis : A day in the life of a web request
+
+Our journey down the protocol stack is now complete!
+* application, transport, network, link
+
+Putting-it-all-together: synthesis!
+
+* Goal: identify, review, understand protocols (at all layers)
+involved in seemingly simple scenario: requesting www page
+
+* Scenario: student attaches laptop to campus network,
+requests/receives www.google.com
+COMPUTER NETWORKS
+
+A day in the life of a web request
+
+browser
+
+>
+
+school network
+
+68.80.2.0/24
+
+web page
+
+Google
+
+web server
+
+64.233.169.105
+
+DNS server
+
+Comcast network
+68.80.0.0/13
+
+Google’s network
+64.233.160.0/19
+
+Sounds
+simple!
+
+@ UNIVERSITY
+
+Scenario:
+
+Arriving mobile
+client attaches to
+network ...
+
+Requests web
+
+page:
+www.google.com
+
+'
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+A day in the life of a web request
+
+Connecting laptop needs to get its own IP
+address, addr of first-hop router, addr of
+DNS server: use DHCP
+
+DHCP request encapsulated in UDP,
+encapsulated in IP, encapsulated in 802.3
+Ethernet
+
+Ethernet frame broadcast (dest:
+FFFFFFFFFFFF) on LAN, received at router
+running DHCP server
+
+Ethernet demuxed to IP demuxed, UDP
+demuxed to DHCP
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+A day in the life : Connecting to the Internet
+
+DHCP server formulates DHCP ACK
+containing client’s IP address, IP address of
+first-hop router for client, name & IP
+address of DNS server
+
+Encapsulation at DHCP server, frame
+forwarded (switch learning) through LAN,
+demultiplexing at client
+
+DHCP client receives DHCP ACK reply
+
+Client now has IP address, knows name & addr of DNS
+server, IP address of its first-hop router
+COMPUTER NETWORKS
+
+A day in the life.... ARP (Before DNS, Before HTTP)
+
+DNS
+UDP
+
+DS arplP__
+Bl ARP query Eth
+Phy
+
+- =<
+
+ARP
+
+W ArPrepy | Eth
+
+Ph
+
+y rou
+ARP server
+
+Before sending HTTP request, need IP
+address of www.google.com: DNS
+
+DNS query created, encapsulated in UDP,
+encapsulated in IP, encapsulated in Eth. To
+send frame to router, need MAC address of
+
+router interface: ARP
+
+ARP query broadcast, received by router,
+which replies with ARP reply giving MAC
+address of router interface
+
+Client now knows MAC address of first
+hop router, so can now send frame
+
+containing DNS query
+COMPUTER NETWORKS @ PES
+A day in the life.... Using DNS o=
+
+[ CIons ]
+
+[ IEons 1
+
+Demuxed to DNS
+
+DNS replies to client
+with IP address of
+www.google.com
+
+IP datagram IP datagram forwarded from campus
+containing DNS query network into Comcast network,
+forwarded via LAN routed (tables created by RIP, OSPF,
+switch from client to IS-1S and/or BGP routing protocols)
+
+15t hop router to DNS server
+COMPUTER NETWORKS @9 PES
+A day in the life.... TCP Connection carrying HTTP m
+
+To send HTTP request, client
+
+first opens TCP socket to web
+server
+
+cast network
+
+; TCP SYN segment (step 1 in TCP 3-
+80.0.0/13 . .
+
+way handshake) inter-domain
+routed to web server
+
+Web server responds with TCP
+SYNACK (step 2 in TCP 3-way
+handshake)
+
+TCP connection established!
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+A day in the life.... HTTP Request / Reply
+
+HTTP request sent into TCP
+socket
+
+ge finally (111)
+
+IP datagram containing HTTP
+request routed to
+www.google.com
+
+ast network
+
+Web server responds with HTTP
+reply (containing web page)
+
+IP datagram containing
+HTTP reply routed
+back to client
+
+B
+
+gl(-;ﬁleb server -
+233.169.105
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

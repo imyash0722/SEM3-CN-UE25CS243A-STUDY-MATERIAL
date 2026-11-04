@@ -1,0 +1,5929 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A) — UNIT 3 SOURCE DOCUMENTS EXTRACTED TEXT
+UNIT TITLE: Network Layer (Data Plane & Control Plane, IPv4, Subnetting, NAT, Routing)
+TOTAL SOURCE FILES: 13
+================================================================================
+
+TABLE OF CONTENTS:
+  1. resources/u3/Slides/3.1.1_TCP_Congestion_Control.pdf
+  2. resources/u3/Slides/3.2.1_QUIC_Protocol.pdf
+  3. resources/u3/Slides/3.4.1_Network_Layer.pdf
+  4. resources/u3/Slides/3.5.1_Inside_A_Router.pdf
+  5. resources/u3/Slides/3.6.1_Switching_Fabrics.pdf
+  6. resources/u3/Slides/3.7.1_IPv4_Datagram.pdf
+  7. resources/u3/Slides/3.8.1_IPv4_Fragmentation.pdf
+  8. resources/u3/Slides/3.9.1_IPv4_Addressing.pdf
+  9. resources/u3/Slides/3.10.1_Designing_IPv4_Subnets_-_Exercises.pdf
+  10. resources/u3/Slides/3.11.1_IPv4_NAT.pdf
+  11. resources/u3/Slides/3.12.1_Software_Defined_Networking_(SDN)_-_OpenFlow_&_P4.pdf
+  12. resources/u3/Slides/3.13.1_Introduction_to_Data_Center_Networking.pdf
+  13. labs/lab4_wireshark/PES2UG25CS615_Yashwanth_K_CN_LAB4.pdf
+
+================================================================================
+
+
+################################################################################
+FILE 1/13: resources/u3/Slides/3.1.1_TCP_Congestion_Control.pdf
+PAGES: 31 | EXTRACTED CHARACTERS: 16,064
+################################################################################
+
+L
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+
+Transport Layer
+
+‘ Department of Computer Science and Engineering
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Transport Layer - Roadmap
+
+3.6 Principles of congestion control
+Cf)M PUTER NETWORKS @ PES
+History Y v
+
+In October 1986 the link between LBL (Lawrence Berkeley Laboratory) and
+UC Berkeley — 400 metres apart — dropped from 32 kbps to 40 bps. A
+thousandfold collapse, and the network hardware was fine. Every sender
+was retransmitting into a queue that was already full, so the network spent
+all its capacity carrying copies of packets that had already been delivered.
+Van Jacobson's fix is what you are learning today
+
+It's 9pm in the hostel. Netflix is buffering. Is that a flow control problem or a
+congestion control problem — and how would you tell the difference from
+where you're sitting?
+COMPUTER NETWORKS PES
+
+Principles of congestion control
+
+Congestion:
+
+informally: “too many sources sending too much data too fast for
+network to handle”
+
+manifestations:
+
+* long delays (queueing in router buffers)
+* packet loss (buffer overflow at routers)
+
+different from flow control!
+
+a top-10 problem! ' 2 congestion
+' control: too many
+senders, sending too fast
+
+flow control: one sender
+too fast for one receiver
+
+COMPUTER NETWORKS @
+
+) ) PES
+Causes/costs of congestion: scenario 1
+
+UNIVERSITY
+
+original data: )\in throughput: Aout
+
+Simplest scenario:
+one router, infinite buffers
+input, output link capacity: R
+
+infinite shared
+output link buffers
+
+two flows Tt 5
+no retransmissions @
+needed g _/_ Iﬂ
+
+Q: What happens as RE : _
+arrival rate A, B 5 §
+approaches R/2? H , ° i
+- Ain R2 An RR2
+maximum per-connection large delays as arrival rate A,
+
+throughput: R/2 approaches capacity
+COMPUTER NETWORKS
+Causes/costs of congestion: scenario 2
+
+Setup: one router, finite buffers; sender retransmits lost, timed-out packets
+* Ain = Aout (app layer); A'in 2 Ain (transport layer, incl. retransmissions)
+
+Idealization 1 — perfect knowledge: sender sends only when buffer space
+available
+— throughput = Ain, still capped at R/2 (graph, top right)
+
+Idealization 2 — some perfect knowledge: resends only if packet known lost
+— at Ain = R/2, throughput < R/2 — "wasted" capacity from needed retransmissions (graph,
+bottom right) (packets can be lost (dropped at router) due to full buffers
+
+Host A LA, : original data
+
+dopy [— A'j,.: original data, plus
+e retransmitted data
+
+free buffer space!
+
+finite shared output
+link buffers
+
+““Host B
+
+}‘out
+
+Z
+N
+
+throughput: Agy
+
+R/2 —
+
+throughput: 7\0ut
+
+Idealization 1
+
+@ UNIVERSITY
+
+)\in
+
+Idealization 2
+
+“wasted” capacity
+due to
+rejransmissions
+
+when sending at
+R/2, some
+packets are
+needed
+retransmissions
+COMPUTER NETWORKS
+Causes/costs of congestion: scenario 2
+
+Realistic scenario: un-needed duplicates
+
+packets can be lost, dropped at router due to full
+buffers — requiring retransmissions
+
+but sender times can time out prematurely, sending
+two copies, both of which are delivered
+
+LA, : original data
+
+[ A'j,.: original data, plus
+retransmitted data
+
+free buffer space!
+
+finite shared output
+link buffers
+
+““Host B
+
+2
+N
+|
+
+throughput: )\out
+
+@ UNIVERSITY
+
+' “wasted” capacity due
+A }to un-needed
+
+v{transmissions
+
+when sending at
+R/2, some packets
+are retransmissions,
+including needed
+
+II and un-needed
+b} duplicates, that are
+delivered!
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 2
+Realistic scenario: un-needed duplicates ,
+packets can be lost, dropped at router due to full R2 271 asted” canacity due
+buffers — requiring retransmissions (<§ ________________ .7 '}toun—negde_z !
+but sender times can time out prematurely, & :'ﬁt”’”sm'ss"’”s
+sending two copies, both of which are delivered g ! when sending at
+3 : R/2, some packets
+= ! are retransmissions,
+= ! including needed
+T and un-needed
+}\in R/2 duplicates, that are
+delivered!
+
+“costs” of congestion:
+more work (retransmission) for given receiver throughput
+
+unneeded retransmissions: link carries multiple copies of a packet
+* decreasing maximum achievable throughput
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 3
+
+four senders Q: what happens as A,, and ;" increase ?
+multi-hop paths A:asred A, increases, all arriving blue pkts at upper
+
+timeout/retransmit queue are dropped, blue throughput — 0
+
+HostA A, : original data
+
+] A'in: original data, plus
+retransmitted data
+
+finite shared
+output link
+
+Host D
+
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 3
+
+R/2 ]
+
+Aout
+
+)\i n R/2
+
+another “cost” of congestion:
+
+when packet dropped, any upstream transmission
+capacity and buffering used for that packet was
+wasted!
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: insights
+
+2
+IN]
+|
+
+throughput can never exceed capacity
+
+throughput: Kou‘
+
+>
+o
+
+]
+©
+
+delay increases as capacity approached
+
+R/2
+
+loss/retransmission decreases effective
+throughput
+
+throughput: Aoyt
+
+un-needed duplicates further decreases x,
+effective throughput R
+
+R/2
+
+upstream transmission capacity / buffering 3
+wasted for packets lost downstream
+
+}"in' R/2
+COMPUTER NETWORKS
+Approaches towards congestion control
+
+End-end congestion control:
+
+* no explicit feedback from
+
+network
+« congestion inferred from g
+observed loss, delay ACKS
+
+approach taken by TCP
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Approaches towards congestion control
+
+Network-assisted congestion
+
+control:
+
+routers provide direct feedback to
+
+sending/receiving hosts with flows
+passing through congested router
+
+may indicate congestion level or
+explicitly set sending rate
+
+* TCP ECN, ATM, DECbit protocols
+
+explicit congestion info
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+ECN: signalling congestion without dropping packets %
+
+Router is congested. Instead of dropping the packet, it sets the CE bit (Congestion Experienced) — two bits in the IP
+header's ToS field. The packet is still delivered.
+
+Receiver sees CE. It sets the ECE flag (ECN-Echo) in the TCP header of its very next ACK.
+
+Sender sees ECE. It halves cwnd exactly as if it had detected loss, and sets CWR (Congestion Window Reduced) to confirm it
+acted.
+
+Router, sender and receiver must all support ECN — which is why a mechanism specified in 1999 took two decades to see
+real deployment.
+
+Congestion signalled, zero packets destroyed. But the feedback still costs a full round trip, and the network itself had to be
+modified to send it. That deployment cost is exactly why TCP chose end-to-end inference instead.
+
+COMPUTER NETWORKS @ PES
+Suggested Readings X wmean
+
+Thank You
+For Your Attention
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Transport Layer - Roadmap
+
+3.7 TCP congestion control
+COMPUTER NETWORKS @ PES
+TCP congestion control: details
+
+sender sequence number space . .
+a P TCP sending behavior:
+—— cwnd —,
+
+roughly: send cwnd bytes,
+more bytes
+
+last byte
+cwnd
+ACKed sent, but not- available but TCP ~
+
+yet ACKed not used RTT
+(“in-flight”) last byte sent rate
+
+bytes/sec
+
+TCP sender limits transmission: LastByteSent- LastByteAcked < cwnd
+
+cwnd is dynamically adjusted in response to observed network congestion
+(implementing TCP congestion control)
+
+COMPUTER NETWORKS @
+
+PES
+TCP: Determine sender rate
+
+UNIVERSITY
+
+Too fast — congestion collapse
+
+Too cautious and too slowly — under utilize the bandwidth
+Send at a high rate without congesting the network
+Guiding principles:
+
+* A lost segment implies congestion, and hence, the TCP sender’s rate should be decreased
+when a segment is lost.
+
+* An acknowledged segment indicates that the network is delivering the sender’s segments to
+the receiver, and hence, the sender’s rate can be increased when an ACK arrives for a
+previously unacknowledged segment.
+
+* Bandwidth probing.
+
+TCP congestion-control algorithm
+
+(1) slow start, (2) congestion avoidance, and (3) fast recovery
+COMPUTER NETWORKS @ PES
+TCP congestion control: AIMD
+
+approach: senders can increase sending rate until packet loss (congestion)
+occurs, then decrease sending rate on loss event
+
+Additive Increase — Multiplicative Decrease ]
+increase sending rate by 1 cut sending rate in half at each
+maximum segment size every RTT loss event
+
+until loss detected
+
+AIMD sawtooth behavior:
+probing for bandwidth
+
+TCP sender Sending rate
+
+time
+COMPUTER NETWORKS @ PES
+TCP AIMD: more
+
+Multiplicative decrease detail: sending rate is
+Cut in half on loss detected by triple duplicate ACK (TCP Reno)
+Cut to 1 MSS (maximum segment size) when loss detected by timeout (TCP Tahoe)
+
+* Loss detected by timeout - cwnd =1 MSS — both Tahoe and Reno
+* Loss detected by 3 duplicate ACKs = Tahoe: cwnd =1 MSS & Reno: cwnd cut roughly
+
+in half
+* So the only difference between Tahoe and Reno is the response to 3 duplicate ACKs
+
+Why AIMD?
+AIMD - a distributed, asynchronous algorithm — has been shown to:
+* optimize congested flow rates network wide!
+
+* have desirable stability properties
+COMPUTER NETWORKS @ PES
+TCP slow start
+
+. . Host A Host B
+when connection begins, q
+increase rate exponentially until e IB
+
+* initially cwnd = 1 MSS
+
+* double cwnd every RTT {
+en
+
+* done by incrementing cwnd for \
+
+every ACK received
+
+first loss event: t e segme
+t M
+'_
+o
+!
+
+summary: initial rate is slow, but
+ramps up exponentially fast
+
+time
+
+In practice: cwnd starts at 10 MSS, not 1
+RFC 6928 (2013) raised the initial window to 10 segments — about 14 KB, enough to carry a small web
+
+page in the very first RTT. Expect to see ten segments, not one, in a real packet capture.
+COMPUTER NETWORKS @ PES
+TCP: detecting, reacting to loss
+
+loss indicated by timeout:
+* cwnd set to 1 MSS;
+
+» window then grows exponentially (as in slow start) to threshold, then
+grows linearly
+
+loss indicated by 3 duplicate ACKs: TCP RENO
+
+* dup ACKs indicate network capable of delivering some segments
+* cwnd is cut in half window then grows linearly
+
+TCP Tahoe always sets cwnd to 1 (timeout or 3 duplicate acks)
+COMPUTER NETWORKS
+Timeout vs 3 Duplicate Acks
+
+Event TCP Tahoe TCP Reno
+
+Timeout cwnd =1 MSS cwnd =1 MSS
+
+3 Duplicate ACKs cwnd =1 MSS cwnd reduced approximately by half
+Fast Retransmit Yes Yes
+
+Fast Recovery No Yes
+
+Initial state: cwnd = 1 MSS, ssthresh = 64 KB, dupACKcount = 0.
+
+@ UNIVERSITY
+
+State On new ACK On duplicate ACK On dupACKcount == On timeout
+cwnd += MSS; ssthresh = cwnd/2; cwnd = | ssthresh = cwnd/2; cwnd =
+Slow start dupACKcount = 0; dupACKcount++ ssthresh+3*; retransmit - | 1; dupACKcount = 0;
+transmit fast recovery retransmit - slow start
+cwnd += ssthresh = cwnd/2; cwnd = | ssthresh = cwnd/2; cwnd =
+. . MSSx(MSS/cwnd); " .
+Congestion avoidance dupACKcount++ ssthresh+3*; retransmit - | 1; dupACKcount = 0;
+dupACKcount = 0; .
+transmit fast recovery retransmit - slow start
+
+Fast recovery
+
+cwnd = ssthresh;
+dupACKcount =0 -
+congestion avoidance
+
+cwnd += MSS; transmit
+
+ssthresh = cwnd/2; cwnd =
+1; dupACKcount = 0;
+retransmit - slow start
+
+T *3: each of the 3 duplicate ACKs proves one segment left the network (that’s the only reason a dup ACK exists) — the sender adds 3 to replace them, keeping the pipe full. This is
+
+temporary: cwnd deflates back to ssthresh once the new ACK arrives.
+COMPUTER NETWORKS
+
+TCP: from slow start to congestion avoidance
+
+PES
+
+UNIVERSITY
+
+@
+
+Q: when should the exponential
+increase switch to linear?
+
+A: when cwnd gets to 1/2 of its value
+before timeout.
+
+Implementation:
+
+variable ssthresh
+
+on loss event, ssthreshis set to 1/2 of
+cwnd just before loss event
+
+ssthresh = cwnd/2
+
+14
+12
+
+—
+o O
+|
+
+Congestion window
+(in segments)
+
+TCP Reno
+
+ssthresh
+
+ssthresh
+
+—TCP Tahoe
+
+01 2 3 456 7 89
+
+T T T T T T T T T T 1T T T 1
+10 11 12 13 14 15
+Transmission round
+
+
+COMPUTER NETWORKS
+TCP: from slow start to congestion avoidance
+
+Initial ssthresh = 8 MSS; loss at end of round 8 via triple duplicate ACK, so ssthresh becomes 6:
+Rounds 1-4 are slow start (doubling to ssthresh = 8). Rounds 5—8 are congestion avoidance (+1/RTT).
+
+At round 8 both compute ssthresh = 6;
+
+@
+
+Tahoe drops to 1 and re-climbs through slow start, Reno resumes at 6 in congestion avoidance. That
+
+gap is the throughput Tahoe gives away.
+
+cwnd vs transmission round: Tahoe vs Reno (triple dup ACK at round 8)
+cwnd (MSS) by Transmission round (RTT)
+
+14
+
+12 L)
+
+./
+10 — -
+./ ./
+8 -/ o/
+./ ./
+6 / n/ o/
+4 /o /./
+2 ./- ./-
+0 1 3 5 7 9 11 13
+
+— TCPTahoe — TCPReno
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Summary: TCP congestion control
+
+new ACK
+
+cwnd = cwnd + MSS , (M: nd)
+dupACKcount=0""
+transmit new segment(s), as allowed
+
+duplicate ACK
+
+dupACKcount++ NewAgK
+
+cwnd = cwnd+MSS
+dupACKcount = 0
+transmit new segment(s), as allowed
+
+cwnd >
+
+wnd >
+_______ ssthresh
+
+I\
+“Za Cj) duplicate ACK
+(e kY » timeout dupACKcount = 0 dupACKcount++
+ssthresh = cwnd/2 retransmit missing segment
+cwnd = 1 MSS
+dupACKcount = 0 2o
+retransmit missing segment timeou ‘(s( {S),
+ssthresh = cwnd/2
+cwnd =1
+dupACKcount = 0 P __
+dupACKcount == retransmit missing segment dupACKcount = dupACKcount ==
+
+ssthresh= cwnd/2
+cwnd = ssthresh + 3
+retransmit missing segment
+
+ssthresh= cwnd/2
+cwnd = ssthresh + 3
+retransmit missing segment
+
+twnd = cwnd + MSS
+transmit new segment(s), as allowed
+
+@
+
+PES
+
+UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+TCP CUBIC: a better way to probe for bandwidth @
+
+Reno's problem +1 MSS per RTT is glacial once cwnd is thousands of segments. To hold 10 Gbps over a 100 ms path,
+
+Reno needs a loss rate near 2 x 107'° — one loss in five billion segments.
+Insight: W ax is the window at which loss was last detected — the same value Reno uses to set ssthresh. The bottleneck has
+
+probably not changed much since then, so return to W,ax quickly, then approach it with care.
+
+Return fast
+
+Climb steeply back toward the last known limit
+instead of crawling up one segment per RTT.
+
+Then hold
+
+Flatten out just below W,,.x instead of sailing
+through into the next loss.
+
+sending rate
+
+Back off less
+
+CUBIC cuts to 0.70 x W,,., not to half. A gentler
+time — cut means less to climb back.
+
+== TCP Reno back off to half, then +1 MSS per RTT
+
+==== CUBIC back off to 70%, return fast, then hold near the limit More area under the curve = higher
+throughput.
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+TCP CUBIC: the shape of the curve @3
+
+A cube is steep, then flat, then steep again
+
+1
+far from K near K : past K
+climb back fast probe cautious:y seek new capacity
+
+1 steep,
+
+: e
+
+3 i 'y
+1
+
+§ 1 flat here
+1
+
+g : steep
+
+= 1
+1
+
+g : Slide the flat point up to W,,., — that is CUBIC.
+
+5 1
+
+o 1
+1 .
+
+070-W ! K — the deadline
+window just after the loss . The time by which CUBIC intends to be back at
+. Wnax. Not a fixed number — the further the
+0 K window had to drop, the further away K sits.
+time since the last loss = (not round trips)
+Why elapsed time matters.
+The curve depends on elapsed time, not on how many ACKs have come back. Under Reno a 20 ms flow grows ten times faster
+
+than a 200 ms flow, and takes a far larger share.
+Under CUBIC both follow this same curve.
+
+COMPUTER NETWORKS
+
+Tahoe, Reno, CUBIC: three answers to the same question
+
+Growth before loss
+
+On timeout
+
+On 3 duplicate ACKs
+Fast recovery
+
+What it fixed
+
+Where you meet it
+
+TCP Tahoe 1988
+
+slow start, then +1 MSS per
+RTT
+
+cwnd = 1 MSS, slow start
+
+cwnd =1 MSS, slow start —
+same as a timeout
+
+No
+
+the first congestion control
+
+that worked — 1986 collapse
+
+solved
+
+history, and exam questions
+
+TCP Reno 1990
+
+slow start, then +1 MSS per
+RTT
+
+cwnd = 1 MSS, slow start
+
+cwnd = ssthresh + 3 during
+fast recovery, then ssthresh
+— a halving
+
+Yes
+
+a triple-duplicate-ACK loss is
+mild; do not restart from
+scratch
+
+the textbook model, and the
+reference for everything since
+
+% UNIVERSITY
+
+CUBIC 2008
+
+slow start, then cubic in time
+since the last loss
+
+cwnd =1 MSS, slow start
+
+cwnd x 0.7 during fast
+recovery — a gentler cut
+
+Yes
+
++1 MSS per RTT is far too
+slow on long, fast paths
+
+default in Linux, Windows and
+macOS; RFC 9438
+
+Only the loss response differs. All three still use slow start, still detect loss the same way, and still cut on loss —
+they disagree only on how hard to cut and how fast to come back.
+
+@ UNIVERSITY
+
+THANK YOU
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 2/13: resources/u3/Slides/3.2.1_QUIC_Protocol.pdf
+PAGES: 20 | EXTRACTED CHARACTERS: 13,514
+################################################################################
+
+L
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+
+Transport Layer
+
+‘ Department of Computer Science and Engineering
+COMPUTER NETWORKS é@ PES
+
+UNIVERSITY
+
+Transport Layer - Roadmap
+
+3.8 Evolution of Transport-layer functionality — QUIC
+Protocol
+COMPUTER NETWORKS
+
+Evolving Transport-Layer Functionality
+
+* TCP, UDP: principal transport protocols for 40 years
+
+» different “flavors” of TCP developed, for specific scenarios:
+
+Scenario Challenges
+
+Long, fat pipes (large data
+transfers)
+
+Many packets “in flight”; loss shuts down
+pipeline
+
+Wireless networks
+
+Loss due to noisy wireless links, mobility;
+TCP treat this as congestion loss
+
+Long-delay links
+
+Extremely long RTTs
+
+@ UNIVERSITY
+
+How it was fixed
+
+| CUBIC: Grow the sending window much faster |
+
+[ Don't treat every loss as congestion |
+
+Grow by the clock, not by round trips (RFC
+3135)
+
+Data center networks
+
+Latency sensitive
+
+Background traffic flows
+
+Low priority, “background” TCP flows
+
+| Let routers warn before queues fill (RFC 8257) |
+
+Yield as soon as other traffic appears (RFC
+6817)
+
+* moving transport—layer functions to application layer, on top of UDP
+
+e HTTP/3:QUIC
+
+Every fix means changing TCP itself — and TCP lives inside the operating system kernel. It helps nobody
+
+until every machine is upgraded.
+
+COMPUTE.R NETWORKS . @ PES
+QUIC - Quick UDP Internet Connections
+
+UNIVERSITY
+
+* QUIC (Quick UDP Internet Connections) is a modern, secure transport protocol
+developed by Google in 2012 and standardized by the IETF.
+
+* QUIC provides many of the reliable transport features of TCP, but runs over UDP and
+integrates TLS 1.3 security directly into the protocol.
+
+* It serves as the foundational transport layer for HTTP/3
+* Application-layer protocol, on top of UDP
+increase performance of HTTP
+deployed on many Google servers, apps (Chrome, mobile YouTube app)
+
+* QUIC defined in RFC 9000 - https://datatracker.ietf.org/doc/rfc9000/
+
+COMPUTER NETWORKS
+QUIC: Quick UDP Internet Connections
+
+HTTP/2 HTTP/2 (slimmed)
+Application HTTP/3
+TLS Qulic
+Transport TCP UDP
+Network IP P
+HTTP/2 over TCP HTTP/3 over UDP
+
+@ UNIVERSITY
+
+Why was QUIC introduced?
+
+TCP connection establishment
+adds latency.
+
+TLS adds another handshake.
+TCP provides one ordered byte
+stream.
+
+Packet loss in one TCP stream can
+delay delivery of data that is
+otherwise independent.
+
+A TCP connection is tied to the
+IP/port 4-tuple, making network
+changes such as Wi-Fi - cellular
+disruptive.
+COMPUTER NETWORKS @ PES
+
+Why QUIC uses UDP?
+
+UNIVERSITY
+
+Since TCP is hardcoded into operating system kernels and worldwide network
+middleboxes (like routers and firewalls), upgrading it globally is nearly impossible.
+
+By building on top of UDP—which is universally accepted by all network hardware—
+QUIC implements its advanced reliability, congestion control, and packet recovery
+directly in user space (application layer) without requiring OS kernel updates.
+
+Using UDP also makes QUIC easier to deploy without changing the underlying IP
+stack.
+
+QUIC implements its own: Reliability, Acknowledgments, Retransmission, Congestion
+control, Flow control, Connection management, Stream multiplexing, Security
+COMPUT!ER NETWORKS . @ PES
+QUIC: Quick UDP Internet Connections
+
+UNIVERSITY
+
+* adopts approaches we’ve studied in this chapter for connection establishment, error
+control, congestion control
+
+* error and congestion control: “Readers familiar with TCP’s loss detection and
+congestion control will find algorithms here that parallel well-known TCP ones.”
+[from QUIC specification]
+
+* connection establishment: reliability, congestion control, authentication,
+encryption, state established in one (or even zero) RTT (recall HTTP3 discussion in
+Chapter 2)
+
+multiple application-level “streams” multiplexed over single QUIC connection
+
+separate reliable data transfer, security
+common congestion control
+HTTP/3 specifically maps HTTP semantics onto QUIC
+COMPUTER NETWORKS @ PES
+QUIC Streams
+
+* A QUIC connection can contain multiple independent streams.
+
+QUIC supports:
+* Bidirectional streams
+* Unidirectional streams
+
+* Each stream is an ordered sequence of bytes.
+
+QUIC Connection The loss in Stream 2 does not
+| inherently block delivery of
+| -+ | data from Streams 1 and 3.
+N N N This reduces head-of-line
+
+blocking across streams.
+Stream 1 Stream 2 Stream 3 &
+
+HTML Image Video
+COMPUTER NETWORK? . @9 PES
+QUIC: streams: parallelism, no HOL Blocking
+
+< B <. i
+
+application
+
+HTTP
+GET GET  HTTP N
+HTTP GET ' hrre 1
+GET N GET
+"Cer ! ayic 'duic’ Quic
+TLY ehcryption TLS |encr ption Qngl-F CRU);-(i Q,:j)l-rc Qé.ll)ITC ;rror!- QRL)|$
+"""" T T QUIC cpng. Copt. QUIC @ong. Copt.
+TAPRDT error| ROT B e 1] I | A
+TCP tohgl Contr. TAP|ddng. Lontr. Jolp DP
+
+(a) HTTP 1.1/2 (b) With QUIC: no HOL blocking
+COMPUTER NETWORKS
+Head-of-line blocking: what QUIC does and does not fix
+
+one QUIC connection
+
+Stream 1 HTML
+
+Stream 2 image
+
+Stream 3 video
+
+packets, in order, per stream =
+
+ok ok ok ok ok
+""" 3
+
+ok ok X | wait wait
+_____ ’
+
+ok ok ok ok ok
+
+delivered to the application
+
+blocked — inside this stream only
+
+delivered to the application
+
+Fixed: the loss in stream 2 does not hold up streams 1 and 3. Under TCP, all three would stall.
+
+Not fixed: stream 2 is still an ordered byte sequence, so its own later bytes still wait.
+
+@ UNIVERSITY
+
+Between streams: fixed
+
+QUIC tracks delivery per stream, so a
+gap in one stream never holds up
+another.
+
+Within a stream: unchanged
+
+Each stream is still an ordered byte
+sequence. Lose a packet mid-stream
+and that stream's later bytes still wait.
+
+Why HTTP/2 could not fix this on its own
+
+HTTP/2 already multiplexed many requests over one connection — but it did so above TCP, and TCP delivers a single ordered byte stream.
+One lost segment makes TCP withhold every later byte, including bytes belonging to completely unrelated HTTP/2 streams. The multiplexing
+was real; the transport underneath knew nothing about it. You cannot fix this from above TCP, which is precisely why QUIC had to replace
+the transport rather than sit on top of it.
+
+COMPUTER NETWORKS
+QUIC: Connection Establishment
+
+@ UNIVERSITY
+
+2 B
+
+TCP handshake
+(transport layer) <
+TLS handshake
+
+(security)
+
+=]
+data -
+
+TCP (reliability, congestion
+control state) + TLS
+(authentication, crypto state)
+
+= 2 serial handshakes
+
+<4 B
+QuIC
+1RTT handshake /
+
+data
+
+QUIC: reliability, congestion control,
+authentication, crypto state
+
+= 1 handshake
+COMPUTER NETWORKS
+QUIC: 0-RTT Connection Establishment
+
+The client sends encrypted
+
+application data alongside its
+
+initial connection request,
+
+eliminating handshake wait times  sentoy sover coshed
+
+. at client
+entirely.
+
+end of first QUIC
+connection
+Client uses last session start of second QUIC
+ticket for encryption, connection
+authentication for new
+connection
+
+= 0 RTT handshake delay
+
+ﬁ?’ T data
+
+@
+
+PES
+
+UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+QUIC Handshake: From Table to Mechanism
+
+Connection Path RTT Cost What Actually Happens See
+
+TCP handshake completes, then TLS 1.3 handshake runs on top — two
+
+TCP + TLS (traditional) 2 RTT negotiations, done serially Slide 40 (left)
+
+QUIC, first connection ~1 RTT Transport Params + TLS 1.3 hello messages travel in the same flight — Slide 40 (right)
+one negotiation, done concurrently
+
+QUIC, returning to same ORTT Client reu.ses a cached TLS session ticket; encrypted app data rides with Slide 41
+
+server the very first packet
+
+Caveat: 0-RTT data _ O-RTT data is ref)/ayal‘ﬁe — safe only for idempotent requests (GET), Security note
+never a POST with a side effect
+
+0-RTT lets a client send actual application data in its very first packet, before any handshake completes — that's the whole speed
+benefit. But to do that, the client has to encrypt that data using key material left over from a previous connection (the cached
+session ticket), not a fresh key negotiated for this connection.
+
+Example: Suppose the 0-RTT data is an HTTP request:
+
+GET /product/42 — fetching a product page. If an attacker replays this 10 times, the server just serves the same page 10 times.
+Annoying at worst, harmless.
+
+POST /orders {item: 42, qty: 1} — placing an order. If an attacker replays this, the server may create the order 10 times — 10
+charges, 10 shipments.
+
+QUIC/TLS 1.3 specs put the responsibility on the application, not the protocol: only send data in the O-RTT flight if it's safe to have
+processed more than once. A browser or server implementation typically restricts what's allowed to go in that first flight for exactly
+this reason.
+COMPUTER NETWORKS @ PES
+QUIC and TLS 1.3 UNIVERSITY
+
+* QUICintegrates TLS 1.3 into its connection establishment. This does not mean QUIC replaces TLS.
+* TLS provides: Authentication, Confidentiality, Integrity, Key establishment
+* Decoupled Responsibilities:
+* TLS 1.3 provides cryptographic state machines and key exchange secrets.
+* QUIC handles the framing, reliability, retransmissions, and delivery of those handshake
+messages.
+* Secret Isolation:
+* QUIC separates its encryption keys to limit damage if a breach occurs. It derives distinct keys
+for:
+* Handshake Secrets: Used only to protect initial configuration packets.
+
+* Application Secrets: Used to encrypt the actual web traffic.
+
+* Header Protection Secrets: Used exclusively to obfuscate packet numbers [encrypting the
+sequence numbers written in the packet headers so that outside observers (like hackers,
+
+Internet Service Providers, or middleboxes) cannot read them].
+COMPUTER NETWORKS
+Connection migration: the feature TCP cannot have
+
+TCP
+
+on Wi-Fi, the connection is identified by
+10.0.0.5:51000 - 203.0.113.7:443
+
+you walk outside — the phone switches to 5G
+
+V
+
+QuIC
+
+on Wi-Fi, the connection is identified by
+Connection ID 0x8f3a2c...
+
+you walk outside — the phone switches to 5G
+
+'
+
+on 5G, the same packets now look like
+100.64.2.9:62110 — 203.0.113.7:443
+
+on 5G, the address changed but the ID did not
+Connection ID 0x8f3a2c...
+
+Different 4-tuple = different connection.
+The old one is dead. The app must open a new
+connection and re-request everything.
+
+The server matches on the connection ID.
+
+Same keys, same streams, same congestion
+state. Nothing above the transport notices.
+
+@3 UNIVERSITY
+
+The connection ID
+
+An identifier the two endpoints choose
+for the connection itself, carried in the
+QUIC packet header and completely
+
+independent of any IP address or port.
+
+What the server does
+
+Recognises the ID, checks the new path
+is real, and carries on — no new
+handshake, no re-request.
+
+And for privacy
+
+IDs are rotated, so observers cannot use
+them to track a device.
+
+TCP cannot be patched to do this. A TCP connection IS its 4-tuple — surviving an address change is not a missing feature, it is a
+
+contradiction in terms.
+
+COMPUTER NETWORKS
+How does a browser even know to use HTTP/3?
+
+browser server
+
+first visit — over TCP
+the usual TCP handshake, then the page request
+
+>
+
+the page, and a note in the reply:
+
+<
+
+“| also speak HTTP/3, on UDP port 443"
+
+later requests — over QUIC
+QUIC over UDP
+
+e m e e e m e m— - ———————
+
+1 round trip now, O once the client has a stored ticket
+
+A client can also be told before it connects at all, by a
+special DNS record that names HTTP/3 alongside the address, saving the TCP round trip.
+
+So your very first connection to a site is never QUIC, and never 0-RTT.
+
+@ UNIVERSITY
+
+The starting problem
+
+A browser cannot simply start speaking
+QUIC. The server may not support it, or
+the network may not carry it — and a
+failed attempt costs a long wait.
+
+So it asks, over TCP
+
+The server mentions in its reply that it
+also speaks HTTP/3. The browser
+remembers that, and uses QUIC next
+time.
+
+Or from DNS
+
+A DNS answer can name HTTP/3 too,
+skipping TCP entirely.
+
+Two independent reasons your very first visit to a site is never 0-RTT: nothing is stored from a previous connection, and the
+
+browser has not yet learned the server speaks HTTP/3.
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Where QUIC falls short @
+
+o UDP s not always allowed
+
+Many campus and company firewalls block it, so the browser quietly falls back to TCP.
+
+@ It costs more processing power
+
+The work happens in the application rather than the operating system, and every packet is encrypted.
+
+o ltis harder to troubleshoot
+
+Almost everything is encrypted, so network staff cannot see inside a slow connection.
+
+o A spoofed request could be abused
+
+With no handshake to prove who is asking, a server must not reply with much until the address is checked.
+
+o Fallback hides the problem
+
+Everything keeps working over TCP, so nobody notices that QUIC was never used at all.
+
+About 39% of websites say they support HTTP/3, and almost every browser does — yet only about 21% of real
+traffic uses it. Supporting a protocol and actually carrying traffic on it are very different things.
+
+COMPUTER NETWORKS
+
+PES
+
+UNIVERSITY
+
+QUICvs TCP @
+Feature TCP + TLS (Traditional) QUIC (Modern)
+Runs over IP ubP
+Reliable delivery Yes Yes
+Ordered delivery Yes, single byte stream Per stream
+
+Connection setup
+
+TCP handshake
+
+QUIC + TLS handshake (1RTT)
+
+Security TLS added separately TLS 1.3 integrated
+Multiplexing Limited by single TCP stream Multiple streams
+Connection migration Difficult Supported
+
+O-RTT No, Requires new handshake Supported
+Congestion control Yes Yes
+
+Flow control Yes Yes
+
+Network IP Switching
+
+Connection drops and
+terminates
+
+Connection persists
+seamlessly
+
+@ UNIVERSITY
+
+THANK YOU
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 3/13: resources/u3/Slides/3.4.1_Network_Layer.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 4,487
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+S)PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.1 Overview of Network Layer
+COMPUTER NETWORKS
+
+Network-layer Services and Protocol
+
+transport segment from
+sending to receiving host
+
+* sender: encapsulates segments
+into datagrams, passes to link layer
+
+* receiver: delivers segments to
+
+transport layer protocol
+network layer protocols in
+every Internet device: hosts,
+routers
+
+routers:
+
+* examines header fields in all IP
+datagrams passing through it
+
+* moves datagrams from input ports
+to output ports to transfer
+datagrams along end-end path
+
+mobile
+
+applicatio
+o
+
+< >
+
+Jink
+physical
+
+link
+Dhysical
+
+link
+physical
+
+enterprise
+
+network
+
+nal or global
+
+link
+Dhysical
+
+link
+physical
+link datacenter
+Dhysical network
+
+applicatio
+
+L 4
+
+link
+physical
+
+COMPUTER NETWORKS
+Two Key Network-layer Functions
+
+network-layer functions:
+
+« forwarding: move packets from a
+router’s input link to appropriate
+router output link
+
+routing: determine route taken by
+packets from source to destination
+
+* routing algorithms
+
+analogy: taking a trip
+
+forwarding: process of getting
+through single interchange
+
+routing: process of planning trip
+from source to destination
+
+forwarding
+
+routing
+
+&
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Interplay between Routing and Forwarding
+
+routing algorithm
+
+routing algorithm determines
+end-end-path through network
+
+forwarding table determines
+local forwarding at this router
+
+value in
+arriving
+packet’s
+header
+
+S
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Network Layer: Data Plane, Control Plane
+
+&%) PES
+
+UNIVERSITY
+
+Data plane:
+
+= Jocal, per-router function
+
+= determines how datagram
+arriving on router input port is
+
+forwarded to router output port
+
+values in arriving
+packet header
+
+Control plane
+network-wide logic
+
+determines how datagram is routed
+among routers along end-end path from
+source host to destination host
+
+= two control-plane approaches:
+
+* traditional routing algorithms:
+implemented in routers
+
+* software-defined networking (SDN):
+implemented in (remote) servers
+COMPUTER NETWORKS
+%% PES
+Per-router Control Plane
+
+Individual routing algorithm components in each and every router interact in the
+
+control plane
+= =
+
+control
+plane
+
+data
+plane
+
+values in arriving
+packet headel
+COMPUTER NETWORKS
+. . %% PES
+Software-Defined Networking (SDN) Control Plane
+
+Remote controller computes, installs forwarding tables in routers
+
+Remote Controller
+
+n i i 0
+
+values in arriving | | i i ‘
+packet header E v
+
+COMPUTER NETWORKS
+
+'S\ PES
+Network Service Model ‘%
+
+UNIVERSITY
+
+Q: What service model for “channel” transporting datagrams
+from sender to receiver?
+
+example services for individual example services for a flow of
+datagrams: datagrams:
+
+= guaranteed delivery * in-order datagram delivery
+
+= guaranteed delivery with
+
+* guaranteed minimum bandwidth to flow
+less than 40 msec delay &
+
+* restrictions on changes in inter-packet
+spacing
+COMPUTER NETWORKS
+
+A2\ PES
+Network-layer Service Model ‘%
+
+UNIVERSITY
+
+. . 2
+Network Service Quality of Service (QoS) Guarantees?
+
+Architecture Model Bandwidth Loss Order Timing
+
+Internet best effort none no no no
+
+Internet “best effort” service model
+
+No guarantees on:
+i. successful datagram delivery to destination
+ii. timing or order of delivery
+iii. bandwidth available to end-end flow
+
+COMPUTER NETWORKS
+Network-layer Service Model
+
+Network
+Architecture
+
+Service
+Model
+
+Quality of Service (QoS) Guarantees ?
+
+Bandwidth
+
+Order
+
+Internet
+
+best effort
+
+no
+
+ATM
+
+Constant Bit Rate
+
+Constant rate
+
+yes
+
+ATM
+
+Available Bit Rate
+
+Guaranteed min
+
+yes
+
+Internet
+
+Intserv Guaranteed
+(RFC 1633)
+
+yes
+
+Internet
+
+Diffserv (RFC 2475)
+
+possible possibly
+
+possibly
+COMPUTER NETWORKS
+
+'S\ PES
+Reflections on best-effort Service ‘%
+
+UNIVERSITY
+
+= simplicity of mechanism has allowed Internet to be widely deployed
+adopted
+
+= sufficient provisioning of bandwidth allows performance of real-time
+applications (e.g., interactive voice, video) to be “good enough” for “most of
+the time”
+
+= replicated, application-layer distributed services (datacenters, content
+distribution networks) connecting close to clients’ networks, allow services
+
+to be provided from multiple locations
+= congestion control of “elastic” services helps
+
+It’s hard to argue with success of best-effort service model .
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 4/13: resources/u3/Slides/3.5.1_Inside_A_Router.pdf
+PAGES: 12 | EXTRACTED CHARACTERS: 4,436
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+PES
+
+UNIVERSITY
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.2 What's Inside a Router?
+COMPUTER NETWORKS
+. . %g PES
+Router Architecture Overview
+
+high-level view of generic router architecture:
+
+routing routing, management
+processor control plane (software)
+operates in millisecond
+I time frame
+forwarding data plane
+I | > (hardware) operates
+— H in nanosecond
+timeframe
+high-speed
+switching
+fabric
+== B o= "
+router input router output
+
+ports ports
+COMPUTER NETWORKS
+
+2\ PES
+Input port functions W%
+link lookup,
+X line R layer | | forwarding .| switch
+termination protocol fabric
+(receive)
+queueing
+physical layer:
+
+bit-level reception
+decentralized switching:
+
+link layer:
+g Etherynet using header field values, lookup output port using forwarding
+(chapter 6) table in input port memory (“match plus action”)
+
+goal: complete input port processing at ‘line speed’
+
+input port queuing: if datagrams arrive faster than forwarding
+rate into switch fabric
+COMPUTER NETWORKS
+
+A2\ PES
+Input port functions ‘%
+
+UNIVERSITY
+
+link lookup,
+forwardin
+J o tne ) faver L) e switch
+termination proto_col fabric
+(receive)
+queueing
+
+physical layer:
+bit-level reception
+
+decentralized switching:
+
+link layer: using header field values, lookup output port using forwarding
+e.g, Ethernet table in input port memory (“match plus action”)
+(chapter 6)
+
+destination-based forwarding: forward based only on
+destination IP address (traditional)
+
+generalized forwarding: forward based on any set of header
+field values
+COMPUTER NETWORKS
+Destination-based Forwarding
+
+forwarding table
+Destination Address Range
+
+Link Interface
+
+11001000 00010111 00010000 00000000
+through
+
+11001000 00010111 00010111 11111111
+
+11001000 00010111 00010000 00000100
+through
+
+11001000 00010111 00010000 00000111
+11001000 00010111 00011000 11111111
+
+11001000 00010111 00011001 00000000
+through
+
+11001000 00010111 00011111 11111111
+
+otherwise
+
+Q: but what happens if ranges don’t divide up so nicely?
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+s
+Longest prefix matching W% PES
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+
+Destination Address Range Link interface
+
+11001000 00010111 00010 %%  H*kkkkknnk 0
+
+11001000 00010111 00011000 Kok kKK K 1
+
+11001000 00010111 00011 swx  HFkxkkxksk 2
+
+otherwise 3
+
+11001000 00010111 00010110 10100001 which interface?
+examples:
+
+11001000 00010111 00011000 10101010 which interface?
+COMPUTER NETWORKS
+Longest prefix matching
+
+longest prefix match
+
+when looking for forwarding table entry for given
+destination address, use longest address prefix that
+matches destination address.
+
+11001000 00010111 00010}
+
+match!
+
+IllOOlOOO 00010111 00011
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+A2\ PES
+Longest prefix matching ‘%
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+
+Destination Address Range Link interface
+
+11001000 00010111 00010%%% xxxxxx%% | O
+
+11001000 00010111 00011000 #sk#sk*k** | 1
+
+11001000 00010111 00011 **xkkxskk 2
+
+otherwise t
+
+match! o
+11001000 uu‘uLil 00010110 10100001 Which interface?
+
+examples:
+
+11001000 00010111 00011p00 10101010 which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+
+&%) PES
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination address, use
+
+longest address prefix that matches destination address.
+
+Destination Address Range
+
+Link interface
+
+11001000 00010111 00010 #**
+
+Kk k Kk ok ok
+
+0
+
+T T 000 T 0TI 000TT000
+
+Kk kK kK kK
+
+e 2
+otherwise [P — 3
+match!
+examples: L
+11001000 00010111 010110 10100001 which interface?
+11001000 00010111 00011000 10101010 which interface?
+
+COMPUTER NETWORKS
+. . &%) PES
+Longest prefix matching
+
+UNIVERSITY
+
+« we’'ll see why longest prefix matching is used shortly, when we study
+addressing
+
+* longest prefix matching: often performed using ternary content
+addressable memories (TCAMS)
+
++ content addressable: present address to TCAM: retrieve address in one clock cycle,
+regardless of table size
+
++ Cisco Catalyst: ~1M routing table entries in TCAM
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 5/13: resources/u3/Slides/3.6.1_Switching_Fabrics.pdf
+PAGES: 14 | EXTRACTED CHARACTERS: 4,944
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+PES
+
+UNIVERSITY
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.3 Switching Fabrics
+COMPUTER NETWORKS
+Switching Fabrics
+
+switching rate: rate at which packets can be transferred from
+inputs to outputs
+
+« often measured as multiple of input/output line rate
+
+* N inputs: switching rate N times line rate desirable
+
+R H (rate: NR, >R
+ideally)
+. high-speed
+N input switching : N output
+ports ) fabric ports
+R i | >R
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Switching Fabrics
+
+&%) PES
+
+UNIVERSITY
+
+transfer packet from input link to appropriate output link
+
+switching rate: rate at which packets can be transferred from inputs to outputs
+« often measured as multiple of input/output line rate
+* N inputs: switching rate N times line rate desirable
+
+three major types of switching fabrics:
+
+===y
+
+mem
+
+===
+
+===
+
+memory
+
+= —
+
+1 === g
+= =
+
+bus interconnection
+network
+COMPUTER NETWORKS
+
+a2\ PES
+Switching via Memory W%
+
+UNIVERSITY
+
+first generation routers:
+« traditional computers with switching under direct control of CPU
+» packet copied to system’s memory
+» speed limited by memory bandwidth (2 bus crossings per datagram)
+
+- input output |
+port memory port :
+[ m (e.g., (e.g., ﬁ
+
+system bus
+COMPUTER NETWORKS
+Switching via a Bus
+
+datagram from input port memory to output port memory via a shared
+bus
+
+bus contention: switching speed limited by bus bandwidth
+32 Gbps bus, Cisco 5600: sufficient speed for access routers
+
+p— 1 —
+L1 —
+
+>
+— —
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+o : S)PES
+SW|tch|ng via interconnection network UNTVERSITY
+
+Crossbar, Clos networks, other
+interconnection nets initially developed to
+connect processors in multiprocessor
+
+multistage switch: nxn switch from multiple
+
+stages of smaller switches 3x3
+crossbar
+
+exploiting parallelism: [r— _/ \
+* fragment datagram into fixed length cells on entry
+exit \ /
+
+TTTT
+
+Ll
+
+* switch cells through the fabric, reassemble datagram at
+
+11l
+TTTT
+
+8x8 multistage switch
+built from smaller-sized
+switches
+COMPUTER NETWORKS
+o : S)PES
+SW|tch|ng via interconnection network UNTVERSITY
+
+scaling, using multiple switching “planes” in parallel:
+speedup, scaleup via parallelism
+
+Cisco CRS router:
+basic unit: 8 switching
+planes
+each plane: 3-stage
+interconnection network
+up to 100’s Thps
+switching capacity
+
+COMPUTER NETWORKS
+
+A2\ PES
+Input port queuing ‘%
+
+UNIVERSITY
+
+¢ If switch fabric slower than input ports combined -> queueing may occur at input queues
+* queueing delay and loss due to input buffer overflow!
+
+* Head-of-the-Line (HOL) blocking: queued datagram at front of queue prevents others in queue from
+moving forward
+
+e - - > | -
+N >
+\
+f \ |7
+/ v
+[ ) S A IS . ||
+switch/ switch,
+fabri¢ fabrics
+/ ’
+.- - - - . N m----
+output port contention: only one red datagram can one packet time later: green packet
+
+be transferred. lower red packet is blocked experiences HOL blocking
+COMPUTER NETWORKS
+A @)PES
+
+Output port queuing
+This is a really important slide
+
+datagram
+switch Buffer link :
+: layer 4 ine >
+fabric |} | protocol termination
+(rate: NR) (send) R
+queueing
+
+Buffering required when datagrams arrive
+from fabric faster than link transmission
+rate. Drop policy: which datagrams to drop
+if no free buffers?
+
+’ Datagrams can be lost due to
+congestion, lack of buffers
+
+Priority scheduling — who gets
+
+Scheduling discipline chooses » best performance, network
+among queued datagrams for neutrality !
+
+transmission
+COMPUTER NETWORKS
+Output port queuing
+
+- >
+.-
+switch,
+fabrie
+] [ —
+
+m-F-- ]
+* —
+v |7
+\
+switch 4 .
+fabric, ‘\
+m----/ |
+
+at f, packets more
+from input to output
+
+one packet time later
+
+buffering when arrival rate via switch exceeds output line speed
+queueing (delay) and loss due to output port buffer overflow!
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+A2\ PES
+How much buffering? ‘%
+
+UNIVERSITY
+
+RFC 3439 rule of thumb: average buffering equal to “typical” RTT (say 250 msec)
+times link capacity C
+
++ e.g., C =10 Gbps link: 2.5 Gbit buffer
+
+more recent recommendation: with N flows, buffering equal to
+RTT -C
+
+N
+
+but too much buffering can increase delays (particularly in home routers)
+* long RTTs: poor performance for realtime apps, sluggish TCP response
+
+* recall delay-based congestion control: “keep bottleneck link just full enough
+(busy) but no fuller”
+
+COMPUTER NETWORKS
+Buffer Management
+
+switch
+fabric
+
+datagram
+buffer
+
+queueing
+scheduling
+
+link
+layer
+protocol
+(send)
+
+line
+termination
+
+D)FES
+buffer management:
+
+drop: which packet to add, drop
+R when buffers are full
+
+Abstraction: queue
+
+packet
+departures
+
+—_—
+packet
+arrivals
+
+queue
+
+(waiting area)
+
+link
+
+(server)
+
+* tail drop: drop arriving packet
+
+* priority: drop/remove on
+priority basis
+
+marking: which packets to mark
+to signal congestion (ECN, RED)
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 6/13: resources/u3/Slides/3.7.1_IPv4_Datagram.pdf
+PAGES: 5 | EXTRACTED CHARACTERS: 1,477
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+Datagram format
+COMPUTER NETWORKS
+Network Layer: Internet
+
+host, router network layer functions:
+
+network
+layer
+
+transport layer: TCP, UDP
+
+Path-selection
+algorithms:
+
+=
+
+IP protocol
+* datagram format
+
+ol di * addressing
+implemented in : ¢ packet handling conventions
+* routing protocols| forwarding
+(OSPF, BGP) _table ICMP protocol
+* SDN controller e error reporting
+® router “signaling”
+link layer
+
+physical layer
+
+COMPUTER NETWORKS
+IP Datagram Format
+
+PES
+
+UNIVERSITY
+
+&
+
+— 32bit§ —m08 ——
+
+IP protocol version number——ver head.type of total
+header length(bytes) service length  |— datagram
+“type” of ~ 16-bit identifier | fig§ oot ee) :;aagsrggrr:;t n/
+service: time to | upper header
+diffserv (0:5) live L layer checksum T — header checksum
+
+.. ECN (6:7
+TTL: remaining mgx ﬁops
+(decremented at each router)
+
+upper layer protocol (e.g., TCP or UDF‘(
+
+ource |IP address
+
+destination IP address
+
+— 32-bit source IP aqdress
+. Maximum length: 64K
+" bytes
+
+options (if any)
+
+¢ Typically: 1500 bytes or
+
+overhead
+20 bytes of TCP
+20 bytes of IP
+=40 bytes + app
+layer overhead for
+TCP+IP
+
+payload data
+(variable length,
+typically a TCP
+or UDP segment)
+
+r less
+
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 7/13: resources/u3/Slides/3.8.1_IPv4_Fragmentation.pdf
+PAGES: 11 | EXTRACTED CHARACTERS: 5,456
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+Fragmentation
+COMPUTER NETWORKS
+IP fragmentation, reassembly
+
+* network links have MTU
+(max.transfer size) - largest
+possible link-level frame
+
+« different link types,
+different MTUs
+
+* large IP datagram divided
+(“fragmented”) within net
+
+* one datagram becomes
+several datagrams
+
+* “reassembled” only at final
+destination
+
+* IP header bits used to
+identify, order related
+fragments
+
+—
+
+-«
+
+reassem
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+. %g PES
+IP fragmentation, reassembly
+
+length |[ID
+example: =4000 [=x |
++ 4000 byte datagram
+« MTU = 1500 bytes
+
+fragflag offset
+=0 =0
+
+one large datagram becomes
+several smaller datagrams
+
+1480 bytes
+
+length |ID | fragflag offse
+in data field
+
+=1500 |=x = =
+
+length |ID | fragflag offse
+
+=1500 offset =1480/8
+
+fragflag
+=0 =370
+
+COMPUTER NETWORKS
+
+A2\ PES
+IP fragmentation, reassembly ‘%
+
+UNIVERSITY
+
+Data to fragment: 4000 bytes
+Original payload = 4000 - 20 = 3980 bytes
+MTU (max total fragment size): 1500 bytes
+IP header size: 20 bytes - so max data per fragment = 1500 - 20 = 1480 bytes
+Step 1 — How many fragments are needed?
+4000 bytes + 1480 bytes/fragment = 2.7 > so 3 fragments are needed: two full ones, and one smaller
+remainder.
+Step 2 — Fragment 1
+Carries the first 1480 bytes of data.
+Total length = 1480 (data) + 20 (header) = 1500
+Offset = 0 (it's the first piece) (0/8)
+More fragments follow - fragflag = 1
+
+Step 3 — Fragment 2
+
+Carries the next 1480 bytes of data (bytes 1480-2959 of the original).
+
+Total length = 1480 + 20 = 1500
+
+Offset = 1480 bytes + 8 = 185 (i.e., this fragment's data starts 185%8 = 1480 bytes into the original)
+More fragments follow - fragflag = 1
+COMPUTER NETWORKS
+
+IP fragmentation, reassembly
+
+Step 4 — Fragment 3 (the remainder)
+
+Remaining data = 4000 - 1480 - 1480 = 1040 bytes
+Total length = 1040 + 20 = 1060
+
+Offset = (1480 + 1480) bytes + 8 = 2960 + 8 = 370
+
+This is the last fragment - fragflag=0
+
+D
+
+PES
+
+UNIVERSITY
+
+Fragment 33:;2;’5‘;5 Total length Offset (/8 bytes) | fragflag
+1480 1500 0 1
+1480 1500 185
+1040 1060 370 0
+
+Check = 1480+1480+1040 = 4000
+Total length add to 4060 bytes: 1500+1500+1060=4060
+COMPUTER NETWORKS
+%% PES
+Fragmentation — Example
+
+Original IP Datagram
+e Total DF MF Fragment
+Sl e L) Length |May/Don’t| Last/ More Offset
+0 345 5140 0 0 0
+
+IP Fragments (Ethernet)
+
+Sequence | Identifier LTotaI L. o L7 =
+ength |May/Don’t|Last/ More Offset
+00 345 1500 0 1 0
+041 345 1500 0 1 185
+0-2 345 1500 0 1 370
+03 345 700 0 0 555
+
+COMPUTER NETWORKS
+
+. %g PES
+Fragmentation - Example
+
+UNIVERSITY
+
+Total Length = 5140 bytes -> this includes the 20-byte IP header, so data payload = 5140 - 20 = 5120
+bytes
+
+Identifier = 345 (carried unchanged into every fragment — this is how the receiver knows which
+fragments belong together)
+
+MTU = 1500 bytes (standard Ethernet) -> max data per fragment = 1500 - 20 = 1480 bytes
+
+Fragment Total Length Payload MF Offset
+0-0 1500 1480 1 0 Data sum check:
++ +
+0-1 1500 1480 1 185 ijgg + ég?)():
+0-2 1500 1480 1 370 5120
+0-3 700 680 0 555
+MF flag check
+
+Fragments 0-0, 0-1, 0-2: MF = 1 - correctly signals "more fragments still coming"
+
+Fragment 0-3: MF = 0 - correctly signals "this is the last one" — this is exactly how the receiver knows reassembly is complete rather than waiting for a
+fragment that never arrives.
+
+DF flag check
+
+All rows show DF = 0 throughout — correctly unchanged, since DF ("Don't Fragment") is a per-datagram policy set by the original sender, not something
+
+that changes as a result of the fragmentation process itself. The fact that this datagram was fragmented is itself consistent with DF=0 (a DF=1 datagram
+that didn't fit the MTU would have been dropped by the router, not fragmented).
+COMPUTER NETWORKS
+
+Fragmentation — Numerical Example
+
+&%) PES
+
+UNIVERSITY
+
+An IP router with a Maximum Transmission Unit (MTU) of
+200 bytes has received an IP packet of size 520 bytes with
+an IP header of length 20 bytes. The values of the relevant
+fields in the IP header.
+
+20| 176 20| 176 20| 148
+Fragment 0 22 44
+MF 1 1 0
+- S 5 5
+Total length 196 196 168
+
+The Fragment Offset field
+is measured in units of 8
+bytes. This means the
+amount of data in every
+fragment (except the
+last) must be a multiple
+of 8 — otherwise the
+offset of the next
+fragment wouldn't land
+on a whole number.
+
+180 is not a multiple of 8
+(180 + 8 = 22.5). So we
+can't actually use the full
+180 bytes per fragment —
+we must round down to
+the nearest multiple of 8.
+So we choose 22 not 23.
+
+COMPUTER NETWORKS PES
+Why fragmentation is avoided
+
+= One lost fragment loses them all
+IP never resends. If one fragment is missing, the destination throws away the rest.
+
+= TCP sizes its segments to fit
+1,500 - 20 (IP) - 20 (TCP) = 1,460 bytes of data, so IP never needs to split.
+
+= Senders ask routers not to split
+The DF bit is set. A router that can't forward the packet drops it and replies with the MTU it needs.
+
+= IPV6 routers never fragment
+Only the sender may split an IPv6 packet. Routers just drop it and report back.
+
+Result: the sender learns the smallest MTU on the whole path and never sends anything bigger. This is called path
+MTU discovery, and it is why routers today almost never fragment.
+
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 8/13: resources/u3/Slides/3.9.1_IPv4_Addressing.pdf
+PAGES: 30 | EXTRACTED CHARACTERS: 15,463
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+IPv4 addressing
+COMPUTER NETWORKS
+uTE . &) PES
+IP addressing: Introduction
+
+223111
+
+* IP address: 32-bit unique ID
+associated with each host or
+router interface
+
+* interface: connection between
+host/router and physical link
+* router’s typically have multiple interfaces
+
+* host typically has one or two interfaces
+(e.g., wired Ethernet, wireless 802.11)
+
+223.1.1.2
+
+223.1.3.1 223.1.3.2
+
+dotted-decimal IP address notation:
+223.1.1.1 = 11011111,00000001, 00000001, 00000001
+
+223 1 1 1
+COMPUTER NETWORKS
+S
+IP addressing: Introduction ‘% EES
+
+UNIVERSITY
+
+Change the following IPv4 addresses from binary notation to dotted-
+decimal notation.
+
+a. 10000001 00001011 00001011 11101111
+b. 11000001 10000011 00011011 11111111
+Solution:
+We replace each group of 8 bits with its equivalent decimal number
+
+P v
+and add dots for separation. T
+e
+a. 129.11.11.239 M
+b. 193.131.27.255 —_—
+
+ —
+COMPUTER NETWORKS
+. . ‘g PES
+IP addressing: Introduction
+
+Change the following IPv4 addresses from dotted-decimal notation to
+binary notation.
+
+a. 111.56.45.78
+
+b. 221.34.7.82
+Solution:
+We replace each decimal number with its binary equivalent. g
+\
+a. 01101111 00111000 00101101 01001110 ‘A
+b. 11011101 00100010 00000111 01010010 - \
+COMPUTER NETWORKS
+
+IP addressing: Introduction @
+
+2231.1.1
+
+Q: how are interfaces
+actually connected?
+
+223.1.1.2
+A: we’ll learn about that A: wired
+in chapters 6, 7 Ethernet interfaces
+connected by
+Ethernet switches
+
+223.1.3.2
+For now: don’t need to worry \g.
+about how one interface is
+connected to another (with no
+
+intervening router) A: wireless WiFi interfaces
+connected by WiFi base station
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+PES
+Subnets
+
+UNIVERSITY
+
+223.1.1.1
+
+What’s a subnet ?
+
+* device interfaces that can
+physically reach each other 223.1.1.2
+without passing through an
+intervening router
+
+IP addresses have structure:
+* subnet part: devices in same subnet
+
+223132
+
+have common high order bits E* \g.
+* host part: remaining low order bits
+
+network consisting of 3
+A portion of a network that shares subnets
+
+a particular subnet address.
+COMPUTER NETWORKS @
+
+PES
+Subnets
+
+UNIVERSITY
+
+subnet 223.1.1.0/24
+223.1.1.1 subnet 223.1.2.0/24
+
+Recipe for defining subnets:
+
+detach each interface from its
+host or router, creating “islands”
+
+of isolated networks
+223.1.1.2
+
+each isolated network is called a
+subnet
+
+223.1.3.0/24 \gZiaﬂ 32
+
+subnet mask: /24
+(high-order 24 bits: subnet part of IP address)
+COMPUTER NETWORKS
+Subnets 223.1.1.2 !:E&
+
+subnet 223.1.1/24
+
+where are the
+subnets?
+
+what are the /24
+subnet
+addresses? subnet 223.1.9/24
+
+. . subnet 223.1.2/24
+A 32-bit combination used to
+
+describe which portion of an 223.1.
+address refers to the subnet and L
+which part refers to the host. )
+COMPUTER NETWORKS
+IP addressing: CIDR
+
+uuuuuuuuuu
+
+CIDR: Classless InterDomain Routing (pronounced “cider”)
+* subnet portion of address of arbitrary length
+
+* address format: a.b.c.d/x, where x is # bits in subnet portion of
+address
+
+P subnet , < host
+
+part part
+11001000 00010111 00010000 00000000
+
+200.23.16.0/23
+COMPUTER NETWORKS
+. %% PES
+IP addressing: CIDR
+
+UNIVERSITY
+
+CIDR Block Prefix # of Host Addresses (inclusive of network and broadcast-id)
+/30 4 hosts (valid host would be 2)
+/29 8 hosts (valid host would be 6)
+/28 16 hosts (valid host would be 14)
+/27 32 hosts
+/26 64 hosts
+/25 128 hosts
+/24 256 hosts
+/23 512 hosts
+122 1,024 hosts
+/21 2,048 hosts
+/20 4,096 hosts
+/19 8,192 hosts
+/18 16,384 hosts
+17 32,768 hosts
+/16 65,536 hosts.
+
+/15 131,072 hosts
+/14 262,144 hosts
+/13 524,288 hosts
+
+/12 1,048,576 hosts and so on
+COMPUTER NETWORKS
+. . %g PES
+IP addressing: Why not Classful Addressing?
+
+Network portion - 8, 16, or 24 bits in length — known as
+Class A, B and C networks respectively
+
+A class C (/24) - accommodate only up to 28 - 2 = 254
+hosts (two of the 28 = 256 addresses are reserved for
+
+special use)
+
+too small for many
+organizations
+
+too large, poor
+A class B (/16) subnet, supports up to 65,536 hosts utilization
+
+A class A (/8) subnet, up to 16,777,214 hosts
+
+0 Classful addressing, which is almost obsolete,
+a m is replaced with classless addressing.
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+IP addressing: Classful Addressing
+
+a % g £
+7] L
+o T % ¥
+& g @ £ b m
+g = & &
+o
+w 2 2 w
+« —1% 588 ] ]
+[ O & 2|° = 3
+m S o 3]
+o= (TR 3 o -
+5
+o - - -
+© 5
+i :
+H 3
+s e s ) g
+] e g - 1 o
+> 8 E i H
+= = Hm ==
+=== =
+z= s SSINEpe | <
+- -Hw . | - —
+% I=|8 >= =1 Nm
+ot | “=|1 Z=| S=ig Tl
+s | | I ol = | e !
+=d| = - - o W
+. = == ”um
+- = =0 s | =
+W ol |l k= = =
+=t == ] ==
+- e - - o—
+3 E e i N (W o (8
+st el el —10]
+
+Ciass A
+
+Class D
+
+Class €
+
+COMPUTER NETWORKS
+IP addressing: Classful Addressing
+
+Class NETID Host | No of Networks Host Per Start End Address
+Bits ID Bits Network Address
+
+ClassA 277128 2216,777,216
+Class B 10 16 16 21%16,384 21665,536
+ClassC 110 24 8 22172,097,152 28256
+ClassD 1110 - o o 5
+Classg 1111 - - - -
+
+Class D: multicast, Class E: reserved (experimental)
+Broadcast Address: 255.255.255.255
+
+0.0.0.0
+128.0.0.0
+192.0.0.0
+224.0.0.0
+
+240.0.0.0
+
+127.255.255.255
+191.255.255.255
+223.255.255.255
+239.255.255.255
+
+255.255.255.255
+
+Network Masks
+
+Class A: 255.0.0.0
+Class B: 255.255.0.0
+
+Class C: 255.255.255.0
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+IP addressing: Classful Subnet Masks
+
+A |11111111 00000000 00000000 00000000 255.0.0.0 8
+B 11111111 11111111 00000000 00000000 255.255.0.0 116
+(o 11111111 11111111 11111111 00000000 255.255.255.0 124
+
+A
+
+®
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+%g PES
+IP addressing: introduction
+
+UNIVERSITY
+
+Find the class of each address.
+
+a. 00000001 00001011 00001011 11101111
+b. 11000001 10000011 00011011 11111111
+c. 14.23.120.8
+
+d. 252.5.15.111
+
+v
+
+Solution N
+a. The first bit is 0. This is a class A address. |
+
+b. The first 2 bits are 1; the third bit is 0. This is a class C address. . o~
+
+c. The first byte is 14; the class is A. - \_/ '
+d. The first byte is 252; the class is E.
+COMPUTER NETWORKS
+
+IP addressing: CIDR — Prefix Lengths %% EES
+/n Mask /n Mask /n Mask /n Mask
+
+1 128.0.0.0 9 255.128.0.0 /17 | 255.255.128.0 /25 | 255.255.255.128
+
+/2 192.0.0.0 /10 | 255.192.0.0 /18 | 255.255.192.0 | /26 | 255.255.255.192
+
+/3 | 224.0.0.0 /11 | 255.224.0.0 /19 | 255.255.224.0 | /27 | 255.255.255.224
+
+/4 240.0.0.0 /12 | 255.240.0.0 /20 | 255.255.240.0 | /28 | 255.255.255.240
+
+/5 248.0.0.0 /13 | 255.248.0.0 /21 | 255.255.248.0 | /29 | 255.255.255.248
+
+/6 | 252.0.0.0 /14 | 255.252.0.0 /22 | 255.255.252.0 | /30 | 255.255.255.252
+
+7 254.0.0.0 /15 | 255.254.0.0 /23 | 255.255.254.0 | /31 | 255.255.255.254
+
+/8 255.0.0.0 /16 | 255.255.0.0 /24 | 255.255.255.0 | /32 | 255.255.255.255
+
+The addresses in color are the default masks for classes A, B, and C.
+Thus, classful addressing is a special case of classless addressing.
+
+COMPUTER NETWORKS
+
+A2\ PES
+Stepwise Method for Designing Subnets ‘%
+
+UNIVERSITY
+
+Step 1: Determine the requirements
+* Identify the number of subnets required.
+* Determine the number of hosts needed per subnet.
+
+Step 2: Determine the subnet and host bits
+¢ Use the 2" - 2 formula to determine the number of subnet bits and host bits required.
+* If multiple subnet masks satisfy the requirements, choose the one that provides better
+future scalability.
+If more subnets are likely to be added -> allocate more subnet bits.
+If more hosts are likely to be added to existing subnets - allocate more host bits.
+* Avoid using all available subnets or host addresses immediately. Leave room for future
+growth.
+COMPUTER NETWORKS
+
+A2\ PES
+Stepwise Method for Designing Subnets ‘%
+
+UNIVERSITY
+
+Step 3: Determine the subnet addresses
+
+¢ Work in binary and list all possible combinations of the subnet bits.
+* Set all host bits to 0 for each combination.
+
+¢ Convert the resulting addresses to dotted-decimal notation.
+
+* These are the subnet addresses.
+
+Step 4: Determine the host addresses
+
+* For each subnet, work in binary and list all possible combinations of the host bits.
+* Keep the subnet bits unchanged.
+
+¢ Convert the resulting addresses to dotted-decimal notation.
+
+* These are the host addresses available within each subnet.
+COMPUTER NETWORKS
+. S2\PES
+Example for Designing Subnets ) rvererr
+
+Consider the internetwork, with Class C network address 192.168.100.0. The internetwork has
+five data links, so at least five subnet addresses are required.
+
+The two Ethernet networks have the highest requirement, with 25 hosts each.
+
+Therefore, the subnetting requirements are:
+
+At least 5 subnets and at least 25 host addresses per subnet.
+
+Step 2:
+
+Applying the 2" — 2 formula, 3 subnet bits and 5 host bits satisfy the requirements:
+Subnets: 23 - 2 = 6 subnets
+
+Hosts per subnet: 2° - 2 = 30 hosts
+
+A Class C network with 3 bits borrowed for subnetting has the subnet mask:
+255.255.255.224
+
+=/27
+COMPUTER NETWORKS
+Example for Designing Subnets
+
+%% UNIVERSITY
+
+Step 3:
+
+The subnet bits are derived by marking the masked subnet bit space and then writing all
+possible bit combinations in the space by counting up from zero in binary.
+
+11111111111111111111111411100000 = 255.255.255.224
+11000000101010000110010000000000 = 192.168.100.0
+NETWORK 000, HOST
+ADDRESS 001 ADDRESS
+SPACE 010, SPACE
+011
+100
+1 SUBNET
+101 <=8 AnpRESS
+H? SPACE
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS ‘
+Example for Designing Subnets %
+
+The subnet addresses are derived by filling in the network address to the left of the subnet
+space, setting all host bits to zero to the right of the subnet space, and converting the results to
+dotted decimal.
+
+1111111111111111111111111 1100000 = 255.255.255.224
+
+110000001010100001100100; .168.100.0
+11000000101010000110010000000000 = 192.168.100.0
+
+11000000101010000110010000100000 = 192.168.100.32
+11000000101010000110010001000000 = 192.168.100.64
+11000000101010000110010001100000 = 192.168.100.96
+11000000101010000110010010000000 = 192.168.100.128
+11000000101010000110000010100000 = 192.168.100.160
+1100000010101000011000001 1000000 = 192.168.100.192
+110000001010100001100000/11100000 = 192.168.100.224
+
+COMPUTER NETWORKS
+. S2\PES
+Example for Designing Subnets ) rvererr
+
+Step 4: Calculate Host Addresses for Each Subnet
+
+* The final step is to determine the host addresses available in each subnet.
+
+¢ Choose a subnet and keep the network and subnet bits unchanged. Then, list all possible
+combinations of the host bits, starting from zero and counting upward in binary.
+
+For example, consider the subnet 192.168.100.32:
+
+* The first address, where all host bits are 0, is the subnet address.
+
+¢ The last address, where all host bits are 1, is the broadcast address.
+
+* The addresses between them are the host addresses available for that subnet.
+
+* After the broadcast address, the next address begins the next subnet, which is
+192.168.100.64.
+
+Thus, the addresses follow this pattern:
+Subnet address - Host addresses - Broadcast address - Next subnet
+COMPUTER NETWORKS
+Example for Designing Subnets
+
+The host addresses for a subnet
+are derived by writing all possible
+bit combinations in the host
+space. These are the host bits for
+subnet 192.168.100.32.
+
+NETWORK
+BITS
+
+11000000101010000110010
+11000000101010000110010000100001 = 192.168.100.33
+11000000101010000110010000100010 = 192.168.100.34
+11000000101010000110010000100011 = 192.168.100.35
+11000000101010000110010000100100 = 192.168.100.36
+11000000101010000110010000100101 = 192.168.100.37
+11000000101010000110010000100110 = 192.168.100.38
+11000000101010000110010000100111 = 192.168.100.39
+110000001010100001 10010@010‘000 = 192.168.100.40
+11000000101010000110010000101001 = 192.168.100.41
+11000000101010000110010000101010 = 192.168.100.42
+1100000010‘010000110010090101011 =192.168.100.43
+11000000101010000110010000101100 = 192.168.100.44
+11000000101010000110010000101101 = 192.168.100.45
+11000000101010000110010000101110 = 192.168.100.46
+11000000101010000110010000101111 = 192.168.100.47
+1100000010101000011001 110000 = 192.168.100.48
+11000000101010000110010000110001 = 192.168.100.49
+11000000101010000110010000110010 = 192.168.100.50
+1100000010101000011001 110011 = 192.168.100.51
+11000000101010000110010000110100 = 192.168.100.52
+11000000101010000110010000110101 = 192.168.100.53
+11000000101010000110010000110110 = 192.168.100.54
+11000000101010000110010000110111 = 192.168.100.55
+11000000101010000110010000111000 = 192.168.100.56
+11000000101010000110010000111001 = 192.168.100.57
+11000000101010000110010000111010 = 192.168.100.58
+11000000101010000110010000111011 = 192.168.100.59
+11000000101010000110010000111100 = 192.168.100.60
+11000000101010000110010000111101 = 192.168.100.61
+11000000101010000110010000111110 = 192.168.100.62
+
+HOST
+BITS
+
+0100000 = 192.168.100.32 +— SUBNET
+
+PES
+
+UNIVERSITY
+
+"~ VALID
+HOST
+ADDRESSES
+
+11000000101010000110010000111111 = 192.168.100.63 «— BROADCAST
+COMPUTER NETWORKS
+
+A2\ PES
+IP addresses: how to get one? ‘%
+
+UNIVERSITY
+
+Q: how does network get subnet part of IP address?
+A: gets allocated portion of its provider ISP’s address space
+
+ISP's block 11001000 00010111 00010000 00000000 200.23.16.0/20
+
+ISP can then allocate out its address space in 8 blocks:
+
+Organization 0 11001000 00010111 00010000 00000000 200.23.16.0/23
+Organization 1 11001000 00010111 00010010 00000000 200.23.18.0/23
+Organization 2 11001000 00010111 00010100 00000000 200.23.20.0/23
+
+Organization 7 11001000 00010111 00011110 00000000 200.23.30.0/23
+
+
+
+COMPUTER NETWORKS
+o . . PES
+Hierarchical addressing: route aggregation oY
+
+hierarchical addressing allows efficient advertisement of routing
+information:
+
+Organization 0
+
+Organization 1
+
+“Send me
+
+anything The ability to use a
+with addresses single prefix to
+advertise multiple
+
+rnet f
+Organization 7 networks is often
+
+referred to as address
+aggregation (also
+
+“Send me route aggregation or
+
+anything ggreg
+
+with addresses route
+
+beginning summarization).
+
+199.31.0.0/16”
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS .
+Hierarchical addressing: more specific routes %
+
+Organization 1 moves from Fly-By-Night-ISP to ISPs-R-Us
+ISPs-R-Us now advertises a more specific route to Organization 1
+
+Organization 0
+
+“Send me
+anything
+with addresses
+
+rnet
+Organization 7
+
+“Send me
+
+anything
+
+Organization 1 with addresses
+
+beginning
+
+199.31.0.0/16” “or
+200.23.18.0/23"
+
+COMPUTER NETWORKS
+Hierarchical addressing: more specific routes
+
+Organization 1 moves from Fly-By-Night-ISP to ISPs-R-Us
+ISPs-R-Us now advertises a more specific route to Organization 1
+
+Organization 0
+
+Organizatioili
+
+Organization 7
+
+“Send me
+anything
+with addresses
+
+anything
+
+with addresses
+
+beginning
+
+199.31.0.0/16” “or
+200.23.18.0/23"
+
+Organization 1
+COMPUTER NETWORKS
+IP addressing: last words...
+
+&%) PES
+
+UNIVERSITY
+
+Q: how does an ISP get block of addresses?
+
+A: ICANN: Internet Corporation for Assigned
+Names and Numbers
+http://www.icann.org/
+
+allocates IP addresses, through 5
+regional registries (RRs) (who may then
+allocate to local registries)
+
+manages DNS root zone, including
+delegation of individual TLD (.com, .edu,
+...) management
+
+Q: are there enough 32-bit IP
+
+addresses?
+
+ICANN allocated last chunk of IPv4
+addresses to RRs in 2011
+
+NAT (next) helps IPv4 address
+space exhaustion
+
+IPv6 has 128-bit address space
+
+"Who the hell knew how much address
+space we needed?" Vint Cerf (reflecting
+on decision to make IPv4 address 32 bits
+long)
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 9/13: resources/u3/Slides/3.10.1_Designing_IPv4_Subnets_-_Exercises.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 5,303
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Given the IP address 172.21.35.17, determine the network address using the appropriate address
+
+mask.
+
+1. Identify the class of the given IP address.
+
+2. Determine the corresponding subnet mask in dotted-decimal notation.
+
+3. Explain how the mask is used to separate the network portion from the host portion of the IP
+address.
+
+4. Determine the resulting network address.
+
+Answer: Determining the Network Address Using a Subnet Mask
+Given IP address: 172.21.35.17
+
+1. Identify the class of the IP address
+
+The first octet of the IP address is 172.
+
+Class A: 1-126
+
+Class B: 128-191
+
+Class C: 192-223
+
+Therefore, 172.21.35.17 is a Class B IP address.
+COMPUTER NETWORKS
+
+%% PES
+IPv4 Addressing & Subnetting — Numerical Example
+2. Determine the subnet mask Truth Table for Boolean AND:
+The default subnet mask for a Class B address is:
+Dotted-decimal: 255.255.0.0 0o 1
+0ANDO0=0
+-0 0[O0 |0
+IP address: 172.21.35.17 i
+10101100.00010101.00100011.00010001 Tanmgoy 1o
+
+Subnet mask: 255.255.0.0
+
+11111111.11111111.00000000.00000000 10101100000101010010001100010001 = 172.21.35.17
+AND J 11111111111111110000000000000000 = 255.255.0.0
+
+3. 10101100000101010000000000000000 = 172.21.0.0
+Each bit of this class B address is ANDed with the
+
+corresponding bit of the address mask to derive * Network portion: 172.21
+
+the network address * Host portion: 35.17
+
+4. Therefore, the network address is: 172.21.0.0
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+123.56.77.32/29
+
+180.34.64.64/30
+200.17.21.128/27
+
+4
+XD
+) A
+
+S
+|
+
+—..
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+123.56.77.32/29
+
+/29 subnet means there are 32 - 29 = 3 bits left for host addresses.
+
+Binary Subnet Mask: 11111111.11111111.11111111.11111000
+
+Subnet Mask: 255.255.255.248 (since the first 29 bits are for the network portion)
+Number of Addresses: 23 = 8 total addresses
+
+Network Address: 123.56.77.32
+
+Usable IP Range: 123.56.77.33 to 123.56.77.38 (8 - 2 = 6 Addresses)
+Broadcast Address: 123.56.77.39
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+180.34.64.64/30
+/30 subnet means there are 32 - 30 = 2 bits left for host addresses.
+Binary Subnet Mask: 11111111.11111111.11111111.11111100
+Subnet Mask: 255.255.255.252 (since the first 30 bits are for the network portion)
+Number of Addresses: 22 = 4 total addresses
+Network Address: 180.34.64.64
+Usable IP Range: 180.34.64.65 to 180.34.64.66 (4 - 2 = 2 Addresses)
+Broadcast Address: 180.34.64.67
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+200.17.21.128 /27
+127 subnet means there are 32 - 27 = 5 bits left for host addresses.
+Binary Subnet Mask: 11111111.11111111.11111111.11100000
+Subnet Mask: 255.255.255.224 (since the first 30 bits are for the network portion)
+Number of Addresses: 25 = 32 total addresses
+Network Address: 200.17.21.128
+Usable IP Range: 200.17.21.129 - 200.17.21.158 (32 - 2 = 30 Addresses)
+Broadcast Address: 200.17.21.159
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+You are given the network address 175.200.0.0; you are
+required to have 4 subnets.
+
+What is the minimum number of Host Bits can you take in to
+the Network Bits for this purpose?
+
+Write down the addresses of 4 subnets.
+
+Write the subnet mask for the network.
+
+4
+
+1SS
+
+) A
+
+. \
+|
+
+—..
+COMPUTER NETWORKS
+IPv4 Addressing & Subnetting — Numerical Example
+
+In a block of addresses, we know the IP address of one host is
+25.34.12.56/16.
+
+What are the first address (network address) and the last
+address (limited broadcast address) in this block?
+
+Please explain in full with detailed steps showing the
+calculation.
+
+&%) PES
+
+UNIVERSITY
+
+2
+
+-
+
+'y
+—
+|
+
+o 4
+COMPUTER NETWORKS
+IPv4 Addressing & Subnetting — Numerical Example
+
+An organization is granted the block 16.0.0.0/8. The
+administrator wants to create 500 fixed- length subnets.
+
+i)  find the subnet mask
+ii) find the number of addresses in each subnet.
+
+iii) find the first and last address in first subnet and in the
+last subnet (500t subnet).
+
+&%) PES
+
+UNIVERSITY
+
+2
+
+-
+
+'y
+—
+|
+
+o 4
+COMPUTER NETWORKS
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+An organization is granted a block of addresses with the
+beginning address 14.24.74.0/24. The organization needs to
+
+have 3 subblocks of addresses to use in its three subnets:
+one subblock of 10 addresses, one subblock of 60
+addresses, and one subblock of 120 addresses. Design the
+subblocks.
+
+S
+
+T
+——
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the network address and the directed broadcast
+address of subnetted Class B IPv4 address 172.25.171.182
+
+with a subnet mask of 255.255.224.0. ,
+
+.-
+
+g
+T
+|
+"\_/\_/
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 10/13: resources/u3/Slides/3.11.1_IPv4_NAT.pdf
+PAGES: 10 | EXTRACTED CHARACTERS: 3,761
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+PES
+
+UNIVERSITY
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+* IPv4 addressing
+* NAT
+COMPUTER NETWORKS @
+
+i PES
+NAT: Network Address Translation
+
+UNIVERSITY
+
+NAT: all devices in local network share just one IPv4
+address as far as outside world is concerned
+
+rest of > local network (e.g., home ,
+Internet network) 10.0.0/24
+
+138.76.29.7 10.0.04
+
+all datagrams leaving local network have  datagrams with source or destination in
+same source NAT IP address: 138.76.29.7, this network have 10.0.0/24 address for
+but different source port numbers  source, destination (as usual)
+COMPUTER NETWORKS
+. %g PES
+NAT: Network Address Translation
+
+all devices in local network have 32-bit addresses in a “private” IP
+address space (10/8, 172.16/12, 192.168/16 prefixes) that can only be
+used in local network
+
+advantages:
+just one IP address needed from provider ISP for all devices
+
+can change addresses of host in local network without notifying
+outside world
+
+can change ISP without changing addresses of devices in local
+network
+
+security: devices inside local net not directly addressable, visible by
+outside world
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS A
+NAT: Network Address Translation ‘%
+
+implementation: NAT router must (transparently):
+
+outgoing datagrams: replace (source IP address, port #) of every outgoing
+datagram to (NAT IP address, new port #)
+
+* remote clients/servers will respond using (NAT IP address, new port #) as
+destination address
+
+remember (in NAT translation table) every (source IP address, port #) to
+(NAT IP address, new port #) translation pair
+
+incoming datagrams: replace (NAT IP address, new port #) in destination
+fields of every incoming datagram with corresponding (source IP address,
+port #) stored in NAT table
+COMPUTER NETWORKS
+PES
+NAT: Network Address Translation
+
+UNIVERSITY
+
+NAT translation table
+
+2: NAT router changes WAN side addr _ [LAN side addr
+datagram source address
+
+from 10.0.0.1, 3345 to 138.76.29.7, 5001 }(LQ./L 3345
+138.76.29.7,5001, | S | e
+updates table
+
+1: host 10.0.0.1 sends
+
+datagram to
+128.119.40.186, 80
+
+$:10.0.0.9, 3345
+D:128.119.40.186,
+
+$:138.76.29.7, 5001
+D:128.119.40.186, 80
+
+138.76.29.7
+
+$:128.119.40.186, 80
+D:10.0.0.1, 3345
+
+$:128.119.40.186, 80
+D:138.76.29.7, 5001
+
+3: reply arrives, destination
+address: 138.76.29.7, 5001
+COMPUTER NETWORKS
+Trace a NAT translation
+
+Host 10.0.0.2, port 4000, connects to a web server at 93.184.216.34, port 443. The NAT
+router (138.76.29.7) picks port 5002. Fill in each packet.
+
+@ Leaves the host: S=? D=?
+) Leaves the NAT router: S=? D=?
+@ Reply reaches the NAT router: S=? D=7
+
+@ Reply reaches the host: S=? D=?
+
+PES
+
+UNIVERSITY
+
+$10.0.0.2:4000 D 93.184.216.34:443
+
+$138.76.29.7 : 5002 D 93.184.216.34 : 443
+
+$93.184.216.34:443 D 138.76.29.7 : 5002
+
+$93.184.216.34:443 D 10.0.0.2: 4000
+
+COMPUTER NETWORKS
+. %% PES
+NAT: Network Address Translation
+
+NAT has been controversial:
+
+* routers “should” only process up to layer 3
+
+ address “shortage” should be solved by IPv6
+
+* violates end-to-end argument (port # manipulation by network-layer device)
+* NAT traversal: what if client wants to connect to server behind NAT?
+but NAT is here to stay:
+
+* extensively used in home and institutional nets, 4G/5G cellular nets
+COMPUTER NETWORKS
+. %% PES
+NAT: Network Address Translation
+
+client
+
+g?
+
+Solution: statically configure NAT
+to forward incoming connection
+
+requests at given port to server
+e.g., (123.76.29.7, port 25000)
+
+NAT
+router always forwarded to 10.0.0.1 port
+
+25000
+
+138.76.29.7
+
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 11/13: resources/u3/Slides/3.12.1_Software_Defined_Networking_(SDN)_-_OpenFlow_&_P4.pdf
+PAGES: 44 | EXTRACTED CHARACTERS: 24,903
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.5 Software Defined Networking (SDN)
+COMPUTER NETWORKS
+) . &%) PES
+Software Defined Networking (SDN)
+
+Internet network layer: historically implemented via distributed, per-
+router control approach:
+monolithic router contains switching hardware, runs proprietary
+implementation of Internet standard protocols (IP, RIP, IS-IS, OSPF,
+BGP) in proprietary router OS (e.g., Cisco 10S)
+different “middleboxes” for different network layer functions:
+firewalls, load balancers, NAT boxes, ..
+
+~2005: renewed interest in rethinking network control plane
+COMPUTER NETWORKS
+%% PES
+Per-router Control Plane
+
+Individual routing algorithm components in each and every router interact in the
+control plane to compute forwarding tables
+
+=
+
+control
+plane
+
+data
+plane
+
+values in arriving
+packet headel
+COMPUTER NETWORKS
+. . %% PES
+Software-Defined Networking (SDN) Control Plane
+
+Remote controller computes, installs forwarding tables in routers
+
+Remote Controller
+
+n i i 0
+
+values in arriving | | i i ‘
+packet header E v
+
+COMPUTER NETWORKS
+
+2\ PES
+Software Defined Networking (SDN) ‘%
+
+UNIVERSITY
+
+Why a logically centralized control plane?
+
+easier network management: avoid router misconfigurations, greater flexibility
+of traffic flows
+
+table-based forwarding (OpenFlow API) allows “programming” routers
+centralized “programming” easier: compute tables centrally and distribute
+
+distributed “programming” more difficult: compute tables as result of
+distributed algorithm (protocol) implemented in each-and-every router
+
+open (non-proprietary) implementation of control plane
+foster innovation: let 1000 flowers bloom
+COMPUTER NETWORKS
+
+SDN Analogy: Mainframe to PC revolution
+
+%% UNIVERSITY
+
+Specialized
+Applications
+
+Specialized
+Operating
+System
+
+Specialized
+Hardware
+
+Vertically integrated
+Closed, proprietary
+Slow innovation
+Small industry
+
+* Slide courtesy: N. McKeown
+
+= Open Interface
+
+» @D
+
+Windows Linux MAC OS
+
+— Open Interface —
+
+- Microprocessor
+
+Horizontal
+’ Open interfaces
+Rapid innovation
+Huge industry
+COMPUTER NETWORKS
+
+PES
+Software-Defined Networking (SDN)
+
+UNIVERSITY
+
+4. programmabl . 3. control plane
+
+functions external to
+control
+Remote Controller
+
+AOUP data-plane switches
+applications
+
+2. control, data
+plane separation
+
+1: generalized “flow-based”
+forwarding (e.g.,
+OpenFlow)
+
+COMPUTER NETWORKS @
+Key Characteristics of SDN ‘%
+
+PES
+
+UNIVERSITY
+
+1: Generalized “flow-based” forwarding (e.g., OpenFlow) —
+
+Packet forwarding by SDN-controlled switches can be based on any number of header field values
+in the transport-layer, network-layer, or link-layer header. OpenFlow abstraction allows forwarding
+based on eleven different header field values. This contrasts sharply with the traditional approach
+to router-based forwarding where forwarding of IP datagrams was based solely on a datagram’s
+destination IP address. Here, packet forwarding rules are specified in a switch’s flow table; and it is
+the job of the SDN control plane to compute, manage and install flow table entries in all of the
+network’s switches.
+
+2: Control and Data plane separation —
+
+The data plane consists of the network’s switches—relatively simple (but fast) devices that execute
+the “match plus action” rules in their flow tables. The control plane consists of servers and software
+that determine and manage the switches’ flow tables.
+COMPUTER NETWORKS
+
+e PES
+Key Characteristics of SDN
+
+UNIVERSITY
+
+3. Network control plane functions: external to data-plane switches —
+
+SDN control plane is implemented in software. Unlike traditional routers, however, this software executes on
+servers that are both distinct and remote from the network’s switches. As shown in Figure, the control plane
+itself consists of two components—an SDN controller (or network operating system [Gude 2008]) and a set of
+network-control applications. The controller maintains accurate network state information (e.g., the state of
+remote links, switches, and hosts); provides this information to the network-control applications running in
+the control plane; and provides the means through which these applications can monitor, program, and
+control the underlying network devices. Although the controller in Figure is shown as a single central server,
+in practice the controller is only logically centralized; it is typically implemented on several servers that
+provide coordinated, scalable performance and high availability.
+
+4. Programmable control applications —
+
+The network is programmable through the network-control applications running in the control plane. These
+applications represent the “brains” of the SDN control plane, using the APIs provided by the SDN controller to
+specify and control the data plane in the network devices.
+
+For example, a routing network-control application might determine the end-end paths between sources and
+destinations. Yet another application might have switches forward packets in a manner that performs server
+load balancing
+COMPUTER NETWORKS
+) . &%) PES
+Software Defined Networking (SDN)
+
+Data-plane switches:
+
+fast, simple, commodity switches
+implementing generalized data-plane
+forwarding (Section 4.4) in hardware
+
+flow (forwarding) table computed,
+installed under controller supervision
+
+API for table-based switch control (e.g.,
+
+OpenFlow)
+- defines what is controllable, what is
+not - T
+protocol for communicating with = @ve data
+< plane
+
+controller (e.g., OpenFlow) %-—‘&:9
+
+SDN-controlled switches
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+SDN controller (network OS):
+
+maintain network state information
+
+interacts with network control
+applications “above” via northbound
+API
+
+interacts with network switches
+“below” via southbound API
+
+implemented as distributed system for
+performance, scalability, fault-
+tolerance, robustness
+
+northbound AP/
+
+SDN Controller
+n (network operating system)
+
+southbound AP/
+
+&
+
+control
+plane
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Software Defined Networking (SDN)
+
+&%) PES
+
+UNIVERSITY
+
+Network-control apps:
+
+“brains” of control: implement
+control functions using lower-
+level services, API provided by
+SDN controller
+
+- unbundled: can be provided by
+3rd party: distinct from routing
+vendor, or SDN controller
+
+network-control
+
+.ﬂ applications
+access load
+control balance
+
+_____________ control
+northbound AP Plane
+
+southbound API l
+COMPUTER NETWORKS
+% PES
+Components of SDN Controller
+
+interface layer to network
+control apps: abstractions
+API
+
+network-wide state
+management : state of
+networks links, switches,
+services: a distributed
+database
+
+communication:
+communicate between SDN
+controller and controlled
+switches
+
+SDN
+controller
+
+COMPUTER NETWORKS
+
+A2\ PES
+Components of SDN ‘%
+
+UNIVERSITY
+
+A communication layer: Communicating between the SDN controller and controlled
+network devices. Clearly, if an SDN controller is going to control the operation of a remote
+SDN-enabled switch, host, or other device, a protocol is needed to transfer information
+between the controller and that device. In addition, a device must be able to communicate
+locally-observed events to the controller (for example, a message indicating that an
+attached link has gone up or down, that a device has just joined the network, or a heartbeat
+indicating that a device is up and operational). These events provide the SDN controller with
+an up-to-date view of the network’s state. This protocol constitutes the lowest layer of the
+controller architecture, as shown in Figure. The communication between the controller and
+the controlled devices cross what has come to be known as the controller’s “southbound”
+interface. OpenFlow is implemented in most, if not all, SDN controllers.
+COMPUTER NETWORKS
+
+A2\ PES
+Components of SDN ‘%
+
+UNIVERSITY
+
+A network-wide state-management layer: The ultimate control decisions made by the SDN control
+plane—for example, configuring flow tables in all switches to achieve the desired end-end
+forwarding, to implement load balancing, or to implement a particular firewalling capability—will
+require that the controller have up-to-date information about state of the networks’ hosts, links,
+switches, and other SDN-controlled devices. A switch’s flow table contains counters whose values
+might also be profitably used by network-control applications; these values should thus be available
+to the applications. Since the ultimate aim of the control plane is to determine flow tables for the
+various controlled devices, a controller might also maintain a copy of these tables.
+
+The interface to the network-control application layer: The controller interacts with network-
+control applications through its “northbound” interface. This API allows network-control applications
+to read/write network state and flow tables within the state-management layer. Applications can
+register to be notified when state-change events occur, so that they can take actions in response to
+network event notifications sent from SDN-controlled devices.
+COMPUTER NETWORKS
+OpenFlow Protocol
+
+= Operates between controller & switch
+= Operates over TCP, default port no. 6653
+= TCP used to exchange messages
+- optional encryption
+= Three classes of OpenFlow messages:
+- controller-to-switch
+-+ asynchronous (switch to controller)
+« symmetric (misc.)
+= Distinct from OpenFlow API
+
+- APl used to specify generalized forwarding
+actions
+
+OpenFlow Controller
+
+m cﬁVOpenFlow
+
+COMPUTER NETWORKS
+OpenFlow: Controller-to-switch messages
+
+S
+
+Key controller-to-switch messages
+
+= features: controller queries switch
+features, switch replies
+
+® configure: controller queries/sets
+switch configuration parameters
+
+= modify-state: add, delete, modify
+flow entries in the OpenFlow tables
+
+= packet-out: controller can send this
+packet out of specific switch port
+
+OpenFlow Controller
+
+m c’ ‘OpenFlow
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+A2\ PES
+OpenFlow: Switch-to-Controller messages ‘%
+
+UNIVERSITY
+
+Key switch-to-controller messages OpenFlow Controller
+
+= packet-in: transfer packet (and its
+control) to controller. See packet-out
+message from controller
+
+= flow-removed: flow table entry deleted
+at switch
+
+= port status: inform controller of a
+
+change on a port.
+
+Fortunately, network operators don’t “program” switches by
+creating/sending OpenFlow messages directly. Instead use higher-level
+abstraction at controller
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Which OpenFlow message?
+
+Name the OpenFlow message for each event.
+
+A packet arrives that matches no rule in the switch packet-in (switch -> controller)
+
+modify-state, often called flow-mod (controller -
+
+The controller installs a new rule in a switch 3
+switch)
+
+A link attached to the switch goes down port-status (switch -> controller)
+
+A rule expires because no packet has used it for a while flow-removed (switch -> controller)
+
+COMPUTER NETWORKS
+
+A2\ PES
+Generalized forwarding: match plus action ‘%
+
+UNIVERSITY
+
+Review: each router contains a forwarding table (aka: flow table)
+*  “match plus action” abstraction: match bits in arriving packet, take action
+* destinodion-bgsed forwarding: forward based on dest. IP address
+
+packet header
+
+* generalize
+
+* many action possible: drop/copy/modify/log packet
+
+= ee
+(aka: flow table) & 08 B8 E
+
+COMPUTER NETWORKS
+
+Flow Table Abstraction
+
+flow: defined by header field values (in link-, network-, transport-layer fields)
+
+generalized forwarding: simple packet-handling rules
+
+match: pattern values in packet header fields
+actions: for matched packet: drop, forward, modify, matched packet or send matched packet to
+
+controller
+
+priority: disambiguate overlapping patterns
+counters: #bytes and #packets
+
+Flow table
+
+Router’s flow table define
+
+match
+
+action
+
+router’s match+action rules
+
+—_~
+
+~
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+%% PES
+
+Flow Table Abstraction
+
+UNIVERSITY
+
+« flow: defined by header fields
+
++ generalized forwarding: simple packet-handling rules
+
+match: pattern values in packet header fields
+
+actions: for matched packet: drop, forward, modify, matched packet or send matched packet
+to controller
+
+priority: disambiguate overlapping patterns
+
+counters: #bytes and #packets
+
+src = ** * * dest=3.4.*.*| forward(2)
+src=1.2.*%.*, dest=*.*** | drop
+src=10.1.2.3, dest=*.** *| send to controller
+* : wildcard
+
+Flow table
+match | action
+
+COMPUTER NETWORKS
+
+. PES
+OpenFlow: Flow table Entries
+
+UNIVERSITY
+
+Match Action Stats
+
+rPacket + byte counters
+
+Forward packet to port(s)
+
+Drop packet
+
+Modify fields in header(s)
+Encapsulate and forward to controller
+
+P PENE
+
+Header fields to match:
+
+P
+
+Ingress Src Dst Eth VLAN  VLAN P P Prot P TCP/UDP  TCP/UDP
+
+Port MAC MAC  Type ID Pri Src Dst 5 ToS Src Port Dst Port
+
+T
+Link layer Network layer Transport layer
+COMPUTER NETWORKS
+
+- &)PES
+OpenFlow Abstraction
+¢ match+action: abstraction unifies different kinds of devices
+Router Firewall
+* match: longest * match: IP addresses and
+destination IP prefix TCP/UDP port numbers
+* action: forward out a * gction: permit or deny
+link
+Switch NAT
+* match: destination MAC * match: IP address and port
+address * action: rewrite address and
+
+* action: forward or flood port
+
+
+COMPUTER NETWORKS
+OpenFlow Examples
+
+PES
+
+UNIVERSITY
+
+Destination-based forwarding:
+
+Switch| MAC | MAC | Eth | VLAN | VLAN P IP P IP TCP | TCP Acti
+Port | src dst | type ID Pri Src Dst | Prot | ToS | s-port|d-port| ~€tiON
+
+* * * * * * * 51.6.0.8 * * * * porté
+IP datagrams destined to IP address 51.6.0.8 should be forwarded to router output port 6
+
+Firewall:
+
+Switch| MAC | MAC | Eth | VLAN |VLAN | IP P P IP TCP | TCP Acti
+Port | src dst | type ID Pri Src Dst | Prot | ToS | s-port|d-port GHER
+* * * * * * * * * * 22 drop
+
+*
+Block (do not forward) all datagrams destined to TCP port 22 (ssh port #)
+
+Switch| MAC | MAC | Eth | VLAN |VLAN | IP P P IP TCP | TCP Acti
+Port | src dst | type ID Pri Src Dst | Prot | ToS | s-port|d-port GHER
+
+* * * * * % 12811911  * * * * * drop
+
+Block (do not forward) all datagrams sent by host 128.119.1.1
+COMPUTER NETWORKS
+
+OpenFlow Examples
+
+Layer 2 destination-based forwarding:
+
+Switch
+Port
+
+MAC
+src
+
+MAC
+dst
+
+Eth
+type
+
+VLAN
+1D
+
+VLAN
+Pri
+
+P
+Src
+
+IP
+Dst
+
+IP
+Prot
+
+P
+ToS
+
+TCP
+s-port
+
+TCP
+
+d-port
+
+Action
+
+*
+
+layer 2 frames with destination MAC address 22:A7:23:11:E1:02 should be forwarded to
+output port 3
+
+*
+
+22:A7:23:
+11:E1:02
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+port3
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+&%) PES
+OpenFlow Examples
+
+Orchestrated tables can
+create network-wide behavior,
+e.g.,:
+
+= datagrams from hosts h5 and
+
+h6 should be sent to h3 or h4,
+via s1 and from there to s2
+
+10.1.02 10.2.0.3
+COMPUTER NETWORKS
+
+%g PES
+OpenFlow Examples
+match action
+EISTENTOREE qust he Orchestrated tables can
+IP Dst = 10.2.+ » | forward(3)| =$8£10.3.06 ) .
+< 3 create network-wide behavior,
+
+e.g.,:
+= datagrams from hosts h5 and
+
+h6 should be sent to h3 or h4,
+via s1 and from there to s2
+
+Host h1 Host h4
+10.1.0.1 =l 10204
+match action gz ms match action
+5 Host h ingress port = 2
+ingress port = 1 10.1.0.2 10.2.0.3 oL forward(3)
+IP Dst = 10.2.*.* IPgDst =p10 2.0.4| forward(4)
+
+COMPUTER NETWORKS
+
+SDN: How the Controller Learns the Network FES
+
+UNIVERSITY
+
+1 Switches check in Controller
+Each switch connects to the controller and lists its ports. holds the whole network map
+
+2 Links are discovered
+Controller sends a probe out of a port; the receiver reports it.
+
+3 Hosts are discovered
+A new host's first packet is passed up to the controller. | Switch A H Switch B H Switch C ’
+
+A whatlsee V flow rules
+
+4 Changes are reported
+Port up/down is reported at once; traffic counts are read often. Learn - Build map - Compute paths -> Install rules
+
+Each switch reports only what it sees locally. Only the controller sees the whole map — so it, not the switches,
+decides the routes.
+
+COMPUTER NETWORKS
+SDN: Control/Data Plane Interaction Example
+
+Dijkstra’s link-state
+
+routing
+
+network RESTful R
+s APl intent
+@1
+fow s
+(253
+
+_OpenFlow]
+
+% UNIVERSITY
+
+D s1, experiencing link failure uses
+OpenFlow port status message to
+notify controller using the
+OpenFlow port-status message
+
+(2 SDN controller receives
+OpenFlow message, updates
+
+link status info .
+(3 Dijkstra’s routing algorithm
+
+application has previously
+registered to be called when ever
+link status changes. ltis called.
+
+@ Dijkstra’s routing algorithm
+access network graph info, link
+state info in controller,
+computes new routes
+COMPUTER NETWORKS . PES
+SDN: Control/Data Plane Interaction Example
+
+Dijkstra’s link-state
+
+routing
+
+(3 (5
+network RESTful f
+graph API intent
+@‘
+fow e
+ostino || swichinto
+@f
+
+)S
+_OperFiow| JIE  snwp
+
+(® link state routing app interacts
+with flow-table-computation
+component in SDN controller,
+which computes new flow
+tables needed
+
+@© controller uses OpenFlow to
+install new tables in
+switches that need updating
+
+COMPUTER NETWORKS
+
+A2\ PES
+Generalized Forwarding: Summary ‘%
+
+UNIVERSITY
+
+= “match plus action” abstraction: match bits in arriving packet header(s) in
+any layers, take action
+* matching over many fields (link-, network-, transport-layer)
+* local actions: drop, forward, modify, or send matched packet to
+controller
+* “program” network-wide behaviors
+= simple form of “network programmability”
+* programmable, per-packet “processing”
+* historical roots: active networking
+* today: more generalized programming:
+P4 (see p4.org).
+COMPUTER NETWORKS )\ PES
+P4 (Programming Protocol-independent Packet Processors) L v
+
+= P4 (Programming Protocol-independent Packet Processors) is a domain-specific
+programming language used to program the data plane (packet forwarding
+behavior) of network devices such as switches, routers, NICs, and programmable
+ASICs.
+
+= Unlike SDN controllers like Ryu or ONOS, which decide where packets should go,
+P4 defines how packets are processed inside the switch.
+
+= P4 is protocol-independent, where you can define your own protocol
+
+= P4 |ets you program the switch itself. Can define: Packet headers, Packet parser,
+Match-action tables, Metadata, Packet processing pipeline; which are in turn
+interpreted and processed by the compiled program and target device.
+
+Introducing P4 -
+https://www.youtube.com/embed/bfSDrznBQSQ?feature=oembed#
+
+COMPUTER NETWORKS
+Traditional to Programmable Networking
+
+[P I L e
+
+PES
+
+UNIVERSITY
+
+REST/gRPC REST/gRPC
+SNMP/SSH/ (SON Controtier] Son Controtier)
+Proprictary ‘Control Plane. Control Plane
+Protocol OpenFlow Transition from
+P4Runtime .
+Protocol the Traditional
+
+@ Architecture (left)
+
+Architecture
+
+s Programma (middle) and SDN
+function function ble . .
+ASIC ASIC Architecture with
+
+a Programmable
+Data Plane (right)
+using P4.
+
+Programmability Programmability Programmability
+
+APL [ ; art
+‘ ‘
+
+Control plane
+
+Data plane
+
+Agent
+Data plane
+
+SDN with
+fixed-function program:
+data plane data plane
+
+Traditional
+networking
+
+COMPUTER NETWORKS
+. a2\ PES
+Traditional to Programmable Networks DY versir
+
+= Traditional architecture had tightly bound control and data plane, called
+“tightly coupled.”
+
+= As SDN came into the picture, control, and data plane, are separated and had a
+bottom-up design. The information is shared using the OpenFlow Protocol.
+
+= Currently, the new architecture seeks programmable data planes in SDN that
+followed a top-down approach. The programmable chip can be user-
+configured, whereas the SDN architecture has a fixed set of functions.
+
+= All major cloud providers and data centers use SDN.
+
+= |n the evolution of SDN virtualization, the king of virtualization called
+“YMware”’, acquired Nicira and renamed it as VMware NSX, which is the SDN-
+style network. NSX, which represents SDN, is used by hundreds of thousands of
+virtual machines in data centers worldwide
+COMPUTER NETWORKS
+. . %g PES
+Where is SDN important
+
+= SDN is significant and allows network operators to combine software and hardware from
+multiple vendors and create customized network services and infrastructure.
+= Improves network connectivity for sales, customer service, internal communication,
+and document-sharing.
+= Enables organizations to create customized network services and infrastructure by
+combining software and hardware from multiple vendors.
+= Avirtual network combines SDN, network function virtualization, and white boxes.
+= Allows for faster deployment of new applications, services, and business models.
+= P4 programmability opens up entirely new possibilities for network stack flexibility from
+7-layered OSI or 5-layered TCP/IP modeling.
+= |f there is a need for upgradability (hardware solutions will never have), which allows
+adding functions and protocols to network devices by updating the P4 software
+running on them rather than purchasing new switches and their frameworks.
+COMPUTER NETWORKS
+P4 Architecture
+
+Parser Checksum Verification /
+Ingress ll‘meh-m:ﬂon
+
+Traffic
+Manager
+
+Checksum Update /
+Egress MTch-Acﬂon
+
+r
+
+P4 Abstract
+Forwarding
+Model
+(PISA)
+
+P4 architecture is called as “P4 Abstract Forwarding Model” - Targeted PISA-like (Protocol Independent
+
+Switch Architecture) devices.
+
+The PISA architecture is a protocol-independent switch architecture that is a single-pipeline forwarding
+architecture. It consists an input block, ingress match-action, buffers, egress match-action, deparser, and an
+
+output block connected to each other in a linear pipeline.
+The limitation of this architecture is that it does not know to express the packets which are processed in the
+
+pipeline.
+COMPUTER NETWORKS
+P4 Architecture
+
+Pipeline (p4 Portable Switch Architecture)
+
+Ingress Packet
+Parser - cc:;:::::‘ - match- Buffer and
+action Replication
+Externs
+
+mega'ti;s- Chacksu Deparser
+— -
+
+action update
+
+Action Action RS
+
+Selector
+
+Profile
+
+PES
+
+UNIVERSITY
+
+S8 Queueing
+
+Packet
+
+Generator
+
+= P4 portable switch architecture, allows to target multiple programmable devices with different architectures. It
+
+has outgrown PISA
+
+= |t uses a programmable parser and performs a multistage matching-action process to forward incoming packets,
+
+which can be either serial or parallel.
+
+= This architecture is widely used as it makes use of additional constraints to solve the problems. Can be
+
+implemented on any switch target.
+
+= The multiple networking functions implemented in the PSA are combined into a single pipeline. The pipeline has
+the following components: parser, checksum validate, ingress match-action, packet buffer, egress matching
+
+action, checksum update, deparser, and buffer queuing engine.
+COMPUTER NETWORKS
+Workflow of P4 Program
+
+PES
+
+UNIVERSITY
+
+Program.p4
+
+Data Declaration
+
+header Ethernet. n( }
+header IPv4_h {1}
+
+struct Headers_t {
+Ethernet_h ethernet;
+
+Parser Logic
+
+=
+
+|Header/ Metadata Bus |Hndor/ Metadata Bus
+
+(" parser parse_ethernet { )
+extract(hdr.ethernet);
+
+transition select(ethernet.ethType) { H
+0x800: parse_ipvé; 47
+
+U ) 5
+Match + Action Tables & Control Flow B 9, ©
+] Replication and =
+
+(" table bl {-} Y a Ingress Scheduling Egress a
+
+control ingress {
+apply {tbLapply 0 }
+
+\_control egress {.}
+
+Deparser Logic
+
+(" control Deparser { 3
+apply
+packet emit(hdr_ethernet);
+packet emit(hdr.ipv4);
+}
+
+N
+
+COMPUTER NETWORKS
+S2)PES
+Workflow of P4 Program
+
+= Each section of the P4 program is linked to a different block that performs a specific
+function.
+
+= The P4 program is divided into four major sections: data declaration, parser logic, a match-
+action table with control flow, and deparser logic. A parser, ingress, scheduler, egress, and
+deparser are required to run the P4 program successfully.
+
+= The packet parser is the first to process the arriving data packets and search for specific
+areas from the packet header, specifying switch protocol support.
+
+= Data packets contain metadata, which is extra information that can be passed between
+processing stages.
+
+= Examples of metadata include ingress port numbers, transmission destinations and
+
+queues, timestamps used for packet scheduling, and data passed between the
+tables.
+COMPUTER NETWORKS
+Workflow of P4 Program \&
+
+= The match-action table received the extracted header area.
+There are two sections in the match action table: the entry and
+exit tables.
+
+= The entry table determines the queue in which a data packet is
+placed. Data packets can be forwarded, copied, discarded, or
+triggered by flow-control-based ingress processing. An action
+table is linked to tracking the status of each frame.
+COMPUTER NETWORKS
+Suggested Readings
+
+Reading Material:
+Software Defined Networks A Comprehensive Approach -
+
+https://ridhanegara.staff.telkomuniversity.ac.id/files/2017/04/Paul-
+Goransson-and-Chuck-Black-Auth.-Software-Defined-Networks.-A-
+Comprehensive-Approach.pdf
+
+Software-Defined-Networks.A Systems Approach.pdf
+https://sdn.systemsapproach.org/intro.html
+
+Textbook: Refer Chapter 4 & 5-4.4 & 5.5
+
+Thank You
+For Your Attention
+
+A2\
+&
+
+Qa
+
+PES
+
+UNIVERSITY
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 12/13: resources/u3/Slides/3.13.1_Introduction_to_Data_Center_Networking.pdf
+PAGES: 21 | EXTRACTED CHARACTERS: 12,471
+################################################################################
+
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+Introduction to Data Center Networking
+COMPUTER NETWORKS
+Introduction to Datacenter Networking
+
+&%) PES
+
+UNIVERSITY
+
+* 10’sto 100’s of thousands of hosts, often closely
+
+coupled, in close proximity:
+
+= e-business (e.g. Amazon)
+
+= content-servers (e.g., YouTube, Akamai, Apple,
+Microsoft)
+
+= search engines, data mining (e.g., Google)
+
+* challenges:
+
+* multiple applications, each serving massive numbers
+of Cl ients Inside a 40-ft Microsoft container, Chicago data center
+
+* reliability
+
+* managing/balancing load, avoiding processing,
+networking, data bottlenecks
+
+COMPUTER NETWORKS
+
+. . %g PES
+Introduction to Datacenter Networking
+
+UNIVERSITY
+
+What is Data Center Networking?
+* Connects servers, storage, applications, virtual machines, and external networks.
+
+* Designed for high bandwidth, low latency, reliability, scalability, and security.
+* Modern data centers increasingly handle large volumes of server-to-server (east-west)
+traffic.
+
+Types of Data Center Traffic:
+
+North-South traffic
+
+User - Internet -> Data Center - Server
+
+Traffic entering or leaving the data center. Example: User accessing a web application.
+East-West traffic
+
+Server A © Server B < Database < Storage
+
+Traffic between resources inside the data center.
+
+Very important for distributed applications, cloud platforms, microservices, and Al
+workloads.
+
+COMPUTER NETWORKS PES
+North—south or east-west?
+
+Classify each flow of traffic
+
+You open a shopping website from your phone North—south — enters the datacenter from outside
+The web server asks the database for your cart East-west — server to server inside
+An Al model is trained across 1,000 GPU servers East-west — and the heaviest kind
+
+The page is sent back to your phone North—south — leaves the datacenter
+
+COMPUTER NETWORKS
+
+. PES
+What a datacenter network must deliver
+Before choosing a design, decide what “good” means. These five tests are used to judge every design
+that follows.
+Bandwidth between any two Short, predictable delay No single point of failure
+servers A web page may wait on hundreds of With 100,000 servers, something is
+Most traffic is east-west, so any server internal requests. The slowest one sets always broken. The network must
+may need to talk fast to any other. the page time. route around it.
+Grow in small steps Built from cheap, identical switches
+Add racks without rebuilding the network or buying one giant Many simple switches cost less and are easier to run than a
+switch. few huge ones.
+
+Which of these does your hostel Wi-Fi network need?
+Mostly 3 and 5, barely 1 and 2 - a datacenter is a very different problem.
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+&%) PES
+
+UNIVERSITY
+
+Border routers
+= connections outside datacenter
+
+Tier-1 (Core) switches
+= connecting to ~16 T-2s below
+
+Tier-2 (Aggregation) switches
+= connecting to ~16 TORs below
+
+Top of Rack (TOR) (Access)
+
+switches
+= one per rack, 100G-400G
+Ethernet to blades
+
+Server racks
+= 20- 40 server blades: hosts
+COMPUTER NETWORKS
+'S\ PES
+Datacenter Networks: Network Elements A/ vnverstry
+
+Traditional 3-Tier Architecture (also known as the hierarchical network design)
+was the gold standard for enterprise and early data center networks for
+decades.
+
+It uses a top-down, rigid structure designed to manage data traveling between
+the internal network and the outside world.
+
+Access layer = connects servers.
+
+Aggregation layer - combines access switches.
+
+Core layer - provides high-speed connectivity.
+
+Limitation: hierarchical design can create bottlenecks and blocked/suboptimal
+paths, particularly for heavy east-west traffic
+COMPUTER NETWORKS
+
+Why the three-tier design struggles e
+
+UNIVERSITY
+
+m Traffic funnels upward
+g Traffic between racks in different parts of the network must climb to the few
+
+- /I \\ core switches and come back down. The links near the top become the
+--TU 5 \ bottleneck — fails test 1.
+- - \
+‘ 288 ‘ ‘ 288 ‘ ‘ ad ’ ‘ ad ’ Spare links sit idle
+These networks usually use spanning tree, which switches off redundant links
+to prevent loops. Half the cables carry nothing until something breaks — fails
+tests 1and 3.
+
+ToR || ToR ToR || ToR (| ToR || ToR
+
+ToR ‘ ToR ‘
+
+Growing means buying bigger boxes
+
+More traffic needs a bigger, costlier core switch (“scale up”), and the core is a
+shared weak point — fails tests 3 and 5.
+
+dashed red = link switched off by spanning tree
+
+server - server in another pod: up to core and back down
+
+What we want instead: every rack equally close to every other, every link in use, and growth by adding more of the same
+cheap switch. That is leaf-spine.
+
+Datacenter Networks: Network Elements
+
+COMPUTER NETWORKS
+
+layer leaf/spine datacenter interconnection network:
+
+Two
+
+Spine
+swﬁches
+
+COMPUTER NETWORKS
+'S\ PES
+Datacenter Networks: Network Elements A/ vnverstry
+
+* Aleaf-spine network is a modern data-center architecture designed to provide
+high bandwidth, low and predictable latency, redundancy, and scalable server-
+to-server communication.
+
+* Itis based on a Clos topology (multi-stage network architecture).
+* Leaf switches - sits at the top of each server rack
+* Connect directly to servers, storage systems, firewalls, load balancers, etc.
+¢ Usually act as Top-of-Rack (ToR) switches.
+* Every leaf connects to every spine.
+* Leaf switches generally do not connect directly to other leaf switches.
+
+* Spine switches
+
+* Form the high-speed backbone of the data-center fabric.
+
+* Every spine connects to every leaf.
+
+* They provide paths between different leaf switches.
+
+* They normally do not directly connect to servers, connect only to leaf switches
+COMPUTER NETWORKS
+
+Oversubscription: sharing the way out of a rack FES
+
+UNIVERSITY
+
+Definition
+4 spines above . . .
+Bandwidth the servers could send + bandwidth available to
+
+leave the rack. Here 1,000 + 400 =2.5: 1.
+
+4 uplinks x 100 Gbps = 400 Gbps
+
+What it means
+
+top-of-rack switch
+
+If every server sends off-rack at once, each gets 400 + 40 =
+
+40 servers x 25 Gbps = 1,000 Gbps 10 Gbps, not 25. Traffic that stays in the rack is unaffected.
+
+Why accept it?
+All servers rarely send off-rack together, and 1 : 1 (“non-
+blocking”) needs far more spine ports. About 3 : 1 is
+
+40 servers
+
+common.
+
+The design lever: add uplinks or spines to lower the ratio — or place services that talk a lot in the same rack, so their traffic
+never needs the uplinks.
+
+COMPUTER NETWORKS
+
+Growing the fabric: from leaf-spine to pods ]
+
+UNIVERSITY
+
+The limit
+
+Every leaf needs one port on every spine. A spine switch with 64
+ports can therefore connect at most 64 leaves — about 2,500
+servers at 40 per rack.
+
+super-spine ‘ ‘ super-spine super-spine ‘ ‘ super-spine
+
+Two ways to grow
+
+More spines add bandwidth between racks. More racks than
+spine ports need another layer: group racks into pods, and join
+the pods with a layer of super-spines.
+
+‘ leaf H leaf H leaf ‘ ‘ leaf H leaf H leaf ‘
+
+racks racks racks racks racks racks
+
+Same idea, one level up
+
+Each pod is a small leaf-spine; the pods form a leaf-spine of
+their own.
+
+Next Slide is exactly this: Facebook’s F16 design uses the same layers — rack switches, fabric switches, spines — at much
+larger scale.
+
+COMPUTER NETWORKS
+Datacenter Networks: Network Elements
+
+Facebook F16 data center
+network topology:
+= each Top-of-Rack
+(ToR) switch connects
+to 16 Fabric switches
+
+= each Fabric switch
+connects to 16 Spine
+switches
+
+Adapted from https://engineering.fb.com/data-center-engineering/f16-minipack
+
+‘ UNIVERSITY
+
+Spine switches
+
+Fabric switches
+
+Top of Rack (ToR)
+
+switches
+COMPUTER NETWORKS
+Datacenter Networks: Multipath
+
+= rich interconnection among switches, racks:
+
+* increased throughput between racks (multiple routing paths possible)
+
+* increased reliability via redundancy
+
+UNIVERSITY
+
+*  Multipath routing — A technique that splits or balances unicast traffic across several parallel physical paths
+between a single sender and a single receiver to maximize total bandwidth, prevent link congestion, and
+provide rapid failover resilience. Core Purpose: Load balancing, congestion avoidance, and fault tolerance.
+
+two disjoint paths highlighted between racks 1 and 11
+
+Server racks
+COMPUTER NETWORKS
+
+Using all the paths: equal-cost multipath (ECMP)
+
+PES
+
+UNIVERSITY
+
+spine 2
+
+spine 4
+
+flow X - spine 2
+flow Y - spine 4
+
+Every switch routes
+
+Leaf A sees four routes to leaf B, all the same length. None is
+switched off, unlike spanning tree.
+
+Hash the flow, not the packet
+
+It computes a hash of the flow’s source and destination addresses,
+ports and protocol, and uses it to pick one of the four.
+
+Same flow, same path
+
+Every packet of flow X takes spine 2, so none overtake each other.
+Flow Y hashes to spine 4.
+
+A spine fails?
+Leaf A drops it from the set and re-hashes onto the other three.
+Traffic moves in milliseconds.
+
+Why not per packet? Packets on different paths arrive out of order; TCP reads that as loss and halves its window. Per-flow
+
+hashing avoids it.
+
+COMPUTER NETWORKS
+Datacenter Networks: Application-layer Routing
+
+Internet
+
+&%) PES
+
+UNIVERSITY
+
+load balancer:
+
+application-layer
+
+routing
+
+= receives external
+client requests
+
+= directs workload
+within data center
+
+= returns results to
+
+external client
+(hiding data center
+internals from client)
+COMPUTER NETWORKS
+
+L . PES
+Putting it together: the life of one request
+Your phone sends a request to the service’s one public address north-south
+Border router brings it into the datacenter north-south
+
+Load balancer owns that public address and picks a front-end server that is not busy
+
+Front-end server asks dozens of internal services: cart, prices, stock, recommendations east-west
+
+Leaf—spine + ECMP carry every internal request, each flow hashed onto one path
+
+Answers return the front end builds the page; the load balancer sends it back to you north-south
+
+One click, two kinds of traffic: one request in and one page out (north—south), and dozens of requests between servers in
+the middle (east-west). Every design choice in this topic serves steps 4 and 5.
+
+COMPUTER NETWORKS
+
+Why Internet-style TCP struggles inside a datacenter FES
+
+UNIVERSITY
+
+Standard TCP was designed for the Internet: long distances, unknown routers, and no one in charge. A
+datacenter is the opposite.
+
+What happens Fixed by (slides 130-131)
+
+One request fans out to many servers; they all answer at the ECN marking + DCTCP; hop-by-hop
+
+Incast : .
+same instant and overflow the rack switch’s buffer. backpressure
+
+Long transfers keep buffers full, so short, urgent requests
+
+wait behind them. DCTCP keeps queues short
+
+Queues build up
+
+Round trips take tens of microseconds, but TCP’s minimum
+A lost packet is a disaster retransmission timeout is usually 200 ms — thousands of
+times longer.
+
+Avoid loss: ECN; lossless Ethernet
+for RDMA
+
+At 100 Gbps, the operating system’s network stack can’t
+
+The CPU is too slow
+keep up.
+
+RDMA over Ethernet (RoCE)
+
+Why the fixes are possible here: one organisation owns every switch and server, so it can change them all at once — which
+the Internet can never do.
+
+COMPUTER NETWORKS
+Data Center Networking: Protocol Innovations
+
+bypassing the CPU/OS stack
+
+Layer / Aspect Data center innovation Why it works inside a DC
+RoCE — RDMA over Converged Ethernet: Single vendor, single admin domain — can
+Link layer NIC writes directly to remote memory, run PFC for a (near-)lossless fabric that RDMA
+
+assumes
+
+Transport layer
+
+DCTCP / DCQCN — use the fraction of ECN-
+marked packets as a multi-bit signal, scale
+the window cut proportionally
+
+Homogeneous switches all support ECN
+consistently; short, stable queues matter for
+microsecond RTTs
+
+Transport layer
+
+Hop-by-hop backpressure — each switch
+
+signals the link immediately upstream to
+slow down
+
+Every switch is owned by the same operator,
+
+so it can hold state and react faster than a
+full RTT
+
+Routing / mgmt
+
+SDN — centralized controller computes
+routes; switches just forward
+
+One operator, uniform hardware — enables
+
+global traffic engineering and fast
+coordinated failover
+
+Placement
+
+Locality-aware placement — keep chatty
+services/data in the same or nearby rack
+
+Clos topology is oversubscribed higher up;
+
+staying under one ToR/pod avoids the scarce,
+
+congested core links
+
+PES
+
+UNIVERSITY
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 13/13: labs/lab4_wireshark/PES2UG25CS615_Yashwanth_K_CN_LAB4.pdf
+PAGES: 8 | EXTRACTED CHARACTERS: 9,337
+################################################################################
+
+NAME: Yashwanth Karthik
+SECTION: J
+SRN: PES2UG25CS615
+
+COURSE: COMPUTER NETWORKS (UE25CS243A)
+
+LAB 4: TCP CONGESTION WINDOW USING WIRESHARK
+
+TASK A: CAPTURE TCP TRAFFIC AND PLOT CONGESTION WINDOW
+
+e Deliverable 1: Screenshot of SYN, SYN-ACK, and ACK Packets
+
+0.216629 10.1.1.262 42.251.156 tP 7% > 443 [SYN] Seq= Win=65535 Len=0 MSS=1460 SACK_PERM TSval=344
+
+4751/19.806609 0.80677 10.1.1.262 142.251.156.119 TP 6639738 443 [ACK] Seq=1 Ack=1 Win=524288 Len=0 TSval=344396920 TSecr=2679
+4752 19.807278 6.066668 16.1.1.262 142.251.156.119 TLSv1.3 1958 Client Hello (SNI=www.google.com)
+
+* Deliverable 2: TCP SYN Segment Details
+
+Sequence number of the TCP SYN segment: O (Relative sequence number). The raw sequence number is
+1869065379.
+
+Field / flag indicating SYN packet: The SYN flag in the TCP header flags field is set to 1
+iioy sntroll Pra
+Source Port: 39738
+Destination Port: 443
+[Stream index: 46]
+[Stream Packet Number: 1]
+[Conversation completeness: Complete, WITH_DATA (63)]
+[TCP Segment Len: 0]
+Sequence Number: 0 (relative sequence number)
+Sequence Number (raw): 1869065379
+[Next Sequence Number: 1 (relative sequence number)]
+Acknowledgment Number: 0
+
+Acknowledgment number (raw): 0
+1010 .... = Header Length: 40 bytes (16)
+
+Reserved: Not set
+
+Accurate ECN: Not set
+
+Congestion Window Reduced: Not set
+ECN-Echo: Not set
+
+Urgent: Not set
+
+Acknowledgment: Not set
+
+Push: Not set
+
+Reset: Not set
+
+-~ Fin: Nbfiset
+[TCP Flags: ++e-vv-ve- S-]
+Window: 65535
+[Calculated window size: 65535]
+Checksum: 0x376c [unverified]
+[Checksum Status: Unverified]
+Urgent Pointer: 0
+
+* Deliverable 3: TCP SYN-ACK Segment Details
+
+Sequence number of the SYN-ACK segment: O . The raw sequence number is 1291744909.
+
+Field / flag indicating SYN-ACK packet: The TCP header flags field has both the Acknowledgment flag set to
+1 and the Syn flag set to 1
+
+The acknowledgment value is 1. It is set to the client initial sequence number plus one because the SYN
+control flag consumes one sequence number. This acknowledges the successful receipt of the SYN segment
+and communicates the next expected sequence number.
+ansmission Lont
+Source Port: 443
+Destination Port: 39738
+[Stream index: 46]
+[Stream Packet Number: 2]
+[Conversation completeness: Complete, WITH_DATA (63)]
+[TCP Segment Len: 0]
+Sequence Number: 0 (relative sequence number)
+Sequence Number (raw): 1291744969
+[Next Sequence Number: 1 (relative sequence number)]
+Acknowledgment Number: 1 (relative ack number)
+Acknowledgment number (raw): 1869065380
+... = Header Length: 40 bytes (16)
+Reserved: Not sét
+Accurate ECN: Not set
+Congestion Window Reduced: Not set
+ECN-Echo: Not set
+Urgent: Not set
+Acknowledgment: Set
+Push: Not set
+Reset: Not set
+
+e Fin: Not set
+[TCP Flags: ««««-++A+-S-]
+Window: 65535
+
+[Calculated window size: 65535]
+Checksum: Oxéecf [unverified]
+[Checksum Status: Unverified]
+
+Urgent Pointer: 0
+
+* Deliverable 4: Congestion Window Plot (Window Scaling)
+
+Blue line representation: The blue line and data points represent the unacknowledged outstanding bytes in
+flight, showing the sender congestion window utilization over time.
+
+Green line representation: The green line represents the receive window (rwnd) advertised by the receiver,
+indicating available receive buffer capacity on the receiving host (approximately 500 kB).
+
+Winon Scaing for 142 ZSUSAIT 443 - 101120739738
+waro
+~ Windowsizs
+20k8 | Receve Window | P
+wial sia
+8
+H 5
+H §
+2 e o6 3
+FIR) o §
+¥
+H
+s 0
+Obytes L obytes
+(=" Teaconds Troconds Teconds [ Sreconds Ssacons
+Time
+008 | [~ Windowsize soore
+Recohve Window
+soonal so0ka
+w00se 00k
+3
+H H
+£ w00k woe
+3
+2 20068 | 20008
+H
+oo o8
+Obytes 1 - - - Obytes
+seconds Sosaconds o0 seconds osmconds
+Time
+
+* Deliverable 5: Inference About TCP Transmission Behavior
+
+Inference: The TCP transmission is governed by sender-side congestion control.
+
+Justification: The effective transmission window in TCP is determined by the minimum of the congestion
+window and the receiver advertised window: Effective Window = min(cwnd, rwnd). Throughout the
+capture, the outstanding bytes in flight (blue line) remain well below 20 kB, whereas the advertised receive
+window (green line) is approximately 500 kB. Because the receiver buffer is never saturated or constraining
+throughput, transmission throughput is dictated entirely by sender-side congestion control mechanisms
+and application data availability.
+TASK B: ANALYZING CONGESTION WINDOW FROM PACKET CAPTURE
+
+* Deliverable 1: Congestion Window Graph and Phase Identification
+
+Slow Start Phase: Observed during the initial connection phase (0 to 2.5 seconds) and again following
+recovery (4.5 to 6.5 seconds), characterized by rapid exponential growth of the congestion window.
+
+Congestion Avoidance Phase: Observed as the window approaches saturation (around 6.5 to 9.5 seconds),
+where window growth transitions into a steady linear increase.
+
+Packet Loss and Drop Event: A sharp drop occurs at approximately 4.3 seconds due to packet loss, reducing
+outstanding bytes.
+
+TCP Identification: TCP Reno. In response to packet loss detected by triple duplicate acknowledgments, TCP
+Reno cuts the threshold in half and executes fast recovery, differing from TCP Tahoe which unconditionally
+resets cwnd to 1 without fast recovery.
+
+Window Scaling for 19216810184:52343 ~ 19216810196:5201
+
+TCP Congestion ControLpcapng
+
+" Window Size
+Receive Window
+2008 {20018
+
+150k8 {1soke
+
+a
+
+]
+H | [Congestion Avoidance| §
+£ 1 H
+§ o | w0 g
+3
+3 Slow Start (Exponential Growth)
+
+Oseconds 25 s0conds Ssoconds 75seconds 10s6conds
+
+Time
+
+* Deliverable 2: Three Duplicate Acknowledgments and Fast Retransmission
+
+Packet 3355: Original ACK for sequence 4347022.
+
+Packet 3358: Duplicate ACK 1 (Ack = 4347022).
+
+Packet 3359: Duplicate ACK 2 (Ack = 4347022).
+
+Packet 3360: Duplicate ACK 3 (Ack = 4347022).
+
+Packet 3361: TCP Fast Retransmission for sequence 4347022.
+
+Observation and Explanation: Upon receiving the third duplicate ACK (packet 3360), the sender
+immediately transmits packet 3361 as a Fast Retransmission for the missing segment (sequence 4347022).
+The duplicate ACKs inform the sender that subsequent out-of-order packets have successfully reached the
+destination while one packet was lost. Rather than waiting for the retransmission timeout (RTO) timer to
+expire, TCP infers the loss and retransmits the missing segment immediately, entering Fast Recovery.
+
+Fie  eat
+
+ADA©
+
+View Go
+
+No. Time
+3355 4.126572
+3356 4.126675
+3357 4.126676,
+
+BB
+
+ame number
+
+E—
+
+Delta Source
+192.168.18.196
+6.000103 192.168.10. 184
+
+6.000801 192.168.10.184
+
+192.168.16.184
+192.168.10.196
+192.168.10.19
+
+stination
+
+Protocol  Length Info
+
+TP
+iPerf3
+iPerf3
+
+545201 » 52343 [ACK] S
+
+347622 Win=212992 Len=0
+
+1514/52343 > 5201[BoundErrorUnreassenbled Packet]
+1514/52343 » 5201[BoundErr
+
+* Deliverable 3: Conditions Under Which cwnd Decreases to 1
+
+rUnreassenbled Packet]
+
+The cwnd decreases to 1 maximum segment size (MSS) when a Retransmission Timeout (RTO) occurs.
+
+Network Event: This event is caused by heavy network congestion or link failure where transmitted packets
+or returning acknowledgments are completely dropped. Because no duplicate acknowledgments arrive to
+trigger fast retransmit, the sender retransmission timer expires. TCP interprets this severe loss as major
+network congestion, sets ssthresh to half of the current cwnd, resets cwnd to 1 MSS, and restarts
+transmission in Slow Start.
+
+* Deliverable 4: Packets Observed After cwnd Reduction and Window Dynamics
+
+ADA®
+
+A frame.numt
+
+No.
+
+Deita Source
+
+7452343 > 5201 [SYN] Seq=0 Win=65535 Len=0 MSS=1460 WS=64 SACK_PERM TSval=-202]
+66/5201 5 52343 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1460 WS=4 SACK_PERN|
+5452343 3 5201 [ACK] Seq=1 Ack=1 Win=262144 Len=0
+9152343 » 5201 Cookie: "Chriss-MBP.1587504839.785272.0951cc’
+
+545201 » 52343 [ACK] Seq=1 Ack=38 Win=212952 Len=0
+
+151452343 » 5261 Unknown 84(84) Unknown -5(-5) Unknown 49(49) Unknown 81(1) Un|
+
+151452343 » 5201 (BoundErrorUnreassenbled Packet]
+
+151452343 » 5261 (BoundErrorUnreassenbled Packet]
+
+20.105354 0.105354 192.168.10.196.
+30.185449 6.800095 192.168.10.
+40.105480 0.080631 192.168.10
+5 0.268562 165102 192.168.10
+60.35099% 682412 192.168.10
+70.35099% 090900 292.168..10
+80.350995 090001 192.168.10
+90350995 900000 292.168..10
+100 168.10
+10 168.10
+120 168.20
+130 168.10
+
+e
+
+Tep
+iparts
+T
+iperts
+iperts
+1Perfa
+iperts
+1perts
+iperts
+iperts
+iperts
+
+1514 52343 Packet]
+151452343 Packet]
+151452343  5201[BoundErrorUnreassenbled
+1514 52343 » 5261 [BoundErrorUnreassenbled
+151452343 > 5201[BoundErrorUnreassenbled Packet]
+545201 » 52343 [ACK] Seq=1 Ack=11718 Win=212992 Len=0
+
+5261(BoundErrorUnreassenbled
+5201[BoundErrorUnreassenbled
+351004
+351004
+351004
+
+600001 192
+600000 192
+600000 192
+
+Packet]
+Packet]
+
+o
+[
+0
+[
+0
+351003 6.000008 192
+0
+[
+o
+0.
+
+Congestion Window Size Changes Over Time:
+
+1. Slow Start: The congestion window begins at 1 MSS. For each incoming acknowledgment, cwnd
+increases by 1 MSS, effectively doubling the congestion window every round trip time in an exponential
+
+progression.
+2. Transition to Congestion Avoidance: Once cwnd reaches the slow start threshold (ssthresh), the
+algorithm shifts to Congestion Avoidance.
+
+3. Congestion Avoidance: In this state, cwnd increases linearly by approximately 1 MSS per round trip time
+to probe for bandwidth cautiously until another packet loss event is encountered.
+
+

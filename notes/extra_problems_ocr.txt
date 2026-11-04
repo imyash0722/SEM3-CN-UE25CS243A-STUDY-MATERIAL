@@ -1,0 +1,458 @@
+Delay Problems Questions
+Q1] Suppose that the packet length is 4000 bits, and
+that the link transmission rate along the link from the
+first router to the second is 10 MBps. What is the
+transmission delay?
+
+* L=4000 bits
+* Transmission Rate, R=10 MBps =10 x 8 x 106 bps = 80Mbps
+* Transmission Delay = L/R=4000/ (10 x 8 x 109)
+
+= 0.00005s = 50 microseconds
+Q2] There are two ways you can send a 10TB of data
+from Bengaluru to Chennai. You have a dedicated link for
+this very purpose transmitting at 100Mbps and a special
+courier option with delivery in one day. Which would you
+prefer to use?
+
+* Convert total data to bits
+* 10TB=10*10"2* 8 bits = 8x10"'3 bits
+
+* Using the dedicated link, transmission time will take
+10 *10'2* 8/ (100 * 10%) = 800,000 seconds/86,400 ~ 9.26 days.
+Network = 9.3 days
+
+But with the special courier option, it would arrive in a single day. Hence
+the courier option would be preferred for speedy delivery.
+Q3] An optical fiber cable is able to transfer packets
+across the network at a speed of 70% of the speed of
+light in 10 microseconds. What is the distance the
+packet traverses?
+
+* Distance = Speed x Time
+
+* Speed of propagation = 70% of 3 x 108 m/s
+=0.7x3x108
+=2.1x108m/s
+
+* Propagation delay = d/s
+
+* Distance traversed = Propagation delay x speed of propagation
+=2.1x108x10x10=2100 m = 2.1km
+Q4] The time taken by a packet to travel across a link is 1000
+times the time taken for the packet to be inserted in the link.
+Assuming no queuing and processing delay, what is the
+transmission delay of the link if it connects an end to end distance
+
+of 2km in the network in a total of 3 microseconds ?
+* Given: Distance = 2 km, Total delay = 3 us
+* Propagation delay = 1000 x transmission delay
+* Assuming no queuing and processing delay,
+
+* End to end delay = Transmission delay + Propagation delay
+
+* End-to-end delay:
+* 3 micro =Trans delay + Propagation delay =TD + (1000 TD) = 1001TD
+* Solving gives:
+
+* Transmission delay ~2.997nano sec ~ 3ns
+Q5] Data traveling in Alice’s network of 2 computers, takes a
+one hop transmission delay of 0.003ms to go from one
+computer to the other. If the queuing delay is 1 microsecond
+and the distance between the two systems is 3km, find the
+time taken by Alice’s router for bit level error checking and
+processing if the total nodal delay is 0.04ms.
+
+CInodal= dproc+ dqueue+ CItrans + CIprop
+0.04x103=d_.+0.001 x 103+ 0.003 x 10-+ 3000/(3 x 108)
+Processing delay,
+
+dproc = (0.04 - 0.01-0.001 - 0.003) x 10-3=0.026 ms
+Throughput Problems
+Q6] Hosts Alice and Bob are connected to each othervia a
+router. The bandwidth of each link between Alice and the router
+is 15Mbps. If the efficiency of data transfer in the entire network
+is 80%, what is the actual throughput of the network?
+
+* Ideal Throughput = min{15, 15} = 15M bps
+
+* Efficiency = Amount of data transferred through the network per
+second / Amount of data that could be transferred per second
+
+80/100* 15
+* Throughput(x) = 12M bps
+Q7] Consider a 10 Mbps link being shared by 7 users. What is
+
+the maximum throughput if the network is using circuit
+
+switching?
+
+* In circuit switching, the link bandwidth is divided equally among
+all users.
+
+* Maximum throughput per user:
+
+10 Mbps
+
+* Throughput peruser = -
+
+* = 1.4286 Mbps
+* =~ 1.43 Mbps
+* The throughput is nearly equal to half of the bandwidth.
+Q8] Alice and Bob are connected to each other via a router. The
+bandwidth of each link between the router and Bob is 20Mbps.
+If the network allows for the actual transmission of data at
+20Mbps, then what is the time taken for a packet of size 1000
+bits to enter the network?
+
+* Transmission Delay=Packet Size /Transmission Rate = L/R
+* Packet Size =1000, R =20Mbps
+
+* Delay=20x108
+. _ _ 1000
+"~ 20,000,000
+
+« = 5x107° seconds
+* =50 microsec
+Q9] This elementary problem begins to explore propagation delay and transmission delay,
+two central concepts in data networking. Consider two hosts, A and B, connected by a single
+link of rate R bps. Suppose that the two hosts are separated by m meters, and suppose the
+
+propagation speed along the link is s meters/sec. Host Ais to send a packet of size L bits to
+Host B.
+
+a. Express the propagation delay, d,,,, interms of m and s.
+
+Propagation delay is: Distance
+d
+
+PTOP " propagation speed
+
+d m
+prop s
+
+b. Determine the transmission time of the packet, d,,., in terms of L and R.
+
+Transmission delay is the time required to push all L bits onto the link:
+
+Packet size
+
+d = —
+trans — Transmission rate
+
+L
+dirans = E
+
+c. Ignoring processing and queuing delays, obtain an expression for the end-to-end delay.
+Total delay=dtrans+dprop
+
+L m
+dend— =—-+—|sec
+end—end R s
+
+d. SEpF’)’ose Host A begins to transmit the packet at time t = 0. At time t =dtrans, where is the last bit of the
+packet?
+
+Att = dipqns, the sender has just finished transmitting the last bit.
+So:
+
+The last bit is just leaving Host A (at the beginning of the link).
+
+e. Suppose dprop is greater than dtrans. At time t = dtrans, where is the first bit of the packet?
+The first bitis in the link and has not reached Host B.
+
+f. Suppose dprop is less than dtrans. At time t = dy.ns, Where is the first bit of the packet?
+
+dprop< dtrans.
+
+* If propagation delay is smaller:
+
+* The first bit reached Host B at time dop ,which is earlier.
+The first bit has already arrived at Host B.
+g. Squose s =2.5* 108, L= 1500 bytes, and R= 10 Mbps. Find the distance m so that d,,,,,
+
+equals dtrans-
+
+$=2.5x108 m/s
+L = 1500 bytes = 15008 = 12000 bits
+
+R = 10 Mbps = 10x10° bps
+We are asked to find distance msuch that: dp,op = dtrans
+
+Compute transmission delay
+12000
+
+* dirans = 1o g6 = 1.2x1073 seconds = 0.0012 s
+* Set equal to propagation delay
+« ™= 0.0012
+S
+*m=s5-0.0012
+
+m = (2.5x10%)(0.0012)
+m = 3x10° meters
+m = 300,000 meters = 300 km
+Q10] Suppose two hosts, A and B, are separated by 20,000
+kilometers and are connected by a direct link of R = 5 Mbps.
+Suppose the propagation speed over the link is 2.5 * 108
+meters/sec.
+
+* Calculate the bandwidth-delay product, R * d
+* Distance = 20,000 km =2x10"m
+« R=5 Mbps = 5x10°bps; Propagation speed s = 2.5x108m/s
+
+2x107
+[ ] = o
+dpmp m/s 2.5%108
+
+* R-dyrop=(5%106)(0.08) = 4x10° bits = 400,000 bits
+
+prop*
+
+= 0.08 seconds
+* Consider sending a file of 800,000 bits from Host A to Host B.
+Suppose the file is sent continuously as one large message. What
+is the maximum number of bits that will be in the link at any given
+time?
+
+If the file is sent continuously, the maximum number of bits that can
+be “in flight” equals the bandwidth-delay product.
+
+Since file size = 800,000 bits (which is larger than 400,000),
+Maximum bits in link = 400,000 bits
+* Provide an interpretation of the bandwidth-delay product.
+
+The bandwidth-delay product represents:
+
+The maximum number of bits that can be in transit (in the link)
+at any given time.
+
+* What is the width (in meters) of a bit in the link? Is it longer than a
+football field?
+
+First find transmission time of one bit:
+
+1
+ime per bi R~ Ex106
+
+Now multiply by propagation speed:
+1
+Bit width = sX B = (2.5x108)(2%x1077) = 50 meters
+
+A football field = 100 meters.
+50m< 100 m
+No, it is about half a football field.
+
+=2x10"7 sec
+
+Q10] For the above problem, now with a link of R=1 Gbps.
+
+a. Calculate the bandwidth-delagl product, R * dprop.
+dprop=mM/s =2x107/2.5%108=0.08 s
+
+R-dprop=(10°)(0.08)=8x107 = 80,000,000 bits
+80 million bits (80 Mb)
+
+b. Consider sending a file of 800,000 bits from Host A to Host B. Suppose the file is sent continuously as
+one big message. What is the maximum number of bits that will be in the link at any given time?
+
+File size = 800,000 bits
+Bandwidth-delay product = 80,000,000 bits
+
+Since the file size is much smaller than the pipe size:
+Maximum bits in the link = 800,000 bits
+
+c. What is the width (in meters) of a bit in the link?
+
+Width of one bit: s
+Bit width = —
+_ 2.5x10
+
+10°
+= 0.25 meters
+
+0.25 meters (25 cm)
+
+Q11] An ISP offers internet connections with transmission speeds of 10 Mbps. To
+attract customers, it promises less than 5 ms of end-to-end delay while playing
+online games, if the other players are also their customers and are no more than
+10,000 km away. Assume an idle network with propagation speed of 2.5 x 108 m/s
+and no processing and queuing delays. If the average amount of data generated per
+second is 100 Kilo Bytes, find out if the ISP can deliver on their promise.
+
+*Transmission rate R =10 Mbps = 10x1086 bps
+*Distance m=10,000m = 10,000 km = 10" m
+*Propagation speed s=2.5x108 m/s
+
+*No processing or queuing delay
+
+*Data generated per second = 100 KB/s
+*Propagation Delay
+
+* dprop=Mm/s =107/2.5x10% = 0.04 seconds = 40 ms
+*Transmission Delay
+
+* 100 KB per second: =100x1000 = 100,000 bytes/sec
+
+* Convertto bits: =100,000x8 = 800,000 bits/sec
+
+800,000
+10x106
+
+* Transmission delay per second of data: drgns = = 0.08 seconds =80 ms
+
+* dtotal=dprop+dtrans = 40 + 80 = 120 ms
+
+Promised delay: <5 ms
+Actual delay: ® 120 ms. The ISP cannot deliver on their promise.
+
+Q12] Two hosts are separated by a distance of 5,000 km. Two packets that are 4
+Mega Bytes in size must be sent from one host to the other. The queuing delay at the
+host is 10 ms and the the propagation speed of the link is 2.5 x 108m /s. Find the
+transmission speed at the source such that it finishes transmitting the second
+packet when the first packet just arrives at the destination.
+
+Distance m = 5000 km = 5x106m
+Packet size =4 MB
+
+Number of packets = 2
+Queuing delay = 10 ms
+Propagation speed s = 2.5x108 m/s
+
+Propagation Delay = dpop=d/s =5x108/2.5%108 = 0.02 sec = 20 ms
+
+Convert Packet Size = 4 MB=4x106 bytes = 4x10°x8 = 32x10° bits
+
+The source finishes transmitting the second packet exactly when the first packet arrives.
+When does the first packet arrive?
+The first packet must:
+
+1. Wait 10 msin queue
+
+2. Betransmitted > dtrans
+3. Propagate > 20 ms
+
+Time when first packet arrives: dgyeye + dirans + dprop = 10 + dirgns + 20
+=304+di0e (in ms)
+* When does the second packet finish transmitting?
+
+The second packet:
+Waits 10 ms in queue
+
+First packet is transmitted > dtrans
+
+Then second packet is transmitted > another dtrans
+
+Time when second packet finishes transmission:
+dqueue + Zdtruns
+=10 + 2d¢rans
+
+For the second packet to finish transmitting exactly when the first arrives:
+Transmission delay must equal propagation delay.
+Finish transmitting second packet=Arrival of first packet
+
+10+2dtrans=30+dtrans
+2d¢rans — dirans = 30 — 10
+
+dirans = 20 ms
+Transmission Rate:
+
+dyans= L/R
+
+trans~
+
+_32x10°
+- R
+_32x10°
+~70.02
+
+R = 1.6x10° bps
+R=1.6Gbps
+Q13] 100 Tera Bytes of data is to be transferred between two hosts, Host Ain
+Bengaluru and Host B in Chennai, separated by a distance of 350 km. The
+transmission speed at Host Ais 1 Gbps and the propagation speed of the dedicated
+link is 2 x 108 m/s. Which one of these is better:
+
+e to transfer the data over the link or
+
+¢ to drive to Chennai to deliver the data and drive back to Bengaluru, if a one-way
+trip takes 7 hours
+
+Which component is dominant in the total time taken for the data transmission?
+Assume negligible processing and queuing delays.
+
+Data size =100 TB, Distance = 350 km
+*Transmission rate R = 1 Gbps = 10° bps
+*Propagation speed s = 2x108 m/s
+*One-way drive time = 7 hours
+
+*Negligible processing and queuing delays
+
+» Convert Data to bits: = 100x1012x8 = 8x10'* bits
+
+14
+* TransmissionTime: d;.qus= % = 8x10° second = 800,000 seconds
+
+800,000
+* Convert to hours:
+3600
+
+~ 222 hours = 9.25 days
+* Propagation Delay
+
+350x103
+prov = 5 708 0.00175 sec = 1.75ms
+
+This is negligible compared to days.
+
+Total Network time = 9.25 days
+
+Round Trip time (driving) = 7+ 7 = 14hrs
+
+Driving is much faster
+
+* Dominant Component: The Transmission Delay (d,,,,s) is the
+dominant component. While the propagation delay is a mere 1.75
+
+msec, the time required to push 100 TB of data through a 1 Gbps
+"pipe" is so massive that it accounts for 99.99% of the total time.
+Q14] There are two paths to transmit 100 packets each of size 16 Mega Bytes from
+host A to host B: a lossy channel with loss probability of 50% and transmission
+speed of 20Gbps; and a lossless channel with transmission speed of 10 Gbps. If
+both the channels have a propagation speed of 2 x 108 m/s and the queuing delay at
+the host is 10 ms per packet, which path is better? Assume all lost packets are re-
+transmitted with no additional overhead.
+
+» Convert Packet Size = 16MB = 16*8*10° = 128Mbits
+* Lossless (10 Gbps)
+* Transmission delay per packet
+
+6
+* derans = oot = 0.0128 5 = 12.8 ms
+
+* Total delay per packet
+*10+12.8 =22.8ms
+* For 100 packets
+
+*100%x22.8 = 2280 ms =|2.28 seconds
+
+* Path 2: Lossy (20 Gbps, 50% loss)
+Expected transmissions per packet:
+
+1 _ 2
+1-05
+So total transmissions:
+100x2 = 200
+* Transmission delay per packet
+128x10° = 0.0064 s =64
+2ox100 s=64ms
+
+* Total per transmission: 10 + 6.4 = 16.4 ms
+* For 200 transmissions
+
+200x16.4 = 3280 ms =|3.28 seconds
+
+Even though the lossy link has double bandwidth, the 50% retransmissions double the
+number of transmissions and increase queuing delay significantly.
+
+Use the lossless 10 Gbps channel.
+

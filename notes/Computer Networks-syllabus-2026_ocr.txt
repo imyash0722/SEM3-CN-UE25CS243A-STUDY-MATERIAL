@@ -1,0 +1,125 @@
+Course Code UE25CS243A Course Title Computer Networks
+Program B.Tech Hours per week/ L T P S C
+Credit Assigned
+4 [] 0 4 4
+Semester 3 Type of Course Core Course
+Tools/Language | Cisco Packet Tracer, Desirable
+s Wireshark, Mininet Knowledge
+Simulator, Python.
+Prelude
+This is a foundation course on Computer Networking which focuses on building blocks of the Internet. We
+trace the journey of messages sent over the Internet from an application residing on one host machine
+(source) to another (Destination) using a top-down layered approach. The course contents are organized
+based on the TCP/IP Protocol stack.
+Course ® To provide a comprehensive understanding of the fundamental principles and architectures of
+Objectives: computer networks and the Internet.
+
+© To enable students to design, implement, and analyze network applications using socket programming
+and understand the role of application layer protocols.
+
+® To equip students with the knowledge to analyze and evaluate transport layer protocols, including
+their mechanisms for reliable data transfer and congestion control, and to introduce them to the
+concepts of Software Defined Networking (SDN).
+
+o To familiarize students with link layer protocols, error detection/correction techniques, and routing
+algorithms, enabling them to understand the operational aspects of local area networks and network
+routing.
+
+Course Unit 1: Computer Networks and the Internet, Application Layer
+Contents Introduction to Computer Networks, Internet: A Nuts—and-Bolts Description, A Services Description,
+
+Protocol, The Network Edge: Access Networks, Physical Media, Introduction to physical layer devices, The
+Network Core, Packet Switching, Circuit Switching, A Network of Networks, Delay, Loss, and Throughput in
+Packet—Switched Networks, Overview of Delay in Packet Switched Networks — Queuing Delay and Packet
+Loss, End—-to—End Delay, Throughput in Computer Networks, The OSI Model and the TCP/IP Protocol Suite,
+Protocol Layers, The OSI Model, TCP/IP Protocol Suite. Network Application Principles: Network Application
+Architectures, Processes Communication, Transport Services available to Applications, Transport Services
+provided by Internet. The Web, HTTP and HTTPS, Non persistent and persistent connection, HTTP Message
+Format, TLS 1.3, User Server Interaction: Cookies, Web Caching.
+
+14 Hours
+
+Unit 2: Application Layer, Transport Layer — UDP
+Domain Name Server (DNS), The Internet’s Directory Service: Services provided by DNS; How DNS works:
+DNS Records and messages; Peer to peer Applications - Overview; Socket Programming with TCP and UDP;
+Other Application Layer Protocols: FTP, SMTP, SNMP, Telnet, SSH.
+Introduction to Transport Layer Services: Relationship Between Transport and Network Layer, Overview of
+the Transport layer on the Internet, Multiplexing and Demultiplexing; Connectionless Transport UDP: UDP
+Segment Structure, UDP Checksum. Overview of Principles of Reliable Data Transfer, Go—Back—N Protocol,
+Selective—Repeat; Connection Oriented Transport TCP: TCP Segment Structure, Flow Control, TCP
+Connection Management
+
+14 Hours
+
+Unit 3: Transport Layer — TCP, Network Layer and Internet Protocol
+TCP Congestion Control. Numerical on TCP congestion control mechanisms—TCP Tahoe, Reno, QUIC
+Protocol — with HTTP3
+Overview of Network Layer: Forwarding and routing, what’s Inside a Router?, The Internet Protocol (IP)
+IPV4: Datagram Format, Fragmentation, Addressing, NAT, Introduction to SDN, Components and
+Architecture of SDN, OpenFlow and P4, Data Center Networking — Modern Clos/Fat-tree vs Traditional 3-
+Tier, Multicast Routing — Case Study.
+
+14 Hours
+
+Unit 4: Network Layer and Internet Protocol, Link Layer and LAN
+Introduction to Network layer Protocols: DHCP, ICMP; IPv6 Protocol: Packet Format, Transition from IPv4
+to IPv6; Introduction to Routing Algorithms: Link State: Dijkstra’s algorithm and Distance Vector: Bellman—
+Ford Algorithm. Link layer — Error-Detection and Correction techniques, Parity checks, Internet Checksum,
+Cyclic Redundancy Check, and Multiple Access Protocols: CSMA/CD; Switched LAN: Link layer addressing
+and ARP, Ethernet: Link—layer switching, VLAN. Retrospective: A Day in the Life of a Web Page Request.
+Physical Layer — Purpose, Signals to Packets, Transmission media. Wireless LANs: IEEE 802.11 LAN
+architecture.
+
+14 Hours
+
+Text Book(s):
+
+“Computer Networking: A Top — Down Approach”, James F. Kurose, Keith W. Ross, 8th Edition, Pearson
+Publication, 2022.
+
+Reference
+Book(s):
+
+“TCP IP Protocol Suite”, Behrouz Forouzan, 4th Edition, McGraw-Hill, 2010.
+
+Course
+Outcome
+
+© Analyze and apply fundamental networking concepts, including protocol layers, network architectures,
+addressing schemes (IPv4, IPv6).
+
+® Evaluate and implement key application layer protocols (HTTP, DNS, SMTP) and understand their role in|
+network communication. Apply socket programming concepts with TCP and UDP to develop network
+applications.
+
+® Design and analyze transport layer protocols (UDP, TCP), including reliable data transfer, flow control, a
+congestion control mechanisms, and evaluate their impact on network performance. Additionally, gain
+introductory understanding of Software Defined Networking (SDN) concepts.
+
+® Explain and apply link layer protocols (Ethernet, Wi-Fi), error detection/correction techniques, and routil
+algorithms (Dijkstra, Bellman-Ford) for efficient network operation.
+
+Labs:
+
+Designing and Simulation of Network Topology using Cisco Packet Tracer. This experiment introduces
+students to Cisco Packet Tracer, enabling them to create basic network topologies, configure devices,
+and visualize data flow within a network.
+
+Understanding Persistent and Non-persistent HTTP Connections. Students use Wireshark to analyze
+HTTP traffic and understand the differences between persistent and non-persistent connections,
+focusing on real-world scenarios like web page loading.
+
+Exploring UDP with DNS using Wireshark. Analyzing DNS queries and responses to understand UDP
+using Wireshark.
+
+Understanding TCP Congestion Window using Wireshark. This experiment emphasizes on the
+practical application of TCP congestion control mechanisms, sliding window and varying the size of
+the congestion window. This lab also includes sequencing of packets in TCP and retransmission.
+Analyzing Ethernet Protocol and ARP using Wireshark This lab is designed to learn about Ethernet and
+ARP protocol, by analyzing the ethernet frames and observing ARP protocol in action. By using
+Wireshark packet sniffer, the students get to learn about the behavior of ARP cache, format and
+meaning of messages sent and received.
+
+Understanding Hardware Components in Networking. Students explore physical networking
+components, such as routers, switches, and cables, gaining hands-on experience with hardware setup
+and troubleshooting.

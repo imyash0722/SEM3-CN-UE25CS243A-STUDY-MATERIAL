@@ -1,0 +1,812 @@
+L
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+
+Transport Layer
+
+‘ Department of Computer Science and Engineering
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Transport Layer - Roadmap
+
+3.6 Principles of congestion control
+Cf)M PUTER NETWORKS @ PES
+History Y v
+
+In October 1986 the link between LBL (Lawrence Berkeley Laboratory) and
+UC Berkeley — 400 metres apart — dropped from 32 kbps to 40 bps. A
+thousandfold collapse, and the network hardware was fine. Every sender
+was retransmitting into a queue that was already full, so the network spent
+all its capacity carrying copies of packets that had already been delivered.
+Van Jacobson's fix is what you are learning today
+
+It's 9pm in the hostel. Netflix is buffering. Is that a flow control problem or a
+congestion control problem — and how would you tell the difference from
+where you're sitting?
+COMPUTER NETWORKS PES
+
+Principles of congestion control
+
+Congestion:
+
+informally: “too many sources sending too much data too fast for
+network to handle”
+
+manifestations:
+
+* long delays (queueing in router buffers)
+* packet loss (buffer overflow at routers)
+
+different from flow control!
+
+a top-10 problem! ' 2 congestion
+' control: too many
+senders, sending too fast
+
+flow control: one sender
+too fast for one receiver
+
+COMPUTER NETWORKS @
+
+) ) PES
+Causes/costs of congestion: scenario 1
+
+UNIVERSITY
+
+original data: )\in throughput: Aout
+
+Simplest scenario:
+one router, infinite buffers
+input, output link capacity: R
+
+infinite shared
+output link buffers
+
+two flows Tt 5
+no retransmissions @
+needed g _/_ Iﬂ
+
+Q: What happens as RE : _
+arrival rate A, B 5 §
+approaches R/2? H , ° i
+- Ain R2 An RR2
+maximum per-connection large delays as arrival rate A,
+
+throughput: R/2 approaches capacity
+COMPUTER NETWORKS
+Causes/costs of congestion: scenario 2
+
+Setup: one router, finite buffers; sender retransmits lost, timed-out packets
+* Ain = Aout (app layer); A'in 2 Ain (transport layer, incl. retransmissions)
+
+Idealization 1 — perfect knowledge: sender sends only when buffer space
+available
+— throughput = Ain, still capped at R/2 (graph, top right)
+
+Idealization 2 — some perfect knowledge: resends only if packet known lost
+— at Ain = R/2, throughput < R/2 — "wasted" capacity from needed retransmissions (graph,
+bottom right) (packets can be lost (dropped at router) due to full buffers
+
+Host A LA, : original data
+
+dopy [— A'j,.: original data, plus
+e retransmitted data
+
+free buffer space!
+
+finite shared output
+link buffers
+
+““Host B
+
+}‘out
+
+Z
+N
+
+throughput: Agy
+
+R/2 —
+
+throughput: 7\0ut
+
+Idealization 1
+
+@ UNIVERSITY
+
+)\in
+
+Idealization 2
+
+“wasted” capacity
+due to
+rejransmissions
+
+when sending at
+R/2, some
+packets are
+needed
+retransmissions
+COMPUTER NETWORKS
+Causes/costs of congestion: scenario 2
+
+Realistic scenario: un-needed duplicates
+
+packets can be lost, dropped at router due to full
+buffers — requiring retransmissions
+
+but sender times can time out prematurely, sending
+two copies, both of which are delivered
+
+LA, : original data
+
+[ A'j,.: original data, plus
+retransmitted data
+
+free buffer space!
+
+finite shared output
+link buffers
+
+““Host B
+
+2
+N
+|
+
+throughput: )\out
+
+@ UNIVERSITY
+
+' “wasted” capacity due
+A }to un-needed
+
+v{transmissions
+
+when sending at
+R/2, some packets
+are retransmissions,
+including needed
+
+II and un-needed
+b} duplicates, that are
+delivered!
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 2
+Realistic scenario: un-needed duplicates ,
+packets can be lost, dropped at router due to full R2 271 asted” canacity due
+buffers — requiring retransmissions (<§ ________________ .7 '}toun—negde_z !
+but sender times can time out prematurely, & :'ﬁt”’”sm'ss"’”s
+sending two copies, both of which are delivered g ! when sending at
+3 : R/2, some packets
+= ! are retransmissions,
+= ! including needed
+T and un-needed
+}\in R/2 duplicates, that are
+delivered!
+
+“costs” of congestion:
+more work (retransmission) for given receiver throughput
+
+unneeded retransmissions: link carries multiple copies of a packet
+* decreasing maximum achievable throughput
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 3
+
+four senders Q: what happens as A,, and ;" increase ?
+multi-hop paths A:asred A, increases, all arriving blue pkts at upper
+
+timeout/retransmit queue are dropped, blue throughput — 0
+
+HostA A, : original data
+
+] A'in: original data, plus
+retransmitted data
+
+finite shared
+output link
+
+Host D
+
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: scenario 3
+
+R/2 ]
+
+Aout
+
+)\i n R/2
+
+another “cost” of congestion:
+
+when packet dropped, any upstream transmission
+capacity and buffering used for that packet was
+wasted!
+COMPUTER NETWORKS @ PES
+Causes/costs of congestion: insights
+
+2
+IN]
+|
+
+throughput can never exceed capacity
+
+throughput: Kou‘
+
+>
+o
+
+]
+©
+
+delay increases as capacity approached
+
+R/2
+
+loss/retransmission decreases effective
+throughput
+
+throughput: Aoyt
+
+un-needed duplicates further decreases x,
+effective throughput R
+
+R/2
+
+upstream transmission capacity / buffering 3
+wasted for packets lost downstream
+
+}"in' R/2
+COMPUTER NETWORKS
+Approaches towards congestion control
+
+End-end congestion control:
+
+* no explicit feedback from
+
+network
+« congestion inferred from g
+observed loss, delay ACKS
+
+approach taken by TCP
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Approaches towards congestion control
+
+Network-assisted congestion
+
+control:
+
+routers provide direct feedback to
+
+sending/receiving hosts with flows
+passing through congested router
+
+may indicate congestion level or
+explicitly set sending rate
+
+* TCP ECN, ATM, DECbit protocols
+
+explicit congestion info
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+ECN: signalling congestion without dropping packets %
+
+Router is congested. Instead of dropping the packet, it sets the CE bit (Congestion Experienced) — two bits in the IP
+header's ToS field. The packet is still delivered.
+
+Receiver sees CE. It sets the ECE flag (ECN-Echo) in the TCP header of its very next ACK.
+
+Sender sees ECE. It halves cwnd exactly as if it had detected loss, and sets CWR (Congestion Window Reduced) to confirm it
+acted.
+
+Router, sender and receiver must all support ECN — which is why a mechanism specified in 1999 took two decades to see
+real deployment.
+
+Congestion signalled, zero packets destroyed. But the feedback still costs a full round trip, and the network itself had to be
+modified to send it. That deployment cost is exactly why TCP chose end-to-end inference instead.
+
+COMPUTER NETWORKS @ PES
+Suggested Readings X wmean
+
+Thank You
+For Your Attention
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Transport Layer - Roadmap
+
+3.7 TCP congestion control
+COMPUTER NETWORKS @ PES
+TCP congestion control: details
+
+sender sequence number space . .
+a P TCP sending behavior:
+—— cwnd —,
+
+roughly: send cwnd bytes,
+more bytes
+
+last byte
+cwnd
+ACKed sent, but not- available but TCP ~
+
+yet ACKed not used RTT
+(“in-flight”) last byte sent rate
+
+bytes/sec
+
+TCP sender limits transmission: LastByteSent- LastByteAcked < cwnd
+
+cwnd is dynamically adjusted in response to observed network congestion
+(implementing TCP congestion control)
+
+COMPUTER NETWORKS @
+
+PES
+TCP: Determine sender rate
+
+UNIVERSITY
+
+Too fast — congestion collapse
+
+Too cautious and too slowly — under utilize the bandwidth
+Send at a high rate without congesting the network
+Guiding principles:
+
+* A lost segment implies congestion, and hence, the TCP sender’s rate should be decreased
+when a segment is lost.
+
+* An acknowledged segment indicates that the network is delivering the sender’s segments to
+the receiver, and hence, the sender’s rate can be increased when an ACK arrives for a
+previously unacknowledged segment.
+
+* Bandwidth probing.
+
+TCP congestion-control algorithm
+
+(1) slow start, (2) congestion avoidance, and (3) fast recovery
+COMPUTER NETWORKS @ PES
+TCP congestion control: AIMD
+
+approach: senders can increase sending rate until packet loss (congestion)
+occurs, then decrease sending rate on loss event
+
+Additive Increase — Multiplicative Decrease ]
+increase sending rate by 1 cut sending rate in half at each
+maximum segment size every RTT loss event
+
+until loss detected
+
+AIMD sawtooth behavior:
+probing for bandwidth
+
+TCP sender Sending rate
+
+time
+COMPUTER NETWORKS @ PES
+TCP AIMD: more
+
+Multiplicative decrease detail: sending rate is
+Cut in half on loss detected by triple duplicate ACK (TCP Reno)
+Cut to 1 MSS (maximum segment size) when loss detected by timeout (TCP Tahoe)
+
+* Loss detected by timeout - cwnd =1 MSS — both Tahoe and Reno
+* Loss detected by 3 duplicate ACKs = Tahoe: cwnd =1 MSS & Reno: cwnd cut roughly
+
+in half
+* So the only difference between Tahoe and Reno is the response to 3 duplicate ACKs
+
+Why AIMD?
+AIMD - a distributed, asynchronous algorithm — has been shown to:
+* optimize congested flow rates network wide!
+
+* have desirable stability properties
+COMPUTER NETWORKS @ PES
+TCP slow start
+
+. . Host A Host B
+when connection begins, q
+increase rate exponentially until e IB
+
+* initially cwnd = 1 MSS
+
+* double cwnd every RTT {
+en
+
+* done by incrementing cwnd for \
+
+every ACK received
+
+first loss event: t e segme
+t M
+'_
+o
+!
+
+summary: initial rate is slow, but
+ramps up exponentially fast
+
+time
+
+In practice: cwnd starts at 10 MSS, not 1
+RFC 6928 (2013) raised the initial window to 10 segments — about 14 KB, enough to carry a small web
+
+page in the very first RTT. Expect to see ten segments, not one, in a real packet capture.
+COMPUTER NETWORKS @ PES
+TCP: detecting, reacting to loss
+
+loss indicated by timeout:
+* cwnd set to 1 MSS;
+
+» window then grows exponentially (as in slow start) to threshold, then
+grows linearly
+
+loss indicated by 3 duplicate ACKs: TCP RENO
+
+* dup ACKs indicate network capable of delivering some segments
+* cwnd is cut in half window then grows linearly
+
+TCP Tahoe always sets cwnd to 1 (timeout or 3 duplicate acks)
+COMPUTER NETWORKS
+Timeout vs 3 Duplicate Acks
+
+Event TCP Tahoe TCP Reno
+
+Timeout cwnd =1 MSS cwnd =1 MSS
+
+3 Duplicate ACKs cwnd =1 MSS cwnd reduced approximately by half
+Fast Retransmit Yes Yes
+
+Fast Recovery No Yes
+
+Initial state: cwnd = 1 MSS, ssthresh = 64 KB, dupACKcount = 0.
+
+@ UNIVERSITY
+
+State On new ACK On duplicate ACK On dupACKcount == On timeout
+cwnd += MSS; ssthresh = cwnd/2; cwnd = | ssthresh = cwnd/2; cwnd =
+Slow start dupACKcount = 0; dupACKcount++ ssthresh+3*; retransmit - | 1; dupACKcount = 0;
+transmit fast recovery retransmit - slow start
+cwnd += ssthresh = cwnd/2; cwnd = | ssthresh = cwnd/2; cwnd =
+. . MSSx(MSS/cwnd); " .
+Congestion avoidance dupACKcount++ ssthresh+3*; retransmit - | 1; dupACKcount = 0;
+dupACKcount = 0; .
+transmit fast recovery retransmit - slow start
+
+Fast recovery
+
+cwnd = ssthresh;
+dupACKcount =0 -
+congestion avoidance
+
+cwnd += MSS; transmit
+
+ssthresh = cwnd/2; cwnd =
+1; dupACKcount = 0;
+retransmit - slow start
+
+T *3: each of the 3 duplicate ACKs proves one segment left the network (that’s the only reason a dup ACK exists) — the sender adds 3 to replace them, keeping the pipe full. This is
+
+temporary: cwnd deflates back to ssthresh once the new ACK arrives.
+COMPUTER NETWORKS
+
+TCP: from slow start to congestion avoidance
+
+PES
+
+UNIVERSITY
+
+@
+
+Q: when should the exponential
+increase switch to linear?
+
+A: when cwnd gets to 1/2 of its value
+before timeout.
+
+Implementation:
+
+variable ssthresh
+
+on loss event, ssthreshis set to 1/2 of
+cwnd just before loss event
+
+ssthresh = cwnd/2
+
+14
+12
+
+—
+o O
+|
+
+Congestion window
+(in segments)
+
+TCP Reno
+
+ssthresh
+
+ssthresh
+
+—TCP Tahoe
+
+01 2 3 456 7 89
+
+T T T T T T T T T T 1T T T 1
+10 11 12 13 14 15
+Transmission round
+
+
+COMPUTER NETWORKS
+TCP: from slow start to congestion avoidance
+
+Initial ssthresh = 8 MSS; loss at end of round 8 via triple duplicate ACK, so ssthresh becomes 6:
+Rounds 1-4 are slow start (doubling to ssthresh = 8). Rounds 5—8 are congestion avoidance (+1/RTT).
+
+At round 8 both compute ssthresh = 6;
+
+@
+
+Tahoe drops to 1 and re-climbs through slow start, Reno resumes at 6 in congestion avoidance. That
+
+gap is the throughput Tahoe gives away.
+
+cwnd vs transmission round: Tahoe vs Reno (triple dup ACK at round 8)
+cwnd (MSS) by Transmission round (RTT)
+
+14
+
+12 L)
+
+./
+10 — -
+./ ./
+8 -/ o/
+./ ./
+6 / n/ o/
+4 /o /./
+2 ./- ./-
+0 1 3 5 7 9 11 13
+
+— TCPTahoe — TCPReno
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Summary: TCP congestion control
+
+new ACK
+
+cwnd = cwnd + MSS , (M: nd)
+dupACKcount=0""
+transmit new segment(s), as allowed
+
+duplicate ACK
+
+dupACKcount++ NewAgK
+
+cwnd = cwnd+MSS
+dupACKcount = 0
+transmit new segment(s), as allowed
+
+cwnd >
+
+wnd >
+_______ ssthresh
+
+I\
+“Za Cj) duplicate ACK
+(e kY » timeout dupACKcount = 0 dupACKcount++
+ssthresh = cwnd/2 retransmit missing segment
+cwnd = 1 MSS
+dupACKcount = 0 2o
+retransmit missing segment timeou ‘(s( {S),
+ssthresh = cwnd/2
+cwnd =1
+dupACKcount = 0 P __
+dupACKcount == retransmit missing segment dupACKcount = dupACKcount ==
+
+ssthresh= cwnd/2
+cwnd = ssthresh + 3
+retransmit missing segment
+
+ssthresh= cwnd/2
+cwnd = ssthresh + 3
+retransmit missing segment
+
+twnd = cwnd + MSS
+transmit new segment(s), as allowed
+
+@
+
+PES
+
+UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+TCP CUBIC: a better way to probe for bandwidth @
+
+Reno's problem +1 MSS per RTT is glacial once cwnd is thousands of segments. To hold 10 Gbps over a 100 ms path,
+
+Reno needs a loss rate near 2 x 107'° — one loss in five billion segments.
+Insight: W ax is the window at which loss was last detected — the same value Reno uses to set ssthresh. The bottleneck has
+
+probably not changed much since then, so return to W,ax quickly, then approach it with care.
+
+Return fast
+
+Climb steeply back toward the last known limit
+instead of crawling up one segment per RTT.
+
+Then hold
+
+Flatten out just below W,,.x instead of sailing
+through into the next loss.
+
+sending rate
+
+Back off less
+
+CUBIC cuts to 0.70 x W,,., not to half. A gentler
+time — cut means less to climb back.
+
+== TCP Reno back off to half, then +1 MSS per RTT
+
+==== CUBIC back off to 70%, return fast, then hold near the limit More area under the curve = higher
+throughput.
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+TCP CUBIC: the shape of the curve @3
+
+A cube is steep, then flat, then steep again
+
+1
+far from K near K : past K
+climb back fast probe cautious:y seek new capacity
+
+1 steep,
+
+: e
+
+3 i 'y
+1
+
+§ 1 flat here
+1
+
+g : steep
+
+= 1
+1
+
+g : Slide the flat point up to W,,., — that is CUBIC.
+
+5 1
+
+o 1
+1 .
+
+070-W ! K — the deadline
+window just after the loss . The time by which CUBIC intends to be back at
+. Wnax. Not a fixed number — the further the
+0 K window had to drop, the further away K sits.
+time since the last loss = (not round trips)
+Why elapsed time matters.
+The curve depends on elapsed time, not on how many ACKs have come back. Under Reno a 20 ms flow grows ten times faster
+
+than a 200 ms flow, and takes a far larger share.
+Under CUBIC both follow this same curve.
+
+COMPUTER NETWORKS
+
+Tahoe, Reno, CUBIC: three answers to the same question
+
+Growth before loss
+
+On timeout
+
+On 3 duplicate ACKs
+Fast recovery
+
+What it fixed
+
+Where you meet it
+
+TCP Tahoe 1988
+
+slow start, then +1 MSS per
+RTT
+
+cwnd = 1 MSS, slow start
+
+cwnd =1 MSS, slow start —
+same as a timeout
+
+No
+
+the first congestion control
+
+that worked — 1986 collapse
+
+solved
+
+history, and exam questions
+
+TCP Reno 1990
+
+slow start, then +1 MSS per
+RTT
+
+cwnd = 1 MSS, slow start
+
+cwnd = ssthresh + 3 during
+fast recovery, then ssthresh
+— a halving
+
+Yes
+
+a triple-duplicate-ACK loss is
+mild; do not restart from
+scratch
+
+the textbook model, and the
+reference for everything since
+
+% UNIVERSITY
+
+CUBIC 2008
+
+slow start, then cubic in time
+since the last loss
+
+cwnd =1 MSS, slow start
+
+cwnd x 0.7 during fast
+recovery — a gentler cut
+
+Yes
+
++1 MSS per RTT is far too
+slow on long, fast paths
+
+default in Linux, Windows and
+macOS; RFC 9438
+
+Only the loss response differs. All three still use slow start, still detect loss the same way, and still cut on loss —
+they disagree only on how hard to cut and how fast to come back.
+
+@ UNIVERSITY
+
+THANK YOU
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY

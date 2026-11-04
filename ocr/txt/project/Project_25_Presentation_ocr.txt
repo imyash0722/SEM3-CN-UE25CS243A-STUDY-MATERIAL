@@ -1,0 +1,220 @@
+AegisFlow
+
+Computer Networks Mini Project — Topic #25 - Low-Level TCP Sockets + OpenFlow 1.3
+THE PROBLEM (Best-Effort Edge Networks)
+
+o Unfiltered Ingress Storms
+
+Dumb edge switches forward all packets blindly based solely on
+destination IP.
+
+o FIFO Backlog Saturation
+
+Adversarial port scans and connection bursts exhaust TCP listen
+queues and file descriptors.
+
+o Severe Collateral Damage
+
+Legitimate users suffer connection timeouts, packet drops, and
+severe latency spikes.
+
+Consequence: Handling malicious probes consumes 100% of
+server CPU, causing severe packet loss for legitimate clients.
+
+Network Intrusion Defense: Problem & Solution
+
+Overcoming Best-Effort Network Vulnerabilities with SDN-Driven Programmable QoS
+
+THE SOLUTION (SDN-Based Edge Defense)
+
+o Real-Time Telemetry Tracking
+
+SDN Controller monitors Packetln connection velocity and
+destination port diversity in real time.
+
+e Dynamic OpenFlow Flow Control
+
+Sliding-window engine detects anomalies in ~120 ms and pushes
+high-priority drop rules in < 1 ms.
+
+® Line-Rate Hardware Enforcement
+
+Edge switches discard malicious frames at ingress datapath,
+shielding server resources entirely.
+
+Outcome: 100% of attacker traffic dropped in switch hardware;
+legitimate clients enjoy 0.44 ms latency and 100% availability.
+
+Architecture & Tech Stack: Protected TCP Service
+
+e Python 3 BSD Sockets: Raw socket.AF_INET and Legitimate Client (h1): Dispatches TCP SYN to 10.0.0.3:8080
+socket.SOCK_STREAM binding to 0.0.0.0:8080
+
+e Kernel SO_REUSEADDR: Eliminates OS kernel TIME_WAIT socket
+
+A
+rebinding locks ) L. |
+. Open vSwitch (s1): Matches Priority 1 L2 Forwarding Rule
+e POSIX Concurrency: Multi-threaded daemon pool
+A
+
+(threading.Thread) with 100-connection backlog
+
+Protected Server (h3): Dedicated Thread Spawned via accept()
+
+® Zero Overhead: Bypasses heavy WSGI/ASGI stacks for pristine
+wire-speed packet analysis
+
+A
+
+e Queue Visibility: Direct kernel-level socket queue buffer
+
+management and connection lifecycle Application Layer: Client Transmits HTTP GET /data
+A
+
+e Deterministic RTT: Client (client.py) measures round-trip time on
+
+every HTTP 200 payload Payload Delivery: Server Responds HTTP 200 OK (64 Bytes)
+e Wire-Speed Delivery: Delivers 0.44 ms baseline latency with
+100% packet delivery v
+
+Metric Verification: End-to-End RTT Measured = 0.44 ms
+
+e Vertical Port Scan: Iterates across common service ports [21, 22,
+23, 25, 80, 443, 8080]
+
+® DoS Connection Flood: Bursts 30+ simultaneous connections to
+exhaust listen queue
+
+o Host Attribution: Attacker emulated on isolated Mininet host h2
+(10.0.0.2)
+
+e Native OS Probing: Returns O for open ports and errno for
+blocked without raising exceptions
+
+e Rapid Execution: Completes reconnaissance scan across entire
+port range in < 500 ms
+
+® Precision Timestamping: Monitors nanosecond probe dispatch
+and the exact drop cutoff
+
+o Delivery Accounting: Calculates drop ratio before and after
+OpenFlow intervention
+
+Architecture & Tech Stack: Adversarial Threat Modeling
+
+Adversary (h2: 10.0.0.2): Initiates Sequential Port Scan
+
+Probe 5 (Port 80): THRESHOLD BREACHED (>= 5 Ports in 10s)
+
+v
+
+OpenFlow PacketlIn: Switch Notifies Ryu Controller IDS
+
+v
+
+Dynamic FlowMod: Priority 200 DROP Installed in < 1 ms
+
+v
+
+Subsequent Probes (Ports 443, DROPPED IN
+HARDWARE
+
+Architecture & Tech Stack: Real-Time IDS Engine
+
+o collections.deque: O(1) time complexity append and left-pop per Ingress Packet: Extract (src_ip, dst_port, timestamp)
+source IP
+
+e Window Bounds: 10-second active window with monotonic time
+
+tracking
+
+Sliding Window Deque: Evict Records Older Than 10 Seconds
+
+o Rule 1 (Reconnaissance): Distinct destination ports >= 5 within
+10s window
+
+o Rule 2 (Volumetric Flood): Connection attempts >= 10 per
+
+second within 1.0s window Threshold Evaluation: Distinct Ports >=5 OR Conns/sec >= 10?
+
+e Instant Alert: Detection latency = ~120 ms for scans and < 50 ms
+for floods
+
+o Zero False Positives: Legitimate client requests to port 8080 pass Decision: Threshold Breached —» TRIGGER SECURITY ALERT!
+without friction
+
+v
+
+Action: Dispatch Priority 200 OFPFlowMod DROP to Open
+vSwitch
+
+Architecture & Tech Stack: Dynamic SDN Control Plane
+
+® Ryu Controller Framework: Event-driven OpenFlow 1.3 controller Open vSwitch Table 0: Flow Evaluation by Priority Order
+operating on TCP port 6633
+
+@ Open vSwitch (s1): Kernel-space OpenFlow datapath executing
+hardware-level packet drops
+
+PRIORITY 200: Match ipv4_src=10.0.0.2 —» DROP IN
+
+HARDWARE
+e OFPFlowMod Message: Pushes match rule: eth_type=IPv4,
+
+ip_proto=TCP, ipv4_src=10.0.0.2 v
+
+o Action List = []: Empty action list instructs switch datapath to
+drop packet instantly
+
+e hard_timeout=60s: Enforces 60-second penalty box before rule
+auto-expires
+
+v
+o Priority Override: Priority 200 (Drop) evaluates before Priority 1 PRIORITY 0: Table-Miss —» SEND TO RYU CONTROLLER
+(Forwarding)
+
+v
+
+e Hardware Response: Rule active in switch datapath in < 1 ms
+
+PRIORITY 1: Match eth_dst=h3 —» FORWARD TO PORT 3
+
+Outcome: Attacker Isolated | Legitimate Traffic 100% Wire-
+Speed
+
+Complete System Architecture Overview
+End-to-End Master Blueprint Combining Data Plane, SDN Network, and Control Plane
+
+1. PacketIn Telemetry Ingestion | 2. Sliding-Window Threshold Evaluation | 3. Priority 200 DROP FlowMod Injection
+
+. PRIORITY 200: DROP RULE (Open vSwitch) v
+e Match: ipv4_src=10.0.0.2 (Attacker Host) e Match: ipv4_src=10.0.0.1 (Legitimate Client)
+o Action: Discard at ingress hardware (0 CPU) e Action: Forward to Port 3 (Wire speed 0.44 ms)
+
+Attacker Host (h2)
+10.0.0.2
+
+Port Scan & Floods Normal HTTP GET /data Multi-Threaded TCP Service
+100% Dropped at Edge 0.44 ms Latency (100% SLA) Zero CPU Load Under Attack
+
+Experimental Evaluation & Conclusion
+
+Key Analytical Takeaways, Quantitative Benchmarks & Live Verification
+
+Key Analytical Takeaways
+
+® 100% Attacker Traffic Quarantined: Attacker drop rate reaches 100% at the edge switch datapath, neutralizing port scans and floods.
+® 97.6% Latency Reduction: Legitimate client transit delay reduced from 18.5 ms (queue backlog) to 0.44 ms wire-speed.
+® Zero Server Resource Degradation: Switch hardware offload shields server CPU, thread pool, and socket listen queue from all attacks.
+
+Performance Metric Baseline (No Defense) With AegisFlow SDN Defense Quantitative Impact
+
+Attacker Attack Delivery 100.0% (Hits server) < 10.0% (Dropped at switch) Attacker neutralized
+Server Queue Saturation Saturated (Buffer full) Zero Impact (No drops) Server 100% protected
+Legitimate Delivery Rate 60% - 70% (Timeouts) 100.0% Success Full service restored
+Legitimate Client Latency 18.50 ms (Severe delay) 0.44 ms (Wire speed) 97.6% Latency Reduction!
+Intrusion Detection Latency N/A (No detection) ~120.50 ms Real-time sliding window
+
+#7 SINGLE-COMMAND VERIFICATION: git clone https://github.com/imyash0722/AegisFlow.git && python3 run.py
+

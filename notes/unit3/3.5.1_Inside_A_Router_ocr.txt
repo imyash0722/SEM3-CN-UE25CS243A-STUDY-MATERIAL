@@ -1,0 +1,259 @@
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+PES
+
+UNIVERSITY
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.2 What's Inside a Router?
+COMPUTER NETWORKS
+. . %g PES
+Router Architecture Overview
+
+high-level view of generic router architecture:
+
+routing routing, management
+processor control plane (software)
+operates in millisecond
+I time frame
+forwarding data plane
+I | > (hardware) operates
+— H in nanosecond
+timeframe
+high-speed
+switching
+fabric
+== B o= "
+router input router output
+
+ports ports
+COMPUTER NETWORKS
+
+2\ PES
+Input port functions W%
+link lookup,
+X line R layer | | forwarding .| switch
+termination protocol fabric
+(receive)
+queueing
+physical layer:
+
+bit-level reception
+decentralized switching:
+
+link layer:
+g Etherynet using header field values, lookup output port using forwarding
+(chapter 6) table in input port memory (“match plus action”)
+
+goal: complete input port processing at ‘line speed’
+
+input port queuing: if datagrams arrive faster than forwarding
+rate into switch fabric
+COMPUTER NETWORKS
+
+A2\ PES
+Input port functions ‘%
+
+UNIVERSITY
+
+link lookup,
+forwardin
+J o tne ) faver L) e switch
+termination proto_col fabric
+(receive)
+queueing
+
+physical layer:
+bit-level reception
+
+decentralized switching:
+
+link layer: using header field values, lookup output port using forwarding
+e.g, Ethernet table in input port memory (“match plus action”)
+(chapter 6)
+
+destination-based forwarding: forward based only on
+destination IP address (traditional)
+
+generalized forwarding: forward based on any set of header
+field values
+COMPUTER NETWORKS
+Destination-based Forwarding
+
+forwarding table
+Destination Address Range
+
+Link Interface
+
+11001000 00010111 00010000 00000000
+through
+
+11001000 00010111 00010111 11111111
+
+11001000 00010111 00010000 00000100
+through
+
+11001000 00010111 00010000 00000111
+11001000 00010111 00011000 11111111
+
+11001000 00010111 00011001 00000000
+through
+
+11001000 00010111 00011111 11111111
+
+otherwise
+
+Q: but what happens if ranges don’t divide up so nicely?
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+s
+Longest prefix matching W% PES
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+
+Destination Address Range Link interface
+
+11001000 00010111 00010 %%  H*kkkkknnk 0
+
+11001000 00010111 00011000 Kok kKK K 1
+
+11001000 00010111 00011 swx  HFkxkkxksk 2
+
+otherwise 3
+
+11001000 00010111 00010110 10100001 which interface?
+examples:
+
+11001000 00010111 00011000 10101010 which interface?
+COMPUTER NETWORKS
+Longest prefix matching
+
+longest prefix match
+
+when looking for forwarding table entry for given
+destination address, use longest address prefix that
+matches destination address.
+
+11001000 00010111 00010}
+
+match!
+
+IllOOlOOO 00010111 00011
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+A2\ PES
+Longest prefix matching ‘%
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination
+address, use longest address prefix that matches destination
+address.
+
+Destination Address Range Link interface
+
+11001000 00010111 00010%%% xxxxxx%% | O
+
+11001000 00010111 00011000 #sk#sk*k** | 1
+
+11001000 00010111 00011 **xkkxskk 2
+
+otherwise t
+
+match! o
+11001000 uu‘uLil 00010110 10100001 Which interface?
+
+examples:
+
+11001000 00010111 00011p00 10101010 which interface?
+
+COMPUTER NETWORKS
+Longest prefix matching
+
+&%) PES
+
+UNIVERSITY
+
+longest prefix match
+
+when looking for forwarding table entry for given destination address, use
+
+longest address prefix that matches destination address.
+
+Destination Address Range
+
+Link interface
+
+11001000 00010111 00010 #**
+
+Kk k Kk ok ok
+
+0
+
+T T 000 T 0TI 000TT000
+
+Kk kK kK kK
+
+e 2
+otherwise [P — 3
+match!
+examples: L
+11001000 00010111 010110 10100001 which interface?
+11001000 00010111 00011000 10101010 which interface?
+
+COMPUTER NETWORKS
+. . &%) PES
+Longest prefix matching
+
+UNIVERSITY
+
+« we’'ll see why longest prefix matching is used shortly, when we study
+addressing
+
+* longest prefix matching: often performed using ternary content
+addressable memories (TCAMS)
+
++ content addressable: present address to TCAM: retrieve address in one clock cycle,
+regardless of table size
+
++ Cisco Catalyst: ~1M routing table entries in TCAM
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY

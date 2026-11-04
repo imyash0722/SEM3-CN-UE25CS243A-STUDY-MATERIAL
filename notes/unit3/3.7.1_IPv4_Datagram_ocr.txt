@@ -1,0 +1,105 @@
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+D) PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.4 The Internet Protocol (IP)
+
+Datagram format
+COMPUTER NETWORKS
+Network Layer: Internet
+
+host, router network layer functions:
+
+network
+layer
+
+transport layer: TCP, UDP
+
+Path-selection
+algorithms:
+
+=
+
+IP protocol
+* datagram format
+
+ol di * addressing
+implemented in : ¢ packet handling conventions
+* routing protocols| forwarding
+(OSPF, BGP) _table ICMP protocol
+* SDN controller e error reporting
+® router “signaling”
+link layer
+
+physical layer
+
+COMPUTER NETWORKS
+IP Datagram Format
+
+PES
+
+UNIVERSITY
+
+&
+
+— 32bit§ —m08 ——
+
+IP protocol version number——ver head.type of total
+header length(bytes) service length  |— datagram
+“type” of ~ 16-bit identifier | fig§ oot ee) :;aagsrggrr:;t n/
+service: time to | upper header
+diffserv (0:5) live L layer checksum T — header checksum
+
+.. ECN (6:7
+TTL: remaining mgx ﬁops
+(decremented at each router)
+
+upper layer protocol (e.g., TCP or UDF‘(
+
+ource |IP address
+
+destination IP address
+
+— 32-bit source IP aqdress
+. Maximum length: 64K
+" bytes
+
+options (if any)
+
+¢ Typically: 1500 bytes or
+
+overhead
+20 bytes of TCP
+20 bytes of IP
+=40 bytes + app
+layer overhead for
+TCP+IP
+
+payload data
+(variable length,
+typically a TCP
+or UDP segment)
+
+r less
+
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY

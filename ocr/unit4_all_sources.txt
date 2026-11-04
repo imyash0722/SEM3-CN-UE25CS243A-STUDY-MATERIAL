@@ -1,0 +1,6162 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A) — UNIT 4 SOURCE DOCUMENTS EXTRACTED TEXT
+UNIT TITLE: Link Layer, LANs, Error Detection, Multiple Access & Wireless
+TOTAL SOURCE FILES: 12
+================================================================================
+
+TABLE OF CONTENTS:
+  1. resources/u4/Slides/4.1.1_DHCP_&_ICMP.pdf
+  2. resources/u4/Slides/4.2.1_IPv6_Addressing.pdf
+  3. resources/u4/Slides/4.3.1_Routing_Algorithm_-_Link_State.pdf
+  4. resources/u4/Slides/4.4.1_Routing_Algorithm_-_Distance_Vector.pdf
+  5. resources/u4/Slides/4.5.1_Introduction_to_Link_Layer.pdf
+  6. resources/u4/Slides/4.6.1_Error_Detection_and_Correction.pdf
+  7. resources/u4/Slides/4.7.1_Multiple_Access_Protocols.pdf
+  8. resources/u4/Slides/4.8.1_Switched_LANs.pdf
+  9. resources/u4/Slides/4.10.1_A_day_in_the_life_of_a_webpage.pdf
+  10. resources/u4/Slides/4.11.1_Physical_Layer.pdf
+  11. resources/u4/Slides/4.12.1_Wireless_LANs.pdf
+  12. labs/lab6_hardware/Lab 6- Hardware Program.pdf
+
+================================================================================
+
+
+################################################################################
+FILE 1/12: resources/u4/Slides/4.1.1_DHCP_&_ICMP.pdf
+PAGES: 14 | EXTRACTED CHARACTERS: 5,202
+################################################################################
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.6 Introduction to Network Layer Protocols
+» DHCP
+
+* ICMP
+4.7 IPv6 Addressing
+
+4.8 Introduction to Routing Algorithms
+COMPUTER NETWORKS PE
+
+UNIVERSITY
+e ccorie v s
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer Protocols
+« DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+eg PES
+IP addresses: how to get one?
+
+UNIVERSITY
+
+That’s actually two questions:
+1. Q: How does a host get IP address within its network (host part of address)?
+2. Q: How does a network get IP address for itself (network part of address)
+
+How does host get IP address?
+hard-coded by sysadmin in config file (e.g., /etc/rc.config in UNIX)
+DHCP: Dynamic Host Configuration Protocol: dynamically get address
+from as server
+e “plug-and-play”
+COMPUTER NETWORKS
+DHCP: Dynamic Host Configuration Protocol
+
+goal: host dynamically obtains IP address from network server
+when it “joins” network
+
+can renew its lease on address in use
+
+allows reuse of addresses (only hold address while
+connected/on)
+
+support for mobile users who join/leave network
+
+DHCP overview:
+host broadcasts DHCP discover msg [optional]
+DHCP server responds with DHCP offer msg [optional]
+host requests IP address: DHCP request msg
+DHCP server sends address: DHCP ack msg
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+DHCP client-server scenario
+
+DHCP server
+
+223.1.21
+
+223.1.2.5
+223.1.1.2
+
+€
+
+223.1.3.27 =
+2231.2.2
+
+s
+223.1.3.2
+
+223.1.31
+
+51
+
+Typically, DHCP server will be
+co-located in router, serving
+all subnets to which router is
+attached
+
+@
+
+arriving DHCP client needs
+address in this network
+COMPUTER NETWORKS
+
+DHCP client-server scenario (DORA)
+
+@ UNIVERSITY
+
+DHCP server: 223.1.2.5
+
+DHCP discover
+
+Arriving client
+
+Broadcast: is there a
+DHCP server out there?
+
+==y
+
+/’:;P offer
+
+\
+
+Broadcast: I'm a DHCP
+server! Here's an IP
+address you can use
+
+The two steps above can
+
+Broadcast: OK. You've
+got that IP address!
+
+-
+DHCP request be skipped “if a client
+remembers and wishes to
+Broadcast: OK. Twould | | "3 ZFGV;OUS'K ddrece”
+like t this IP ress! allocated network address
+e to use this IP address [RFC 2131]
+—
+DHCP ACK
+
+—~—
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+DHCP: more than IP addresses
+
+DHCP can return more than just allocated IP address on
+subnet:
+address of first-hop router for client
+name and IP address of DNS sever
+
+network mask (indicating network versus host portion of
+address)
+COMPUTER NETWORKS
+DHCP: example
+
+UNIVERSITY
+
+ieE | DHCP
+[ IDHCP] UDP
+[IHCP| IP
+[ [ TToHcH] Eth
+Phy /
+DHCP
+[ IoHcP UDP
+[ [CIoHCH] 1P
+EEel| Eth rou HCP
+Phy server built into
+router
+
+= Connecting laptop will use DHCP
+to get IP address, address of first-
+hop router, address of DNS server.
+
+= DHCP REQUEST message encapsulated
+
+in UDP, encapsulated in IP, encapsulated
+in Ethernet
+
+= Ethernet frame broadcast (dest:
+
+FFFFFFFFFFFF) on LAN, received at router
+running DHCP server
+
+Ethernet de-mux’ed to IP de-mux’ed,
+UDP de-mux’ed to DHCP
+COMPUTER NETWORKS —
+DHCP: example
+
+= DCP server formulates DHCP ACK
+containing client’ s IP address, IP
+address of first-hop router for client,
+name & IP address of DNS server
+
+= encapsulated DHCP server reply
+forwarded to client, de-muxing up to
+DHCP at client
+
+| [ ETonce |
+[ T ICToxce]
+
+Phy server built into = client now knows its IP address, name
+router and IP address of DNS server, IP
+address of its first-hop router
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+ICMP: Internet Control Message Protocol
+
+Used by hosts and routers to
+communicate network-layer
+information.
+
+Typical use of ICMP is for error
+reporting: unreachable host, networks,
+port, protocol
+
+Eg: “Destination network unreachable”
+Echo request/reply (used by ping)
+
+ICMP messages — carried as IP
+payloads. (network-layer “above” IP)
+
+ICMP is often considered part of IP, but
+architecturally it lies just above IP.
+
+ICMP messages have a type and a code
+field.
+
+dest. network unreachable
+dest host unreachable
+dest protocol unreachable
+dest port unreachable
+
+dest network unknown
+dest host unknown
+
+source quench (congestion
+
+echo request (ping)
+route advertisement
+
+Type Code description
+0 0 echo reply (ping)
+3 0
+3 1
+3 2
+3 3
+3 6
+3 7
+4 0
+control - not used)
+8 0
+9 0
+10 O router discovery
+1 0 TTL expired
+12 0 bad IP header
+
+A
+&) FPES
+COMPUTER NETWORKS
+ICMP: Internet Control Message Protocol
+
+Perform — Network diagnostics
+
+Utilities traceroute and ping — use ICMP.
+
+Other examples of ICMP messages:
+
+Source quench message (congestion)
+Parameter problem (bad IP header)
+Time exceeded message (TTL)
+Destination unreachable
+
+@ UNIVERSITY
+
+Redirection message
+
+ICMP Dest Unreach
+
+MP TTL Ex
+
+v ICMP TTL Exceed ‘ e
+TTL 1
+
+SRC
+
+Router 1
+
+TTL=2
+
+Router 2
+
+Router 3
+
+ICMP TTL Exceed
+
+ICMP TTL Exceed
+ceed |
+
+Router 4
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 2/12: resources/u4/Slides/4.2.1_IPv6_Addressing.pdf
+PAGES: 22 | EXTRACTED CHARACTERS: 10,165
+################################################################################
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+IPv6 Protocol: Rationale for Change
+
+Larger address space * initial motivation: 32-bit IPv4
+
+Better header format address space would be completely
+. allocated
+
+New options
+
+Allowance for extension
+Support for resource allocation
+
+Support for more security
+checksum: removed entirely to reduce processing time at each hop
+options: allowed, but outside of header, indicated by “Next Header” field
+ICMPv6: new version of ICMP
+fragmentation/reassembly: no
+
+Additional motivation:
+speed processing/forwarding: 40-byte fixed length header
+enable different network-layer treatment of “flows”
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+@ PES
+IPv6 Datagram Format
+flow label: identify
+priority: identify 32 bits datagrams in same
+priori;cy among ver | pri flow label ——— "flow.” (concept of
+datagrams in flow payload len next hdr | hop limit “flow” not well defined).
+& source address
+128-bit_ 11— (128 bits)
+IPv6 addresses —~__ destination address
+(128 bits)
+payload (data)
+
+What’s missing (compared with IPv4):
+
+* no checksum (to speed processing at routers)
+
+= no fragmentation/reassembly
+
+= no options (available as upper-layer, next-header protocol at router)
+COMPUTER NETWORKS PES
+Introduction to IPv6
+
+128 bits address
+340 undecillion address (340 + 33 digits) Decimal _ Binary  Hexadecimal
+IPv6 address space is 2°¢ times of the IPv4 address. : 2322
+Made up of eight 16-bit blocks (octet) o
+
+0011
+Separated by
+
+o
+
+0100
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+1100
+1101
+1110
+1111
+
+Hexadecimal, each hexadecimal character — 4 bits
+
+340,282,366,920,938,463,374,607,431,768,211,456
+Rules:
+
+WO [(RX[(an |0 | [W]|N
+
+[
+o
+
+[
+™
+
+Discard leading Zero(es)
+
+[
+N
+
+If two of more blocks contain consecutive Zero(es), omit them
+all and replace with double colon sign ::
+
+[
+w
+
+=
+>
+
+o E(o(Q|w|p|o|lo|v|a|o|s|w|N |
+
+[y
+o
+
+If Zero(es) are present in a discontinuous pattern, replace them
+with :: at only one joining.
+COMPUTER NETWORKS PES
+Introduction to IPv6
+128 bits
+B3 >
+1111110111101100 (X 1110110110101011
+Colon hexadecimal FDEC = BA98 = 7654 = 3210 = ADBF = BBFF = 2922 = FFFF
+notation
+Zero compression FDEC:0202020z2BBFF 10z FFFF -—
+Original address Zero compressed
+CIDR address FDEC 1 2 BBFF = 0 2 FFFF/60
+Rule 1 2001:0000:3238:DFE1:0063:0000:0000:FEFB 2001:0000:3238:DFE1:63:0000:0000:FEFB
+Rule 2 2001:0000:3238:DFE1:0063:0000:0000:FEFB 2001:0000:3238:DFE1:63::FEFB
+
+2001:0:3238:DFE1:63::FEFB
+COMPUTER NETWORKS @ PES
+Introduction to IPv6
+
+IPv6 compression rule #2 cannot be used more than once in an address or the result will be ambiguity about
+the full address the compressed version represents.
+
+Rule 3
+
+Only a single contiguous string of all-Os segments can be represented with a double colon;
+otherwise, the address would be ambiguous, as shown in this example:
+
+Incorrect address using two double colons:
+2001::abecd::1234
+
+Possible ambiguous choices:
+
+2001:0000:0000:0000:0000:abcd:0000:1234
+2001:0000:0000:0000:abcd:0000:0000:1234
+2001:0000:0000:abcd:0000:0000:0000:1234
+2001:0000:abcd:0000:0000:0000:0000:1234
+COMPUTER NETWORKS
+IPv6 Addressing
+
+Show the unabbreviated colon hex notation for the following IPv6
+addresses:
+
+a. An address with 64 Os followed by 64 1s.
+
+b. An address with 128 0s.
+
+c. An address with 128 1s.
+
+d. An address with 128 alternative 1s and Os.
+
+Solution
+
+a. 0000:0000:0000:0000:FFFF :FFFF:FFFF:FFFF
+
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+
+c. FFFF.FFFF.FFFF:FFFF .FFFF.FFFF:FFFF.FFFF
+
+d. AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+COMPUTER NETWORKS
+
+2\ PES
+IPv6 Addressing %v
+
+UNIVERSITY
+
+The following shows the zero contraction version of addresses in
+previous example.
+
+a. :: FFFF:FFFF:FFFF:FFFF
+
+b. ::
+
+c. FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+
+d. AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA
+
+-~
+
+s
+COMPUTER NETWORKS
+IPv6 Addressing
+
+Show abbreviations for the following addresses:
+
+a. 0000:0000:FFFF:0000:0000:0000:0000:0000
+b.1234:2346:0000:0000:0000:0000:0000:1111
+c. 0000:0001:0000:0000:0000:0000:1200:1000
+d. 0000:0000:0000:0000:0000:FFFF:24.123.12.6
+
+Solution
+
+a. 0:0:FFFF::
+b.1234:2346::1111
+c.0:1::1200:1000
+
+d. ::FFFF:24.123.12.6
+
+A
+&) FPES
+
+T—
+.\
+...
+COMPUTER NETWORKS &) PES
+IPv6 Addressing
+
+Decompress the following addresses and show the complete
+unabbreviated IPv6 address:
+
+a. 1111::2222
+b. ::
+c. 0:1::
+d. AAAA:A:AA::1234
+@
+...
+
+Solution
+a.1111:0000:0000:0000:0000:0000:0000:2222
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+c. 0000:0001:0000:0000:0000:0000:0000:0000
+d. AAAA:000A:00AA:0000:0000:0000:0000:1234
+COMPUTER NETWORKS
+
+%g PES
+IPv6 Prefix Notation
+
+UNIVERSITY
+
+* The prefix length is a decimal value that indicates the number of leftmost bits of an IP address that constitute the
+network portion.
+
+For example, consider the IPv6 address 2001:aaaa:bbbb:cccc:0:0:0:10/64.
+
+* The prefix length 64 indicates that the first 64 bits represent the network portion, while the remaining 64 bits
+represent the host (interface) portion.
+
+* Therefore, the IPv6 subnet is 2001:aaaa:bbbb:cccc::/64, and 2001:aaaa:bbbb:cccc::10 represents a node within this
+subnet.
+
+2001:0df8:00f2:0000:0000:06ee:0000:0f11
+/16
+
+/32
+
+/48
+
+/52
+/56 IPv6 Prefix Notation Example
+
+/60
+/64
+COMPUTER NETWORKS % PES
+
+Three Address Types
+In IPv6, a destination address belong to:
+Unicast Address (one-to-one) — defines a single interface . %
+; Unicast
+(computer or router). Packets sent to a unicast address p :
+
+‘{ 1>
+are delivered to the interface configured with that IPv6 address. @93 @
+Multicast Address (one-to-many) — also defines a group of @
+computers, each member of the group receives a copy. Packets @
+sent to a multicast address are delivered to all interfaces Multicast
+
+identified by that address.
+
+Anycast Address (one-to-nearest) — defines a group of PR
+computers that all share a single address. Packets sent to an
+anycast address are delivered to the "closest" interface identified Anycast | Q>
+
+by that address. "Closest" typically means the one with the best @_@_@_{é
+routing metric st Group (“4}9
+Broadcast Address (one-to-all) — x There are no broadcast
+
+addresses in IPv6. Broadcast functionality is implemented using
+
+multicast addresses.
+COMPUTER NETWORKS
+
+IPv6 Address Types
+IPv6 Address Types
+Unicast
+Sr:::baaslt Link-Local Loopback Unspecified UL’: g:le Emmded
+2000::/3  fe80::/10 ::1/128 /128 fc00::/7 ::/80
+Multicast
+|
+I I
+Well-Known Transient Solicited-Node
+ff00::/12  ff10::/12  ff02:0:0:0:0:1:ff00::/104
+
+Anycast
+
+PES
+
+UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Address Space Allocation
+
+Address space = 2128 ddresses
+1/8 1/8 1/8 1/8 1/8 1/8 "
+Reserved Reserved Reserved Reserved Reserved &“\:ﬁfg‘nﬁé
+E G H I JKLMN
+A:1/256 IPv4 Compatible D: 1/64 Reserved G: 1/16 Reserved K: 1/512 Reserved
+B: 1/256 Reserverd E: 1/32 Reserved H: 1/32 Reserved L: 1/1024 Link Local
+C: 1/128 Reserved F: 1/16 Reserved 1: 1/64 Reserved M: 1/256 Reserved
+
+J: 1/128 Unique Local Unicast N: 1/256 Multicast
+COMPUTER NETWORKS
+IPv6 Datagram Format
+
+40 bytes
+
+Up to 65,535 bytes
+
+ﬂ Base header Payload I
+.
+
+Extension headers
+
+Data packet from upper layer
+
+(optional)
+) 32 bits = 4 bytes )
+0 4 12 16 24 31
+<=| VER | Traffic Class Flow label
+Payload length Next header Hop limit
+C Source address
+
+(128 bits = 16 bytes)
+
+Destination address
+(128 bits = 16 bytes)
+
+Table 27.1 Next Header Codes
+
+UNIVERSITY
+
+Code Next Header Code Next Header
+0 Hop-by-hop option 44 | Fragmentation
+2 ICMP 50 | Encrypted security payload
+6 TCP 51 | Authentication
+17 UDP 59 Null (No next header)
+43 Source routing 60 | Destination option
+
+flow label: identify datagrams in
+same "flow.” (concept of “flow”
+
+not well defined).
+
+Format of the base header
+
+COMPUTER NETWORKS
+Transition from IPv4 to IPv6e
+
+* not all routers can be upgraded simultaneously
+* no “flag days”
+* how will network operate with mixed IPv4 and IPv6 routers?
+
+tunneling: IPv6 datagram carried as payload in IPv4 datagram
+among IPv4 routers (“packet within a packet”)
+
+* tunneling used extensively in other contexts (4G/5G)
+
+IPv4 header fields IPv6 header fields
+IPv4 squrce, dest addr IPv6 source dest addr IPv4 payload
+
+‘ UDP/TCP paylmd/
+
++«—|Pv6 datagram ——
+
++«— |Pv4d datagram———
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Tunneling and Encapsulation
+
+Ethernet connecting A °
+==
+two IPv6 routers: = IPvé
+
+__—E
+
+Ethernet connects two E
+IPv6 routers
+
+IPv6 datagram
+
+Link-layer frame  The ysual: datagram as payload in link-layer frame
+
+IPv4 network
+connecting two
+
+IPv6 routers IPv6 IPv6/v4
+
+IPv6/v4
+
+IPv4 network
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS —
+Tunneling and Encapsulation
+
+Eth t ti A B Ethernet connects two £ F
+ernet connecting —_ = IPv6 routers == ==
+two IPv6 routers: .~|P !f! 65 !\5
+v6 IPv6 4 IPv6 IPv6
+///)/ ‘ ’ ‘ IPv6 datagram
+
+Link-layer frame  The ysual: datagram as payload in link-layer frame
+
+IPv4 tunnel A B 1Pv4 %n%el t E F
+: t
+
+connecting two S S oS S
+
+IPv6 routers IPv6  IPV/v4 N >  Pwew P
+
+IPv4 datagram tunneling: IPv6 datagram as payload in a IPv4 datagram
+COMPUTER NETWORKS
+
+Tunneling %% PES
+logical Vi connegtbi/‘;; ?Iglz/%e;outers
+: .—H—M’
+oplcalview IPv6 IPv6/v4 IPv6/v4 IPv6
+A B C D E F
+physical view: S-S5
+IPv6 IPv6/v4 IPv4 1Pv4 IPv6/v4 IPv6
+
+_—
+
+Note source and
+destination
+addresses!
+
+IPv6 inside IPv6 inside |Pv6 inside
+IPv4 IPv4 IPv4
+
+E-to-F:
+COMPUTER NETWORKS —
+IPv6 Adoption
+
+https://www.akamai.com/us/en/resources/our-thinking/state-of-the-internet-report/state-of-the-internet-ipv6-
+adoption-visualization.jsp
+
++ Google!: ~ 40% of clients access services via IPv6 (2023)
+
+« NIST: 1/3 of all US government domains are IPv6 capable
+
+1Pv6 Adoption
+We are continuously measuring the availability of IPv6 connectivity among Google users. The graph shows the percentage of users that access Google over IP6,
+
+Native: 0.04% 6tod/Teredo: 0.09% | Sep 4, 2008
+
+45.00%
+40.00%
+35.00%
+30.00%
+25.00%
+20.00%
+15.00%
+10.00%
+
+5.00%
+
+0.00% 2010 2020
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 3/12: resources/u4/Slides/4.3.1_Routing_Algorithm_-_Link_State.pdf
+PAGES: 22 | EXTRACTED CHARACTERS: 7,698
+################################################################################
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+Routing Protocols PES
+Routing protocol goal: determine “good” mobile network
+
+paths (equivalently, routes), from sending hosts < ) NS s s
+
+to receiving host, through network of routers —=re
+
+* path: sequence of routers packets
+traverse from given initial source host to
+
+application
+transport
+
+0
+link
+
+final destination host physica
+* “good”: least “cost”, “fastest”, “least
+congested” m I
+* routing: a “top-10” networking challenge! e P doceyer
+application
+transport
+enterprise
+network physical
+
+COMPUTER NETWORKS
+Routing Algorithms
+
+COMPUTER NETWORKS
+Routing Protocols PES
+
+vvvvvvvvvv
+
+Graph abstraction: link costs
+
+Cqp COSt Of direct link connecting a and b
+e.g., Cy,=5,C,,=°
+
+cost defined by network operator:
+could always be 1, or inversely related
+=X Sy to bandwidth, or inversely related to
+
+congestion
+
+graph: G = (N,E)
+
+N:setof routers={u, v, w, x, y,z}
+
+E: set of links ={ (u,v), (u,x), (v,x), (v,w), (x,w), (xy), (W,y), (W,2), (v,2) }
+
+Network Layer: 5-5
+COMPUTER NETWORKS
+Routing Protocols %% PES
+
+Routing algorithm classification t
+
+global: all routers have complete
+
+tcost info
+. dlgorithms i~
+How fast M dynamic: routes change
+
+doroutes Static: routes more quickly
+change?  change slowly over « periodic updates or in
+time response to link cost
+changes
+
+decentralized: iterative process of
+computation, exchange of info with neighbors
+
+* routers initially only know link costs to
+
+global or decentralized information?
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %% PES
+
+Dijkstra’s link-state routing algorithm
+
+centralized: network topology, link — notation
+costs known to all nodes _ _
+. s C, - direct link cost from
+* accomplished via “link state node x to v y; = oo if not direct
+broadcast neighbors
+
+* all nodes hav i .
+allnodes have same info D(v): current estimate of
+
+computes least cost paths from cost of least-cost-path from
+one node (“source”) to all other source to destination v
+nodes p(v): predecessor node
+
+along path from source to v
+
+iterative: after k iterati K N': set of nodes whose least-
+ative: atter k iterations, know cost-path definitively known
+
+least cost path to k destinations
+
+* gives forwarding table for that node
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %g PES
+
+UNIVERSITY
+
+1 Initialization:
+
+N'= {u} /* compute least cost path from u to all other nodes */
+for all nodes v
+
+ifv adjacent tou /* u initially knows direct-path-cost only to direct neighbors */
+
+2
+
+3
+
+4
+
+5 then D(v) = Cuv /* but may not be minimum cost! */
+6 else D(v)=o°
+7
+
+8
+
+9
+
+Loop
+find w not in N' such that D(w) is a minimum
+
+10 addwto N’
+11 update D(v) for all v adjacent to w and not in N':
+12 D(v) = min (D(v), D(w) +c,,, )
+13 /* new least-path-cost to v is either old least-cost-path to v or known
+14 least-cost-path to w plus direct-cost from wto v */
+15 until all nodes in N'
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+0 u 2,u 5.u 1,u o oo
+
+Initialization (step 0):
+For all a: if a adjacent to u then D(a) = ¢,
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w y z
+Step N' D(v),p(v) P(w) Dx).p(x) D(y).ply) D(z).p(z)
+0 5,u d,-lD oo oo
+
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v).p(v) D(w),p(w) D(x).p(x) D(y),p(y) D(z),p(z)
+
+0 u 2,u 5,u d-lD oo oo
+
+1 ux 2,u 4.x 2,X o
+
+2
+
+3
+
+4
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) +c,,)
+D(v) = min ( D(v), D(x) + ¢, ) = min(2, 1+2) = 2
+
+D(w) = min ( D(w), D(x) + c,,,) = min (5, 1+3) = 4
+D(y) = min ( D(y), D(x) + c,,,) = min(inf,1+1) =
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w X z
+Step N' D(v).p(v) D(w),p(w) P(X) _D(y).py) D(z).p(z)
+
+0 u 2,u ; d-lD o oo
+
+1 ux 24— 4x @20 o0
+
+2 uy)—
+
+3
+
+4
+
+5
+
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+
+0 u 2,u 5,u d-lD o oo
+
+1 ux 2,u 4,x @2 o
+
+2 uxy 2,u 3y 4y
+
+3
+
+4
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(w) = min ( D(w), D(y) +c,,,) = min (4, 2+1) = 3
+D(z) = min ( D(z), D(y) + ¢,,) = min(inf,2+2) =
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+;/6/) w X y z
+Step N' (V).p(v) D(w),p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+0 u / 2u 5,u a,mn oo oo
+1 ux 2,u 4,x @2 had
+2 uy /  Quw 3y 4y
+3 uxyvy
+4
+5
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v),p(v) D(w),p(w) D(x),p(x) D(y).p(y) D(z).p(z)
+u 2,u 5,u d,-lD ) oo
+1 ux 2,u 4,x @x> b
+2 uxy Quw 3y 4y
+3 uxyv 3y 4y
+4
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(w) = min ( D(w), D(v) +c,,,) = min (3, 2+3) = 3
+
+Dijkstra’s algorithm: an example Ol
+
+v X y z
+Step N' D(v),p(v) D(w),p(w) D(x),p(x) D(y),p(y) D(z),p(z)
+0 u 2,u 5,u d-lb oo oo
+1 ux é/UD 4.x @x> o
+2 uxy 2,u 3, 4y
+3 uxyv 6}% 4y
+
+4 uxywy’
+5
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+\Y; W X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+
+0 u 2,u 5,u d-lD o oo
+
+1 ux C2u> 4 x @O -
+
+2 uxy 2,u 3, 4y
+
+3 uxyv @5 4y
+
+4 UXyvw 4y
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(z) = min ( D(z), D(w) +c,,,) = min (4, 3+5) = 4
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PESW
+
+v w X y
+Step N' D(v).p(v) D(w).p(w) D(x)p(x) D D(2).p(2)
+0 u ’ s 1 ,u ) o
+
+2,u 5,u
+1 ux 2,u 4x @O -
+2 uxy Quw %5/ 4,y
+3 uxyv 3y 4y
+4 UXyvW D)
+5 uxywWzr
+
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+\Y; w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+u 2,u 5,u d,-lD ) oo
+1 ux 2,u 4.x @O oo
+2 uxy Quw 3, 4,y
+3 uxyv @% 4y
+4 uxyvw @
+5 uxyvwz
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+
+UNIVERSITY
+
+Example contd..
+
+SVI——Cw3
+
+resulting least-cost-path tree from u:
+resulting forwarding table in u:
+
+@ destination | outgoing link
+Y (u,v) — route from u to v directly
+Q X (u,x)
+Yy (u,x) route from u to all
+w (u,x) other destinations
+X (u,x) via x
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %% PES
+
+Another example:
+
+(x)
+D(x), ), z),
+p(x) p(y) p(z)
+
+,u
+
+o
+
+vy 11w 14
+uwxv) 14,x
+
+notes:
+construct least-cost-path tree by tracing predecessor nodes
+
+ties can exist (can be broken arbitrarily)
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 4/12: resources/u4/Slides/4.4.1_Routing_Algorithm_-_Distance_Vector.pdf
+PAGES: 27 | EXTRACTED CHARACTERS: 11,216
+################################################################################
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm %% PES
+
+xxxxxxxxxx
+
+Distance vector algorithm
+
+Based on Bellman-Ford (BF) equation (dynamic programming):
+
+— Bellman-Ford equation
+
+Then:
+
+Let D,(y): cost of least-cost path from x to y.
+
+D,(y) = min, {c,, + D|v(y)}
+
+min taken over all neighbors v of x
+
+V's estimated least-cost-path cost to
+
+4 .
+direct cost of link from x to v
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm PES
+
+Bellman-Ford: Example
+Suppose that u’s neighboring nodes, x,v,w, know that for destination z:
+
+Bellman-Ford equation says:
+
+min { c|| I+ D"(
+
+Cuw T Du(2) }
+=min {2 + 5,
+
+1+3,
+node achieving minimum (x) is next
+
+D,(z)=3 hop on estimated least-cost path to
+destination (z)
+
+D,(z)=5 Dyfz) =3
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm %% PES
+
+xxxxxxxxxx
+
+Distance vector algorithm:
+
+key idea:
+
+from time-to-time, each node sends its own distance vector estimate
+to neighbors
+
+when x receives new DV estimate from any neighbor, it updates its
+own DV using B-F equation:
+
+D.(y) & min{c,,+ D,(y)} for each nodey € N
+
+under minor, natural conditions, the estimate D,(y) converge to the
+actual least cost d,(y)
+COMPUTER NETWORKS
+
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm @PES
+
+Distance vector algorithm:
+
+each node:
+
+}
+
+wait for (change in local link
+cost or msg from neighbor)
+
+|
+
+recompute DV estimates using
+DV received from neighbor
+
+|
+
+if DV to any destination has
+changed, notify neighbors
+
+iterative, asynchronous: each local
+iteration caused by:
+
+local link cost change
+DV update message from neighbor
+
+distributed, self-stopping: each
+node notifies neighbors only when
+its DV changes
+
+neighbors then notify their
+neighbors — only if necessary
+
+no notification received, no
+actions taken!
+COMPUTER NETWORKS
+
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: example
+
+D
+
+t=0
+
+All nodes have
+distance
+estimates to
+nearest neighbors
+
+mm’}gdes send
+
+their local
+distance vector to
+their neighbors
+
+D,(a)=0
+D,(b) =8
+Dy(c) = o
+D,(d) =1
+Dy(e) = e
+Dy(f) = o
+D,(g) = e°
+Dy(h) = o
+D,(i) = o0
+
+| N
+1 1
+
+<D -»14- < —
+Il Il
+
+1t 1 t
+
+@ UNIVERSITY
+
+A few asymmetries:
+missing link
+larger cost
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: Iteration
+
+@ e =
+1 i
+t=1
+1 1
+All nodes:
+receive distance
+vegtorsfrom l l
+neighbors @t— -b@ﬂ- - —b@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm PES
+
+UNIVERSITY
+
+Distance vector: lteration
+
+O
+
+t=1
+
+All nodes:
+
+compute their new
+local distance
+vector
+
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: lteration
+
+@ SR
+t=1 | ]
+Il nodes ! '
+A :
+
+1 T
+
+D == co = = cp
+
+_ ] ] ]
+
+send their new 1 1 1
+local distance t I t
+vector to neighbors
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: lteration
+
+@ ST e
+1 1
+
+t=2 X X
+
+All nodes:
+
+receive distance
+
+vegtorsfrom l l
+
+neighbors @0— - -b@- : -»@
+i 1 1
+1 1 1
+4 | |}
+o= == _—=cp
+
+PES
+
+UNIVERSITY
+
+11
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm PES
+
+UNIVERSITY
+
+Distance vector: lteration
+
+G
+
+t=2
+
+All nodes:
+
+compute their new
+local distance
+vector
+
+12
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector: lteration
+
+@ SR
+t=2 s ’
+Il nodes ! '
+A :
+
+1 t
+
+D == co = = cp
+
+_ ] 4 ]
+
+send their new 1 1 1
+local distance t I t
+vector to neighbors
+
+@ UNIVERSITY
+
+....and soon
+COMPUTER NETWORKS
+
+Routing Protocols - Bellman-Ford Distance Vector Routing Algorithm
+
+Distance vector example: computation
+
+D,(a)=0
+
+D,(b) =8
+Dy(c) = o
+D,(d) =1
+Dy(e) = e
+Dy(f) = o
+D,(g) = o°
+Dy(h) = e
+Dy(i) = o0
+
+O
+
+t=1
+
+b receives DVs
+froma,c, e
+
+Let’s next take a look at
+the iterative
+computations at nodes
+
+Db(a) =8
+Dp(c)=1 Dylg)
+Dy(d) = o= Dy(h)
+Dp(i) = oo
+
+Dy(f) = o=
+
+=3
+
+e
+
+Dyle)=1
+-8 @ 1
+1
+1
+<o
+
+Do o
+
+D (a) = oo
+D.(b) =1
+D.(c) =0
+D(d) = e
+D(e) = oo
+D(f) = oo
+D(g) = =
+D(h) = e
+D (i) = e
+
+De(a) = e
+De(b) =1
+D(c) = oo
+De(d) =1
+Dc(e)=0
+De(f)=1
+
+De(g) = oo
+Du(h) =1
+De(i) = o0
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+D,(a)=0
+D,(b) =8
+Dy(c) = o
+D,(d)=1
+Dy(e) = e
+t=1 D,(f) = o
+. D,(g) ===
+b receives DVs D,(h) = oo
+froma,c, e, D.(i) = oo
+
+computes:
+
+Dy(a) = min{cy, ,+D,(a), Cpc+D(a), ChetDe(@)} = min{8,e0,00} =8
+Dy(c) = min{cy, ,+D,(c), Cpc+Dc(C), Cpe+De(c)} = min{eo,1,00} =1
+Dp(d) = min{cy, ,+D,(d), ¢y +Dc(d), Cpe+De(d)} = min{9,2,00} = 2
+Dy(e) = min{cy, ,+D,(e), cp +Dc(€), Cpe+De(e)} = min{eo,o0,1} =1
+Dyp(f) = min{cp,a#Da(f), Cp,c +Dc(f), Cpe+Delf)} = min{eo,o0,2} =2
+Dp(8) = min{cy,2+Da(8), Co,c +Dc(8), C,e*De(8)} = min{ee, oo, oo} = oo
+Dp(h) = min{cp 2+Da(h), €y, +Dc(h), Cpe+De(h)} = min{eo, oo, 2} =2
+Dy (i) = min{cy, 2+D5(i), Cpc+Dc(i), CpetDe(i)} = min{ee, oo, oo} = co
+
+ovin B
+
+Dy(a)=8 Dy(f)=ee Dc(a) = o
+D:(c) =1 Di(g) =0 Db) =1
+Dy(d) = e Dy(h) =oo Dclc)=0
+Dy(e) =1 Dyli) === D (d) = >
+
+D(e) =
+D(f) = o0
+D(g) = o=
+D(h) = oo
+D(i) = o=
+
+De(a) = ==
+De(b) =1
+De(c) = o=
+De(d) =1
+Dc(e)=0
+De(f)=1
+
+De(g) = oo
+Du(h) =1
+
+Difi) =
+
+Dp(a) =8 Dy(f) =2
+
+Dp(c)=1 Dy(g) =
+Dp(d) =2 Dy(h) =2
+Dp(e) =1 Dyfi) =
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+O
+
+t=1
+
+c receives DVs
+from b
+
+D,(a)=0
+
+D,(b)=8
+D,(c) = o
+D,(d)=1
+Dy(e) = e
+Dy(f) = o
+Da(g) = o=
+Dy(h) = e
+Dy(i) = o0
+
+Dp(a) =8 Dyf) ==
+Dp(c)=1 Dylg) =9
+Dy(d) = oo Dy(h) ==
+Dy(e) =1 Dyli) =
+
+- o —me o
+"Iy
+s
+
+ovine: &
+
+D.(a) = oo
+D.(b) =1
+D.(c) =0
+D (d) = e
+D(e) = oo
+D(f) = oo
+D(g) = =
+D(h) = e
+D(i) = e
+
+De(a) =
+Dub) =1
+De(c) = o0
+De(d) =1
+Dc(e)=0
+De(f)=1
+
+Dc(g) = o°
+De(h) =1
+De(i) = oo
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Dp(a) =8 Dyff) ==
+Dp(c) =1 Dylg)=oe
+Dy(d) == Dy(h) ==
+Dy(e) =1 Dyli) ===
+
+® P
+t=1
+
+c receives DVs
+from b computes:
+
+D(a) = min{c ,+Dy(a}}=1+8=9
+
+D¢(b) = min{c p+Dy(b)}=1+0=1 D(a)= 9
+D¢(d) = min{c, p+Dp(d)} = 1+ oo = oo D(b)=1
+Dc(e) = min{c.,+Dp(e)}=1+1=2 D (c)=0
+
+. D.(d)=2
+D¢(f) = min{c. p+Dp(f)} = 1+ o0 = oo D(e) = oo
+D.(g) = min{c. y+Dp(g)} = 1+ oo = o0 ¢ ¢ __ * Check out the online interactive
+
+¢ e D(f) = o exercises for more examples:
+Dc(h) = min{cpcp+Dp(h)} = 1+ o0 = e D(g) = o= http://gaia.cs.umass.edu/kurose_ross/interactive/
+Deli) = minfcep#+Dp(i)} = 1+ oo = oo Dc(h) =
+D (i) = =
+
+ovin B
+
+D (a) = oo
+D.(b) =1
+D.(c) =0
+D(d) = e
+D(e) = oo
+D(f) = oo
+D(g) = =
+D(h) = e
+D (i) = e
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+O
+
+t=1
+
+e receives DVs
+fromb, d, f, h
+
+D(a)=1
+D(b) = e°
+D(c) = o
+D(d)=0
+D(e)=1
+D(f) = e°
+D(g)=1
+D(h) = e°
+D (i) = =
+
+D(a) = oo
+D(b) = ==
+D(c) ==
+D(d) =
+D.(e)=1
+D(f) = oo
+D (g) =1
+D.(h)=0
+D(i) =1
+
+=3
+
+<o
+
+Dp(a) =8  Dy(f) = o0
+Dp(c)=1 Dylg) =9
+Dy(d) = oo Dy(h) ==
+
+Dy(e) =1 Dyli) =
+
+e
+
+8
+
+t=1?
+
+1
+
+Q: what is new DV computed in e at
+
+=2
+
+De(a) =
+Dub) =1
+De(c) = o0
+De(d) =1
+Dc(e)=0
+De(f)=1
+
+Dc(g) = o°
+De(h) =1
+De(i) = oo
+
+D(a) = oo
+D(b) = oo
+D(c) = o=
+D(d) = e°
+D(e)=1
+
+D.(f)=0
+
+D(g) =
+D (h) =
+D(i) =
+
+oo
+oo
+
+1
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford
+
+Distance vector: state information diffusion
+
+A
+&) FPES
+
+Iterative communication, computation steps diffuses information through network:
+
+c’s state at t=0is at c only
+
+c’s state at t=0 has propagated to b, and
+may influence distance vector
+
+computations up to 1 hop away, i.e., atb
+
+c’s state at t=0 may now influence distance
+
+vector computations up to 2 hops away, i.e.,
+at b and now at a, e as well
+
+c’s state at t=0 may influence distance vector
+
+computations up to 3 hops away, i.e., at b,a,e
+and now at c,f,h as well
+
+c’s state at t=0 may influence distance vector
+
+computations up to 4 hops away, i.e., at
+b,a,e, c, f, h and now at g,i as well
+
+COMPUTER NETWORKS
+
+Routing Protocols - Bellman-Ford %% PES
+
+Distance vector: link cost changes
+
+link cost changes: 11—
+node detects local link cost change — &_r
+updates routing info, recalculates local DV 50
+
+if DV changes, notify neighbors
+
+t,: y detects link-cost change, updates its DV, informs its neighbors.
+
+“good news ¢, : 7 receives update from y, updates its table, computes new least
+travels fast cost to x , sends its neighbors its DV.
+
+t,:y receives z’s update, updates its distance table. y’s least costs
+do not change, so y does not send a message to z.
+COMPUTER NETWORKS
+Routing Protocols - Bellman-Ford %% PES
+
+Distance vector: link cost changes
+
+link cost changes: 60, o
+: 1
+node detects local link cost change N
+50 -
+
+“bad news travels slow” — count-to-infinity problem:
+* ysees direct link to x has new cost 60, but z has said it has a path at cost of 5. So
+y computes “my new cost to x will be 6, via z); notifies z of new cost of 6 to x.
+
+* zlearns that path to x via y has new cost 6, so z computes “my new cost to
+x will be 7 via y), notifies y of new cost of 7 to x.
+
+* ylearns that path to x via z has new cost 7, so y computes “my new cost to
+x will be 8 via y), notifies z of new cost of 8 to x.
+
+* zlearns that path to x via y has new cost 8, so z computes “my new cost to
+x will be 9 via y), notifies y of new cost of 9 to x.
+
+see text for solutions. Distributed algorithms are tricky!
+COMPUTER NETWORKS
+
+Distance Vector - Example PES
+t cost to
+DX() costio | X y 2
+X x [0
+IS
+gy y|2 01 D,(z) = min{c, ,+ D, (z), 6, Du(2)}
+z Z|7 1\0 =min{2+1, 7+0} = 3
+Dy()
+
+Dy(y) = min{c,, + D(y), c,.* D,(y)}
+= min{2+0 , 7+1} =2
+
+from
+N < X |
+
+O
+N
+—~
+~—"
+
+from
+N < X |
+
+COMPUTER NETWORKS
+Distance Vector Example
+
+UNIVERSITY
+
+cost to
+
+cost to
+
+DX()XyZ Xco;ttoz
+x(02 7 X
+I 027 i 02 3
+gy 0 o0 0 gy 201
+cost to
+Dy() Xy z
+EX X 02 3
+gy y 20 1
+z z 310
+cost to
+D,(), Xy z
+X X 023
+Sy y 20 1
+z z 310
+
+COMPUTER NETWORKS @ —
+Distance Vector vs Link State
+
+Distance Vector Link State
+Primary Send entire routing table to | Only provides link state
+principle its neighbors information
+Learning about |Learn about network only Learn about network from all
+network from neighbors routers
+Building the Based on inputs from only Based on complete database
+routing table neighbors collected from all routers
+
+Sends periodic updates every |Use triggered updates, only
+30-90 seconds — Broadcasts |when there is a change —
+updates Multicasts updates
+
+Advertisement
+of updates
+
+Routing loops |Vulnerable Less prone to routing loops
+
+COMPUTER NETWORKS
+Distance Vector vs Link State
+
+Distance vector
+
+Link State
+
+Convergence
+(stabilization)
+
+Slow
+
+Fast
+
+More CPU power and memory
+
+Resources Less CPU power and memory .
+required
+Cost More than Distance vector
+- Mor lable th ist
+Scalability ore scalable than distance
+
+vector
+
+Examples
+
+RIP, IGRP
+
+OSPF, IS-1S
+
+®
+
+PES
+
+UNIVERSITY
+
+
+COMPUTER NETWORKS
+Suggested Readings
+
+Thank You
+For Your Attention
+
+xxxxxxxxxx
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 5/12: resources/u4/Slides/4.5.1_Introduction_to_Link_Layer.pdf
+PAGES: 11 | EXTRACTED CHARACTERS: 3,571
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+COMPUTER NETWORKS
+
+Link Layer and LAN
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+@ UNIVERSITY
+COMPUTER NETWORKS
+Unit — 4 Link Layer and LAN Roadmap
+
+Introduction
+Error detection, correction
+Multiple access protocols
+
+LANs
+addressing, ARP
+Ethernet
+Switches
+VLANSs
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+@ UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Introduction
+COMPUTER NETWORKS
+Introduction to Link layer
+
+mobile network
+
+al or global ISP
+
+datacenter
+network
+
+Terminology:
+
+Hosts, routers, switches, WiFi access points:
+Nodes
+
+communication channels that connect adjacent
+nodes along communication path: Links
+
+* wired
+
+* wireless
+
+layer-2 packet: frame, encapsulates datagram
+
+enterprise
+network
+
+link layer has responsibility of
+transferring datagram from one node to
+physically adjacent node over a link
+
+COMPUTER NETWORKS
+Link Layer: Context
+
+@ UNIVERSITY
+
+Datagram transferred by
+different link protocols over
+different links:
+
+* e.g., WiFi on first link,
+
+Ethernet on next link
+
+Each link protocol provides
+different services
+* e.g., may or may not provide
+reliable data transfer over
+link
+
+transportation analogy:
+
+trip from Princeton to Lausanne
+
+* limousine: Princeton to JFK airport
+* plane: JFK to Geneva
+
+* train: Geneva to Lausanne
+
+tourist = datagram
+transport segment = communication link
+transportation mode = link-layer protocol
+
+travel agent = routing algorithm
+COMPUTER NETWORKS
+Link Layer: Services
+
+@ UNIVERSITY
+
+framing, link access:
+
+* encapsulate datagram into frame, adding
+header, trailer
+
+e channel access if shared medium
+
+* “MAC” addresses in frame headers identify
+source, destination (different from IP
+address!)
+
+reliable delivery between adjacent
+nodes
+
+* we already know how to do this!
+
+* rarely used on low bit-error links (coax, fiber,
+etc)
+
+* wireless links: high error rates
+COMPUTER NETWORKS
+Link Layer: Services
+
+@ UNIVERSITY
+
+cellular e q
+e
+
+pe 55> v
+. i Ethernet LANs
+[ / e 55>
+// T
+éf WiFi g
+
+flow control:
+* pacing between adjacent sending and
+receiving nodes
+error detection:
+* errors caused by signal attenuation, noise.
+* receiver detects errors, signals
+retransmission, or drops frame
+error correction:
+* receiver identifies and corrects bit error(s)
+without retransmission
+half-duplex and full-duplex:
+
+* with half duplex, nodes at both ends of
+link can transmit, but not at same time
+COMPUTER NETWORKS
+Where is the link layer implemented?
+
+In each-and-every host
+
+Link layer implemented in network
+interface card (NIC) or on a chip
+
+* Ethernet, WiFi card or chip
+* implements link, physical layer
+Attaches into host’s system buses
+
+Combination of hardware, software,
+firmware
+
+i
+
+application
+
+cpu
+
+4
+
+control
+
+¥
+
+physical
+
+<
+
+e
+
+P
+
+network interface
+
+(e.g., PCl)
+
+COMPUTER NETWORKS @ -
+Interfaces communicating
+
+application application
+
+ransport transport
+
+datagram hetwork cpu memory memory | CPU network
+[ tink | v link
+
+= —=
+
+i v iy
+. . 1 1 , |
+|I|nkh datagram Flink Cor}troller | | contrfoller i datagram
+physical ¥ 1 1 V- physical
+. physical | | physical
+Sending side: Receiving side:
+encapsulates datagram in frame looks for errors, reliable data transfer,
+adds error checking bits, reliable flow control, etc.
+data transfer, flow control, etc. extracts datagram, passes to upper layer
+
+at receiving side
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 6/12: resources/u4/Slides/4.6.1_Error_Detection_and_Correction.pdf
+PAGES: 17 | EXTRACTED CHARACTERS: 7,640
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Error detection, correction
+COMPUTER NETWORKS
+
+Error detection
+
+@ UNIVERSITY
+
+EDC: error detection and correction bits (e.g., redundancy)
+D: data protected by error checking, may include header fields
+
+datagram
+
+l— d data bits —|
+
+4
+
+datagram
+
+otherwise I
+
+all
+
+OK
+
+bits in D’
+
+detected
+error
+
+D
+
+EDC
+
+Error detection not 100%
+reliable!
+protocol may miss some
+errors, but rarely
+larger EDC field yields
+better detection and
+correction
+COMPUTER NETWORKS @ —
+Parity checking
+
+single bit parity: two-dimensional bit parity:
+detect single bit detect and correct single bit
+0111000110101011 | 1 errors g :W—vpamy
+. R 1,1 T 1,j dl,j+1
+— d data bits —| ‘ dy, dy; | dyja
+parity
+bit column diy sy | dijir
+Even parity: set parity bit so there parity [ 4. oo da d
+is an even number of 1’s i L Tiin
+At receiver:
+= compute parity of d received g g
+. tect
+bits . . . noerrors: 101011 ¢ ecaﬁd i )12(‘1; é parity
+* compare with received parity correctable o T 7 ol
+bit — if different than error single-bit - 45 1To
+
+detected
+
+v
+parity
+error
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Parity checking
+
+We send 1011 0110 with an even-parity bit. Two bits flip on the way. What does the receiver
+conclude?
+
+a Error detected, and the frame is dropped b Error detected, and the bad bit is fixed
+
+¢ No error detected: the parity still matches d Error detected, but only if the flips are adjacent
+
+Step 1 Data has 5 ones - parity bit = 1 = 6 ones in total (even).
+
+Step 2 Two flips change the count by -2, 0 or +2 - still even = check passes.
+
+Answer: (c). One parity bit catches any odd number of flips and misses any even number.
+
+COMPUTER NETWORKS @a PES
+Two dimensional bit parity check - Example
+
+Original data
+1100111 1011101 0111001 0101001
+
+Row parities
+
+Column parities
+
+C 1
+
+~—— 11001111 10111011 01110010 01010011 01010101
+Data and parity bits
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Internet checksum (review)
+
+Goal: detect errors (i.e., flipped bits) in transmitted segment
+
+Sender:
+
+Receiver:
+treat contents of UDP segment .
+(including UDP header fields and compute checksum of received segment
+IP addresses) as sequence of 16- check if computed checksum equals
+bit integers checksum field value:
+checl|<sum: additionf(one's * not equal - error detected
+complement sum) of segment * equal - no error detected. But maybe errors
+content
+
+] nonetheless? More later ....
+checksum value put into UDP
+
+checksum field
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Two dimensional bit parity check - Example
+
+0110011001100110
+
+0101010101010101 }Threelébitsworﬂs
+0000111100001111
+
+The sum of first of iwo 16-bit words is:
+
+0110011001100110
+0101010101010101
+
+1011101110111011 = Surm of 1% two 16 bit words.
+
+Adding the third word io the ahove sum gives:
+
+1011101110111011 = Sum of 1% two 16 bit words.
+0000111100001111 - Third 16 bits word
+
+1100101011001010 - Sum ofall three 16 bit wards.
+
+Taking 1’s complement for the final sum:
+
+1100101011001010 - Sum ofall three 16 bit words.
+0011010100110101 = 1I's complement for the final sum.
+
+The 1's camplement value is called as Checksun
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Cyclic Redundancy Check (CRC Codes)
+
+more powerful error-detection coding
+D: data bits (given, think of these as a binary number)
+G: bit pattern (generator), of r+1 bits (given)
+
+r CRC bits
+I+ d data bits ﬁ
+D R ) ——— bit pattern
+N\ _
+<D,R>=D*2" XOR R —— formula for bit pattern
+
+goal: compute r CRC bits, R, such that <D,R> exactly divisible by G (mod 2)
+* receiver knows G, divides <D,R> by G. If non-zero remainder: error detected!
+* can detect all burst errors less than r+1 bits
+* widely used in practice (Ethernet, 802.11 WiFi)
+COMPUTER NETWORKS
+Sender Side — Calculation of CRC
+
+@ UNIVERSITY
+
+A string of n Q’s is appended to the
+data unit to be transmitted.
+
+Here, n is one less than the number
+of bits in CRC generator.
+
+Binary division is performed of the
+resultant string with the CRC
+generator.
+
+After division, the remainder so
+obtained is called as CRC.
+
+It may be noted that CRC also
+consists of n bits.
+
+Sender
+
+< nbitn
+
+Division
+w1 bits
+remainder
+«—— abis——>
+CRC Generator at sender side
+
+COMPUTER NETWORKS @9 —
+Receiver Side — Check
+
+The received code word is divided
+
+with the same CRC generator.
+
+On division, the remainder so LE;J__M
+obtained is checked.
+Case-1: Remainder =0, orain abis
+* No error
+
+* Receiver accepts the data
+
+Case-2: Remainder #0
+
+* Receiver assumes that some error « A
+occurred
+* Receiver rejects the data and asks a0 cor S
+
+the sender for retransmission. £ hocher at Recicoridy
+
+COMPUTER NETWORKS
+CRC Generator
+
+an algebraic polynomial represented as a bit pattern
+
+Rule - The power of each term gives the position of the
+bit and the coefficient gives the value of the bit.
+
+Consider the CRC generatoris x” + x® + x* + x3 + x + 1.
+
+1x7 + 1x8 + 0x5 + 1x4 + 1x3 + 0x2 +1x1 + 1x°
+
+AN
+
+1 1 0 1 1 0 1 1
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ —
+Cyclic Redundancy Check (CRC): Example
+
+Calculation for the case of: G
+D=101110,d =6, —t— 101011
+G=1001,andr=3. 1001)101110000)
+100 1N
+Sender wants to compute R such that: 101 D*2r
+D-2" XOR R=nG 000
+. . 1010
+... or equivalently (XOR R both sides): 1001
+D-2"=nG XOR R
+] 110
+... Which says: 000
+if we divide D -2" by G, we want remainder R 1100
+to satisfy: 1001
+. 1010
+R=remainder[D'2r] algorlth_mfor 1001
+G computing R 011
+l_'_J
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/ R
+COMPUTER NETWORKS
+CRC — Numerical Example
+
+1100001010
+
+10011[ 1
+
+A bit stream 1101011011 is
+transmitted using the standard
+CRC method. The generator
+
+polynomial is x*+x+1.
+
+What is the actual bit string
+transmitted?
+
+10011
+
+Solution
+Generator polynomial G(x) =x*+x + 1 is
+encoded as 10011.
+G(x) consists of 5 bits. So, a string of 4 zeroes is
+appended to the bit stream to be transmitted.
+The resulting bit stream is 11010110111110.
+
+10011
+
+1010110110000
+
+10011
+
+00001
+00000
+
+00010
+00000
+
+00101
+00000
+
+01011
+00000
+
+10110
+10011
+
+01010
+00000
+
+10100
+10011
+
+01110
+00000
+1110
+
+Remainder
+
+@ UNIVERSITY
+
+,
+
+.-
+
+v
+Q
+—
+|
+’\_/p
+COMPUTER NETWORKS
+
+CRC — Numerical Example
+
+@ UNIVERSITY
+
+10001100
+A bit stream 10011101 is transmitted using the 1001 10011101000
+standard CRC method. The generator
+polynomial is x>+1.
+
+1001
+00001
+* What is the actual bit string transmitted? 0000
+* Suppose the third bit from the left is inverted during 00011
+transmission. How will receiver detect this error? 0000 ‘
+Solution 00110
+Generator polynomial G(x) = x3 + 1 is encoded as 1001. 2‘1"1’21 -
+G(x) consists of 4 bits. 4 zeroes is appended now. 001 =
+The resulting bit stream is 10011101100. 01000 [
+1001
+Solution (Part-l) 00010
+Code word to be transmitted is obtained by replacing 0000
+the last 3 zeroes of 10011101000 with the CRC. 00100
+Code word transmitted to the receiver = 10011101100.
+
+0000
+
+—
+
+0100 «<— crC
+COMPUTER NETWORKS @
+CRC — Numerical Example
+
+PES
+
+UNIVERSITY
+
+10101000
+
+Solution (Part-z) 1001 |10111101100
+According to the question, 1001
+
+|
+
+00101
+0000
+
+The bit stream received by the receiver = 01011
+10111101100. 1001
+Receiver performs the binary division witk oono0
+
+0000
+
+the same G(x). —
+
+1001
+Remainder obtained on division is a hon- 00001
+zero value. 0000
+00010
+
+Error occurred
+0000
+
+00100
+0000
+
+—_—
+0100
+
+—t
+
+\
+1 €— Remainder
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 7/12: resources/u4/Slides/4.7.1_Multiple_Access_Protocols.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 5,580
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Multiple access protocols
+COMPUTER NETWORKS
+Multiple access links, Protocols
+
+@ UNIVERSITY
+
+two types of “links”:
+point-to-point
+* point-to-point link between Ethernet switch, host
+* PPP, HDLC
+
+broadcast (shared wire or medium)
+
+¢ old-fashioned Ethernet
+
+* upstream HFC in cable-based access network
+¢ 802.11 wireless LAN, 4G/5G, satellite
+
+1 g8
+Ws g>
+e 2 > . < e 5 s
+
+X & oo £ g
+s(:r;%rlzg VI\EIitLeeﬁﬁ'egt')’ shared radio: 4G/5G shared radio: WiFi
+
+b 3B W ¢
+
+shared radio: satellite humans at a cocktail party
+
+As humans, we've evolved an elaborate set of protocols
+for sharing the broadcast channel:
+
+“Give everyone a chance to speak.”
+
+“Don’t speak until you are spoken to.”
+“Don’t monopolize the conversation.”
+
+“Raise your hand if you have a question.”
+“Don’t interrupt when someone is speaking.”
+“Don’t fall asleep when someone is talking.”
+
+(shared air, acoustical)
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Multiple access protocols
+
+Single shared broadcast channel
+
+Two or more simultaneous transmissions by nodes: interference
+* collision if node receives two or more signals at the same time
+
+— Multiple access protocol
+
+Distributed algorithm that determines how nodes share
+channel, i.e., determine when node can transmit
+
+Communication about channel sharing must use
+channel itself!
+
+* no out-of-band channel for coordination
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Two kinds of links
+
+Shared or private? For each link, decide whether other nodes compete for the same channel.
+
+Link Shared or private?
+Your laptop's cable to a switch port [ Private (one at each end)
+The Wi-Fi in this classroom ’ Shared (one radio channel)
+Cable-TV internet, homes sending upstream [ Shared (one cable)
+Your phone to a cell tower ’ Shared (the tower schedules)
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+An ideal Multiple access protocol
+
+Given: multiple access channel (MAC) of rate R bps
+
+desiderata(needed):
+1. when one node wants to transmit, it can send at rate R.
+2. when M nodes want to transmit, each can send at average rate R/M
+3. fully decentralized:
+* no special node to coordinate transmissions
+* no synchronization of clocks, slots
+4. simple
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+MAC protocols : Taxonomy
+
+Three broad classes:
+
+channel partitioning (TDMA, FDMA, Mealtple-scoess
+oA
+
+* divide channel into smaller “pieces”
+
+(time slots, frequency, code)
+* allocate piece to node for exclusive use -
+
+random access (ALOHA, slotted ALOHA,
+
+CSMA, CSMA/CD, CSMA/CA —Q;JA:A | — Reservation [ roma
+
+* channel not divided, allow collisions | csMA/CD _$°L"”9 A _Z‘;m
+o . - | OKenNn passin —
+
+* “recover” from collisions L csmaka peng
+
+“taking turns”
+
+* nodes take turns, but nodes with more Included in the syllabus
+to send can take longer turns
+COMPUTER NETWORKS @ PES
+CSMA (Carrier Sense Multiple Access)
+
+Simple CSMA: listen before transmit:
+* if channel sensed idle: transmit entire frame
+* if channel sensed busy: defer transmission Listen before speaking — Carrier Sensing
+
+Human analogy: don’t interrupt others!
+If someone else begins talking at the same
+
+CSMA/CD: CSMA with collision detection time, stop talking - Collision Detection
+
+* collisions detected within short time
+* colliding transmissions aborted, reducing channel wastage
+* collision detection easy in wired, difficult with wireless
+
+human analogy: the polite conversationalist
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+CSMA Collisions spatial layout of nodes
+
+collisions can still occur with carrier
+sensing:
+* propagation delay means two nodes may 0
+
+not hear each other’s just-started
+transmission
+
+<« time
+
+collision: entire packet transmission
+time wasted
+
+* distance & propagation delay play role in in
+determining collision probability
+COMPUTER NETWORKS @ -
+CSMA/cD UNIVERSITY
+
+spatial layout of nodes
+
+CSMA/CD reduces the amount of time
+wasted in collisions
+* transmission aborted on collision detection
+
+collision
+detect/abort
+time
+
+COMPUTER NETWORKS @ —
+Ethernet CSMA/CD Algorithm
+
+1. NIC receives datagram from network layer, creates frame
+
+2. If NIC senses channel:
+if idle: start frame transmission.
+if busy: wait until channel idle, then transmit
+
+3. If NIC transmits entire frame without collision, NIC is done with frame!
+
+4. If NIC detects another transmission while sending: abort, send jam
+signal
+5. After aborting, NIC enters binary (exponential) backoff:
+* after n collisions, NIC chooses K at random from {0,1,2, ..., 2m-1}.
+
+NIC waits K'512 bit times, returns to Step 2
+* more collisions: longer backoff interval
+COMPUTER NETWORKS
+Is collision detection still used?
+
+@ UNIVERSITY
+
+Then: one shared cable, or a hub
+
+‘ Host ’ | Host I ‘ Host ’ | Host I
+
+X clash
+
+any two can send at once
+
+Now: a switch, one cable per device
+
+o ) — S ——(~ |
+tl
+
+each direction has its own channel
+
+m Two ends per cable
+
+A switch gives each cable to one device and one switch port. No
+third sender.
+
+m Each direction has its own channel
+
+Separate wires, or separated electronically on faster copper. Both
+ends send at once.
+
+m Contention moves into the switch
+
+Frames for the same output port wait in a queue. A full queue drops
+frames.
+
+m Wi-Fi is still shared
+Everyone uses one radio channel, so clashes still happen (slide 110).
+
+[ Switched, full-duplex Ethernet has nothing to collide with, so collision detection is switched off.
+
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 8/12: resources/u4/Slides/4.8.1_Switched_LANs.pdf
+PAGES: 60 | EXTRACTED CHARACTERS: 31,373
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+LL addressing, ARP
+COMPUTER NETWORKS @ —
+MAC Addresses
+
+32-bit IP address:
+* network-layer address for interface
+
+* used for layer 3 (network layer) forwarding
+* e.8.:128.119.40.136
+
+MAC (or LAN or physical or Ethernet) address:
+
+* function: used “locally” to get frame from one interface to another physically-
+connected interface (same subnet, in IP-addressing sense)
+
+* 48-bit MAC address (for most LANs) burned in NIC ROM; usually unique; often
+
+software-assigned on Wi-Fi (private addresses); also sometimes software
+settable
+
+* e.g.: 1A-2F-BB-76-09-AD
+T~ hexadecimal (base 16) notation
+(each “numeral” represents 4 bits)
+COMPUTER NETWORKS
+MAC Addresses
+
+Each interface on LAN
+has unique 48-bit MAC address
+has a locally unique 32-bit IP address (as we’ve seen)
+
+- q 137.196.7.78
+«—1A-2F-BB-76-09-AD
+I =
+
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-53
+137.196.7.23
+
+]«— oc-c4-11-6F-E3-98
+137.196.7.88
+
+——
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ —
+MAC Addresses
+
+MAC address allocation administered by IEEE
+
+manufacturer buys portion of MAC address space (to assure
+uniqueness)
+
+analogy:
+* MAC address: like Aadhar number
+* |P address: like postal address
+
+MAC flat address: portability
+* can move interface from one LAN to another
+
+* recall IP address not portable: depends on IP subnet to
+which node is attached
+COMPUTER NETWORKS
+Private Wi-Fi addresses
+
+@ UNIVERSITY
+
+Factory address: the same everywhere
+
+Mall Airport
+58-23-D7-FA-20-BO 58-23-D7-FA-20-BO
+
+Campus
+58-23-D7-FA-20-BO
+
+X same ID at every place - visits can be linked to one phone
+
+Private address: made up, one per network
+
+Mall Airport
+6A-41-9C-0E-77-15 3E-D0-52-B8-19-A4
+
+Campus
+D2-7B-E3-46-0F-C9
+
+v adifferent ID at each place -> the visits don't match
+
+= Anyone nearby can read it
+The address travels unscrambled in every Wi-Fi frame, even while a
+phone searches for networks.
+
+m A fixed address is a tracking ID
+Shops, malls and venues can spot the same phone across days and
+places.
+
+u The fix: invent one per network
+
+Each network sees a different address. Some phones also change it
+every two weeks. The second hex digit: 2, 6, A or E means locally
+assigned — second lowest bit indicated “locally assigned” flag.
+
+= The cost
+Sign-ins tied to an address, fixed IP bookings and device allow-lists
+can break.
+
+A MAC address only has to be unique on one LAN, so a phone can safely invent one for each network.
+
+COMPUTER NETWORKS @ PES
+ARP: Address Resolution Protocol "
+
+Question: how to determine interface’s MAC address, knowing its IP address?
+
+ARP table: each IP node (host, router)
+on LAN has table
+
+* IP/MAC address mappings for some
+
+137.196.7.78 LAN nodes:
+<« 1A-2F-BB-76-09-AD
+
+iARP < IP address; MAC address; TTL>
+%T * TTL (Time To Live): time after which
+S L65-F7.28.08. £8.93.07-FA20.80 address mapping will be forgotten
+
+137.196.7.23 137.196.7.14 (typlca”y minutes, va rieS)
+
+rplH<— oc-ca-11-6F-£3-98
+137.196.7.88
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+* B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+A broadcasts ARP query, containing B's IP addr
+
+@ + destination MAC address = FF-FF-FF-FF-FF-FF Ethernet frame (sent to FF-FF-FF-FF-FF-FF)
+* all nodes on LAN receive ARP query q C Source MAC: 71-65-F7-2B-08-53
+
+Source IP: 137.196.7.23
+
+ARP table in A Target IP address: 137.196.7.14
+
+IP addr MAC addr TTL
+
+r=
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-
+137.196.7.23
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+* B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+ARP message into Ethernet frame
+(sent to 71-65-F7-2B-08-53)
+
+C Target IP address: 137.196.7.14
+Target MAC address:
+) 58-23-D7-FA-20-B0
+=3
+T =
+58-23-D7-FA-20-BO
+137.196.7.14
+
+ARP table in A
+IP addr MAC addr TTL
+
+71-65-F7-2B-08-
+137.196.7.23
+
+B replies to A with ARP response,
+giving its MAC address
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+e B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+ARP table in A
+IP addr MAC addr TTL
+137.196.7.14 58-23-D7-FA-20-B0 500
+
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-
+137.196.7.23
+
+A receives B’s reply, adds B entry
+into its local ARP table
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Asking everyone on the LAN
+
+A asks “who has B's IP address?” in a frame sent to FF-FF-FF-FF-FF-FF. Who receives it, and who
+answers?
+
+a Only Breceives it, and B then answers A b All nodes receive it; only B answers, to A
+
+¢ All nodes receive it, and all of them answer A d Only the router receives it and answers for B
+
+Answer: (b). All ones means 'everyone on this LAN', so B, C and D all read it. Only B's IP matches, and B replies to A alone.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+After the exchange
+
+A asked, B answered. Whose ARP table now has a new entry?
+
+a Only A's (B's address) b A's and B's (each other's)
+
+¢ Every node's on the LAN d Only the switch's table
+
+Answer: (b). A stores B's MAC from the reply. B stored A's from the question, so it could answer without asking back. C
+and D usually ignore it.
+
+[ Anyone can send a reply that claims an IP address. ARP trusts what it hears. ]
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+Walkthrough: sending a datagram from Ato Bvia R
+Focus on addressing — at IP (datagram) and MAC layer (frame) levels
+Assume that:
+* A knows B’s IP address
+
+* A knows IP address of first hop router, R (how?)
+* Aknows R’s MAC address (how?)
+
+ALY B
+111.111.111.111T r%
+74-29-9C-E8-FF-55
+3 49-BD-D2-C7-56-2A
+
+222.222.222.222
+
+222.222.222.220
+%f 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T%‘
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+IP and MAC addresses given according to the diagram
+
+Device IP Address MAC Address
+
+A (upper-left host) 111.111.111.111 74-29-9C-E8-FF-55
+Left lower host 111.111.111.112 CC-49-DE-D0-AB-7D
+R —left interface 111.111.111.110 E6-E9-00-17-BB-4B
+R —right interface 222.222.222.220 1A-23-F9-CD-06-9B
+Right lower host 222.222.222.221 88-B2-2F-54-1A-0F
+B (upper-right host) 222.222.222.222 49-BD-D2-C7-56-2A
+
+Left subnet (111.111.111.0/24)
+
+@ UNIVERSITY
+
+Step 1 — Only these four
+entries (left and right subnet)
+actually get created by an
+A->B transmission — A never
+learns B's MAC and B never
+learns A's MAC, because ARP
+can't cross the router. (The
+other two hosts, .112 and
+.221, aren't involved unless
+they generate traffic
+themselves.)
+
+Right subnet (222.222.222.0/24)
+
+Device
+
+ARP table entries
+
+Device
+
+ARP table entries
+
+A(111.111.111.111)
+
+111.111.111.110 -> E6-E9-00-17-BB-4B
+
+R, left interface
+(111.111.111.110)
+
+111.111.111.111 -> 74-29-9C-E8-FF-55
+
+R, right interface
+(222.222.222.220)
+
+222.222.222.222 - 49-BD-D2-C7-56-2A
+
+B (222.222.222.222)
+
+222.222.222.220 -> 1A-23-F9-CD-06-9B
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+Step 2 — Why Riis involved at all
+
+A compares its own IP (111.111.111.111) against B's IP (222.222.222.222) using the subnet mask.
+Different network portion = B is not on A's LAN. So A doesn't try to resolve B's MAC directly — it sends
+the datagram to its default gateway, router R, and lets R forward it. This decision happens once, before
+any ARP request is sent.
+
+Step 3 — Hop 1: A resolves R's MAC (ARP on the left LAN)
+
+Assume A's ARP cache is empty.
+
+ARP request (broadcast): A broadcasts a frame to FF-FF-FF-FF-FF-FF on the left LAN: "Who has
+111.111.111.110?Tell 111.111.111.111." Every device on that LAN's cloud receives it (including the .112
+host), but only R recognizes the target IP as its own.
+
+ARP reply (unicast): R replies directly to A: "111.111.111.110 is at E6-E9-00-17-BB-4B.”
+
+Host A caches this mapping.
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+A creates IP datagram with IP source A, destination B
+A creates link-layer frame containing A-to-B IP datagram
+
+¢ R's MAC address is frame’s destination
+
+MAC src: 74-29-9C-E8-FF-55
+MAC dest: E6-E9-00-17-BB-4B
+
+IP src: 111.111.111.111
+IP dest: 222.222.222.222
+
+IP
+Eth
+Phy
+
+e
+
+111.111.111.111
+74-29-9C-E8-FF-55 — T —
+
+%/ 222.222.222.220
+=
+
+1 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B
+
+222.222.222.222
+49-BD-D2-C7-56-2A
+/™
+T\o’
+
+222222.222.221
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+frame sent from Ato R
+frame received at R, datagram removed, passed up to IP
+
+MAC src: 74-29-9C-E8-FF-55
+
+MAC dest: E6-E9-00lP7AmRI4.111.111.111
+IP src: 111.111.11 f4get 222.222.222.222
+
+1P 1P
+Eth Eth
+Phy Phy
+
+A
+
+111. 111 111 111
+
+74-29-9C-E8-FF-55 — —— 222.222.222.222
+T 49-BD-D2-C7-56-2A
+%/ 222.222.222.220 \
+%f 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T%
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+Step 4 — A sends the frame (Frame 1: A >
+R)
+
+A now encapsulates the IP datagram in an
+Ethernet frame addressed at the link layer to
+R, even though the datagram itself is
+addressed to B:
+
+The key idea is : IP addresses stay the same
+end-to-end; MAC addresses only get you to
+the next hop.
+
+Field Value
+
+74-29-9C-E8-FF-55
+(A)
+
+E6-E9-00-17-BB-4B
+(R, left interface)
+
+IP src 111.111.111.111 (A)
+IP dst 222.222.222.222 (B)
+
+Frame src MAC
+
+Frame dst MAC
+
+Step 5 — R receives, strips the frame, checks the
+routing decision
+
+R's left interface receives the frame, strips the
+Ethernet header, and hands the IP datagram up to
+the network layer. R looks at the destination IP
+(222.222.222.222), consults its routing table, and
+determines it should go out the right interface onto
+the 222.222.222.0/24 subnet.
+
+Step 6 — Hop 2: R resolves B's MAC (ARP on the
+right LAN)
+
+R's right-interface ARP cache is also empty initially.
+ARP request (broadcast): R broadcasts on the right
+LAN: "Who has 222.222.222.2227? Tell
+222.222.222.220."
+
+ARP reply (unicast): B replies: "222.222.222.222 is
+at 49-BD-D2-C7-56-2A."
+
+R caches this.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+R determines outgoing interface, passes datagram with IP source A, destination B
+to link layer
+
+R creates link-layer frame containing A-to-B IP datagram. Frame destination
+address: B's MAC address
+
+MAC src: 1A-23-F9-CD-06-9B
+MAC dest: 49-BD-D2-C7-56-2A
+
+IP src: 111.111.111.111
+IP dest: 222.222.222.222
+
+1P
+Eth
+Phy
+111.111.111.111 > 4
+74-29-9C-E8-FF-55 — I 222.222.222.222
+- + 49-BD-D2-C7-56-2A
+%/ 222.222.222.220 N/
+>3 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T\l
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+R determines outgoing interface, passes datagram with IP source A,
+destination B to link layer
+
+R creates link-layer frame containing A-to-B IP datagram. Frame
+destination address: B's MAC address
+
+MAC src: 1A-23-F9-CD-06-9B
+
+Transmits link-layer frame MAGC dest: 49-BD-D2-C7-56-2A
+IP src: 111.111.111.111
+
+IP dest: 222.222.222.222
+
+1P
+P Eth
+Eth Phy
+Phy
+éé\ /:Q
+111.111.111.111 > g
+74-29-9C-E8-FF-55 — I 222.222.222.222
+- + 49-BD-D2-C7-56-2A
+¥/ 222.222.222.220 /™
+>3 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T\l’
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+Step 7 — R re-encapsulates and sends (Frame 2:
+
+R - B)
+
+R builds a brand-new Ethernet frame — different
+source and destination MACs than Frame 1, but
+the same IP datagram, unmodified:
+
+Field
+
+Value
+
+Frame src MAC
+
+1A-23-F9-CD-06-9B (R, right
+interface)
+
+Frame dst MAC
+
+49-BD-D2-C7-56-2A (B)
+
+IP src
+
+111.111.111.111 (A) — unchanged
+
+IP dst
+
+222.222.222.222 (B) — unchanged
+
+Step 8 — B receives
+
+B's NIC sees its own MAC as the destination,
+accepts the frame, strips the Ethernet
+header, and passes the IP datagram up. B
+checks the destination IP matches its own —
+it does — and delivery is complete.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+B receives frame, extracts IP datagram destination B
+
+B passes datagram up protocol stack to IP
+
+IP src: 111111411711
+IP dest: 222.222.222.222
+
+IP
+P Eth
+Eth Phy
+
+Phy
+
+AL B
+D]
+' T~
+i 49-BD-D2-C7-56-2A
+f
+
+222.222.222.220
+e —— 1A-23-F9-CD-06-9B
+e
+
+111.111.111.112 111.111.111.110
+CCa0 DE BrAnTe 1.111.111.110 222.222.222.221
+E6-£9-00-17-BB-4B 88-B2-2F-54-1A-0F
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+B receives frame, extracts IP datagram destination B
+
+B passes datagram up protocol stack to IP
+
+IP src: 111111411711
+IP dest: 222.222.222.222
+
+IP
+P Eth
+Eth Phy
+
+Phy
+
+AL B
+D]
+' T~
+i 49-BD-D2-C7-56-2A
+f
+
+222.222.222.220
+e —— 1A-23-F9-CD-06-9B
+e
+
+111.111.111.112 111.111.111.110
+CCa0 DE BrAnTe 1.111.111.110 222.222.222.221
+E6-£9-00-17-BB-4B 88-B2-2F-54-1A-0F
+
+COMPUTER NETWORKS
+Routing to another Subnet : frame-by-frame sequence.
+
+PES
+
+UNIVERSITY
+
+@
+
+Step | Sender | Receiver Message / Action Source MAC Destination MAC Type
+(internal A compares its subnet (111.111.111.0/24) with Internal (routin
+1 A decision) B's IP (222.222.222.222) — different network > |— — decision) g
+send to default gateway R, not directly to B
+All devices |ARP Request—"Who has 111.111.111.110? Tell |74-29-9C-E8-FF-55
+2 A on left LAN |111.111.111.111" (A) FF-FF-FF-FF-FF-FF  [Broadcast
+ARP Reply —"111.111.111.110 is at E6-E9-00-17- |E6-E9-00-17-BB-4B |74-29-9C-E8-FF-55 .
+3 Router R |A BB-4B" (R, left) (A) Unicast
+4 A R Data frame (1) — IP datagram (src 74-29-9C-E8-FF-55 |E6-E9-00-17-BB-4B Unicast
+111.111.111.111, dst 222.222.222.222) (A) (R, left)
+. R strips the frame, reads dst IP 222.222.222.222, .
+(internal . ; Internal (routing
+5 R - checks routing table - forward out right — — L.
+decision) |. decision)
+interface
+All devices
+. ARP Request — "Who has 222.222.222.222? Tell |1A-23-F9-CD-06-9B
+6 R on right 222.222.222.220" (R, right) FF-FF-FF-FF-FF-FF  |Broadcast
+LAN
+ARP Reply — "222.222.222.222 is at 49-BD-D2-C7-|49-BD-D2-C7-56-2A |1A-23-F9-CD-06-9B .
+7 B R " . Unicast
+56-2A (B) (R, right)
+Data frame (2) — same IP datagram (src
+8 R B 111.111.111.111, dst 222.222.222.222), re- 1A-23-F9-CD-06-9B  [49-BD-D2-C7-56-2A,; 5o
+
+encapsulated
+
+(R, right)
+
+(B)
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+
+Ethernet
+
+
+COMPUTER NETWORKS @ PES
+Ethernet
+
+“dominant” wired LAN technology:
+first widely used LAN technology
+simpler, cheap
+kept up with speed race: 10 Mbps — 800 Gbps with 1.6Tbps on the way
+single chip, multiple speeds
+Ethernet’ Success
+* First widely deployed high-speed LAN
+
+* Token ring, FDDI, and ATM were more complex and expensive than Ethernet
+* Operated at equal data rates or higher.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+Ethernet : Physical Topology
+
+Bus: popular through mid 90s
+* all nodes in same collision domain (can collide with each other)
+
+Switched: prevails today
+* active link-layer 2 switch in center
+
+* each “spoke” runs a (separate) Ethernet protocol (nodes do not
+collide with each other)
+
+i
+
+bus: coaxial cable Q_ E‘g switched
+
+g
+
+<4
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Hub or switch?
+
+Eight PCs are plugged into one hub. Another eight are plugged into one switch. How many
+separate collision domains does each have?
+
+a Hub: 1; switch: 8 b Hub: 8; switch: 1
+
+¢ Hub: 1; switch: 1 d Hub: 8; switch: 8
+
+Answer: (a). A hub repeats every bit to every port, so all eight share one channel. A switch gives each port its own. With
+full-duplex links nothing collides at all.
+
+COMPUTER NETWORKS e@ PES
+
+UNIVERSITY
+
+Ethernet Frame Structure
+
+Sending interface encapsulates IP datagram (or other network
+layer protocol packet) in Ethernet frame
+
+type
+
+Preamble:
+Used to synchronize receiver, sender clock rates
+7 bytes of 10101010 followed by one byte of 10101011
+COMPUTER NETWORKS @ PES
+Ethernet Frame Structure ( more)
+
+dest. source data (payload)
+
+preamble ! address | addreis
+
+Addresses: 6 byte source, destination MAC addresses
+
+* if adapter receives frame with matching destination address, or with broadcast
+address (e.g., ARP packet), it passes data in frame to network layer protocol
+
+* otherwise, adapter discards frame
+* Destination comes first so a card can decide "is this for me?" as early as possible.
+
+Type: indicates higher layer protocol
+* mostly IP but others possible, e.g., Novell IPX, AppleTalk
+
+* used to demultiplex up at receiver
+
+CRC: cyclic redundancy check at receiver
+* error detected: frame is dropped
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+Smallest and largest frame
+
+Worked solution
+
+Destination 6 bytes, source 6, type 2, data 46 to 1500, CRC 4. What is the smallest frame, and
+the largest?
+
+dest. source type data CRC
+6 bytes 6 bytes 2 bytes 46 — 1500 bytes 4 bytes
+
+Smallest 6 +6 + 2 + 46 + 4 = 64 bytes (=512 bits, Session 2's collision budget)
+Largest 6+ 6+ 2+ 1500 + 4 = 1518 bytes (1500 is the MTU from Unit 3)
+
+Short data 20 bytes of data = 26 bytes of padding added to reach 46
+
+Answer: 64 bytes and 1518 bytes. The preamble (8 bytes) is not counted in either.
+
+COMPUTER NETWORKS
+Ethernet : Unreliable Connectionless
+
+Connectionless: no handshaking between sending and receiving
+NICs
+
+Unreliable: receiving NIC doesn’t send ACKs or NAKs to sending
+NIC
+
+* data in dropped frames recovered only if initial sender uses
+higher layer rdt (e.g., TCP), otherwise dropped data lost
+
+Ethernet’s MAC protocol: unslotted CSMA/CD with binary
+backoff on shared links
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unreliable, by design
+
+A frame carrying part of your download fails its CRC check at the second router. Who notices,
+and who sends the data again?
+
+a The second router asks the first one to resend b TCP at the sender notices the gap and resends
+
+¢ The first router resends after a short timeout d Nobody: the file arrives with a hole in it
+
+Answer: (b). Ethernet drops the frame silently: no acknowledgements, no resends. TCP sees the missing bytes and resends
+the segment end to end.
+
+COMPUTER NETWORKS
+
+802.3 Ethernet Standards: Link and Physical Layers
+
+Many different Ethernet standards
+* Common MAC protocol and frame format
+* Different speeds: 2 Mbps, 10 Mbps, 100 Mbps, 1Gbps, 10 Gbps, 40 Gbps, ...
+
+* Different physical layer media: fiber, cable
+
+application
+
+transport
+
+network
+
+link
+
+physical
+
+copper (twisted pair) physical layer
+
+MAC protocol
+
+and frame format
+
+100BASE-TX
+
+100BASE-T2 I 100BASE-FX
+
+100BASE-T4
+
+100BASE-SX 100BASE-BX
+
+/
+
+fiber physical layer
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Reading an Ethernet name
+
+Decode the two names: what speed, and what kind of cable?
+
+100 BASE -TX / -FX
+speed in Mb/s one signal on the wire the medium
+Name Speed and cable
+100BASE-TX [ 100 Mb/s over twisted-pair copper
+100BASE-FX [ 100 Mb/s over optical fibre
+
+Different cables, same frames: the frame format and addresses never change.
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+
+Switches
+COMPUTER NETWORKS @ PES
+Ethernet switch
+
+Switch is a link-layer device: takes an active role
+* Stores and forwards Ethernet frames
+
+* Examine incoming frame’s MAC address, selectively forward frame to one-or-
+
+more outgoing links when frame is to be forwarded on segment, uses CSMA/CD
+to access segment
+
+Transparent: hosts unaware of presence of switches
+Plug-and-play, self-learning
+
+* Switches do not need to be configured manually for forward function, hence Plug-
+and-play. Managed switches are configured for VLANs and security".
+
+* Self-learning — forwarding information is learned automatically.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Switch : Multiple Simultaneous Transmissions
+
+Hosts have dedicated, direct connection
+to switch
+
+Switches buffer packets
+
+Ethernet protocol used on each incoming
+link, so:
+
+* no collisions; full duplex
+* each link is its own collision domain
+
+Switching: A-to-A’ and B-to-B’ can transmit
+
+simultaneously, without collisions switch with six
+
+interfaces (1,2,3,4,5,6)
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Switch: Multiple Simultaneous Transmissions
+
+Hosts have dedicated, direct connection
+to switch
+
+Switches buffer packets
+
+Ethernet protocol used on each incoming
+link, so:
+
+* No collisions; full duplex
+* Each link is its own collision domain
+
+Switching: A-to-A’ and B-to-B’ can transmit
+simultaneously, without collisions switch with six
+
+* but A-to-A’ and Cto A’ can not happen interfaces (1,2,3,4,5,6)
+simultaneously
+COMPUTER NETWORKS
+Switch Forwarding Table
+
+@ UNIVERSITY
+
+Q: How does switch know A’ reachable via interface 4,
+
+B’ reachable via interface 5?
+
+A: Each switch has a switch table, each entry:
+
+g[A
+C’ i
+"s% 1 5
+
+Wz
+(MAC address of host, interface to reach 6T
+host, time stamp) L 2_ 5 g
+looks like a routing table! \E’?/ %
+Q: How are entries created, maintained in - N
+switch table?
+something like a routing protocol? MAC Interface | A€INE/TiMe
+Address Information
+A 1 60s
+A 4 60s
+B 2 60s
+
+COMPUTER NETWORKS
+Switch: Self-learning
+
+@ UNIVERSITY
+
+Switch /learns which hosts can be
+reached through which interfaces
+
+* When frame received, switch
+“learns” location of sender:
+incoming LAN segment
+
+* Records sender/location pair in
+
+switch table
+
+Switch table
+(initially empty)
+
+Source: A
+// Dest: A’
+
+MAC addr
+
+interface
+
+TTL
+
+A
+
+1
+
+60
+
+COMPUTER NETWORKS
+Switch: Frame Filtering / Forwarding
+
+When frame received at switch:
+
+1. Record incoming link, MAC address of sending host
+2. Index switch table using MAC destination address
+
+3. If entry found for destination
+then {
+
+If destination on segment from which frame arrived
+then drop frame
+
+else forward frame on interface indicated by entry
+
+}
+
+else flood /* forward on all interfaces except arriving interface */
+
+frames sent to the broadcast address (FF-FF-FF-FF-FF-FF) are always
+flooded, because no device "lives" at that address
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Self-learning, Forwarding: Example
+
+@ UNIVERSITY
+
+Source: A
+
+Frame destination, A’, location
+unknown: Flood
+
+Destination A location
+
+known: Selectively send on just
+
+one link
+MAC addr |interface |TTL
+A 1 60
+A’ 4 60
+
+/ Dest: A’
+
+switch table
+(initially empty)
+
+BI
+
+COMPUTER NETWORKS @ e
+Interconnecting Switches
+
+Self-learning switches can be connected together:
+
+Q: sending from A to G - how does S, know to
+forward frame destined to G via S, and S;?
+A: self learning! (works exactly the same as in
+single-switch case!)
+COMPUTER NETWORKS e@ PES
+
+UNIVERSITY
+
+Self-learning Multi-switch Example
+
+Suppose C sends frame to |, | responds to C m
+
+Address Port
+C 1
+
+| 4 | switcha
+
+Address Port
+
+g | C 1
+| 3
+
+Address Port
+
+Q: show switch tables and packet
+
+forwardinginS;, S,, S5, S, ¢ ¢ m
+
+Address Port
+
+C 4
+| 3
+COMPUTER NETWORKS @ PES
+Why doesn't S2 learn I?
+
+On previous slide, C sends a frame to |, and | replies to C. Switch 2 ends up knowing where C is,
+but not I. Why?
+
+a S4 knew C was toward S1, so I's reply skipped S2 b S2's table was full, so it ignored I's address
+
+d I's reply was a broadcast; switches don't learn
+
+¢ S2 learns only from frames addressed to it
+those
+
+Answer: (a). C's first frame was flooded everywhere, so every switch learned C. I's reply was addressed to C, and S4 sent it
+only toward S1.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Small Institutional Network
+
+I mail server
+to externa —
+network = =
+ol web server
+>
+IP subnet
+[ ==
+= [ == =<
+COMPUTER NETWORKS
+Switches Vs Routers
+
+Both are usually store-and-forward:
+
+Routers: network-layer devices (examine
+network-layer headers)
+
+Switches: link-layer devices (examine link-
+layer headers)
+
+Both have forwarding tables:
+
+Routers: compute tables using routing
+algorithms, IP addresses
+
+Switches: learn forwarding table using
+flooding, learning, MAC addresses
+
+application
+ransport -
+datagram | [network
+frame link i
+. [
+physical link frame
+1P G hysical
+switch
+| T |
+nei'we*k_ ldiat?gram
+@ Iink frame
+I physical
+lapplication
+transport
+network
+link
+—physieat 17 o
+
+A
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+How far does a broadcast go?
+
+In slide 71's network (many switches, one router to the outside), a laptop sends an ARP
+broadcast. Which devices receive it?
+
+a Only devices on the laptop's own switch b Only the router, which answers for everyone
+
+¢ Every device on every switch, up to the router d Every device, including networks outside
+
+stops it.
+
+Answer: (c). Every switch floods broadcasts on all its ports, so the whole building is one broadcast domain. Only the router ]
+
+[ One building, one broadcast domain: every ARP and every unknown frame reaches everyone. VLANs fix this. ]
+
+COMPUTER NETWORKS @ —
+Virtual LANs (VLANS)
+
+What is a VLAN?
+
+A Virtual Local Area Network (VLAN) is a method of dividing a single physical switched
+network into multiple logical LANs. Devices belonging to the same VLAN can communicate
+as if they are connected to the same physical network, even if they are connected to
+different switches or different locations.
+
+Why Do We Need VLANs?
+
+A traditional switched LAN can form a single broadcast domain.
+
+As the LAN grows:
+
+* Layer-2 broadcast traffic increases.
+
+* Broadcast traffic such as ARP, DHCP, and unknown-destination MAC frames can reach a
+large number of hosts.
+
+* This can create scaling and efficiency problems.
+
+* Alarge common broadcast domain can also create security and privacy concerns.
+
+
+COMPUTER NETWORKS @ —
+Virtual LANs (VLANS) - Motivation ounveRsITY
+
+Q: What happens as LAN sizes scale, users change point of attachment?
+
+single broadcast domain:
+
+= scaling: all layer-2 broadcast traffic
+(ARP, DHCP, unknown MAC) must
+cross entire LAN
+
+= efficiency, security, privacy, efficiency
+issues
+
+administrative issues:
+
+= CS user moves office to EE - physically
+attached to EE switch, but wants to
+remain logically attached to CS
+switch
+
+Without VLANSs: A broadcast can potentially reach hosts throughout the LAN.
+With VLANs: Forms a separate logical Layer-2 network.
+
+COMPUTER NETWORKS @ =
+Inside the 4-byte VLAN tag
+
+dest. address source address VLAN tag type data CRC
+6 bytes 6 bytes 4 bytes 2 bytes 46 — 1500 bytes 4 bytes (recomputed)
+T T e
+et T
+ettt =T =P
+tag marker: 81-00 priority drop VLAN number
+16 bits 3 bits 1 bit 12 bits
+
+m Tag marker 81-00 m Priority, 0to 7
+
+Sits where the type field was, so any switch knows a tag follows. Which frames leave first when a queue fills. Voice is usually 5.
+
+m Drop flag u VLAN number: 4,094 usable
+
+Which frames to throw away first if the switch is overloaded. 12 bits give 4,096 values; 0 and 4,095 are reserved.
+
+Four bytes after the source address tell every switch the frame's VLAN. The largest frame grows from 1,518 to
+1,522 bytes.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Access ports, trunk ports, and the untagged VLAN
+
+access: no tag access: no tag
+
+PC . i he
+
+(VLAN 10) Switch A Switch B (VLAN 20)
+trunk: VLAN 10 and 20 tagged; one VLAN untagged
+
+:I'::ebpelrcl):: Desk phone one wall port: PC untagged (data VLAN), phone tagged (voice VLAN, priority 5)
+
+m Access port = Trunk port
+
+One VLAN only. Frames to and from the device carry no tag. Many VLANSs on one cable, each frame tagged.
+
+m The untagged (native) VLAN = Allowed list
+
+One VLAN crosses each trunk untagged. Both ends must agree on which. A trunk should carry only the VLANs needed on the far side.
+
+= Voice VLAN
+
+Phone and PC share one port; the phone's tagged frames get priority.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+How a VLAN-aware switch forwards
+
+VLAN MAC Port 1 Note the frame's VLAN
+From the port it arrived on, or from its tag if it came in on a trunk.
+10 A 1
+10 B 2 2 Learn
+Record (VLAN, source MAC) - port.
+20 C 5
+20 D 6 3 Look up (VLAN, destination)
+Known: send on that one port. Unknown or broadcast: flood, but only to ports in the
+10,20 (trunk) 8 same VLAN and trunks that carry it.
+
+Switch table, with a VLAN column
+4 Tag or untag on the way out
+
+Add the tag on trunk ports; remove it on access ports.
+
+[ Same learning rule, but every lookup and every flood stays inside one VLAN. ]
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Where does the broadcast go?
+
+A PC on access port 5 (VLAN 20) sends a broadcast. Ports 1-2 are VLAN 10, ports 5-6 are VLAN
+20, port 8 is a trunk carrying 10 and 20.
+
+a To every port: broadcasts ignore VLANs b To port 6 untagged, and port 8 tagged 20
+
+¢ Only to port 8, the trunk, tagged 20 d Only to the router, which handles broadcasts
+
+Answer: (b). Flooding stays inside VLAN 20: its other access port gets it without a tag, and the trunk carries it tagged 20.
+Ports 1-2 never see it.
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Port-Based VLANs port-based VIAN: switch ports grouped (by
+
+switch management software) so that
+
+Switch(es) supporting VLAN capabilities can be single physical switch ......
+
+configured to define multiple virtual LANS
+over single physical LAN infrastructure.
+Access ports / Port-based VLANS provides:
+
+1) traffic isolation: frames to/from ports 1-8
+can only reach ports 1-8
+
+* can also define VLAN based on MAC EE (VLA pors 19 €S (VLAN ports $-19)
+addresses of endpoints, rather than ... operates as multiple virtual switches
+switch port
+
+2) dynamic membership: ports can be
+dynamically assigned among VLANs
+
+3) forwarding between VLANS: done via
+routing (just as with separate switches)
+
+* in practice vendors sell combined
+switches plus routers
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Getting from one VLAN to another
+
+A router on one trunk A switch that can also route
+
+Router
+
+Switch
+
+one trunk: up in VLAN 10, back down in
+VLAN 20
+
+routing inside, one gateway per
+VLAN
+
+PC - VLAN 10 PC - VLAN 20 PC - VLAN 10 PC - VLAN 20
+m Each VLAN is its own IP network m Crossing means routing m Rules live here
+With its own gateway address: the router's side The frame goes up to the router and comes Which VLAN may reach which is decided at this
+facing that VLAN. back as a new frame in the other VLAN. router or firewall.
+
+A switch keeps VLANs apart; only a router can join them. Small sites use one trunk to a router; campuses use
+switches that route.
+
+COMPUTER NETWORKS @ PES
+Trunk port VLANs
+
+VLANS spanning multiple switches
+
+—
+
+=
+f/ 4 6 8
+
+//
+
+Ports 2,3,5 belong to EE VLAN
+Ports 4,6,7,8 belong to CS VLAN
+
+Trunk port: carries frames of several VLANs between switches
+
+= frames forwarded within VLAN between switches can’t be untagged Ethernet
+frames (must carry VLAN ID info)
+
+= 802.1Q adds/removes additional header fields for frames forwarded between
+trunk ports
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+VLANSs on a real campus
+
+Example plan How a device lands in its VLAN
+
+The lab desk socket is set to VLAN 30, whoever plugs in.
+10 Staff Staff systems, internet
+
+20 Students Learning portal, internet
+m By Wi-Fi network name
+
+30 Teaching labs Lab servers Each network name is tied to one VLAN: Staff Wi-Fi - 10,
+Guest Wi-Fi = 50.
+
+40 Cameras, loT Video recorder only
+50 Guest Wi-Fi Internet only = By login
+
+The network checks your username first, then puts you in your
+99 Switch management Network admins only VLAN, from any port.
+
+Group by who you are and what you may reach, not by where you sit.
+
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 9/12: resources/u4/Slides/4.10.1_A_day_in_the_life_of_a_webpage.pdf
+PAGES: 11 | EXTRACTED CHARACTERS: 3,667
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+A day in the life of a web request
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Synthesis : A day in the life of a web request
+
+Our journey down the protocol stack is now complete!
+* application, transport, network, link
+
+Putting-it-all-together: synthesis!
+
+* Goal: identify, review, understand protocols (at all layers)
+involved in seemingly simple scenario: requesting www page
+
+* Scenario: student attaches laptop to campus network,
+requests/receives www.google.com
+COMPUTER NETWORKS
+
+A day in the life of a web request
+
+browser
+
+>
+
+school network
+
+68.80.2.0/24
+
+web page
+
+Google
+
+web server
+
+64.233.169.105
+
+DNS server
+
+Comcast network
+68.80.0.0/13
+
+Google’s network
+64.233.160.0/19
+
+Sounds
+simple!
+
+@ UNIVERSITY
+
+Scenario:
+
+Arriving mobile
+client attaches to
+network ...
+
+Requests web
+
+page:
+www.google.com
+
+'
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+A day in the life of a web request
+
+Connecting laptop needs to get its own IP
+address, addr of first-hop router, addr of
+DNS server: use DHCP
+
+DHCP request encapsulated in UDP,
+encapsulated in IP, encapsulated in 802.3
+Ethernet
+
+Ethernet frame broadcast (dest:
+FFFFFFFFFFFF) on LAN, received at router
+running DHCP server
+
+Ethernet demuxed to IP demuxed, UDP
+demuxed to DHCP
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+A day in the life : Connecting to the Internet
+
+DHCP server formulates DHCP ACK
+containing client’s IP address, IP address of
+first-hop router for client, name & IP
+address of DNS server
+
+Encapsulation at DHCP server, frame
+forwarded (switch learning) through LAN,
+demultiplexing at client
+
+DHCP client receives DHCP ACK reply
+
+Client now has IP address, knows name & addr of DNS
+server, IP address of its first-hop router
+COMPUTER NETWORKS
+
+A day in the life.... ARP (Before DNS, Before HTTP)
+
+DNS
+UDP
+
+DS arplP__
+Bl ARP query Eth
+Phy
+
+- =<
+
+ARP
+
+W ArPrepy | Eth
+
+Ph
+
+y rou
+ARP server
+
+Before sending HTTP request, need IP
+address of www.google.com: DNS
+
+DNS query created, encapsulated in UDP,
+encapsulated in IP, encapsulated in Eth. To
+send frame to router, need MAC address of
+
+router interface: ARP
+
+ARP query broadcast, received by router,
+which replies with ARP reply giving MAC
+address of router interface
+
+Client now knows MAC address of first
+hop router, so can now send frame
+
+containing DNS query
+COMPUTER NETWORKS @ PES
+A day in the life.... Using DNS o=
+
+[ CIons ]
+
+[ IEons 1
+
+Demuxed to DNS
+
+DNS replies to client
+with IP address of
+www.google.com
+
+IP datagram IP datagram forwarded from campus
+containing DNS query network into Comcast network,
+forwarded via LAN routed (tables created by RIP, OSPF,
+switch from client to IS-1S and/or BGP routing protocols)
+
+15t hop router to DNS server
+COMPUTER NETWORKS @9 PES
+A day in the life.... TCP Connection carrying HTTP m
+
+To send HTTP request, client
+
+first opens TCP socket to web
+server
+
+cast network
+
+; TCP SYN segment (step 1 in TCP 3-
+80.0.0/13 . .
+
+way handshake) inter-domain
+routed to web server
+
+Web server responds with TCP
+SYNACK (step 2 in TCP 3-way
+handshake)
+
+TCP connection established!
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+A day in the life.... HTTP Request / Reply
+
+HTTP request sent into TCP
+socket
+
+ge finally (111)
+
+IP datagram containing HTTP
+request routed to
+www.google.com
+
+ast network
+
+Web server responds with HTTP
+reply (containing web page)
+
+IP datagram containing
+HTTP reply routed
+back to client
+
+B
+
+gl(-;ﬁleb server -
+233.169.105
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 10/12: resources/u4/Slides/4.11.1_Physical_Layer.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 4,578
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS e@
+Unit — 4 Link Layer and LAN Roadmap
+
+Physical layer
+COMPUTER NETWORKS
+Physical Layer — OSI Reference Model
+
+Device A
+
+Intermediate Intermediate
+node node
+
+— <
+
+Device B
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+4-3 interface
+Network
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Layer-to-layer communication (7th layer)
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+
+4-3 interface
+Network
+
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Physical communication
+
+@ UNIVERSITY
+
+Implemented
+in Software
+
+Implemented
+in Hardware
+COMPUTER NETWORKS @ PES
+Purpose of Physical Layer nersiTy
+
+7 Application ’
+6 Presentation
+
+5 Session
+
+Transport
+
+Network
+
+Data Link
+
+a1
+1 Physical
+
+The Physical layer interconnects our data networks.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Physical Layer Services
+
+The role of Physical Layer is to:
+
+encode the binary digits that represent data link layer frames into
+signals
+
+Analog signal — continuous-
+valued (amplitudes,
+
+copper wires, optical fiber, and wireless that connect network devices. frequencies)
+Digital signal — discrete-valued
+
+Physical medium - conduct a signal in the form of voltage, light, or  (0s & 1s)
+radio waves from one device to another.
+
+to transmit and receive these signals cross the physical media
+
+Media Signal Type
+Copper cable Patterns of electrical pulses
+Time Time Fiber-optic cable Patterns of light pulses
+
+Analog signal Digital signal
+Wireless Patterns of radio transmissions
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Physical Layer Services
+
+The delivery of frames across the local media requires the
+following physical layer elements:
+
+The physical media and associated connectors .
+Physical Layer
+
+A representation of bits on the media Devices
+Encoding of data and control information * Hub
+Transmitter and receiver circuitry on the network : I\R/Iezeater
+; ° odem
+devices
+) S « Cables
+Components to understand Physical Layer functions includes: « Network Adapters
+
+Physical components
+Encoding
+Signaling
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+Physical Layer Services
+
+Source Node Destination Node
+A
+Application Application
+Encapsulation
+PDU Presentation o Presentation PDU
+Application |Data
+Data Session Session Data
+Data| | Data| | Data
+Segment Transport Transport Segment
+Network Deta
+Packet Network Header Network Packet
+Frame Data Link Frame |Network| = |Frame Data Link Frame
+Header | Header Trailer
+Bits Physical 1lol1lolol1l1]1]olo]1 Physical Bits
+Bits
+
+Nighnigiieiiminmiimii
+
+Physical Layer Encoding
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Physical Layer Principles
+
+Encoding| 1[0 [1[ofo[1[1][1]o]0][1]
+
+Signaling EpigiEpipE gty s
+
+Media
+
+COMPUTER NETWORKS @ —
+Signalling Bits for the Media
+
+Varying Amplitude
+
+Varying Frequency
+
+Varying Phase
+
+Clock
+
+- bit time -
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+Signalling Methods
+
+Bit
+Time
+—
+
++ Volts
+
+NRZ (Non Return to Zero) Encoding — A
+oo O low voltage being 0 and a higher voltage
+representing a 1.
+
+1 o 1 0 1
+
+0 Volts
+
+Bit
+Time
+
+| Manchester Encoding
+
+* Avoltage change from low to high within the
+
+" bit time represents a 1.
+
+* Avoltage drop within the bit time from a
+high to a low voltage represents a 0.
+
++ Volts
+
+-Volts
+
+COMPUTER NETWORKS
+Physical Layer Standards
+
+Some of the key organizations:
+The International Organization for Standardization
+(1SO)
+The Institute of Electrical and Electronics Engineers
+(IEEE)
+The American National Standards Institute (ANSI)
+The International Telecommunication Union (ITU)
+
+The Electronics Industry
+
+Alliance/Telecommunications Industry Association
+(EIA/TIA)
+
+National telecommunications authorities such as the
+Federal Communications Commission (FCC) in the
+United States
+
+@ UNIVERSITY
+
+Standards set by:
+ISO IEEE
+ANSI ITU
+EIA/TIA FCC
+COMPUTER NETWORKS
+
+Types of Physical Transmission Media
+
+Specification
+
+10BASE-T
+
+CAT 3,4 or 5 UTP (4 pair)
+
+Maximum
+Segment Length
+
+100m
+
+Connector
+
+100BASE-TX
+
+CAT 5 UTP (2 pair)
+
+100m
+
+100BASE-FX
+
+62.5/125 multimode fiber
+
+2km
+
+1000BASE-CX
+
+STP
+
+25m
+
+1000BASE-T
+
+CAT 5 UTP (4 pair)
+
+100m
+
+1000BASE-SX
+
+62.5/50 multimode fiber
+
+62.5 - 275m
+50 — 550m
+
+1000BASE-LX
+
+62.5/50 multimode
+9-micron single-mode fiber
+
+62.5/50 — 550m
+9 —-10 km
+
+1000BASE-ZX
+
+9-micron single-mode fiber
+
+70km
+
+10GBASE-ZR
+
+9-micron single-mode fiber
+
+80km
+
+@
+
+PES
+
+UNIVERSITY
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 11/12: resources/u4/Slides/4.12.1_Wireless_LANs.pdf
+PAGES: 17 | EXTRACTED CHARACTERS: 5,258
+################################################################################
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+COMPUTER NETWORKS
+Unit — 4 Link Layer and LAN Roadmap
+
+Wireless LANs: IEEE 802.11
+
+@ UNIVERSITY
+COMPUTER NETWORKS @ PES
+
+vvvvvvvvvv
+
+Wireless Networks: Context
+
+= more wireless (mobile) phone subscribers than fixed (wired) phone
+subscribers (10-to-1 in 2019)!
+
+= more mobile-broadband-connected devices than fixed-broadband-
+connected devices devices (5-1in 2019)!
+* 4G/5G cellular networks now embracing Internet protocol stack,
+including SDN
+= two important (but different) challenges
+* wireless: communication over wireless link
+
+* mobility: handling the mobile user who changes point of attachment to
+network
+COMPUTER NETWORKS
+Wireless Applications — their needs
+
+PES
+
+UNIVERSITY
+
+Six Application Areas
+
+= \Wide-area Mobile Wireless Internet
+Access
+
+» | ocal-area Mobile Wireless Internet
+Access
+
+» Fixed Wireless Internet Access
+
+Application needs
+
+- -
+
+wigh importance
+
+user
+data rate
+
+. 1
+= Satellite Networks for Internet P s trafic
+Access and Sensing capacity i‘
+
+= Cable replacement
+= |[nternet of Things (loT)
+
+device
+density
+
+SN_—_——-
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Elements of a Wireless Network
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Elements of a Wireless Network
+
+- wireless hosts e
+WE D
+laptop, smartphone, loT ‘ c]l w
+
+run applications
+
+may be stationary (non- moblle) or mobile
+* wireless does not always mean mobility!
+
+COMPUTER NETWORKS @ PES
+Elements of a Wireless Network e
+
+- base station —— ﬁ \(Ag)
+
+typically connected to wired network
+
+relay - responsible for sending packets
+between wired network and wireless
+host(s) in its “area”
+
+* e.g., cell towers, 802.11 access points
+
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+Elements of a Wireless Network
+
+- wireless link ——— (@‘D> —
+typically used to connect mobile(s) to
+
+base station, also used as backbone link
+
+multiple access protocol coordinates link
+access
+
+various transmission rates and distances,
+frequency bands
+
+COMPUTER NETWORKS @ —
+Characteristics of Selected Wireless Links onmvegstry
+
+14 Gbps
+10 Gbps
+2 Key Areas:
+3.5 Gbps c .
+802.11 af,ah (White-Fi, HaLow) overage area
+600 Mbps =* Link rate
+54 Mbps i
+11 Mbps
+2 Mbps
+Indoor Outdoor Midrange Long range
+outdoor outdoor
+
+10-30m 50-200m 200m-4Km 4Km-15Km
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+Elements of a Wireless Network
+
+- infrastructure mode
+
+base station connects mobiles into
+wired network
+
+handoff: mobile changes base station
+providing connection into wired
+network
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Elements of a Wireless Network
+
+—ad hoc mode
+no base stations
+
+nodes can only transmit to other nodes
+within link coverage
+
+nodes organize themselves into a
+network: routing, address assignment,
+DNS-like name translation, and more.
+
+COMPUTER NETWORKS
+Wireless network taxonomy
+
+single hop
+
+multiple hops
+
+infrastructure
+(e.g., APs)
+
+infrastructure
+less
+
+host connects to base
+station (WiFi, cellular)
+which connects to
+
+larger Internet. Eg: 4G
+LTE
+
+no base station, no
+connection to larger
+Internet.
+
+eg: Bluetooth, adhoc nets
+
+host may have to relay
+through several wireless
+nodes to connect to larger
+Internet: mesh net
+
+no base station, no connection
+to larger Internet. May have to
+
+relay to reach other.
+eg: MANET, VANET
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+IEEE 802.11 Wireless LAN (WiFi)
+
+802.11b 1999
+802.11g 2003
+
+802.11n (WiFi 4) 2009
+
+802.11ac (WiFi 5) 2013
+802.11ax (WiFi 6) 2020
+
+802.11af 2014
+
+802.11ah 2017
+
+11 Mbps 30m
+54 Mbps 30m
+600 70m
+3.47Gpbs 70m
+14 Gbps 70m
+
+35-560 Mbps 1 Km
+
+347Mbps 1Km
+
+standard
+
+2.4 Ghz
+2.4 Ghz
+24,5 Ghz
+
+5 Ghz
+2.4,5 Ghz
+
+unused TV bands
+(54-790 MHz)
+900 Mhz
+
+all use CSMA/CA for multiple access, and have base-station and ad-hoc
+
+network versions
+COMPUTER NETWORKS
+The 802.11 LAN architecture
+
+Internet
+
+wireless host communicates with base
+station
+
+* base station = access point (AP)
+
+Basic Service Set (BSS) (aka “cell”) in
+infrastructure mode contains:
+
+* wireless hosts
+
+* access point (AP): base station
+* ad hoc mode: hosts only
+COMPUTER NETWORKS
+802.11: Channels, Association
+
+spectrum divided into channels at different frequencies
+* AP assigns Service Set ID (SSID)
+* AP admin chooses frequency for AP (2.4 GHz to 2.4835 GHz)
+
+* interference possible: channel can be same as that chosen by
+neighboring AP! — WiFi Jungle
+
+arriving host: must associate with an AP
+
+* scans channels, listening for beacon frames containing
+AP’s name (SSID) and MAC address
+
+* selects AP to associate with
+* then may perform authentication
+
+* then typically run DHCP to get IP address in AP’s
+subnet
+
+@ UNIVERSITY
+
+25>
+
+:f{g,
+Pl
+
+BSS
+COMPUTER NETWORKS
+802.11 active/passive scanning
+
+@ UNIVERSITY
+
+BBS 1 BBS 2
+
+@ PRP) @ ERP)
+%,» @
+AP 1 M&. AP 2
+H1
+
+passive scanning:
+(1) beacon frames sent from APs
+(2) association Request frame sent: H1
+to selected AP
+(3) association Response frame sent
+from selected AP to H1
+
+BBS 1 BBS 2
+@5 €|
+AP 1 % AP2
+
+H1
+
+active scanning:
+(1) Probe Request frame broadcast from H1
+(2) Probe Response frames sent from APs
+(3) Association Request frame sent: H1 to
+selected AP
+(4) Association Response frame sent from
+selected AP to H1
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 12/12: labs/lab6_hardware/Lab 6- Hardware Program.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 19,478
+################################################################################
+
+IPV4 Routing
+
+Experiment 6
+
+Obijective: Setup network with two routers and exchange packets across Routers.
+
+Hardware Requirements:
+
++ Computer/Laptop 4
+¢+ Switch 3
++ Patch Cords(1.5Mtr/5ft) 6
++ NIC 2
+Software Requirements:
+¢+ Wireshark Tool
++ Ubuntu/Linux Operating
+System
++ Topology
+”ngé Il 1 Wzm
+AEE Swient Swichs
+
+Figurel:Topology and its configuration details
+
+Description: Design a network with at least 2 router networks. Host Ha should be able to
+
+communicate with Host Hd using newly assigned addresses.
+Note:
+1. These commands have to be executed with the superuser privilege.
+2. To check interface and ip address configuration issue below command line. $ ip addr show
+3. We will not use ifconfig commands as that is deprecated.
+
+4. All computers should have ubuntu to execute
+
+Step1:Assign IP addresses to each computer
+1.1 Ha: S$sudoip addr add 172.16.10.1/24 dev ethl
+$ip addr show
+
+Note : In the ubuntu systems in the lab, the mentioned ethernet name might be enp1s0, use that
+instead of eth1.
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+link/loopback 00:00:00:00:00:00 brd 060:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+inet6 128 scope host
+valid_lft forever preferred_lft forever
+2: ethl: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP q
+
+en 1000
+link/ether 50:e5:49:1c:64:c0 brd ff:ff:ff:ff:ff:ff
+inet 172.16.10.1/24 brd 172.16.10.255 scope global eth1
+inet6 fe80::52e5:49ff:felc:64c0/64 scope link
+valid_lft forever preferred_Lft forever
+student@pesit-To-be-filled-by-0-E-M:~5 ||
+
+Note: While setting ip address. Do not disturb existing configuration.
+
+1.2 R1:  $sudoip addr add 172.16.10.201/24 dev eth1
+$sudo ip addr add 172.16.11.1/24 dev eth2
+
+$ip addr show
+student@pesit-To-be-filled-by-0-E-M:~5 ip addr Show
+FETL <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+link/loopback 06 00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.6.6.1/8 scope host lo
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1560 qdisc pfifo_fast state UP ql|
+en 1000
+link/ether b8:a3:86:98:42:73 brd ff:ff:ff:ff:ff:ff
+inet 172.16.11.1/24 brd 172.16.11.255 scope global eth2
+inet6 fe80::baa3:86ff:fe98:4273/64 scope link
+valid_1ft forever preferred_lft forever
+: ethl: <BROADCAST,MULTICAST,UP,LOWER_UR- mtu 1560 qdisc pfifo_fast state UP ql
+
+e5:49:1d:4a:ad brd f ff:Ff:ff:ff
+inet 172.16.10.201/24 brd 172.16.10.255 scope global eth1
+inet6 fe80::52e5:49ff:fe1d:4aad/64 scope link
+valid_lft forever preferred_lft forever
+student@pesit-To-be-filled-by-0-E-M:~$ [l
+
+1.3 R2: $sudo ip addr add 172.16.11.201/24 dev eth2
+$sudo ip add radd 172.16.12.1/24 dev ethl
+
+$ ip addr show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+link/loopback 00:00:00:00:00:00 brd 60:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+inet6 ::1/128 scope host
+valid_lft forever preferred_Lft forever
+: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1560 qdisc pfifo_fast state UP q
+1600
+link/ether 28:10:7b:4b:15:05 brd ff:ff:ff:ff:ff:ff
+inet 172.16.11.201/24 brd 172.16.11.255 scope global eth2
+inet6 feB0::2a10:7bff:fedb:1565/64 scope link
+valid_lft forever preferred_Lft forever
+: ethl: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1560 qdisc pfifo_fast state UP q
+1000
+link/ether 56:e5:49:1c:d3:ae brd ff:ff:ff:ff:ff:ff
+inet 172.16.12.1/24 brd 172.16.12.255 scope global ethi
+inet6 feB0::52e5:49ff:felc:d3ae/64 scope link
+valid_1ft forever preferred_Lft forever
+student@pesit-To-be-filled-by-0-E-M:~$
+
+14 Hd: S$sudoip addr add 172.16.12.201/24 dev ethl
+$ip addr show
+student@pesit-To-be-filled-by-0-E-M:~$ sudo ip addr show
+[sudo] password for student:
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+inet6 /128 scope host
+valid_lft forever preferred_Llft forever
+
+2: ethl: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP q
+link/ether 50:e5:49:1b:f0:c4 brd ff:ff:ff:ff:ff:ff
+inet 172.16.12.201/24 brd 172.16.12.255 scope global eth1
+inet6 fe80::52e5:49ff:felb:fOc4/64 scope link
+valid_Llft forever preferred_Llft forever
+student@pesit-To-be-filled-by-0-E-M:~$ I
+
+Note 1: The machines are physically on the same LAN, thus you may get ICMP redirect
+messages from other machines (in case you make some configuration mistakes), so as a
+precautionary measure disable accepting the ICMP Redirect packets. By default the linux
+enables accepting the ICMP redirect packets. To have precautionary measures issue below comma
+
+ndline in Ha and Hd. Don’t do this for routers.
+
+$ sudo sysctl —w net.ipv4.conf.all.accept_redirects=0
+
+do sysctl -w net.ipv4.conf.all.accep
+
+]
+
+Note 2: Since machines are on same physical interface, the router is going to send ICMP
+redirect message disturbing the routing decision by hosts. Thus, disable sending of the ICMP
+redirect packets by these routers with aliased interfaces.To have precautionary measures
+
+issue below command line in R1 and R2
+
+$ sudo sysctl —w net.ipv4.confall.send_redirects=0
+
+student@student-H81H3-I:~$ sudo sysctl -w net.ipv4.conf.all.send_redirects=0
+net.ipv4.conf.all.send_redirects = 0
+
+student@student-H81H3-I:~$ I
+
+Step2:ConvertBandCsystemsasroutersbyissuingbelowcommand.
+
+Notel:Check if ip forwarding is enabled or not.
+
+We need to query the sysctl kernel value net.ipv4.ip_forward to see if forwarding is enabled or not
+Using sysctl:
+
+S$sysctl net.ipv4.ip_forward
+It should display the following: net.ipv4.ip_forward=0
+
+Other alternative to check out if ip forwarding is enabled or not through the value in the
+
+/procsystem:
+
+Scat /proc/sys/net/ipv4/ip_forward0
+
+Command to set the value of net.ipv4.ip_forward is as given below
+
+1.1 For R1 and R2: $ sudo sysctl -w net.ipv4.ip_forward=1
+
+$ sudo sygctl -w net.ipv4. forward=1
+
+net.ipv4.ip_forward =
+
+Step3:Verify the connection From Ha and Hd using ping command.
+
+Initially test the connection of systems within the same network or the local network.
+
+AtHa:  $ping 172.16.10.1 (Local network)
+
+student@pesit-To-be-filled-by-0-E-M:~$ ping 172.16.10.1
+.16.10.1 (172.16.10.1) 56(84) bytes of data.
+from 172.16.10.1: icmp_req=1 time=0.027
+from 172.16.16.1: icmp_req time=0.020
+from 172.16.10.1: icmp_req time=0.018
+from 172.16.10.1: 1 3% = time=0.018
+
+from 172.16.10.1: icmp_req 1 time=0.022
+
+--- 172.16.10.1 ping statistics ---
+
+5 packets transmitted, 5 received, 0% packet loss, time
+rtt min/avg/max/mdev = ©.018/0.021/0.027/0.003 ms
+student@pesit-To-be-filled-by-0-E-M:~S I
+
+$ ping 172.16.10.201 (Local network)
+
+student@pesit-To-be-filled-by-0-E-M:~$ ping 172.16.10.201
+PING 172.16.10.201 (172.16.10.201) 56(84) bytes of data.
+bytes from 172.16. % : icmp_req=1 time=0.248
+bytes from 172.16 . : icmp_req=2 time=0.237
+bytes from 172.16.10. icmp_req=3 time=0.223
+bytes from 172.1 5 i =2 time=0.219
+bytes from 172.16. U : icmp_req=5 time=0.216
+
+bytes from 172.16.10. : icmp_req=6 ttl time=0.211
+
+172.16.10.201 ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 4997ms]
+rtt min/avg/max/mdev = ©.211/0.225/0.248/0.021 ms
+student@pesit-To-be-filled-by-0-E-M:~$
+
+Step4:Insert Routing Table entries on each system to direct ipv4 packets to ping across the
+
+networks through the routers in middle.
+
+4.1 Ha: $sudo ip route add 172.16.12.0/24 via 172.16.10.201
+$sudo ip route add 172.16.11.0/24 via 172.16.10.201
+
+$ip route show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip route show
+default via 172.16.10.201 dev ethl proto static
+169.254.0.0/16 dev ethl scope link metric 1000
+
+172.16.10.6/24 dev ethl proto kernel scope link src 172.16.10.1 metric 1
+172.16.12.0/24 via 172.16.10.201 dev ethl
+student@pesit-To-be-filled-by-0-E-M:~$ l
+
+In the first host, Sincel72.16.10.0/24 network is local network we dont need any routing table
+entry. We need to have routing table entries for other networks such as 172.16.11.0/24 and
+172.16.12.0/24.
+
+42  RI:  $sudoiproute add 172.16.12.0/24 via 172.16.11.201
+
+$ ip route show
+
+student@pesit-To-be-filled-by-0-E-M:~$ sudo ip route show
+
+default via 172.16.10.1 dev eth1 proto static
+
+169.254.0.0/16 dev eth1 scope link metric 1600
+
+172.16.10.0/24 dev ethl proto kernel scope link src 172.16.10.201 metric 1
+172.16.11.0/24 dev eth2 proto kernel scope link src 172.16.11.1 metric 1
+172.16.12.0/24 via 172.16.11.201 dev eth2
+student@pesit-To-be-filled-by-0-E-M:~$ l
+
+Since R1 is connected to 172.16.10.0/24 and 172.16.11.0/24 networks we need to have
+one routing table entry to 172.16.12.0/24.
+
+43 R2:  Ssudo ip route add 172.16.10.0/24 via 172.16.11.1
+$ip route show
+student@pesit-To-be-filled-by-0-E-M:~$ ip route show
+
+default via 172.16.12.201 dev ethl proto static
+169.254.0.0/16 dev eth2 scope link metric 1000
+
+172.16.10.0/24 via 172.16.11.1 dev eth2
+172.16.11.0/24 dev eth2 proto kernel scope link src 172.16.11.201 metric
+172.16.12.0/24 dev ethl proto kernel scope link src 172.16.12.1 metric 1
+student@pesit-To-be-filled-by-0-E-M:~$ I
+
+44 Hd: $sudo ip route add 172.16.10.0/24 via 172.16.12.1
+$sudo ip route add 172.16.11.0/24 via 172.16.2.1
+
+$ip route show
+
+student(@pesit-To-be-filled-by-0-E-M:~
+default via 172.16.12.1 dev ethl proto static
+169.254.0.0/16 dev eth1 scope link metric 1000
+
+172.16.10.0/24 via 172.16.12.1 dev ethl
+172.16.12.0/24 dev ethl proto kernel scope link src 172.16.12.201 metric 1
+student@pesit-To-be-filled-by-0-E-M:~5 ]
+
+Step5: After adding routing table entries again verify the connection from Ha and Hd using
+
+ping command.
+5.1 Testing path from Ha and Hd
+
+AtHa: $ ping 172.16.12.1 and
+$ ping 172.16.12.201
+
+student@pesit-To-be-filled-by-0-E-M:~S ping 172.16.12.201
+
+PING 172.16.12.201 (172.16.12.201) 56(84) bytes of data.
+bytes from 172.16.12.201: icmp_reqg=1 time=0.661
+bytes from 172.16.12.201: icmp_req=2 time=0.643
+bytes from icmp_re 3 time=0.640
+bytes from icmp_req=4 time=0.630
+bytes from 172.16.12.201: icmp_req=5 time=0.660
+
+--- 172.16.12.201 ping statistics ---
+
+5 packets transmitted, 5 received, 0% packet loss, time
+rtt min/avg/max/mdev ©.630/0.646/0.661/0.034 ms
+student@pesit-To-be-filled-by-0-E-M:~$ ping 172.16.12.1
+
+PING 172.16.12.1 (172.16.12.1) 56(84) bytes of data.
+bytes from 172.16.12.1: icmp_req=1 time=0.486
+bytes from 172.16.12.1: icmp_req=2 time=0.446
+bytes from 172.16.12.1: icmp_req=3 time=0.442
+bytes from 172.16.12.1: icmp_req=4 time=0.451
+bytes from 172.16.12.1: icmp_req=5 time=0.447
+
+--- 172.16.12.1 ping statistics ---
+
+5 packets transmitted, 5 received, 0% packet loss, time
+rtt min/avg/max/mdev ©.442/0.454/0.486/0.024 ms
+student@pesit-To-be-filled-by-0-E-M:~S [
+
+5.2 Testing path from Hd and Ha
+At Hd: $ ping 172.16.10.1
+$ ping 172.16.10.201
+
+student@pesit-To-be-filled-by-0-E-M:~$ ping 172.16.10.1
+
+PING 172.16.10.1 (172.16.10.1) 56(84) bytes of data.
+
+64 bytes from 172.16.10.1 i EE time .627
+bytes from 172.16.10.1: i * time=0.619
+bytes from 172.16.10.1 _
+bytes from 172.16.10.1: icmp_req=4 time=0.612
+bytes from 172.16.10.1: icmp_req=5 time=0.613
+
+--- 172.16.10.1 ping statistics ---
+
+5 packets transmitted, 5 received, 0% packet loss, time 3999ms
+rtt min/avg/max/mdev = ©.590/0.612/0.627/0.019 ms
+student@pesit-To-be-filled-by-0-E-M:~$ ping 172.16.10.201
+
+PING 172.16.10.201 (172.16.10.201) 56(84) bytes of data.
+bytes from 172.16.10.20 icmp_req=1 1
+bytes from 172.16.10.20 icmp_req=2
+bytes from 172.16.10.20 icmp_re
+bytes from 172.16.10.201: icmp_req=4
+bytes from 172.16.10.20 icmp_req=5
+
+- 172.16.10.201 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 3999ms
+rtt min/avg/max/mdev = ©.398/0.425/0.458/0.026 ms
+student@pesit-To-be-filled-by-0-E-M:~$S
+
+Step6: check each system neighbors to verify the connection
+
+Ip neighbor provides a command line interface to display the neighbor table (ARP cache)
+
+6.1 Ha: § ip neigh show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip neigh show
+172.16.10.201 dev ethl lladdr 50:e5:49:1d:4a:ad REACHABLE
+
+student@pesit-To-be-filled-by-0-E-M:~$S l
+
+6.2 R1: $ ip neigh show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip neigh show
+'172.16.11.201 dev eth2 1laddr 28:10:7b:4b:15:05 STALE
+172.16.10.1 dev ethl lladdr 50:e5:49:1c:64:c0 STALE
+|student@pesit-To-be-filled-by-0-E-M:~$ I
+
+6.3 R2:$ ip neigh show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip neigh show
+172.16.11.1 dev eth2 1laddr b8:a3:86:98:42:73 STALE
+172.16.12.201 dev ethl lladdr 5 5:49:1b:f0:c4 REACHABLE
+student@pesit-To-be-filled-by-0-E-M:~$ [I
+
+6.4 Hd:$ ip neigh show
+
+student@pesit-To-be-filled-by-0-E-M:~$ ip neigh show
+172.16.12.1 dev ethl lladdr 50:e5:49:1c:d3:ae REACHABLE
+
+student@pesit-To-be-filled-by-0-E-M:~$ .
+
+Step7: Capture packets from Ha and Hd using Wireshark tool
+
+7.1 Capture packets from Ha and Hd
+
+Ha: Tl:  $ sudo wireshark
+
+T2:  $ping 172.16.12.201
+
+BEcee o oxCc@ Qe-3F 4 [E
+
+Filter: | ~ | Expression... Clear Apply
+Protocol Length  Info
+
+98 Echo (ping
+
+No. Time Source Destination
+
+135.004428  Gica-Byt lc:ddiae  Giaa-Byt 1b:fo:cd
+Version: 4
+
+Header length: 20 bytes
+» Differentiated Services Field: 0x80 (DSCP 6x00: Default; ECN: 0x80: Not-ECT (Not ECN-Capable Transport))
+
+Total Length: 84
+Identification: ©x0600 (8)
+» Flags: 6x02 (Don't Fragment)
+Fragnent offset: 0
+Tine tolive: 62
+Protocol: ICMP (1)
+> Header checksum: Oxcdbe [correct]
+Source: 172.16.10.1 (172.16.10.1)
+Destination: 172.16.12.201 (172.16.12.201)
+> Internet Control Message Protocol
+
+7.2 Capture packets from R1
+$ sudo wireshark At eth1:
+AMde anRR Q¢ >y AFE o E
+[ Tropia iy e <coir>
+No.. Destination Protocol Vl-rwlh Info.
+; o.12.201 100 request id-axiode, seq=202/11777,
+Gon T Teply | ii-oodo, seq-soz/3arrr,
+o1 Tow Tenwst id-onisde,
+o Teply' a-oxdde,
+A 1 T
+e i
+o seq=sau/i228,
+Tow Seqmana/ 1200,
+o o Seimsos/ 1245,
+o Seisos/ises,
+o o Seqmasorizssi,
+o Seamsao/ 12801, (request in 39) |
+
+» Frame 1: 98 bytes on wire (784 bits), captured (784 bits) on inter
+» Ethernet 11, Src: Elitegro_as:as:4d (bt a5:05:4d), Dst: Elitegro_as:
+» Internet Protocol Version 4, Src: 172.16.10.1, Dst: 172.16.12.201
+
+» Internet Control Message Protocol
+
+000 bB ae ed a5 a6 Of bd ac ed a5 a5 4d 66 00 45 00 W.E
+©10 08 54 24 €2 49 60 40 01 a6 dc ac 10 6a 01 ac 10
+6c c9 08 60 27 ad 10 do 01 67 94 61 2e 59 60 68 Ay
+
+©03 69 09 3b ce 01 60 60 00 00 60 10 11 12 13 14 15
+0040 16 17 18 19 1a 1b dc 1d le 1f 20 2122 23 24 25
+0050 2627 2829 20 2b 2c 24 2e 2f 30 31 32 33 34 35 & ()4, (/012345
+o060 36 37 &7
+
+Ateth2:
+Amge GMRT Q¢ >I A3 SRR
+W[ Apply a ispay Fiter.. <urf> 3 epresson... +
+no. Time source Destination ___ protocol_Length Info A
+31001023888 172, 172.16.12.261 100 98 Echo (ping) request  id-0x10d0, Seq=75/15260, (reply in 4)
+2 1 opaaszs2a 17zi00101 100 98 Echo (ping) reply  id-0x1900, seq=75/15260, (requast 1n 3)
+52 17211622201 10 96 Echo (ping) request  id-0xi0do, (reply in 6)
+7226201 10w 98 Echo (ping) reply (request in s)
+i7220012.201  T0W0 Echo (ping) request (reply in 8)
+1726201 100 96 Echo (ping) reply (request in 7)
+5 3" ogoas0se1 i72110012.201  10W0 98 Echo (ping) request (reply in 1)
+10 4 o078sess? 2101 10w 98 Echo (ping) reply (request in 9)
+115 008308463 72126.12.201 100 96 Echo (ping) request (reply in 12)
+12 5. oosa13252 7zia00201 100 98 Echo (ping) reply (request in 11)
+w201 sz 1w 98 Echo (ping) request (reply in 14)
+726.12.201 172362001 Iowe 98 Echo (ping) reply (request in 13) |
+
+ Frame 1: 98 bytes on wire (784 bits), 98
+> Ethernet 11, Src: Realteks. 3
+
+» Internet Protocol Version 4, Src:
+» Internet Control Message Protocol
+
+bytes captured (784 bits) on interface @
+c:36:1c:1d), Dst: Elitegro 35:c2:52 (b8:ae:
+10.1, Dst: 172116.12.201
+
+i
+
+RN RO NS ERE R RER S e
+G 54 co fo 30 06 Of c1 05 5o ac 10 ba o1 ac 10 1.0
+© 00 5500 oo 7a 70 10 00 o0 4a go o0 e Sh B s [ 3l
+N mmimy mRkannN.
+N RN EN ERRHBRNE e
+B manin mrMABBNE LU e
+o k3 &
+7.3 Capture packets from R2
+$ sudo wireshark
+Atethl:
+WEdo anRE QI Ir A5 BEE
+W hopya diply e <cit - - 37 opressin.._ +
+o Tme soue Destnaton_protocal. Length info
+S1.00192858 1724690 172.16.12.201 1P 98 Echo (ping) request  i6-0eiods SeqETS/39209, CE1=63 (reply in 4)
+il Imrt6i22e 1isdon 1B 98 Eche (ping) reply  Ai-oelods, seqcre/tanes, (1163 (request in 3)
+52.003906198 172.16.10.1  172.16.12.201 ICHP 98 Echo (ping) request Seq=76/19456, tt1=63 (reply in 6)
+172.16.12.261 172.16.16.1 oM 98 Echo (ping) reply seq'?a/sslsl, tt1=63 (request in 5)
+172.16.10.1 172.16.12.201  ICHP Echo (ping) request 016 , tt1=63 (reply in 8)
+172.16.12.261 172.16.16.1 TcHP Echo (ping) reply maaxmu !MF'"IIIHZ tt1=63 (request in 7)
+260 iodedzzen Iob 98 Echo (ping) request id-oxiodo, seqTo/0988, £c1-89 (reply in 10)
+iTaed0s 108 90 Eche (ping) reply  Ab-oclods, seqcra/ieess, (1163 (request in 3)
+172.16.12.201 ICWP 98 Echo (ping) request 18d0, 5eq=79/26224, tt1=63 (reply in 12)
+X 172.16.10.1 TCHP 98 Echo (ping) reply (1000, seq=79/26224, tt1=63 (request in 11)
+13 6.010267854  172.16.10.1 172.16.12.201  ICHP Echo (ping) request 1d=6x10de, seq=86/20480, tt1=63 (reply in 14)
+146.611772216  172.16.12.261 172.16.16.1 e 98 Echo (ping) reply  id=6x10de, seq=86/20480, ttl=63 (request in 13)
+
+» Frane 1: 98 bytes on wire (764 bits), 98 bytes captured (784 bits) on interface 0
+» Ethernet I, Src: Realteks_36:1c:1d (06:e0:4c:36:1c:10), Dst: ELitegro_35:c2:52 (b8:ae:ed:35:c2:52)
+» Internet Protocol Version 4, Src: 172.16.1.1, Dst: 172.16.12.261
+
+» Internet Control Message Protocol
+
+b8 ae ed 35
+00 54 ¢6 16
+oc c9 68 60
+0 60 90 da
+
+4 1617 18 19
+
+% 26272829
+3 37
+
+25200 e0
+40 60 37 01
+7a 7e 10 do
+6 60 60 60
+1a1b 1c 10
+2z 22
+
+i
+05
+0
+0
+1o
+2
+
+36 10 1d 08
+c8 ac 10 6a
+4a d6 60 2¢
+010 11 12
+wwazn
+o 3 3%
+
+0
+o1
+59
+13
+2
+E
+
+500
+ac 16
+00 60
+1615
+225
+33
+
+N Apply  dislay it
+
+<t
+
+3 - Expresion
+
+87 42.077715974
+
+Prto Lergth fo
+o0
+
+o0
+o0
+o
+e
+w
+o0
+o0
+o0
+
+request
+% Echo (ping) repy
+98 Echo (ping) request
+98 Echo (ing) reply
+50 Who has 172.16.10.1
+42172.16.10.1 is at bt
+98 Echo (ping) request
+98 Echo (ping) reply
+98 Echo (ping) request
+
+=0x1040, Seq=302/11777,
+1d=0x10d0, seq=302/11777,
+1d-6x10d0, seq=303/12033,
+5eq=303/12033,
+
+88 42.679471993 Toup 98 Echo (ping) reply ~ 1d=0x10de, seq=305/12545,
+89 43.079630986 172.16.12.201 WP 98 Echo (ping) request '5eq=306/12861,
+90 43681352998 1236101 10N 98 Echo (ping) reply 524-300/12801,
+
+ttl=64 (reply
+ttl=62 (request in 79)
+tt1=64 (reply in 82)
+
+ttl=62 (request in 81)
+
+ttl=64 (reply in 86)
+tt1=62 (request in &)
+€e1=64 (reply in 88)
+
+, telz62 (request in 87)
+
+tt1=64 (reply in 56)
+tt1=62 (request in 89) |-
+
+» Frane 1: 98 bytes on wire (784 bits), 98
+» Ethernet II, Src: Elitegro_as:as:dd (b
+» Internet Protocol Version 4, Src: 172.16.
+» Internet Control Message Protocol
+
+bytes captured (784 bits) on interface 0
+4d), Dst: Elitegro_as:a6:of (b:
+10.1, Dst: 172.16.12.201
+
+a5:a6:67)
+
+0300 b8
+0610
+0620
+
+ae ed a5 a6 of b8 ac
+54 24 2 40 60 40 61
+9 08 00 27 ad 10 do
+60 3b ce 61 00 60 60
+171819 1a b 1c 14
+272829 2 20 2c 20
+B
+
+ed a5 a5 4d
+a6 dc ac 10
+01 67 94 61
+00 60 16 11
+le 1f 20 21 22
+2 2f 30 31 32
+
+0830
+
+7.4 Capture packets from
+Hd
+
+Hd:
+
+T1: $sudo wireshark
+
+T2: ping 172.16.10.1
+
+Protocol Length Info
+
+13 5.004428
+Version: 4
+Header length: 20 bytes
+
+-BVt lc:d3:ae
+
+(Giga-Bvt 1b:f0:c4.
+
+ARP
+
+has 172.16.12.2017 Tell 172.16.12.1
+
+> Differentiated Services Field: 8x00 (DSCP 0x60: Default; ECN: 6x80: Not-ECT (Not ECN-Capable Transport))
+
+Total Length: 84
+Identification: 6xa000 (0)
+» Flags: 0x62 (Don't Fragment)
+Fragnent offset: ©
+Tine toflive: 62
+Protocol: ICHP (1)
+» Header checksun: excdbe [correct]
+Source: 172.16.10.1 (172.16.10.1)
+Destination: 172.16.12.201 (172.16.12.201)
+> Internet Control Message Protocol
+
+
+

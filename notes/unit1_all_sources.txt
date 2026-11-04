@@ -1,0 +1,6081 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A) — UNIT 1 SOURCE DOCUMENTS EXTRACTED TEXT
+UNIT TITLE: Introduction, Network Core/Edge & Application Layer
+TOTAL SOURCE FILES: 4
+================================================================================
+
+TABLE OF CONTENTS:
+  1. resources/u1/Slides_Unit_1_Part_1.pdf
+  2. resources/u1/Slides_Unit_1_Part_2.pdf
+  3. labs/lab1_cisco/Lab1_Simulation of Network Topology using Cisco Packet Tracer.docx.pdf
+  4. labs/lab2_wireshark/Lab 2-HTTP Persistent and Non-persistent Connections.pdf
+
+================================================================================
+
+
+################################################################################
+FILE 1/4: resources/u1/Slides_Unit_1_Part_1.pdf
+PAGES: 131 | EXTRACTED CHARACTERS: 65,794
+################################################################################
+
+PES
+%% UNIVERST
+
+COMPUTER NETWORKS
+
+Computer Networks
+and the Internet
+
+I Es Team Networks
+
+UNIVERSITY Department of Computer Science and Engineering
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+COMPUTER NETWORKS
+
+Text Book
+
+NETWORKING
+
+@ ATOP-DOWN APPROACH
+
+== ~ enwnedion —_—
+_‘gg;'; 3
+
+Computer Networking: A Top-Down
+Approach
+
+James Kurose, Keith Ross
+Pearson, 2020
+
+8th, Edition
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Do's:-
+
+« Students should be on time for every lecture.
+
+« Students are advised to show due respect to all faculty members.
+
+« Students must maintain absolute discipline and decorum in the class.
+Don't s:-
+
+« Students must not use their cell phones/laptops during the lecture hours. If any
+
+student is found using their cell phone during class hours it will be confiscated.
+
+« No sleeping in the class.
+COMPUTER NETWORKS: Honor Code @@ PES
+
+UNIVERSITY
+
+w The Honour Code is PESU statement on academic integrity.
+
+w |t articulates our expectations of students and faculty in
+establishing and maintaining the highest standards in academic
+work.
+COMPUTER NETWORKS: Honor Code @ PES
+
+UNIVERSITY
+
+= The Honour Code is an undertaking of the students, individually and
+collectively:
+
+- Students will not give or receive aid in examinations and class
+work, labs and assignments;
+
+- Students will not give or receive unpermitted aid in class work, in
+the preparation of reports, or in any other work that is to be used
+by the instructor as the basis of grading;
+
+- Students will do their share and take an active part in seeing to it
+that others as well as themselves uphold the spirit and letter of the
+Honour Code.
+COMPUTER NETWORKS: Academy Honesty @ PES
+
+UNIVERSITY
+
+= Academic honesty is expected from each student participating in
+the course.
+
+& No sharing (willing, unwilling, knowing, unknowing) of assignment
+code or solutions between students;
+
+w Labs and Assignments must be done by each student
+independently.
+
+= No submission of downloaded code (from the Internet, Campus
+LAN, or anywhere else) is accepted.
+UNIVERSITY
+
+COMPUTER NETWORKS: Academy Honesty @@ PES
+
+w  Any dishonesty will result in Zero marks for the assignment/work
+
+And in addition, downgrade of final subject result by ONE grade!
+This applies for both students giving and students taking
+e.g. B grade will downgrade to C
+COMPUTER NETWORKS
+
+Industry-relevant Roles
+
+* Network Engineer
+
+* SDN Engineer
+
+* Network Automation Engineer
+
+* Network Security Engineer
+
+* Cloud Network Engineer
+
+* Network Software Engineer
+
+* Systems Engineer
+
+* Infrastructure Engineer
+
+* DevOps Engineer
+
+* Site Reliability Engineer (SRE)
+
+* SDN Application Developer
+
+* Cybersecurity Analyst
+
+* Security Operations Center (SOC) Analyst
+* Infrastructure Automation Engineer
+* Wireless Network Engineer
+
+@ UNIVERSITY
+
+Companies Hiring these skills
+
+* Cisco
+
+* Juniper Networks
+
+* Arista Networks
+
+* HPE (Hewlett Packard)
+* Extreme Networks
+
+* Nokia
+
+* Ericsson
+
+* IBM
+
+* Vmware (Broadcom)
+* RedHat
+
+* OQOracle
+
+* Microsoft
+
+Google
+
+Amazon
+
+Accenture
+
+Palo Alto Networks
+Fortinet
+
+F5
+
+Broadcom
+
+Intel
+
+Qualcomm
+COMPUTER NETWORKS
+
+Computer Networks and the Internet
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Unit — 1 Computer Networks and the Internet
+
+1.1 Introduction to Computer Networks
+1.2 What is the Internet?
+
+* A nuts-and-bolts and Services description, Protocol
+1.3 Network edge
+
+* End systems, Access networks, Physical media
+1.4 Network core
+
+* Packet switching, Circuit switching, Network structure
+1.5 Delay, Loss & Throughput in networks
+1.6 Protocol layers, Service models
+
+* OSI model and TCP/IP protocol suite
+COMPUTER NETWORKS
+Introduction to Computer Networks
+
+Router/Firewall
+
+Internet
+
+> iPhone
+Workstation y‘i’ Laptop Computer
+i
+I. I | l I | Smartphone
+) amm——a )
+Desktop PC Desktop PC Desktop PC
+
+* Two or more devices are connected together.
+* Communicate with each other, share data or resources
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+What is the Internet? UNIVERSITY
+
+* A massive network of networks.
+
+* A computer network that interconnects billions of computing
+devices throughout the world.
+
+* Traditional devices — PCs, Workstations, Servers — web pages,
+emails, etc.
+
+* Internet “things” — laptops, PDAs, TVs, gaming consoles, home
+security systems, home appliances, watches, cars, traffic control
+systems, etc.,
+COMPUTER NETWORKS
+
+The Internet: A “Nuts and Bolts” View
+
+- @ “p=, Billions of connected
+-g c. <§ computing devices:
+o g hosts = end systems
+n I m running ,nelgwork apps at
+
+Internet’s “edge”
+
+Packet switches: forward
+= = packets (chunks of data)
+
+routers, switches
+
+e ) %)3 Communication links
+
+fiber, copper, radio, satellite
+transmission rate: bandwidth
+
+Networks
+collection of devices, routers, links:
+
+managed by an organization
+
+mobile network
+
+datacenter
+network
+
+enterprise
+network
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+“Fun” Inter-connected Devices
+
+Tweet-a-watt:
+monitor energy use Oth ers ?
+Web-enabled toaster +
+
+weather forecaster )
+There will be 41
+Billion loT devices by
+
+9 2027
+
+&J
+
+Amazon Echo .
+IP picture frame
+
+-
+
+a Slingbox: remote
+(o, " i control cable TV
+- Security Camera
+
+AR devices
+sensorized,
+bed
+Internet phones gg mattress
+Fitbit
+
+* https://www.businessinsider.com/internet-of-things-report?IR=T
+
+COMPUTER NETWORKS @ PES
+The Internet: A “Nuts and Bolts” View UhGEras
+
+mobile network
+
+. Internet: “network of networks”
+* Interconnected ISPs
+
+Protocols are everywhere
+. .. Skype
+- control sending, receiving of messages
+
+* e.g., HTTP (Web), streaming video, Skype,
+TCP, IP, WiFi, 4G/5G, Ethernet
+
+Internet standards
+* RFC: Request for Comments Ethernet
+* IETF: Internet Engineering Task Force
+
+enterprise
+network
+COMPUTER NETWORKS @9 PES
+The Internet: A “Service” View UNIVERSITY
+
+« Infrastructure that provides services to mobile network
+applications: 2
+
+* Web, streaming video, multimedia
+teleconferencing, email, games, e-
+commerce, social media, inter-connected
+appliances, ... Skype
+
+al or global ISP
+
+provides programming interface to
+distributed applications:
+* “hooks” allowing sending/receiving apps
+
+to “connect” to, use Internet transport
+service
+
+* provides service options, analogous to
+postal service
+
+datacenter
+network
+
+enterprise
+network
+COMPUTER NETWORKS
+What is a Protocol?
+
+Human protocols:
+“what’s the time?”
+“I have a question”
+
+introductions
+
+... specific messages sent
+
+... specific actions taken when
+message received, or other
+events
+
+Network protocols:
+computers (devices) rather than humans
+
+all communication activity in Internet
+governed by protocols
+
+Protocols define the format, order of
+messages sent and received among
+network entities, and actions taken
+
+on msg transmission, receipt.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+What’s a Protocol?
+
+A human protocol and a computer network protocol:
+
+Q\ TCP connection
+
+request ——,
+
+Hi =
+TCP connection
+< response
+
+T Got the _
+time? GET -
+http://gaia.cs.umass.edu/kurose_ross
+<file>
+—
+
+time
+
+Q: other human protocols?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Network Edge: A closer look at network structure orvERSITY
+
+Network edge:
+* Referred as End systems
+* Hosts: clients & servers
+
+* Servers in data centers
+End systems are also referred to as hosts
+because they application programs such as
+a Web browser program, a Web server
+program, an e-mail client program, or an e-
+mail server program.
+
+COMPUTER NETWORKS
+Network Edge: A closer look at network structure il
+PES
+
+UNIVERSITY
+CELEBRATING 80 YEARS
+
+ACcCess networks, pnhysical media: (pO="
+The network that physically connects T
+an end system to the first router (also = —
+known as the “edge router”) on a path
+from the end system to any other
+distant end system.
+
+* wired, wireless communication links
+
+COMPUTER NETWORKS
+
+Network Edge: A closer look at network structure
+
+* Hosts: clients and servers
+
+* Servers in data centers
+
+* wired, wireless communication
+links
+
+Network core:
+¢ interconnected routers
+¢ network of networks
+
+mobile network
+
+datacenter
+network
+
+4
+il
+=m
+
+enterprise
+network
+
+PES
+
+UNIVERSITY
+
+©
+COMPUTER NETWORKS @@ PES
+Network Edge: Access networks and Physical media e
+
+Q: How to connect end systems
+to edge router?
+- Residential access networks
+
+- Institutional access networks (school,
+company)
+
+« Mobile access networks (WiFi, 4G/5G)
+
+What to look for:
+
+Transmission rate (bits per second)
+of access network
+
+Shared or dedicated access among
+users
+
+COMPUTER NETWORKS @@ PES
+Network Edge: Access Networks — Home access onvERSITY
+
+wireless
+devices «<+>> <¢ -
+<T>
+
+I ‘
+
+S u N SR
+
+=~
+
+- » to/from headend or
+= — =" central office
+often combined | Tttt Ao
+in single box q
+%y
+
+WiFi wireless access router, firewall, NAT
+
+‘ Fiber optics
+point (54, 450 Mbps)
+
+wired Ethernet (1 Gbps)
+COMPUTER NETWORKS
+Network Edge: Access Networks — Enterprise networks
+
+5 45 é7 Enterprise link
+, --=--to
+ISP (Internet)
+
+— T institutional
+router
+
+#  institutional
+
+il mail,
+
+web servers
+
+companies, universities, etc.
+
+mix of wired, wireless link technologies, connecting a mix of
+switches and routers (we’ll cover differences shortly)
+
+Ethernet: wired access at 100Mbps, 1Gbps, 10Gbps
+WiFi: wireless access points at 11, 54, 450 Mbps
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+Network Edge: Wireless Access Networks
+
+Shared wireless access network connects end system to router
+
+via base station aka “access point”
+
+Wireless local area networks (WLANs) Wide-area cellular access networks
+typically within or around building (~100 ft) provided by anb"e, cellular network
+802.11b/g/n (WiFi): 11, 54, 450 Mbps operator (10’s km)
+
+transmission rate 10’s Mbps
+4G/5G cellular networks (6G coming)
+
+to Internet to Internet
+
+
+
+COMPUTER NETWORKS
+Network Edge: Data Center Networks
+
+= high-bandwidth links (10s to 100s
+Gbps) connect hundreds to thousands
+of servers together, and to Internet
+
+Courtesy: Massachusetts Green High Performance Computing
+Center (mghpcc.org)
+
+@
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Network Edge: Physical media
+
+bit: propagates between
+transmitter/receiver pairs
+
+physical link: what lies between
+transmitter & receiver
+guided media:
+* signals propagate in solid
+media: copper, fiber, coax
+unguided media:
+
+* signals propagate freely, e.g.,
+radio
+
+Twisted pair (TP)
+
+two insulated copper
+wires (STP & UTP)
+
+* Category 5: 100 Mbps, 1 Gbps
+Ethernet
+
+* Category 6: 10Gbps Ethernet
+
+@
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Network Edge: Physical media
+
+Coaxial cable:
+
+two concentric copper
+conductors
+
+concentric rather than parallel
+bidirectional
+broadband:
+
+* multiple frequency channels on
+cable
+
+* 100’s Mbps per channel
+
+Protective Plastic Cover
+Inner Insulator
+
+—
+
+Inner Conducting Core
+Braided Outer Conductor
+
+Fiber optic cable:
+
+glass fiber carrying light pulses,
+each pulse a bit
+
+high-speed operation:
+* high-speed point-to-point
+transmission (10’s-100’s Gbps)
+low error rate:
+* repeaters spaced far apart
+
+* immune to electromagnetic
+noise
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Network Edge: Physical media
+
+@ UNIVERSITY
+
+Wireless radio
+
+signal carried in
+electromagnetic spectrum
+
+Ill
+
+no physical “wire”
+
+broadcast and “half-duplex”
+(sender to receiver)
+propagation environment
+effects:
+
+* reflection
+
+* obstruction by objects
+
+* interference
+
+Radio link types:
+
+terrestrial microwave Tonmestial Microuave
+* up to 45 Mbps channels
+
+Wireless LAN (WiFi) ?(ﬁ?\
+« Up to 100’s Mbps (%’ | —— \?)
+
+wide-area (e.g., cellular)
+1
+
+* 4G cellular: ~ 10’s Mbps
+/X Satellite Microwave
+
+satellite
+* up to 45 Mbps per channel
+» 280 msec end-end delay
+
+* geosynchronous vs. low-
+earth-orbit
+
+Earth
+
+Half-duplex: - Data can only be transmitted in one direction at a time. The sender and receiver take
+turns using a single communication channel to send and receive data.
+
+Full-duplex: - Data can be transmitted and received simultaneously in both directions. Full-duplex uses
+two separate communication channels, one for sending and one for receiving.
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core
+
+* mesh of interconnected routers
+
+* packet-switching: hosts break
+application-layer messages into
+packets
+
+» forward packets from one router
+
+to the next, across links on path
+from source to destination
+
+* each packet transmitted at full link
+capacity
+
+COMPUTER NETWORKS
+Hosts: Send packets of data
+Host sending function: / ‘/ two packets,
+takes application message TE— /L bits each
+breaks into smaller chunks, “ -
+known as packets, of length L 51 -
+bits =SSO
+transmits packet into access host
+network at transmission rate R R: link transmission rate
+* link transmission rate, aka
+link capacity, aka link
+bandwidth
+packet time needed to L (bits)
+transmission = transmit L-bit = —
+
+delay packet into link R (bits/sec)
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core: Packet Switching: store-and-forward
+
+' V ==
+
+.
+BN
+
+L bits
+per packet
+
+321
+
+source _— q destination
+T~ R bps S R bps \\/"I
+
+* Transmission delay: takes L/R seconds to
+
+transmit (push out) L-bit packet into link at OIS0} FUIEHSE) Selie:
+
+R bps L =10 Kbits
+
+« Store and forward: entire packet must R= 1:0 Mbps N
+arrive at router before it can be dor;e- _08 ';ransm|55|on
+transmitted on next link elay = 0.1 msec
+
+* End-end delay: 2L/R (above), assuming
+zero propagation delay (more on delay
+shortly)
+COMPUTER NETWORKS
+Network Core: Packet Switching: queuing delay, loss
+
+I|~? =100 Mb/s
+
+queue of packets
+waiting for output link
+
+Packet queuing and loss: if arrival rate (in bps) to link exceeds
+transmission rate (bps) of link for a period of time:
+
+* packets will queue, waiting to be transmitted on output link
+* packets can be dropped (lost) if memory (buffer) in router fills up
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+
+Network Core: Two Key Network Core Functions
+
+routing algorithm
+
+Routing:
+
+global action:
+
+Forwardingi—— - N RNEIC e .
+orward local forwarding table determine source-
+
+. header value joutput link . .
+* local action: move 0100 | 3 destination paths
+arriving packets otot | 2 taken by packets
+from router’s 1001 | 1
+
+input link to routing algorithms
+
+appropriate
+router output link
+
+destination address in arriving
+packet’s header
+
+COMPUTER NETWORKS
+Network Core: Circuit Switching
+
+end-end resources allocated to,
+reserved for “call” between source
+and destination (eg: telephone) e
+
+* in diagram, each link has four circuits.
+* call gets 2" circuit in top link and 15t
+
+=
+circuit in right link. = =
+* dedicated resources: no sharing H:
+
+* circuit-like (guaranteed) performance
+
+* circuit segment idle if not used by call (no
+sharing)
+
+* commonly used in traditional telephone
+
+networks >
+
+. . . . . — f——
+* In-circuit switching, each data unit knows g
+the entire path address which is provided H
+
+by the source.
+
+* In Packet switching, each data unit just q
+knows the final destination address g
+intermediate path is decided by the
+routers.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Multiplexing in Circuit Switched Networks: FDM & TDM
+
+Frequency Division Multiplexing
+
+(FDM) 4 users BECH
+
+* optical, electromagnetic frequencies
+divided into (narrow) frequency
+bands
+
+* each call allocated its own band, can
+transmit at max rate of that narrow
+
+band time
+
+frequency
+
+Time Division Multiplexing
+(TDM)
+time divided into frames -> slots
+
+each call allocated periodic
+slot(s), can transmit at maximum
+
+rate of (wider) frequency band, .
+but only during its time slot(s) time
+
+frequency
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Why Packet Switching Won: Statistical Multiplexing
+
+Circuit | switchinﬁ reserves a fixed slice of
+bandwidth for the entire call — even during Worked example
+silence
+
+. . . . Link capacity: 1 Gbps
+In a typical voice call, 50-60% of the time is .
+silence (pauses, listening) — a dedicated Each active user needs: 1 Mbps
+
+circuit wastes that idle capacity Users active at any instant: ~10%
+Packet switching lets many idle users share
+
+one link; bandwidth is consumed only when
+someone actually sends data Circuit Switching Packet Switching
+
+~5000+ users
+(statistically, low
+blocking)
+
+}'hisd is clalled statli(sticalf multiplexing — no 1000 users MAX
+ixed “slots,” packets from many sources .
+interleave on demand (guaranteed, fixed)
+
+It's the reason internet backbone links are
+provisioned in shared Gbps/Tbps trunks, not
+divided per-subscriber
+COMPUTER NETWORKS
+
+Network Core: Packet Switching vs Circuit Switching
+
+Is packet switching a “slam dunk winner”?
+
+great for “bursty” data — sometimes has data to send, but at other times
+not
+
+* resource sharing
+* simpler, no call setup
+
+excessive congestion possible: packet delay and loss due to buffer overflow
+* protocols needed for reliable data transfer, congestion control
+
+Q: How to provide circuit-like behavior?
+* bandwidth guarantees traditionally used for audio/video applications
+
+Q: human analogies of reserved resources (circuit switching) versus
+on-demand allocation (packet switching)?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core: Packet Switching vs Circuit Switching
+
+Connectionless
+
+Connection oriented
+
+Designed for data Designed for voice
+
+* Flexible * Inflexible
+ Out of order, assembled at * Message received in same
+the dest order
+* FDM & TDM
+
+Forward, Store & Fwd
+
+Physical layer
+
+Network layer
+
+dith | ‘
+* Bandwidth is saved gcfxr;%")‘”d is wasted
+
+(dynamic) * Transmission of data —
+
+* Transmission of data — source
+
+Source, routers « Call setup delay
+
+* Transmission delay
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+End systems connect to Internet via access ISPs (Internet Service
+Providers)
+
+Residential, company and university ISPs
+Access ISPs in turn must be interconnected.
+< So that any two hosts can send packets to each other
+Resulting network of networks is very complex
+< Evolution was driven by economics and national policies
+
+Let’s take a stepwise approach to describe current Internet
+structure
+
+kY
+L4
+
+kY
+L4
+
+kY
+L4
+
+kY
+L4
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+Question: given millions of access ISPs, how to connect them together?
+
+P <
+s &5
+o e
+e
+
+@ UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+Question: given millions of access ISPs, how to connect them together?
+
+connecting each access ISP to
+each other directly doesn’t scale: '
+O(N?) connections.
+
+COMPUTER NETWORKS @3 PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+Option: connect each access ISP to one global transit ISP?
+Customer and provider ISPs have economic agreement.
+
+Network
+Structure 1
+
+UNIVERSITY
+
+COMPUTER NETWORKS @3 PES
+
+Internet Structure: a “network of networks”
+
+But if one global ISP is viable business, there will be competitors ....
+
+Network
+Structure 2
+
+UNIVERSITY
+
+COMPUTER NETWORKS @5 PES
+
+Internet Structure: a “network of networks”
+
+But if one global ISP is viable business, there will be competitors ....
+
+who will want to be connected .
+Internet exchange point
+
+Network
+Structure 3
+
+https://ix.nixi.in/page/What_IX
+
+COMPUTER NETWORKS
+
+Peering at Scale: NIXI, India's Internet Exchange
+
+NIXI (National Internet Exchange of India) — non-
+profit under MeitY, established 2003
+
+About 77 operational exchange nodes across India:
+Delhi/Noida, Mumbai, Chennai, Kolkata,
+Bengaluru, Hyderabad, Ahmedabad, and more
+
+Purpose: let Indian ISPs exchange India-to-India
+traffic locally, instead of routing it abroad and back
+
+Before widespread local peering, a request from
+Bengaluru to Chennai could round-trip through
+Singapore or the US — real, avoidable delay and
+cost
+
+Peak traffic NIXI now handles: over 1.5 Tbps
+
+@ UNIVERSITY
+Before local peering
+
+-------- g SrampereUs
+1
+1
+1
+1
+‘
+
+long international detour for domestic traffic
+
+H NIXI (local IXP) H Chennai
+
+traffic stays within India — lower latency, lower cost
+
+With NIXI
+
+Bengaluru
+
+Try it: run a traceroute from a campus machine to another Indian site — see if it
+stays within India or takes a detour.
+
+UNIVERSITY
+
+COMPUTER NETWORKS @5 PES
+
+Internet Structure: a “network of networks”
+
+.. and regional networks may arise to connect access nets to ISPs
+
+Network
+Structure 4
+
+regional ISP
+
+N W
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+.. and content provider networks (e.g., Google, Microsoft, Akamai)
+may run their own network, to bring services, content close to end
+
+users
+
+(= IXP
+
+Network
+', Structure 5
+6 =)
+
+= = ,
+
+regional ISP
+
+e
+
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+Regional
+
+Regional
+
+acce acce acce acce acce acce acce acce
+ss ss ss ss ss ss ss ss
+ISP ISP ISP ISP ISP ISP ISP ISP
+
+At “center”: small # of well-connected large networks
+
+“tier-1” commercial ISPs (e.g., AT&T, NTT, T-Mobile, Tata Communications), national &
+international coverage
+
+content provider networks (e.g., Google, Facebook/Meta, Amazon): private network that
+connects its data centers to Internet, often bypassing tier-1, regional ISPs
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+CDNs: Why Netflix Doesn’t Stream From California
+
+In practice, the access network — not the
+backbone — is almost always the end-to-end delay
+bottleneck
+
+A Content Delivery Network (CDN) places copies of
+popular content at the network's edge, close to
+access ISPs
+
+Netflix Open Connect, Akamai, Cloudflare, Google
+Global Cache — physical appliances installed inside
+ISP data centers, including inside Jio's and Airtel's
+networks in India
+
+Result: a Bengaluru user's Netflix stream is served
+from a box a few km away, not a data center in the
+us
+
+UNIVERSITY
+Without a CDN
+
+Origin server e :230Lns_n£m_d r_np_ - You
+(USA) (Bengaluru)
+
+With a CDN
+
+Origin server
+(USA)
+
+CDN edge You
+(inside Jio/Airtel) (Bengaluru)
+
+~8 ms round trip
+
+Numbers are illustrative: actual round-trip
+times vary by route and network conditions —
+the point is the order-of-magnitude drop from
+crossing an ocean to hopping to a nearby edge
+cache.
+
+
+
+COMPUTER NETWORKS @@ PES
+Network Core: Tier 1 ISP Network Map: Sprint 2019
+
+L s CANADA POP: point-of-presence
+e to/from other Sprint PoPS
+
+links to peering
+
+B
+Kansas “
+UNITED STATES  tene ——
+
+Sprint Node
+
+Sprint Ethernet POP or
+Sprint Virtual POP
+
+Landing Station
+Sprint Network Backbone
+
+Sprint Network Coverage
+COMPUTER NETWORKS @@ PES
+Performance: Delay, Loss & Throughput i
+
+How do packet loss and delay occurs?
+
+packets queue in router buffers
+
+packets queue, wait for turn
+
+arrival rate to link (temporarily) exceeds output link capacity: packet loss
+packet being transmitted (transmission delay)
+
+i packets in buffers (queueing delay)
+
+free (available) buffers: arriving packets
+dropped (loss) if no free buffers
+COMPUTER NETWORKS
+Performance: Packet Delay — 4 Sources
+
+transmission
+
+ALY - ion —»
+= gropagatlon
+B q —
+L nodal
+processing queueing
+dnodal = dproc + dqueue + dtrans + dprop
+dproc: NOdal processing dgueve: queueing delay
+check bit errors time waiting at output link for transmission
+determine output link depends on congestion level of router
+
+typically < microsec microseconds to milliseconds
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Performance: Packet Delay — 4 Sources Ly
+
+transmission
+
+«— propagation —
+
+nodal
+
+pFOCESSI ng q UEUEI ng * Check out the online interactive exercises:
+http://gaia.cs.umass.edu/kurose_ross
+dnodal = dproc + dqueue + dtrans + dprop
+Oirans: transmission delay: d,rop: Propagation delay:
+L: packet length (bits) d: length of physical link
+R: link transmission rate (bps) s: propagation speed (~2x108 m/sec)
+d,..,=d/s
+Clom=lR >~
+dtransand dprop
+
+very different
+COMPUTER NETWORKS 6{@ PES
+Transmission Delay vs Propagation Delay RSy
+
+Transmission Delay Propagation Delay
+
+Time required for the router to Time it takes a bit to propagate
+push out the packet. from one router to the next.
+
+A function of the packet’s A function of the distance
+length and the transmission between the two routers.
+rate of the link.
+
+Nothing to do with the Nothing to do with the
+distance between packet’s length or the
+
+the two routers. transmission rate of the link.
+COMPUTER NETWORKS
+Performance: Delay — Caravan Analogy
+
+iRz R ;mf_-,g<— 100 km
+
+ten-car caravan toll booth
+(aka 10-bit (aka router)
+packet)
+
+cars “propagate” at 100 km/hr
+
+toll booth takes 12 sec to service
+car (bit transmission time)
+
+car ~ bit; caravan ~ packet
+
+Q: How long until caravan is lined
+up before 2nd toll booth?
+
+toll booth
+
+time to “push” entire caravan
+through toll booth onto
+highway = 12*10 = 120 sec
+
+time for last car to propagate
+from 1st to 2nd toll both:
+100km/(100km/hr) =1 hr
+
+A: 62 minutes
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Performance: Delay — Caravan Analogy (more)
+
+ten-car c‘aravan toll booth toll booth
+(aka 10-bit (aka router)
+packet)
+
+suppose cars now “propagate” at 1000 km/hr
+and suppose toll booth now takes one min to service a car
+
+Q: Will cars arrive to 2nd booth before all cars serviced at first
+booth?
+
+A: Yes! after 7 min, first car arrives at second
+booth; three cars still at first booth
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+WhiCh Delay Wins? UNIVERSITY
+
+You are downloading a 5-Megabyte image.
+Scenario A: Downloading over a fast 1 Gbps fiber link from a server 12,000 km away.
+
+Scenario B: Downloading over a slow 1 Mb?ps dial-up link from a server next door. Which delay component
+dominates in Scenario A versus Scenario B®
+
+Answer - In Scenario A, the message is short relative to the massive bandwidth, so propagation delay dominates.
+For example, assuming propagation speed = 2x108m/s:
+
+_ 12000000 _ o
+) o prop = TosqeE oo D ovms
+The 5 MB image transmission time is only about:
+5%10°%8
+dirans = —109 = 0.04s = 40ms
+So propagation is a major/dominant component.
+In Scenario B, transmission delay dominates.
+The distance is tiny, so propagation delay is negligible.
+Fora 5 MB image:
+5x10°x8 20
+_— S
+trans 106
+
+So the transmission delay is approximately 40 seconds, while propagation is extremely small.
+COMPUTER NETWORKS @@ PES
+Performance: Packet Queueing Delay revisited UNTVERSITY
+
+Unlike other delays (dproc, dtrans, dprop), dqueue is interesting.
+* Canvary from packet to packet.
+
+* Characterize dg,q, -> average, variance, probability that it
+exceeds some specified value.
+
+When is the queuing delay large and when is it insignificant?
+* Rate at which traffic arrives at the queue,
+
+* Transmission rate of the link,
+
+* Nature of the arriving traffic — periodically or in bursts
+
+L-a , arrival rate of bits “traffic
+
+R service rate of bits Intensity”
+COMPUTER NETWORKS @@ PES
+Performance: Packet Queueing Delay revisited UNTVERSITY
+
+R: link bandwidth (bps)
+
+>
+o
+L: packet length (bits) L
+a: average packet arrival rate (pps) %ﬁ
+La: avg. rate at which bits arrive at § Design your system so
+the queue g that the traffic intensity is
+« ” .o . 20 no greater than 1.
+La/R > 1: more “work” arriving is g g
+more than can be serviced - average 3 i
+delay infinite! traffic intensity = La/R 1
+
+La/R <= 1: nature of arriving traffic La/R~0
+
+La/R ~ 0: avg. queueing delay small
+
+Queuing delay is
+calculated as:
+IL/(R(1-1)) for 1< 1.
+
+La/R > 1: Average rate at which bits arrive at
+the queue exceeds the rate at which the bits
+can be transmitted from the queue (delay is
+
+large) La/R -> 1
+@ UNIVERSITY
+
+no wait
+
+delay = 1 transmission time
+delay = 4 transmission times
+delay = 9 transmission times
+
+delay = 99 transmission
+times
+
+COMPUTER NETWORKS
+Queuing Delay Formula: Why It Blows Up Near =1
+Full formula: d_queue = I'L / (R(1-1)), for I < 1 Congestion multiplier 1/(1-1)
+Regroup it: d_queue = (L/R) x I/(1-1) = d_trans x I (intensity) | l/(1-1) m
+1/(1-1) 0 0
+L/R is exactly transmission delay — so queuing 0.5 1x
+delay is transmission delay, scaled by a 0.8 4%
+congestion multiplier
+0.9 9x
+The multiplier 1/(1-1) depends only on traffic
+intensity, not on packet size or link rate directly 0.99 99x
+“La/R >1 -> average delay infinite” 1 o
+
+delay blows up
+
+pkt/s, 1=0.1 > d_queue = 11.1 ps.
+
+A 9% increase in arrivals produced an 81x increase in delay
+
+Worked example: R =10 Mbps, L = 1000 bits - d_trans = 100 ps. At a = 1000
+
+Raise arrival rate 9% to a = 9000 pkt/s (I =0.9) - d_queue =900 ps.
+
+COMPUTER NETWORKS
+“Real” Internet Delays and Routes
+
+what do “real” Internet delay & loss look like?
+
+traceroute program: provides delay measurement from source
+to router along end-end Internet path towards destination.
+For all i:
+
+* sends three packets that will reach router i on path towards
+destination (with time-to-live field value of i)
+
+* router i will return packets to sender
+
+* sender measures time interval between transmission and
+reply
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+“Real” Internet Delays and Routes
+
+traceroute: gaia.cs.umass.edu to www.eurecom.fr
+
+3 delay measurements from
+gaia.cs.umass.edu to cs-gw.cs.umass.edu
+
+1 128.119.240.254) 1ms 1 ms 2ms
+2 125.110.3.145) 1ms 1 ms 2 ms<>.0€lay measurements
+3 cht-vbns.gw.umass.edu .119.3.130) 6 ms 5 ms 5 ms to borderl-rt-fa5-1-0.gw.umass.edu
+
+4 jn1-at1-0-0-19.wor.vbns.net (204.147.132.129) 16 ms 11 ms 13 ms
+
+5 Jn1-s07-0-0-0.wae.vbns.net (204.147.136.136) 21 ms 18 ms 18 ms
+
+6 abilene-vbns.abilene.ucaid.edth(gg%g%1416.9)252 m52;8 ms 22 ms link
+.32.8. ms 22 ms 22ms trans-oceanic lin
+
+740.103.253) 104 ms 109 ms )
+
+de2-1.de1.de.geant.net (62.40.96.129) 109 ms 102 ms 104 ms
+
+de.fr1.fr.geant.net (62.40.96.50) 113 ms 121 ms 114 ms ;
+
+renater-gw fr1 fr.geant.net (62.40.103.54) 112 ms 114 ms 112 ms«100ks like delays
+
+0
+1
+2 nio-n2.cssi.renater.fr (193.51.206.13) 111 ms 114 ms 116 ms decrease! Why?
+3 nice.cssi.renater.fr (195.220.98.102) 123 ms 125 ms 124 ms
+4 r3t2-nice.cssi.renater.fr (195.220.98.110) 126 ms 126 ms 124 ms
+5 eurecom-valbonne.r3t2.ft.net (193.48.50.54) 135 ms 128 ms 133 ms
+
+(75 194.214.211.25 (194.214.211.25) 126 ms 128 ms 126 ms
+8
+
+* Kk ok
+
+— :
+* ok x means no response (probe lost, router not replying)
+19 fantasia.eurecom.fr (193.55.113.142) 132 ms 128 ms 136 ms
+
+* Do some traceroutes from exotic countries at www.traceroute.org
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @S PES
+How Traceroute works? UNIVERSITY
+
+ICMP Dest
+ICMP TTL Unreach
+ICMP TTL Exceed
+
+Exceed
+
+Exceed
+LI —&—L],
+z_ 77 TIL= TTL=2 TTL=3 TTL=4 TIL=5 /)
+SRC Router 1 Router 2 Router 3 Router 4 DST
+
+Refer RFC 1393, Traceroute Using an IP Option
+
+Don’t Trust Traceroute (Completely)
+COMPUTER NETWORKS @@ PES
+Performance: Packet loss UNIVERSITY
+
+gueue (aka buffer) preceding link in buffer has finite capacity
+packet arriving to full queue dropped (aka lost)
+
+lost packet may be retransmitted by previous node, by source end system, or
+not at all
+
+buffer . .
+A/ (waiting area)  Packet being transmitted
+= N~
+
+B >
+B [ 2
+e — \packet arriving to
+
+Ind full buffer is lost
+
+* Check out the Java applet for an interactive animation on queuing and loss
+COMPUTER NETWORKS
+Performance: Throughput
+
+throughput: rate (bits/time unit) at which bits are being sent from
+sender to receiver
+
+* instantaneous: rate at given point in time
+* average: rate over longer period of time
+
+‘ pipe that can carry pipe that can carry -
+. fluid at rate fluid at rate
+server sends bits (Rs bits/sec) (R, bits/sec)
+
+(fluid) into pipe
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS e{@ PES
+Performance: Throughput (more) UNIVERSTTY
+
+R, < R, What is average end-end throughput?
+
+@&) R, bits/sec w R bits/sec )»5
+g
+
+Rs > R. What is average end-end throughput? Throughput = min{Rs Rc}
+9
+) R, bits/sec )@ R¢bits/sec Q
+; e
+—  bottleneck link
+
+link on end-end path that constrains end-end throughput.
+
+COMPUTER NETWORKS @ PES
+
+Suppose you are downloading an MP3 file of F = 32 million bits.
+
+The server has a transmission rate of Rs = 2 Mbps and you have an
+access link of Rc =1 Mbps.
+
+What is the time needed to transfer the file?
+
+Let’s work it out!
+Solution:
+
+Throughput — Numerical Example
+
+The end-to-end transfer rate is limited by the slowest link: g
+Transfer Rate = min(Ry’ R,) = min(2,1) = 1 Mbps P
+.
+. S sl 32x10° a
+Time=Transfer Rate/ File Size = TX10° g
+
+32 seconds!
+COMPUTER NETWORKS @ PES
+Performance: Throughput — Network Scenario onveRsITY
+
+per-connection end-end
+throughput: min(R,R,, R/10)
+
+. . . * Check out the online interactive
+in practice: R. or Ry is often  exercises for more examples:
+
+bott I enec k http://gaia.cs.umass.edu/kurose_ross/
+
+Suppose Rs =2 Mbps, Re=1
+Mbps, R =5 Mbps
+
+10 clients from 10 servers =
+10 downloads
+
+10 connections (fairly) share End-to-end throughput for .
+each download is now
+
+backbone bottleneck link R bits/sec reduced to 500 kbps.
+
+@ UNIVERSITY
+
+Computer Networks and the Internet
+
+Protocol Layers
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+
+“Protocol Layers” and reference models
+
+Networks are complex,
+with many “pieces”:
+hosts
+routers
+links of various media
+applications
+protocols
+hardware, software
+
+Question:
+
+is there any hope of
+organizing structure of
+network?
+
+.. or at least our discussion
+
+of networks?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Example: Organization of Air Travel
+
+e
+
+ticket (purchase) ticket (complain)
+baggage (check) baggage (claim)
+gates (load) gates (unload)
+runway takeoff runway landing
+airplane routing airplane routing
+
+airplane routing
+
+airline travel: a series of steps, involving many services
+
+PES
+
+UNIVERSITY
+Layering of Airline functionality
+
+ticketing service
+baggage service
+gate service
+
+runway service
+
+routing service
+
+layers: each layer implements a service Q: describe in words
+via its own internal-layer actions the service provided
+relying on services provided by layer in each layer above
+
+below
+
+aa
+&) PES
+COMPUTER NETWORKS @ PES
+Why Iayering? UNIVERSITY
+
+Approach to designing/discussing with complex systems:
+
+explicit structure allows identification, relationship of complex system’s
+pieces
+* layered reference model for discussion
+
+modularization eases maintenance, updating of system
+* change in layer's service implementation: transparent to rest of system
+* e.g., change in gate procedure doesn’t affect rest of system
+
+Is layering considered harmful?
+layering in other complex systems?
+COMPUTER NETWORKS
+Internet Protocol Stack
+
+application: supporting network applications (access
+to network resources)
+* IMAP, SMTP, HTTP
+
+transport: process-process data transfer (segmentation
+& reassembly, sockets, connection, flow and error control)
+* TCP, UDP
+
+network: routing of datagrams from source to
+destination (addressing, routing)
+
+* |P, routing protocols
+
+link: data transfer between neighboring network
+elements (framing, addressing, flow & error control)
+* Ethernet, 802.11 (WiFi), PPP
+
+physical: bits “on the wire”
+
+application
+
+transport
+
+network
+
+link
+
+physical
+
+@
+
+PES
+
+UNIVERSITY
+
+
+COMPUTER NETWORKS
+OSI reference model
+
+* presentation: allow applications to —
+interpret meaning of data, (e.g., encryption, application
+
+compression, machine-specific conventions)
+
+. . . presentation
+* session: synchronization, checkpointing, -
+recovery of data exchange session
+* Internet stack “missing” these layers! transport
+* these services, if needed, must be
+implemented in application network
+* needed? link
+physical
+
+Open Systems Interconnection (OSI) model — introduced
+in late 1970s by ISO.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+OSl reference model (more)
+
+Device A
+
+Intermediate Intermediate
+node node
+
+— <
+
+Device B
+
+%
+b
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+4-3 interface
+Network
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Layer-to-layer communication (7th layer)
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+
+4-3 interface
+Network
+
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Physical communication
+
+N
+
+[y
+
+UNIVERSITY
+
+User support
+layers
+
+‘ Heart
+
+Network
+support layers
+COMPUTER NETWORKS
+TCP/IP vs OSI reference model
+
+Application
+
+Presentation
+
+Session
+
+Application
+
+Transport
+
+Transport |
+
+Network
+
+Network |
+
+Data link
+
+Data link |
+
+Physical
+
+e el
+
+OSI Model
+
+Physical |
+
+TCP/IP Protocol Suite
+
+Several application
+protocols
+
+Several transport
+protocols
+
+Internet Protocol
+and some helping
+protocols
+
+Underlying
+LAN and WAN
+technology
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+A Link 2
+@& =
+@ ]
+Link 3 Link 4
+Link 5
+R3 - R4
+
+R2
+
+A private internet
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Legend [ ©Q Source @ Destination
+
+A R1 R3 R4 B
+Physical Physical
+layer @ ® @ Igyer
+Link 1 Link 3 Link 5 Link 6
+Link 1
+Link 2
+R2
+Link 4 Link 6
+Link 5 :
+R4
+— e
+M
+
+011... 101 011... 101
+
+@ UNIVERSITY
+
+Communication at
+the physical layer
+
+Unit of Communication
+- bit
+COMPUTER NETWORKS @@ PES
+Layers in the TCP/IP Protocol Suite (more) L
+
+Legend [ ©Q Source @ Destination D Data H Header
+
+A R1 R3 R4 B
+Data link Data link
+Physical Physical Communication at the
+Link 1 Link 3 Link 5 Link 6 data link layer
+Link 1
+A Unit of Communication —
+frame
+‘e
+Mo
+[ D2 [H2
+
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Legend | O Source @ Destination D Data H Header
+
+A R1 R3 R4
+Network E zl Network
+Data link J _J _J _J Data link
+Physical -|J -'J -|J Physical
+Link 1
+A Link 2
+> a & :
+@1 1
+Link 3 Link 4
+Datagram
+»3 Link 5 R4 ‘
+
+UNIVERSITY
+
+Communication at the
+network layer
+
+Unit of Communication —
+datagram
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+A Legend | ©Q Source @ Destination D Data H Header B
+Transport ﬂ RI R3 R1 Transport
+Network J Network
+Data link J J J Data link
+Physical Physical
+
+Link 1
+
+A
+@
+
+UNIVERSITY
+
+Communication at the
+transport layer
+
+Unit of Communication
+— segment/packet
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Application
+Transport
+
+Data link
+Physical
+
+A B
+Application Legend | O Source @ Destination D Data H Header
+Trans|
+port R1 R3 R4
+Network -J
+Data link
+Physical
+Link 1
+A Link 2
+R1 R2
+@
+<1 1
+
+Link 3
+
+R3
+
+UNIVERSITY
+
+Communication at the
+application layer
+
+Unit of Communication
+— message
+COMPUTER NETWORKS
+
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+
+physical
+
+g8
+source
+
+Application exchanges messa
+
+M
+
+>
+
+ges 1o implement some application
+
+service using services of transport layer
+
+M
+
+Ht
+
+>
+
+Transport-layer protocol transfers M (e.g., reliably) from one process
+to another, using services of network layer
+
+= transport-layer protocol encapsulates
+application-layer message, M, with
+transport layer-layer header H; to
+create a transport-layer segment
+
+* H; used by transport layer protocol to
+implement its service
+
+PES
+
+UNIVERSITY
+
+@
+
+application
+
+transport
+
+network
+
+link
+
+physical E
+
+destination
+
+COMPUTER NETWORKS
+
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+
+physical
+
+g8
+source
+
+Hi| M >
+
+Transport-layer protocol transfers M (e.g., reliably) from one process
+to another, using services of network layer
+
+Hp[Hi| M >
+
+Network-layer protocol transfers transport-layer segment [H, | M] from
+one host to another, using link layer services
+
+= network-layer protocol encapsulates
+transport-layer segment [H, | M] with
+network layer-layer header H,, to
+create a network-layer datagram
+* H, used by network layer protocol to
+implement its service
+
+@ UNIVERSITY
+
+application
+
+transport
+
+network
+
+physical
+
+destination
+
+COMPUTER NETWORKS
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+- physical
+i
+source
+
+Hp|Ht| M
+
+>
+
+Network-layer protocol transfers transport-layer segment [H, | M] from
+one host to another, using link layer services
+
+—
+
+Link-layer protocol transfers datagram [H,| [H; [M] from host to
+
+Hi|Hh|Ht| M
+
+neighboring host, using network-layer services
+
+= link-layer protocol encapsulates
+network datagram [H,| [H, [M], with link-
+
+layer header H, to create a link-layer
+
+frame
+
+@ UNIVERSITY
+
+application
+
+transport
+
+network
+
+physical
+
+destination
+
+COMPUTER NETWORKS PES
+OSl vs TCP/IP Protocol Suite UNIVERSITY
+
+The OSI Model The TCP/IP Model
+
+Application
+
+DHCP, DNS, FTP, HTTP, HTTPS,
+POP, SMTP, SSH, etc...
+
+Application
+
+Presentation
+
+Session bata
+
+Segment
+
+Transport TCP UDP Transport
+
+Datagram
+Network IP Address: IPv4, IPv6 Internet
+F
+Link MAC Address o
+1 Network Access
+
+Ethernet cable, fibre, wireless,
+
+Phisical coax, etc... Bits
+
+COMPUTER NETWORKS @@ PES
+Enca pSUlatiOn UNIVERSITY
+
+Matryoshka dolls (stacking dolls)
+
+message  segment datagram frame
+
+Credit: https:/dribbble.com/shots/7182188-Babushka-Boi
+
+COMPUTER NETWORKS e{@ PES
+Encapsulation & Decapsulation UNIVERSITY
+
+application
+
+application a message M v
+
+transport 8 segment He| M A M transport
+network a datagram  [Hn|Hy| M Ha[Hy \ network
+&
+link frame Hi[Hp|H | M Hi| Hn|H:
+
+physical ¥_/ physical E
+
+source destination
+COMPUTER NETWORKS @@ PES
+Encapsulation — End-to-End view UNIVERSITY
+message M appligation
+segment |[Hy| M trangport
+datagram [Hy| Hi| M netvyork .
+frame |Hj|Hp| Hi| M ligk -
+physical
+link
+physical o
+| .
+switch
+destination il e Retwork
+M Qpplication Hi | Hnl He Iin|.< v
+H] ™ | | fransport physical
+Hp| Hi| M network
+H[Ho H] ™ link router
+
+COMPUTER NETWORKS PES
+
+. - UNIVERSITY
+Encapsulation & Decapsulation
+
+. Header at transport layer
+Legend [B] Header at network layer
+[B] Header at data-link layer T Decapsulate
+
+l Encapsulate
+
+Source host Destination host
+
+COMPUTER NETWORKS PES
+
+Introduction to Network Devices e
+
+M—» Application Gateways
+
+! TRANSPORT LAYER }—b Transport Gateways
+NETWORKLAYER '—* Router
+
+: DATA LINK LAYER }——b Bridge, NIC, and Switch
+
+: PHYSICAL LAYER ]—D Repeaterand Hub
+
+COMPUTER NETWORKS @ PES
+Introduction to Network Devices : Repeater UNIE
+
+Repeater
+
+hPownN -~
+
+Regenerate the signal over the same network before the signal becomes too weak or corrupted
+to extend the length to which the signal can be transmitted over the same network
+Works at the Physical Layer
+
+|——Week Signalﬁ
+
+Strong Signal ‘ Strong Signal
+
+Repeater
+
+Working of a Repeater:-
+
+Signal Reception: Captures incoming data signal (electrical voltages or electromagnetic waves).
+Signal Amplification: Strengthens weakened signals due to attenuation and interference.
+
+Signal Regeneration: Reconstructs the signal to ensure data integrity and network compliance.
+Signal Transmission: Sends the amplified and regenerated signal to its target, minimizing further
+deterioration.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Hub ey
+
+Hub
+
+e Basic networking device that is used to connect multiple devices together on a local network.
+
+e |t shares bandwidth among all connected devices and broadcasts data sent by one device to all
+others, giving each device equal access to the network
+
+e Operates at Physical Layer
+
+Features of a Hub:-
+
+= HUB
+. Always Broadcast: Hubs broadcast data to = 9.‘\\D s i
+all connected devices, regardless of the =—=o
+intended recipient.
+2. Half-duplex Communication: Only one device i
+can transmit at once. i =
+
+3. Cannot Store MAC Addresses: Hubs lack
+intelligence and cannot store MAC
+addresses or maintain tables.
+
+4. No Data Filtering: Hubs transmit all data to all connected devices without filtering.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Modem ARSI
+
+Modem
+
+»ow
+
+Device that connects a computer to the internet by converting digital signals to analog and vice
+
+versa for data transmission.
+Operates at the Physical Layer e erssgecr] -
+
+Modem Modem
+
+Modem Data Transmission Process:-
+
+. Modulation: The modem converts digital data from the computer into an analog signal
+
+for transmission.
+
+Transmission: The modulated signal is sent over the communication line to the
+receiving modem.
+
+Demodulation: The receiving modem converts the analog signal back into digital data.
+Decoding: The digital data is then sent to the computer for use.
+COMPUTER NETWORKS @ PES
+Introduction to Network Devices : Bridge ey
+
+Bridge
+
+o
+
+A 2-port device that joins two or more network segments and routes data between them
+
+according to MAC addresses D
+Operates at the Data Link Layer E==
+
+HUB Bridge HUB
+Functions :- .—»;- H
+
+. Segmentation: Divides a large network into smaller segments to reduce congestion
+
+and improve performance.
+
+Filtering: Uses MAC addresses to selectively forward packets, enhancing security and bandwidth
+usage.
+
+Learning: Tracks MAC addresses and port mappings to optimize packet forwarding.
+
+Forwarding: Directs packets between segments, reducing unnecessary traffic and ensuring proper
+delivery.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Switch UN T
+
+Switch
+
+e An intelligent network device, functioning as a multiport bridge, uses MAC addresses to forward
+data packets to the appropriate destination ports.
+e Operates at Data Link Layer
+
+Features of a Switch:-
+
+1. Employs packet switching to receive and route
+data from source to destination.
+
+2. Can perform some error checking before
+forwarding data to the destined port.
+
+3. Can operate in full-duplex mode, enabling Ppe>
+simultaneous data transmission & reception in network —
+
+4. Store MAC addresses of connected devices,
+routing communication only to the intended destination, reducing collisions and eliminating
+broadcast domains.
+
+COMPUTER NETWORKS e[@ PES
+Introduction to Network Devices : NIC UG e
+
+NIC - Network Interface Card
+
+e ltis a physical card or chip, which contains MAC addresses, helps to identify the device on the
+network.
+e Used at the Data Link Layer Types of NIC
+
+Internal NIC External NIC
+
+Functions of a NIC:-
+
+1. Connectivity: Links the device to the WP S .
+network (wired or wireless). @ l - =
+2. Data Transmission: Sends and receives ~ "
+
+data between devices. ' \\’ qb
+
+3. Data Conversion: Converts data for
+transmission and reception.
+
+Error Handling: Detects and corrects transmission errors.
+
+Traffic Management: Prioritizes or limits data to avoid congestion.
+Security: Provides encryption and authentication for protection.
+
+ook
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Router RSy
+
+Router
+
+e Device that routes/forwards data packets based on their IP addresses and have a dynamically
+updating routing table based on which they make decisions on routing the incoming packets.
+
+e Operates at the Network Layer S ——
+LAN %" = = = LAN
+Functions of a Router:- \‘D\M/ﬂ 4:) N ,\”>@,9D
+poiofofoq . 7 pelolelc
+1. Forwarding: Receives packets, phw
+checks headers, performs basic V| -
+functions, and forwards packets to @ @ X = *T m oo
+the appropriate output port. - \ / L \‘B\M/m
+RLLE pui & |sgea
+1. Routing: Determines the best path for ’7EQ\E‘ = Q' 6 L B
+S oo <
+
+a packet to reach its destination using a
+routing table built with algorithms.
+
+
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Router et
+
+Router
+
+Functions of a Router:-
+3. Network Address Translation (NAT): Translates between private and public IP
+addresses, enabling devices on a private network to access the internet.
+
+©1213.14.15 © 40.30.20.10
+
+--Lml
+
+©192168.1.5 19216811
+COMPUTER NETWORKS e{@ PES
+Introduction to Network Devices : Gateway L
+
+Gateway
+
+e Network connectivity device that connects two different configuration networks
+
+e The gateway acts as a portal between two applications via protocol communications, allowing
+them to share data on the same or other systems. Hence, a gateway is also a protocol converter
+that can operate at any OSI model layer.
+
+Types of Gateway:- s
+1. Unidirectional Gateway: Data flows in
+one direction, with changes replicated m
+
+from source to destination only.
+2. Bidirectional Gateway: Data flows in
+both directions, used for GATEWAY
+
+. . INTERNET
+synchronization.
+
+Introduction of Gateways ee
+
+COMPUTER NETWORKS
+
+Introduction to Network Devices : Firewall
+
+Firewall
+
+e Network security device that
+monitors incoming and outgoing
+network traffic and decides
+whether to allow or block specific
+traffic based on a defined set of
+security rules
+
+e [t can used in the transport layer
+or the application layer
+
+P
+
+Internet
+
+Firewall
+
+et
+
+c
+"
+* .Il o
+2
+
+User 2
+
+Ll
+
+User 3
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+
+Beyond the Basics: Wireless AP, WLC, and L3 Switch
+Access Point (AP): a Layer-2 device that bridges wireless clients onto the wired LAN — functionally a
+‘wireless hub/bridge
+
+Wireless LAN Controller (WLC): centrally manages many APs across an office or campus — handles roaming
+and channel planning
+
+L3 Switch: combines Switch (Layer 2) + Router (Layer 3) in one box — the modern default in real campus
+and data-center networks
+
+Access Point (AP) Layer 2 (Data Link) Bridges wireless clients to the wired LAN
+
+Wireless LAN Controller (WLC) Management layer Centrally manages many APs
+
+L3 Switch Layer 2 + Layer 3 Switches within a VLAN, routes between VLANs
+COMPUTER NETWORKS
+Introduction to Network Devices
+
+@
+
+Function Broadcasts data to all devices Forwards data to the specific destination device
+based on MAC address
+Layer Operates at Physical Layer Operates at Data Link Layer
+
+Data Handling
+
+Sends data to all connected devices
+
+Sends data only to the intended device
+
+Collision Single collision domain Multiple collision domains (one per port)
+Domain
+
+Bandwidth Shared bandwidth among all devices Dedicated bandwidth for each device
+Intelligence Basic, no intelligence More intelligent, stores MAC addresses and
+
+makes forwarding decisions
+
+Data Filtering
+
+No filtering, all data is broadcasted
+
+Filters data based on MAC addresses
+
+Usage
+
+Suitable for small networks
+
+Suitable for larger, more complex networks
+
+Performance
+
+Lower performance due to collisions
+
+Higher performance with reduced collisions
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Introduction to Network Devices
+
+@
+
+Transmission
+
+the network.
+
+Definition A network device that connects multiple A network device that connects multiple
+devices within the same network. networks and routes data between them.
+Data Uses MAC addresses to forward data within | Uses IP addresses to route data between
+
+networks.
+
+network.
+
+Function Operates at Data Link Layer Operates at Network Layer
+
+Broadcast Typically operates within a single broadcast | Breaks up broadcast domains and creates
+
+Domain domain. separate ones.
+
+Usage Used in LANs to expand network capacity. | Used to connect LANSs to the internet or other
+LANSs.
+
+Speed High-speed data transfer within the Typically slower due to complex routing
+
+processes.
+
+PES
+
+UNIVERSITY
+@ UNIVERSITY
+
+Computer Networks and the Internet
+
+Interactive Exercises
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+Interactive Exercise
+
+@ UNIVERSITY
+
+Computing end-end delay (transmission and
+propagation delay)
+
+Consider the figure below, with three links, each
+with the specified transmission rate and link
+length.
+
+«—Link 1—
+|
+
+Transmission rate: 100 Mbps
+Link Length: 3 Km
+
+Transmission rate: 10 Mbps
+Link Length: 3 Km
+
+Transmission rate: 1000 Mbps
+Link Length: S00 Km
+
+Find the end-to-end delay (including the
+transmission delays and propagation delays on
+each of the three links, but ignoring queueing
+delays and processing delays) from when the left
+host begins transmitting the first bit of a packet to
+the time when the last bit of that packet is
+received at the server at the right.
+
+The speed of light propagation delay on each link is
+3x10**8 m/sec.
+
+Note that the transmission rates are in Mbps and
+the link distances are in Km.
+
+Assume a packet length of 8000 bits. Give your
+answer in milliseconds.
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+Link 1 transmission delay = L/R = 8000 bits / 100 Mbps = 80 microsec
+
+Link 1 propagation delay = d/s = 3 Km / 3*10**8 m/sec = 10 microsec
+
+Link 1 total delay = 80+10 = 90 microsec
+
+Link 2 transmission delay = L/R = 8000 bits / 1000 Mbps = 8 microsec
+
+Link 2 propagation delay = d/s = 500 Km / 3*10**8 m/sec = 1670 microsec.
+Link 2 total delay = 8 + 1670 = 1678 microsec
+
+Link 3 transmission delay = L/R = 8000 bits / 10 Mbps = 800 microsec
+
+Link 3 propagation delay = d/s =3 Km / 3*10**8 m/sec = 10 microsec
+
+Link 3 total delay = 800 + 10 = 810 microsec
+
+Total end-to-end delay is the sum of these six delays: 90 + 1678 + 810 = 2.578 ms
+COMPUTER NETWORKS Note: Please use the formulas for @@ PES
+Interactive Exercise Queuing Delay from the slide only UNIVERSITY
+
+Computing Queuing Delay Assume:
+
+Consider the queuing delay in a router buffer. a constant transmission rate of
+
+R = 1800000 bps,
+
+a constant packet-length L = 7300 bits, and
+ais the average rate of packets/second.
+
+A
+
+Traffic intensity | = La/R, and
+Queuing delay is calculated as:
+IL/(R(1-1)) forI<1.
+
+Average queuing delay
+
+- ————— e —— ——————
+
+La/R
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+1. In practice, does the queuing delay tend to vary a lot? Answer with Yes or No
+2. Assuming that a = 30, what is the queuing delay?
+
+3. Assuming that a = 76, what is the queuing delay?
+
+4. Assuming the router's buffer is infinite, 1762 packets arrive over a second. How
+many packets will be in the buffer 1 second later?
+
+5. If the buffer has a maximum size of 956 packets, how many of the packets
+would be dropped upon arrival from the previous question?
+COMPUTER NETWORKS @ PES
+Interactive Exercise UNTVERSITY
+
+1. Yes, in practice, queuing delay can vary significantly. We use the above formulas as a way to give
+a rough estimate, but in a real-life scenario it is much more complicated.
+
+2. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.1217*7300/(1800000*(1-0.1217)) * 1000 = 0.561 ms.
+
+3. Queuing Delay = IL/(R*(1 - 1)) * 1000 = 0.3082*7300/(1800000*(1-0.3082)) * 1000 = 1.806 ms.
+4. Buffer fill rate = a — R/L = 1762 packets/sec - 1800000/7300 = 1515 packets/sec.
+
+[packet arrived — packets transmitted]
+
+5. Packets dropped = packets arrived — (packets serviced (R/L) + packets in buffer) = 1762 — (956 +
+246) = 559 packets
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+END TO END THROUGHPUT AND
+BOTTLENECK LINKS
+
+Consider the scenario shown below, with
+four different servers connected to four
+different clients over four three-hop paths.
+
+The four pairs share a common middle
+
+hop with a transmission capacity of R =
+300 Mbps.
+
+The four links from the servers to the
+shared link have a transmission capacity
+of Rg = 50 Mbps.
+
+Each of the four links from the shared
+middle link to a client has a transmission
+capacity of Rc = 90 Mbps.
+
+COMPUTER NETWORKS @ PES
+Interactive Exercise UNTVERSITY
+
+Answer the following questions:
+
+1. What is the maximum achievable end-end throughput (in Mbps) for each of four
+client-to-server pairs, assuming that the middle link is fairly shared (divides its
+transmission rate equally)?
+
+2. Which link is the bottleneck link? Format as Rc, Rs, or R
+
+3. Assuming that the servers are sending at the maximum rate possible, what are
+the link utilizations for the server links (R¢)? Answer as a decimal
+
+4. Assuming that the servers are sending at the maximum rate possible, what are
+the link utilizations for the client links (R.)? Answer as a decimal
+
+5. Assuming that the servers are sending at the maximum rate possible, what is the
+link utilizations for the shared link (R)? Answer as a decimal
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+Solutions:
+
+1. The maximum achievable end-end throughput is the capacity of the link with
+the minimum capacity, which is 50 Mbps
+
+2. The bottleneck link is the link with the smallest capacity between R¢, R¢, and
+R/4. The bottleneck link is Rs.
+
+3. The server's utilization = Ryoieneck / Rs = 50/50 = 1
+4. The client's utilization = Ry ieneck / Rc = 50/ 90 = 0.56
+
+5. The shared link's utilization = Rygeneck / (R/ 4) =50/ (300/ 4) = 0.67
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Car - Caravan Analogy
+
+Consider the figure below, adapted from Figure 1.17 in the text, which draws the analogy between
+store-and-forward link transmission and propagation of bits in packet along a link, and cars in a caravan
+being serviced at a toll booth and then driving along a road to the next tollbooth.
+
+W o o o Wiaww ey || 500 km - - S00 km .
+=l = -
+10 car caravan toll booth toll booth toll booth
+
+(aka 10-bit packet) (akalink)
+
+Suppose the caravan has 10 cars, and that the tollbooth services (that is, transmits) a car at a rate of one
+car per 2 seconds. Once receiving serving a car proceeds to the next tool both, which is 500 kilometers
+away at a rate of 10 kilometers per second. Also assume that whenever the first car of the caravan arrives
+at a tollbooth, it must wait at the entrance to the tollbooth until all of the other cars in its caravan have
+arrived, and lined up behind it before being serviced at the toll booth. (That is, the entire caravan must be
+stored at the tollbooth before the first car in the caravan can pay its toll and begin driving towards the next ?
+tollbooth). . f:’
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Car - Caravan Analogy
+
+Question List
+
+1. Once a car enters service at the tollbooth, how long does it take until it leaves service?
+
+2. How long does it take for the entire caravan to receive service at the tollbooth (that is the time from when the
+first car enters service until the last car leaves the tollbooth)?
+
+3. Once the first car leaves the tollbooth, how long does it take until it arrives at the next tollbooth? ’
+4. Once the last car leaves the tollbooth, how long does it take until it arrives at the next tollbooth? . N
+
+)
+
+5. Once the first car leaves the tollbooth, how long does it take until it enters service at the next tollbooth?
+
+6. Are there ever two cars in service at the same time, one at the first toll booth and one at the second toll booth?
+Answer Yes or No
+
+7. Are there ever zero cars in service at the same time, i.e., the caravan of cars has finished at the first toll both but
+not yet arrived at the second tollbooth? Answer Yes or No
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Car - Caravan Analogy
+
+Solution
+
+1. Service time is 2 seconds
+
+2. It takes 20 seconds to service every car, (10 cars * 2 seconds per car)
+
+3. It takes 50 seconds to travel to the next toll booth (500 km / 10 km/s)
+
+4. Just like in the previous question, it takes 50 seconds, regardless of the car
+
+5. It takes 68 seconds until the first car gets serviced at the next toll booth (10-1 cars * 2 seconds per car + 500
+km/ 10 km/s)
+
+6. No, because cars can't get service at the next tollbooth until all cars have arrived
+
+7. Yes, one notable example is when the last car in the caravan is serviced but is still travelling to the next toll ,
+booth; all other cars have to wait until it arrives, thus no cars are being serviced o ~
+
+W
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Computing the one-hop transmission delay
+
+Consider the figure below, in which a single router is transmitting packets, each of length L bits, over a
+single link with transmission rate R Mbps to another router at the other end of the link.
+
+L: packet length (in bits)
+
+@ ‘ F’i link transm|55|on rates(Mbps)
+
+Queue of packets
+waiting for output link
+
+Suppose that the packet length is L= 8000 bits, and that the link transmission rate along the link to
+router on the right is R = 1 Mbps.
+
+Round your answer to two decimals after leading zeros
+
+\,/\'
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing the one-hop transmission delay
+
+Question List
+
+1. What is the transmission delay?
+
+2. What is the maximum number of packets per second that can be transmitted by
+
+this link? ,
+
+Solution »
+
+—V N
+1. The transmission delay = L/R = 8000 bits / 1000000 bps = 0.008 seconds
+
+1. The number of packets that can be transmitted in a second into the link =R / L = 1000000 bps / 8000 bits
+=125 packets
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Queuing Delay
+
+Consider the queuing delay in a router buffer, where the packet experiences a delay as it waits to be transmitted
+onto the link. The length of the queuing delay of a specific packet will depend on the number of earlier-arriving
+packets that are queued and waiting for transmission onto the link. If the queue is empty and no other packet is
+currently being transmitted, then our packet’s queuing delay will be zero. On the other hand, if the traffic is
+
+@
+e
+
+heavy and many other packets are also waiting to be transmitted, the queuing delay will be long.
+
+Average queuing delay
+
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+|
+|
+1
+
+La/lR
+
+Assume a constant transmission rate of R = 1900000 bps, a constant packet-length L = 4700 bits, and a is the average
+rate of packets/second. Traffic intensity | = La/R, and the queuing delay is calculated as IL/(R(1 - 1)) for | < 1.
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Queuing Delay
+
+Question List
+
+1. In practice, does the queuing delay tend to vary a lot? Answer with Yes or No
+
+2. Assuming that a = 35, what is the queuing delay? Give your answer in milliseconds (ms)
+3. Assuming that a = 77, what is the queuing delay? Give your answer in milliseconds (ms)
+
+4. Assuming the router's buffer is infinite and 613 packets arrive over a second. How many packets will be in the
+buffer 1 second later?
+
+5. If the buffer has a maximum size of 627 packets, how many of the 613 packets would be dropped upon arrival
+from the previous question?
+
+o
+.“
+e
+COMPUTER NETWORKS @@ PES
+Queuing Delay
+
+Solution
+
+1. Yes, in practice, queuing delay can vary significantly. We use the above formulas as a way to give a
+rough estimate, but in a real-life scenario it is much more complicated.
+
+| = La/R =4700*35/1900000 = 0.0865
+2. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.0865*4700/(1900000*(1-0.0865)) * 1000 = 0.23 ms.
+
+| = La/R =4700*77/1900000 = 0.19
+3. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.19*4700/(1900000%(1-0.19)) * 1000 = 0.58 ms.
+
+4. Buffer fill rate = a— R/L = 613 packets/sec - 1900000/4700 = 209 packets/sec. ,
+5. Packets dropped = packets arrived — (packets serviced (R/L) + packets in buffer) = 613 — (404 + 209) = 0 packets . !
+
+—h_
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing end-end delay (transmission and propagation delay)
+
+Consider the figure below, with three links, each with the specified transmission rate and link length.
+
+‘"i..%' - =
+<«—Link 1— +——Link2 —» <«—Link 3—
+Transmission rate: 100 Mbps Transmission rate: 10 Mbps
+Link Length: 3 Km Link Length: 1 Km &
+—
+~
+| |’
+Transmission rate: 1 Mbps —rAhl
+
+Link Length: S000 Km
+
+Assume the length of a packet is 12000 bits. The speed of light propagation delay on each link is 3x1078 m/sec
+
+Round your answer to two decimals after leading zeros
+COMPUTER NETWORKS
+
+Computing end-end delay (transmission and propagation delay)
+
+Question List
+
+9.
+
+. What is the transmission delay of link 1?
+. What is the propagation delay of link 17?
+. What is the total delay of link 1?
+
+. What is the transmission delay of link 2?
+. What is the propagation delay of link 2?
+. What is the total delay of link 2?
+
+. What is the transmission delay of link 3?
+
+. What is the propagation delay of link 3?
+
+What is the total delay of link 3?
+
+10. What is the total delay?
+
+@ UNIVERSITY
+
+
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing end-end delay (transmission and propagation delay)
+
+Solution
+
+1. Link 1 transmission delay = L/R = 12000 bits / 100 Mbps = 0.00012 seconds
+
+2. Link 1 propagation delay = d/s = ()3 Km) * 1000 / 3*10*8 m/sec = 1.00E-5 seconds
+
+3. Link 1 total delay =d_t + d_p = 0.00012 seconds + 1.00E-5 seconds = 0.00013 seconds
+
+4. Link 2 transmission delay = L/R = 12000 bits / 1 Mbps = 0.012 seconds
+
+5. Link 2 propagation delay = d/s = ()5000 Km) * 1000 / 3*10*8 m/sec = 0.017 seconds
+
+6. Link 2 total delay =d_t + d_p = 0.012 seconds + 0.017 seconds = 0.029 seconds
+
+7. Link 3 transmission delay = L/R = 12000 bits / 10 Mbps = 0.0012 seconds
+
+8. Link 3 propagation delay = d/s = ()1 Km) * 1000 / 3*10"8 m/sec = 3.33E-6 seconds
+
+9. Link 3 total delay =d_t + d_p = 0.0012 seconds + 3.33E-6 seconds = 0.0012 seconds
+
+10. The total delay =d_L1 +d_L2 + d_L3 = 0.00013 seconds + 0.029 seconds + 0.0012 seconds = 0.03 seconds ,
+' ‘?
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+End to End Throughput and Bottleneck Links
+
+Consider the scenario shown below, with four different servers connected to four different clients over four
+three-hop paths. The four pairs share a common middle hop with a transmission capacity of R =300 Mbps. The
+four links from the servers to the shared link have a transmission capacity of Rg = 50 Mbps. Each of the four
+links from the shared middle link to a client has a transmission capacity of R. = 60 Mbps.
+
+@
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+End to End Throughput and Bottleneck Links
+
+Question List
+
+1. What is the maximum achievable end-end throughput (in Mbps) for each of four client-to-server
+pairs, assuming that the middle link is fairly shared (divides its transmission rate equally)?
+2. Which link is the bottleneck link? Format as R, R, or R
+
+3. Assuming that the servers are sending at the maximum rate possible, what are the link utilizations
+for the server links (Rs)? Answer as a decimal
+
+4. Assuming that the servers are sending at the maximum rate possible, what are the link utilizations
+for the client links (Rc)? Answer as a decimal
+
+5. Assuming that the servers are sending at the maximum rate possible, what is the link utilizations
+
+for the shared link (R)? Answer as a decimal ?
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+End to End Throughput and Bottleneck Links
+
+Solution
+
+1. The maximum achievable end-end throughput is the capacity of the link with the minimum capacity, which is 50
+Mbps
+
+2. The bottleneck link is the link with the smallest capacity between Rs, R¢, and R/4. The bottleneck link is Rs.
+
+3. The server's utilization = Rygttjeneck / Rs=50/50 =1
+
+4. The client's utilization = Ryottieneck / Re= 50/ 60 = 0.83
+
+5. The shared link's utilization = Ryottieneck / (R/ 4) =50/ (300/ 4) =0.67
+COMPUTER NETWORKS @@ PES
+Wireshark UNIVERSITY
+
+r - """" 3
+
+1 1
+
+' ' application
+
+1
+
+| packet |1 (W""Wllbr‘l’.wssr'
+
+i | analyzer | | email clien
+L |
+
+1 1 application
+TR I N
+T L [e)
+
+1 1
+
+1| packet | Transport (TCP/UDP)
+1| capture || _ copyofall Network (IP)
+
+i Ethernet frames
+
+\ | sent/received
+
+UNIVERSHTY
+
+THANK YOU
+
+Team Networks
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 2/4: resources/u1/Slides_Unit_1_Part_2.pdf
+PAGES: 70 | EXTRACTED CHARACTERS: 39,932
+################################################################################
+
+L
+
+% UNIVERSIT
+
+(%%) COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+%% UNIVERSITY
+
+COMPUTER NETWORKS
+
+Application Layer
+
+‘ Department of Computer Science and Engineering
+COMPUTER NETWORKS % PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.1 Principles of Network Applications
+COMPUTER NETWORKS %% PES
+Application Layer: Overview UNIVERSTTY
+
+Our goals: Learn about protocols by
+examining popular
+application-layer protocols
+s HTTP
+
+Conceptual and implementation
+aspects of application-layer
+protocols
+
+* transport-layer service
+models
+
+* client-server paradigm
+* peer-to-peer paradigm
+COMPUTER NETWORKS
+Some Network Apps
+
+social networking (e.g., TikTok,
+Facebook, Instagram, X, and
+WeChat)
+
+Web
+
+text messaging
+
+e-mail (e.g., Gmail and Yahoo Mail)
+multi-user network games
+
+streaming stored video (YouTube,
+Hulu, Netflix)
+
+P2P file sharing
+
+voice over IP
+
+real-time video conferencing
+(e.g., Skype, Hangouts)
+
+Internet search
+remote login
+
+generative Al (chatbots, text to
+image/video)
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS S\ PES
+- Wv UNIVERSITY
+Creating a Network App
+
+transport
+network
+data link
+physical
+
+write programs that:
+
+run on (different) end systems
+
+communicate over network
+
+e.g., web server software
+communicates with browser
+
+software
+
+no need to write software for
+network-core devices
+
+network-core devices do not run
+user applications
+
+transport
+network
+
+transport
+network
+data link
+
+physical
+
+physical
+
+applications on end systems allows
+for rapid app development, g
+propagation
+
+COMPUTER NETWORKS S\ PES
+- - ‘v UNIVERSITY
+Client-Server Paradigm
+
+server:
+always-on host —
+permanent IP address
+often in data centers, for scaling
+
+clients:
+contact, communicate with server
+may be intermittently connected
+may have dynamic IP addresses
+
+do not communicate directly with
+each other
+
+examples: HTTP, IMAP, FTP @
+COMPUTER NETWORKS
+Peer-to-Peer Architecture
+
+no always-on server
+
+arbitrary end systems directly
+communicate
+
+peers request service from other
+peers, provide service in return to
+other peers
+
+* self scalability — new peers bring new
+service capacity, as well as new service
+demands
+
+peers are intermittently
+connected and change IP
+addresses
+
+* complex management
+example: P2P file sharing
+[BitTorrent]
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS S\ PES
+- - Wv UNIVERSITY
+Processes Communicating
+
+process: program running _ clients, servers
+within a host client process: process that
+within same host, two initiates communication
+processes communicate server process: process that
+using inter-process waits to be contacted
+communication (defined by
+0S)
+
+processes in different hosts
+communicate by exchanging
+messages
+
+note: applications with P2P
+architectures have client
+processes & server
+processes
+COMPUTER NETWORKS
+Sockets
+
+process sends/receives messages to/from its socket
+
+socket analogous to door
+
+* sending process shoves message out door
+
+* sending process relies on transport infrastructure on other
+side of door to deliver message to socket at receiving
+
+process
+
+e two sockets involved: one on each side
+
+socket \
+
+Internet
+
+application controlled by
+
+app developer
+
+controlled
+by OS
+
+g
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Addressing Processes
+
+to receive messages, process
+must have identifier
+
+host device has unique 32-bit
+IP address
+
+Q: does IP address of host on
+which process runs suffice for
+identifying the process?
+
+A: no, many processes
+can be running on
+same host
+
+identifier includes both IP
+address and port numbers
+associated with process on
+
+host.
+
+example port numbers:
+e HTTP server: 80
+* mail server: 25
+
+to send HTTP message to
+
+gaia.cs.umass.edu web server:
+
+* IP address: 128.119.245.12
+* port number: 80
+
+more shortly...
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+An Application-layer Protocol defines:
+
+UNIVERSITY
+
+types of messages exchanged, open protocols:
+
+* e.g., request, response
+
+message syntax:
+
+» what fields in messages &
+how fields are delineated
+
+message semantics
+
+* meaning of information in
+fields
+
+rules for when and how
+
+processes send & respond to
+messages
+
+defined in RFCs, everyone
+
+has access to protocol
+
+definition
+
+allows for interoperability
+
+e.g., HTTP, SMTP
+proprietary protocols:
+
+e.g., Skype
+COMPUTER NETWORKS
+
+What transport service does an App needs?
+
+data integrity
+some apps (e.g., file transfer,
+web transactions) require
+100% reliable data transfer
+
+other apps (e.g., audio) can
+tolerate some loss
+
+timing
+some apps (e.g., Internet
+telephony, interactive
+
+games) require low delay to
+be “effective”
+
+throughput
+
+some apps (e.g., multimedia)
+require minimum amount of
+throughput to be “effective”
+
+other apps (“elastic apps”)
+make use of whatever
+throughput they get
+
+security
+encryption, data integrity, ...
+
+/1)
+@) LES
+COMPUTER NETWORKS
+Transport service requirements: common apps
+
+/1)
+@) LES
+
+application data loss throughput time sensitive?
+file transfer/download  no loss elastic no
+e-mail noloss elastic no
+Web documents  no loss elastic no
+
+real-time audio/video
+
+streaming audio/video
+interactive games
+text messaging
+
+loss-tolerant
+
+loss-tolerant
+loss-tolerant
+no loss
+
+audio: 5Kbps-1Mbps
+video:10Kbps-5Mbps
+same as above
+Kbps+
+
+elastic
+
+yes, 10’s msec
+
+yes, few secs
+yes, 10’s msec
+yes and no
+COMPUTER NETWORKS
+Internet Transport Protocol Services
+
+TCP service:
+
+reliable transport between sending
+and receiving process
+
+flow control: sender won’t
+overwhelm receiver
+
+congestion control: throttle sender
+when network overloaded
+
+does not provide: timing, minimum
+throughput guarantee, security
+
+connection-oriented: setup
+required between client and server
+processes
+
+UDP service:
+
+unreliable data transfer
+between sending and
+receiving process
+
+does not provide: reliability,
+flow control, congestion
+control, timing, throughput
+guarantee, security, or
+connection setup.
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Internet Transport Protocol Services
+
+application transport
+
+application layer protocol protocol
+
+file transfer/download FTP [RFC 959] TCP
+
+e-mail SMTP [RFC 5321] TCP
+
+Web documents HTTP 1.1 [RFC 7320] TCP
+
+Internet telephony SIP [RFC 3261], RTP [RFC TCP or UDP
+3550], or proprietary (Skype)
+
+streaming audio/video DASH TCP
+
+interactive games WOW, FPS (proprietary) UDP or TCP
+
+/1)
+@) LES
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.2 Web, HTTP and HTTPS
+COMPUTER NETWORKS %% PES
+Web, HTTP and HTTPS UNIVERSITY
+
+First, a quick review...
+
+web page consists of objects, each of which can be stored on
+different Web servers
+
+object can be HTML file, JPEG image, Java applet, audio file,...
+
+web page consists of base HTML-file which includes several
+referenced objects, each addressable by a URL, e.g.,
+
+If a Web page contains HTML text and 5 JPEG images, then the
+Web page has 6 objects: the base HTML file plus the 5 images.
+
+www . someschool.edu/someDept/pic.gif
+
+host name path name
+COMPUTER NETWORKS
+HTTP Overview
+
+HTTP: hypertext transfer protocol
+Web’s application layer protocol
+client/server model:
+
+* client: browser that requests,
+receives, (using HTTP protocol) and
+“displays” Web objects
+
+* server: Web server sends (using
+HTTP protocol) objects in response
+to requests
+
+Defined in RFC 1945; RFC 2616
+
+PC running 5
+Firefox browser
+
+iPhone running
+Safari browser
+
+«® server running
+
+Apache/IIS Web
+server
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Overview (more)
+
+HTTP uses TCP:
+
+client initiates TCP connection
+(creates socket) to server, port 80
+
+server accepts TCP connection
+from client
+
+HTTP messages (application-layer
+protocol messages) exchanged
+between browser (HTTP client)
+and Web server (HTTP server)
+
+TCP connection closed
+
+HTTP is “stateless”
+
+server maintains no
+information about past
+client requests
+
+aside
+
+protocols that maintain
+“state” are complex!
+
+past history (state) must be
+maintained
+
+if server/client crashes, their
+views of “state” may be
+inconsistent, must be reconciled
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Connections: two types
+
+Non-persistent HTTP
+1. TCP connection opened
+
+2. at most one object sent over
+TCP connection
+
+3. TCP connection closed
+
+downloading multiple objects
+required multiple connections
+
+Persistent HTTP
+
+TCP connection opened to a
+server
+
+multiple objects can be sent
+over single TCP connection
+between client, and that
+server
+
+TCP connection closed
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+Non-persistent HTTP: example UNIVERSTTY
+
+User enters URL: www.someSchool.edu/someDepartment/home.index
+(base HTML file containing text, references to 10 jpeg images)
+
+w
+<« la. HTTP client initiates TCP E 1b. HTTP server at host .
+www.someSchool.edu waiting for TCP
+
+connection to HTTP server
+
+(process) at \ connection at port 80 “accepts”
+
+connection, notifying client
+
+www.someSchool.edu on port
+80
+2. HTTP client sends HTTP request 3. HTTP server receives request
+
+message (containing URL) into \ message, forms response
+TCP connection socket. message containing
+Message indicates that client requested object, and sends
+wants object message into its socket
+
+someDepartment/home.index
+COMPUTER NETWORKS %% PES
+Non-persistent HTTP: example (more) UNIVEREFY
+
+User enters URL: www.someSchool.edu/someDepartment/home. index
+(containing text, references to 10 jpeg images)
+
+g
+
+e
+
+4. HTTP server closes TCP
+
+. . connection.
+5. HTTP client receives response /
+
+message containing html file,
+displays html. Parsing html file, finds
+10 referenced jpeg objects
+
+6. Steps 1-5 repeated for each of
+10 jpeg objects
+COMPUTER NETWORKS
+
+Non-persistent HTTP: response time
+
+RTT (definition): time for a small
+packet to travel from client to
+server and back
+
+HTTP response time (per object):
+one RTT to initiate TCP connection
+
+one RTT for HTTP request and first few
+bytes of HTTP response to return
+
+obect/file transmission time
+
+initiate TCP__ :
+
+connection
+RTT.
+
+request file /
+
+file received
+
+. time to
+I+ transmit
+- file
+
+time time
+
+Non-persistent HTTP response time = 2RTT+ file transmission time
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Persistent HTTP (HTTP 1.1)
+
+/1)
+@) LES
+
+Non-persistent HTTP Persistent HTTP (HTTP1.1):
+
+issues: server leaves connection
+requires 2 RTTs per open after sending
+object response
+0S overhead for each subsequent HTTP
+
+TCP connection (TCP messages between same
+buffer and variables) client/server sent over
+
+open connection
+browsers often open
+
+multiple parallel TCP client sends requests as
+referenced objects in referenced object
+parallel as little as one RTT for all
+
+the referenced objects
+
+(cutting response time in
+half)
+
+Establishment
+
+\SYN\‘ —
+TCP connection {
+
+obi2 HTTP
+l—
+Obj4
+.
+TCP connection
+closing
+
+o
+—FINACK
+
+client server
+
+g %
+
+
+COMPUTER NETWORKS
+
+Connection Management in HTTP/1.x
+
+Client Server
+
+Establish connection
+
+Close connection
+
+Establish connection
+
+Close connection
+
+Establish connection
+
+Close connection
+
+Short-lived connections
+
+awiy
+
+Client Server
+
+Establish connection
+
+Persistent connection
+
+Client Server
+
+Establish connection
+
+Close connection
+
+awi|
+
+HTTP Pipelining
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Persistent HTTP (HTTP 1.1)
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+
+A webpage consists of: @ 1 HTML file ® 6 images Assume: ® One RTT = 80 ms ® Object transmission time is
+
+negligible.
+
+Calculate the total time required to download the webpage using Non-Persistent HTTP.
+
+Calculate the total time required using Persistent HTTP (without pipelining).
+
+1
+2
+3. Calculate for HTTP persistent with pipelining
+4
+
+Which approach provides better performance? Justify.
+
+Solution:
+
+a) Non-Persistent HTTP: For each object, non-persistent HTTP requires:
+
+1 RTT to establish TCP connection
+1 RTT for HTTP request and beginning of response
+Total per object =2 RTT
+
+There are 7 objects: 7X2RTT = 14RTT == 14X80 =
+Answer: 1120 ms =1.12 s
+
+1120 ms
+
+COMPUTER NETWORKS %% PES
+Persistent HTTP (HTTP 1.1) UNIVERSITY
+
+b) Persistent HTTP — without pipelining
+
+With Persistent HTTP, the server keeps the TCP connection open after sending a response. Subsequent objects
+can be sent over this existing connection. Because it is without pipelining, the client must wait for the
+current response before issuing the next request.
+
+With persistent HTTP: TCP connection is established only once - 1 RTT
+1 RTT to establish the initial TCP connection
+
+1 RTT to request and receive the base HTML file
+
+6 RTT to request and receive the 6 images sequentially (1 RTT per image)
+Total Time = 1 RTT (TCP) + 1 RTT (HTML) + 6 RTT (images) = 8 RTTs
+
+Each of the 7 objects requires an HTTP request/response cycle > 7 RTTs
+Therefore: 1RTT + 7RTT = 8RTT == 8x80 =640 ms
+
+Answer: 640 ms =0.64 s
+
+COMPUTER NETWORKS %% PES
+Persistent HTTP (HTTP 1.1) UNIVERSITY
+
+d) Persistent HTTP with pipelining
+
+With Persistent HTTP with pipelining, the client opens a single TCP connection and can send multiple HTTP requests back-to-back without
+waiting for each response.
+
+After downloading the HTML:
+1 RTT to establish the single TCP connection.
+1 RTT to request and receive the base HTML file.
+
+1 RTT to request and receive all 6 images. The client parses the HTML file, discovers all 6 images, and sends requests for all of them
+together in a single batch.
+
+With pipelining, it sends requests for all 6 images without waiting for individual responses.
+Approximately 1 RTT is needed for the requests and responses to begin.
+Total Time = 1 RTT (TCP) + 1 RTT (HTML) + 1 RTT (All 6 images) = 3 RTT
+Since RTT = 80 ms: ==>3x80 =|240 ms
+
+Performance Calculation:
+
+HTTP approach RTT calculation Total RTTs Total time | Relative performance
+Non-persistent HTTP (7 \times 2) 14RTT 1120 ms | Slowest (Baseline 1.0x)
+Persistent HTTP, no (A+7) 8RTT 640 ms | Better (1.75x faster)
+pipelining
+
+Persistent HTTP +
+
+S (1+1+1) 3RTT 240 ms | Best (4.67x faster)
+pipelining
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.2 Web, HTTP and HTTPS
+COMPUTER NETWORKS %% PES
+HTTP Request Message UNIVERSITY
+
+two types of HTTP messages: request, response
+
+HTTP request message:
+
+* ASCll (human-readable format)
+carriage return character
+
+line-feed character
+
+request line (GET,
+"~ GET /index.html HTTP/1.1\r\n
+
+POST, Host: www-net.cs.umass.edu\r\n
+HEAD commands) User-Agent: Firefox/3.6.10\r\n
+Accept: text/html,application/xhtml+xml\r\n
+header Accept-Language: en-us,en;qg=0.5\r\n
+
+lines | Accept-Encoding: gzip,deflate\r\n
+Accept-Charset: IS0-8859-1,utf-8;9=0.7\r\n
+Keep-Alive: 115\r\n
+| Connection: keep-alive\r\n
+carriage return, line feed — \r\n
+at start of line indicates
+
+end of header lines * Check out the online interactive exercises for more
+examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+
+COMPUTER NETWORKS
+HTTP Request Message: General Format
+
+method |sp URL sp| version |cr| If
+header field name value |cr|If
+header field name value |cr| If
+cr|lIf
+= entity body =
+
+request
+
+1 line
+
+header
+lines
+
+body
+
+HTTP specifications [RFC 1945; RFC 2616; RFC 7540]
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+HTTP Request Message — Wireshark Capture AV
+
+Capturing from any
+File Edit View Go Capture Analyze Statistics Telephony Wireless Tools Help
+
+AN A WHRE QLK >F k<= @eEaE
+
+[WThetp - Expression... +
+No. Time Source inati Protocol Length Info
+
+44 1.7342 5  192.168.1.95 205 677 GET /filel.html HTTP/1.1
+
+50 1.831703556  63.33.73.205 HTTP 326 HTTP/1.1 200 OK (text/html)
+
+52 1.874581455 192.168.1.95 63.33.73.205 HTTP 558 GET /favicon.ico HTTP/1.1
+
+54 1.970307494 63.33.73.205 192.168.1.95 HTTP 326 HTTP/1.1 404 Not Found (application/json)
+
+» Frame 44: 677 bytes on wire (5416 bits), 677 bytes captured (5416 bits) on interface
+» Linux cooked capture
+» Internet Protocol Version 4, Src: 192.168.1.95, Dst: 63.33.73.205
+» Transmission Control Protocol, Src Port: 33862, Dst Port: 80, Seq: 1, Ack: 1, Len: 609
+»
+Host: wireshark.grydeske.net\r\n
+Connection: keep-alive\r\n
+Pragma: no-cache\r\n
+Cache-Control: no-cache\r\n
+Upgrade-Insecure-Requests: 1\r\n
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36\r\n
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9, image/webp, image/apng, */*;q=0.8, application/signed-exchange;v=b3\r\n
+Referer: http://localhost:8080/wireshark/wireshark-http.html\r\n
+Accept-Encoding: gzip, deflate\r\n
+Accept-Language: en-US,en;q=0.9,da;q=0.8\r\n
+Cookie: __utma=231828553.1458339319.1536683537.1537430811.1537432942.3\r\n
+\r\n
+[Full request URI: http://wireshark.grydeske.net/filei.html]
+[HTTP request 1/2]
+Response in frame: 50
+[Next request in frame: 52]
+0000 00 04 00 061 00 06 NN L 00 00 08 00 B
+0016 45 00 02 95 53 6b 40 00 40 06 9a 02 cO a8 01 5f E ske- @- - - -
+3f 21 49 cd 84 46 00 50 68 d6 3c f@ c3 38 b6 49 ?!I--F-P h-<--8-I
+80 18 01 06 4d 7d 60 60 01 01 68 Ga €0 c1 51 3b M} ;
+@046 5f £3 Bh d1 47 45 54 20 2f 66 69 6c 65 31 e 68 GFT /file1.h
+
+COMPUTER NETWORKS
+Other HTTP Request Messages
+
+POST method: HEAD method:
+web page often includes form input requests headers (only) that would be
+user input sent from client to server in returned if specified URL were requested
+entity body of HTTP POST request with an HTTP GET method.
+message
+
+GET method (for sending data to server): PUT method:
+include user data in URL field of HTTP GET uploads new file (object) to server
+request message (following a ‘?’): completely replaces file that exists at
+
+specified URL with content in entity body
+of POST HTTP request message
+
+www.somesite.com/animalsearch?monkeysé&banana
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Response Message
+
+/1)
+@) LES
+
+status line (protocol ——————— grrp/1.1 200 OK\r\n
+
+status code status phrase)
+
+header
+lines
+
+Date: Sun, 26 Sep 2010 20:09:20 GMT\r\n
+
+Server: Apache/2.0.52 (CentOS)\r\n
+
+Last-Modified: Tue, 30 Oct 2007 17:00:02
+GMT\r\n
+
+ETag: "17dc6-a5c-b£f716880"\r\n
+
+Accept-Ranges: bytes\r\n
+
+Content-Length: 2652\r\n
+
+Keep-Alive: timeout=10, max=100\r\n
+
+Connection: Keep-Alive\r\n
+
+Content-Type: text/html; charset=ISO-8859-
+1\r\n
+
+L_\r\n
+
+data, e.g., requested ———— data data data data data ...
+
+HTML file
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+COMPUTER NETWORKS PES
+HTTP Response Message — Wireshark Capture
+
+UNIVERSITY
+
+fle Bt Vew Go Capture Analyze Statistics Telephony Tools _Intemals Help
+SHood BEXTE A¢e+»aTF L2 (OB QA #¥B% B
+
+No. Time Source Destination Protocol Length_Info B
+
+| 222.21:13:58.590670000 10.36.40.181 239.255.255.250  SSDP 528 NOTIFY * WTTR/1.1
+
+| 223 21:13:58.590877000  fe80::4195:59f3:544Ff02::c  SSDP  SS6NOTIFY * WTTR/1.1
+
+L L
+241 21:13:59.150482000  128.119.245.12 10.36.40.181 452 HTTP/1.1 200 OK (text/html)
+
+kl
+
+@ Internet Protocol Version 4, Src: 128.119.245.12 (128.119.245.12), Dst: 10.36.40.181 (10.36.40.181)
+@ Transmission Control Protocol, src Port: http (80), Dst Port: 55990 (55990), Seq: 4381, Ack: 420, Len: 398
+@ [5 Reassembled TCP Segments (4778 bytes): #234(1423), #237(1460), #239(1460), #235(37), #241(398)]
+
+- Hypertext Transfer protocol
+CHTTR/LL1 200 OK\r\n
+
+Date: wed, 27 Feb 2013 02:14:00 GMT\r\n
+server: Apache/2.2.3 (Centos)\r\n
+Last-Modified: wed, 27 Feb 2013 02:13:01 GMT\r\n
+ETag: "d6c97-1194-50408540"\r\n
+Accept-Ranges: bytes\r\n
+Content-Type: text/html; charset=UTF-8\r\n
+@ Content-Length: 4500\r\n
+Connection: Keep-Alive\r\n
+Age: O\r\n
+
+nnen_ B 20
+Frame (452 bytes) | Reassembled TCP (4778 bytes)|
+
+O ® | Frame (frame), 452 bytes | Packets: 336 Displayed: 40 Marked: 0 Profile: Default
+
+COMPUTER NETWORKS %% PES
+HTTP Response Status Codes UNIVERSITY
+
+status code appears in 1st line in server-to-client response message.
+some sample codes:
+
+200 OK
+
+* request succeeded, requested object later in this message
+
+301 Moved Permanently
+
+* requested object moved, new location specified later in this message (in
+Location: field)
+
+400 Bad Request
+
+* request msg not understood by server
+
+404 Not Found
+
+* requested document not found on this server
+
+505 HTTP Version Not Supported
+COMPUTER NETWORKS
+Cookies
+
+Website/HTTP/Internet cookies
+
+Piece of data from a specific
+website
+
+Stored on a user’s computer
+Allows sites to keep track of users
+Eg: language selection
+
+We value your privacy
+
+We use cookies to enhance your browsing experience,
+serve personalized ads or content, and analyze our traffic.
+
+By clicking "Accept All", you consent to our use of cookies.
+
+Customize Reject All Accept All
+
+This website uses cookies to ensure you get
+the best experience on our website.
+
+Learn mode
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Maintaining user/server state: cookies
+
+Recall: HTTP GET/response
+interaction is stateless
+
+no notion of multi-step exchanges
+of HTTP messages to complete a
+Web “transaction”
+
+* no need for client/server to track
+“state” of multi-step exchange
+
+* all HTTP requests are independent of
+each other
+
+* no need for client/server to “recover”
+from a partially-completed-but-never-
+completely-completed transaction
+
+a stateful protocol: client makes
+two changes to X, or none at all
+
+g W
+e
+
+: lock dat, record x
+
+t:
+
+: Update ye_ X :
+
+Unlock x
+
+Q: what happens if network connection or
+client crashes at t’?
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Maintaining user/server state:
+
+cookies (more)
+
+Web sites and client
+browser use cookies to
+maintain some state
+between transactions
+
+four components:
+
+1) cookie header line of
+HTTP response message
+
+2) cookie header line in next
+HTTP request message
+
+3) cookie file kept on user’s
+host, managed by user’s
+browser
+
+4) back-end database at
+Web site
+
+Example:
+
+Susan uses browser on laptop,
+visits specific e-commerce site
+for first time
+
+when initial HTTP requests
+arrives at site, site creates:
+
+* unique ID (aka “cookie”)
+
+* entry in backend database
+for ID
+
+* subsequent HTTP requests
+from Susan to this site will
+contain cookie ID value,
+allowing site to “identify”
+Susan
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Maintaining user/server state: cookies (more)
+
+cIientg
+
+T
+: usual HTTP request msg
+
+cookie file
+
+m server
+
+—>
+
+usual HTTP response
+
+merooall | set-cookie: 1678
+amazon 1678
+
+—  usual HTTP request msg
+
+cookie: 1678
+
+usual HTTP response msg
+
+“~
+
+one week later:
+
+ebay 8734 — usual HTTP request msg
+amazon 1678 Iy cookie: 1678
+
+usual HTTP response msg
+
+Amazon server
+creates ID
+
+1678 for user  create
+
+entry , database
+
+cookie- access
+
+specific
+action
+
+access
+
+cookie- /
+
+specific
+action
+
+/!
+
+backend
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Cookies: Comments
+
+/1)
+@) LES
+
+What cookies can be used for:
+
+track user’s browsing history
+
+remembering login details
+(authorization)
+
+track visitor count
+shopping carts
+Recommendations
+
+save coupon codes for you
+
+Challenge: How to keep state:
+at protocol endpoints: maintain
+state at sender/receiver over
+multiple transactions
+In messages: cookies - HTTP
+messages carry state
+
+: ) aside
+cookies and privacy.
+
+cookies permit sites to learn a lot about
+you on their site.
+
+third party cookies (tracking cookies)
+allow common identity (cookie value) to
+be tracked across multiple web sites,
+disabled by default or restricts them.
+
+track user behavior on a given website
+(first party cookies)
+
+track user behavior across multiple
+websites (third party cookies) without
+user ever choosing to visit tracker site (!)
+COMPUTER NETWORKS %% PES
+Example for Cookies: Display a NY Times web page e
+
+GET base html file
+from nytimes.com
+
+(3). fetch ad from nytimes.com
+
+& adX.com # %}
+HTTP HTTP
+(7) display composed GET reply
+page
+
+4\ d o ==
+
+NY times page with
+embedded ad displayed
+
+COMPUTER NETWORKS %% PES
+Example for Cookies: Tracking a user’s browsing history e
+
+“first party” cookie —
+from website you chose
+to visit (provides base
+
+HTTP [ | HTTP ;
+
+Set cookie: 1634
+
+“third party” cookie —
+from website you did not
+choose to visit AdX: 74193
+
+HTTP reply
+NY Times: 1634 Set cookie: 7493
+
+3 l 7493: NY Times sports, 2/15/22
+
+dX.com
+
+COMPUTER NETWORKS &) PES
+Example for Cookies: Tracking a user’s browsing behavior e
+
+. AdX:
+socks HTTIP = tracks my web browsing
+.com reply . .
+\é\ over sites with AdX ads
+HTTP ® can return targe_ted gds
+GET based on browsing history
+HTTP GET
+Referrer: socks.com, cookie: 7493
+/D ]
+N
+%’/ ~\ 7493: NY Times sports, 2/15/22
+5 7493:kocks.com, 2/16/22
+HTTP reply
+NY 34 Set cookie: 7493 AdX ©
+
+93
+
+COMPUTER NETWORKS &) PES
+Example for Cookies: Tracking a user’s browsing behavior (one day later) e
+
+:larts, 2/17/22
+
+nytimes.com (arts)
+
+HTTP HTTP
+GET reply
+cookie: 1634 Set cookie: 1634
+
+HTTP GET
+Referrer: nytimes.com, cookie: 749
+® —
+Fa\ 7493: NY Times sports, 2/15/22
+5 7493:kocks.com, 2/16/22
+HTTP reply 7493;NY Times arts, 2/15/22
+634 Set cookie: 7493 AdX com
+
+AdX: 7§93 Returned ad for socks!
+
+COMPUTER NETWORKS %% PES
+Web Caches (Proxy ServerS) UNIVERSITY
+
+Goal: satisfy client request without involving origin server
+
+user configures browser
+
+to point to a Web cache ﬂ/ oroxy
+browser sends all HTTP X, server E
+
+requests to cache client 477, ™" origin
+* if object in cache:
+
+. oL -
+cache returns object to « @ <
+client ¥ (\Q(e&"“
+
+* else cache requests
+object from origin
+server, caches received origin
+object, then returns
+object to client
+
+COMPUTER NETWORKS %% PES
+Web Caches (Proxy ServerS) UNIVERSITY
+
+Web cache acts as both Why Web caching?
+client and server
+
+* server for original requesting
+client
+
+reduce response time for client request
+(speed)
+
+. - * cache is closer to client
+* client to origin server
+
+typically cache is installed by reduce traffic on an institution’s access
+
+ISP (university, company, link (saves bandwidth)
+residential ISP) internet is dense with caches
+
+* enables “poor” content providers to more
+
+server tells cache about effectively deliver content
+
+object’s allowable caching in _ _
+response header: privacy — surf the internet anonymously
+
+Cache-Control: max-age=<seconds> activity logging
+
+Cache-Control: no-cache
+COMPUTER NETWORKS
+Caching example (15 reg/sec) * (100 Kbits/req)/(1.54 Mbps) = 0.974
+Scenario: (15 req/sec) * (100 Kbits/req)/(1 Gbps) = 0.0015
+
+access link rate: 1.54 Mbps
+
+RTT from institutional router to server:
+2 sec
+
+Web object size: 100K bits
+
+Average request rate from browsers to
+origin servers: 15/sec
+
+average data rate to browsers:
+
+origin
+servers
+
+1.50 Mbps 1.54 Mbps
+. access link
+Performance: problem: large i i
+LAN utilization: .0015 delays at high
+
+access link utilization = utilization!
+end-end delay = Internetdelay +
+
+access link delay + LAN delay
+= 2 sec + minutes + usecs
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @9 PES
+Caching example: buy a faster access link MR
+
+Scenario: 154 Mbps
+access link rate: 24 Mbps origin
+RTT from institutional router to server: 2 sec servers
+
+Web object size: 100K bits
+Avg request rate from browsers to origin
+servers: 15/sec
+
+avg data rate to browsers: 1.50 Mbps ML5piMbps
+
+access link
+
+Performance:
+LAN utilization: .0015
+access link utilization = ==—— 0097
+
+end-end delay = Internet delay +
+access link delay + LAN delay
+
+= 2 sec+ m=ules + usecs
+Cost: faster access link (expensive!) msecs
+
+
+COMPUTER NETWORKS
+Caching example: install a web cache
+
+Scenario:
+
+access link rate: 1.54 Mbps
+
+RTT from institutional router to
+
+server: 2 sec
+
+Web object size: 100K bits
+
+Avg request rate from browsers to
+
+origin servers: 15/sec
+avg data rate to browsers: 1.50
+Mbps
+
+Performance: How to compute link
+LAN utilization: .?  utilization, delay?
+
+origin
+servers
+
+1.54 Mbps
+access link
+
+institution
+
+access link utilization = ?
+average end-end delay =7
+
+local web cache
+
+Cost: web cache (cheap!)
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Caching example: install a web cache
+
+@ UNIVERSITY
+
+Calculating access link utilization, end-
+
+end delay with cache:
+
+suppose cache hit rate is 0.4: 40% requests
+satisfied at cache, 60% requests satisfied at
+
+origin
+
+access link: 60% of requests use access link
+
+data rate to browsers over access link
+=0.6 * 1.50 Mbps = .9 Mbps
+utilization = 0.9/1.54 = .58
+
+average end-end delay
+= 0.6 * (delay from origin servers)
+
++ 0.4 * (delay when satisfied at cache)
+
+=0.6 (2.01) + 0.4 (®msecs) =~ 1.2 secs
+
+origin
+servers
+
+1.54 Mbps
+access link
+
+local web cache
+
+lower average end-end delay than with 154 Mbps link (and cheaper too!)
+COMPUTER NETWORKS %% PES
+Conditional Get — Browser Caching UNTVERSITY
+
+client g server
+Goal: don’t send object if cache has <
+up-to-date cached version
+
+* no object transmission delay
+
+HTTP request msg
+
+« lower link utilization If-modified-since: <date> Ot:joetCt
+cache: specify date of cached HTTP response — mb“f"f'e‘j
+copy in HTTP request “ HTTP/1.0 <§act)£i
+If-modified-since: <date> 304 Not Modified
+server: response containsno =~ - -T - ---------------
+object if cached copy is up-to-
+date: ] HTTP request msg
+HTTP/1.0 304 Not Modified If-modified-since: <date> — obj_e_ct
+modified
+HTTP response — after
+T HTTP/1.0 200 OK <date>
+<data>
+
+COMPUTER NETWORKS
+Conditional Get (more)
+
+B El
+
+Source Destination Protocol Length Info
+
+347 20:33:14.318343000  10.36.40.181 128.119.245.12 586 GET /wireshark-labs/HTTP-wireshark-file2.html HTTP/1.1
+
+K
+0
+
+@ Ethernet II, Src: HonHaiPr_Oa:de:6b (cc:af:78:0a:de:6b), Dst: Cisco_4c:61:3f (00:1e:f7:4c:61:3f)
+@ Internet Protocol Version 4, src: 10.36.40.181 (10.36.40.181), Dst: 128.119.245.12 (128.119.245.12)
+@ Transmission Control Protocol, Src Port: 55404 (55404), Dst Port: http (80), Seq: 750, Ack: 1126, Len: 532
+a
+@
+Host: gaia.cs.umass.edu\r\n
+connection: keep-alive\r\n
+cache-control: max-age=0\r\n
+Accept: text/html,application/xhtml+xml,application/xm1;q=0.9,%/%;q=0.8\r\n
+User-Agent: Mozilla/5.0 (windows NT 6.1; wow64) Applewebkit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.97 safari/537.22\r\n
+Accept-Encoding: gzip,deflate,sdch\r\n
+Accept-Language: en-us,en;g=0.8\r\n
+Accept-Charset: IS0-8859-1,utf-8;g=0.7,%;g=0.3\r\n
+
+m
+
+Full request URI: http://gaila.cs.umass.edu/wireshark-labs/HTTP-wireshark-file2.html]
+49 53 4f 2d 38 38 35
+
+6e 65 If-None
+2d 31 37 33 Zd 63 31 33 33 36 "d6c96-1 73—:1336
+
+© B[ Textitem (text), 50 bytes Packets: 367 Displeyed: 10 Marked: 0 Dropped: 0 Profile: Default
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+HTTP/2 UNIVERSITY
+
+Key goal: decreased delay in multi-object HTTP requests
+
+HTTP1.1: introduced multiple, pipelined GETs over single TCP
+connection
+
+* server responds in-order (FCFS: first-come-first-served scheduling) to
+GET requests
+
+* with FCFS, small object may have to wait for transmission (head-of-line
+(HOL) blocking) behind large object(s)
+
+* |oss recovery (retransmitting lost TCP segments) stalls object
+transmission
+COMPUTER NETWORKS %% PES
+HTTP/2 UNIVERSITY
+
+Key goal: decreased delay in multi-object HTTP requests
+HTTP/2: rec 7540, 2015) increased flexibility at server in sending
+objects to client:
+
+* methods, status codes, most header fields unchanged from HTTP 1.1
+
+® transmission order of requested objects based on client-specified
+object priority (not necessarily FCFS)
+
+= push unrequested objects to client
+= divide objects into frames, schedule frames to mitigate HOL blocking.
+COMPUTER NETWORKS %% PES
+HTTP/2 to HTTP/3
+
+HTTP/2 over single TCP connection means:
+
+= recovery from packet loss still stalls all object transmissions
+
+* asin HTTP 1.1, browsers have incentive to open multiple parallel TCP
+connections to reduce stalling, increase overall throughput
+
+" no security over TCP connection
+
+= HTTP/3: adds security, per object error- and congestion-
+control (more pipelining) over UDP
+COMPUTER NETWORKS
+HTTP vs HTTPS
+
+PES
+
+UNIVERSITY
+
+@
+
+€ C
+
+A Not secure example.com
+
+& = (C @ Secure https//www.example.com H
+
+HTTP vs HTTPS
+
+Normal HTTP (80)
+
+User
+[ — /‘ \ [« -]
+=1 ’ Insecure [« ]
+\ _/ Connection
+User Secure HTTPS (443)
+[ — =
+ﬁ = =
+- Encrypted [= | a
+Connection
+
+SSL Certificate
+
+HTTPS is HTTP with encryption — All communications between browser
+
+and server are encrypted (bi-directional).
+
+‘S’ refers ‘Secure’ or HTTP over Secure Socket Layer.
+Uses TLS (SSL) to encrypt normal HTTP requests and responses.
+
+Attackers can't read the data crossing the wire and you know you are
+talking to the server you think you are talking too.
+COMPUTER NETWORKS
+HTTP vs HTTPS (more)
+
+@
+
+HTTP + TLS -> Encrypted
+
+Uses port no. 443 for data
+communication.
+
+HTTPS is based on public/private-key
+cryptography.
+* The public key is used for encryption
+* The secret private key is required for
+decryption.
+SSL certificate is a web server’s digital
+certificate issued by a third party CA.
+* Create an encrypted connection and
+establish trust.
+
+Is my certificate SSL or TLS?
+
+HTTPS
+
+Any message encrypted with Bob’s
+public key can be only decrypted
+with Bob’s private key.
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Benefits of HTTPS over HTTP using SSL Certificates
+
+Asymmetric Encryption
+
+1Y
+
+&
+
+Symmetric Encryption
+
+Public Different Keys Secret
+Key Key
+A4Sh*L@9.
+T6=#/>B#1 r
+ecryption
+RO6/J2.>1L
+1PRL39P20
+Plain Text Cipher Text Plain Text
+Secret
+Key
+
+G~
+
+Plain Text
+
+Y
+
+Same Key
+
+A4$h*L@9.
+
+Te=#/>B#1
+
+R06/J2.>1L
+1PRL39P20
+
+Cipher Text
+
+Secret
+Key
+
+PES
+
+UNIVERSITY
+
+Plain Text
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol
+
+= widely deployed security protocol above the transport layer
+* supported by almost all browsers, web servers: https (port 443)
+
+= provides:
+* confidentiality: via symmetric encryption (Encrypts data so eavesdroppers can't
+read it.)
+* integrity: via cryptographic hashing (Ensures data isn't altered or corrupted in
+transit.)
+* authentication: via public key cryptography (Verifies that the client is actually
+talking to the genuine server, not an impostor.)
+
+= history:
+* early research, implementation: secure network programming, secure sockets
+* secure socket layer (SSL) deprecated [2015]
+* TLS 1.3: RFC 8846 [2018]
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol DA RReerv
+
+* SSL (Secure Sockets Layer): Created by Netscape in the mid-1990s.
+
+* SSL 1.0: Never released publicly due to major flaws.
+
+* SSL 2.0 & 3.0: Released in 1995 and 1996, but later broken by critical vulnerabilities.
+
+* TLS (Transport Layer Security): Created by the IETF starting in 1999 as the official
+standard successor.
+
+* TLS1.0& 1.1:Released in 1999 and 2006 (now deprecated).
+
+* TLS 1.2 & 1.3: The only secure, active standards used on the web today.
+
+TLS or SSL Certificate:
+
+* Digital certificates (technically called X.509 Certificates) do not care about protocol versions.
+
+* A certificate contains a public key and identity info.
+
+* It works identically whether the server uses TLS 1.2, TLS 1.3, or legacy SSL.
+
+* The term "SSL Certificate" persists purely because of 30 years of marketing and consumer familiarity.
+Modern security tools and web browsers actually run on TLS.
+
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol
+
+= |In older versions (TLS 1.2 and SSL), the server sent its certificate out in plain text.
+Anyone monitoring your Wi-Fi network could see exactly which website certificate
+was being sent down to your computer.
+
+= |n TLS 1.3:
+
+* The browser and server establish a temporary secret key BEFORE the certificate is sent.
+
+* The Certificate itself is encrypted! An eavesdropper on public Wi-Fi can no longer read the
+certificate as it travels across the wire.
+
+A server's SSL/TLS Certificate acts like a digital passport. It contains:
+
+= Domain Name (e.g., bank.com).
+
+= Server's Public Key.
+
+= |ssuer Information (Certificate Authority details).
+
+= Expiration Date.
+
+= CA Digital Signature (Encrypted hash created by a trusted CA's private key).
+COMPUTER NETWORKS
+
+Transport Layer
+
+Security (TLS)
+
+= TLS provides an API that any application can use
+
+An HTTP view of TLS:
+
+Application
+
+Network
+
+PES
+
+UNIVERSITY
+
+@
+
+HTTP 1.0 HTTP/2 HTTP/2 (slimmed)
+LS Quic
+[ e | [ e | [ wr ]
+"""""" e | [ e | [ e
+HTTP/2 over TCP HTTP/2 over TCP HTTP/2 over QUIC
+
+(which incorporates TLS)
+
+over UDP
+COMPUTER NETWORKS %% PES
+What Actually Changed Under the Hood?
+
+Handshake & Performance
+
+= SSL Handshake: Required multiple back-and-forth round trips (2-RTT). Connection setup
+was slow, creating noticeable lag for users.
+
+= TLS Handshake: Streamlined the negotiation. TLS 1.3 cuts handshake latency in half by
+allowing key exchange parameters to be sent in the very first message (1-RTT).
+
+Security & Cryptography
+
+= Weak Cryptography Excised: SSL allowed insecure encryption algorithms like RC4 stream
+ciphers, RSA key transport, and MD5 hashing, which hackers easily broke. TLS removed
+all of these in favor of authenticated encryption (AEAD) like AES-GCM and ChaCha20.
+
+= Mandatory Forward Secrecy: Under SSL, if an attacker recorded encrypted web traffic
+
+and stole the server's private key 5 years later, they could retroactively decrypt all that
+past data. Modern TLS forces the use of temporary session keys (Ephemeral Diffie-
+Hellman) so stolen server keys can't decrypt past recordings.
+
+Note: Cryptographic algorithms will be dealt in courses like Applied Cryptography in detail.
+COMPUTER NETWORKS %% PES
+How Authentication Works
+
+= Certificate Presentation: The server sends its digital certificate containing its Public Key
+and the signature from a Certificate Authority (CA).
+
+= CA Trust Verification: The browser checks the digital signature against its built-in
+database of trusted Root Certificate Authorities (CAs) (like DigiCert or Let's Encrypt).
+
+= Proof of Ownership (CertificateVerify): To prove the server isn't an attacker using a
+stolen public certificate, the server encrypts/signs a unique handshake message using its
+secret Private Key.
+
+= Public Key Verification: The browser decrypts that signature using the Public Key from
+the certificate. If the message decrypts successfully, it proves the server holds the
+matching private key, confirming its identity.
+COMPUTER NETWORKS
+TLS 1.3 handshake: 1 RTT
+
+&) PES
+
+-
+:® client hello:
+= supported cipher suites
+= DH key agreement protocol,
+parameters
+
+server hello:
+
+= selected cipher suite
+
+= DH key agreement
+protocol, parameters
+
+i
+T
+O
+
+@4/
+
+client server
+
+“cipher suite”: a set of distinct cryptographic algorithms bundled
+
+together to secure a network connection. This cipher suite can be used
+for key generation, encryption, MAC (Message Authentication Code),
+
+digital signature.
+
+(O client TLS hello msg:
+= guesses key agreement
+protocol, parameters
+= indicates cipher suites it
+supports
+
+(») server TLS hello msg chooses
+= key agreement protocol,
+parameters
+= cipher suite
+= server-signed certificate
+
+() client:
+
+= checks server certificate
+
+= generates key
+
+= can now make application
+request (e.g.., HTTPS GET)
+COMPUTER NETWORKS %% PES
+TLS 1'3 UNIVERSITY
+
+TLS 1.3 optimizes the process by combining key negotiation into the very first
+packet.
+
+= Step 1 (ClientHello + Key Share): The browser sends supported ciphers AND
+proactively generates its ephemeral key parameters (Key Share), sending them in
+the first packet.
+
+= Step 2 (ServerHello & Encrypted Certificate): The server picks a cipher, generates
+its matching key share, and calculates the symmetric session key. All subsequent
+handshake messages—including the Server Certificate—are encrypted!
+
+= Step 3 (Data Transmission): The client verifies the certificate signature and
+derives the same symmetric key. Real HTTPS data flows immediately.
+
+For returning visitors, TLS 1.3 introduces 0-RTT (Zero Round-Trip Time) mode:
+= Uses a Pre-Shared Key (PSK) saved from the previous connection.
+
+= The browser can send encrypted HTTP requests (like GET /home) in the very first
+packet, eliminating latency entirely.
+COMPUTER NETWORKS %% PES
+TLS 1.3 handshake: 0 RTT oveRs
+g E - initial hello message contains
+o cllent hello: icati |
+~ g soher sutes encrypted application data!
+oy 2greement protocol, . “resuming” earlier connection
+« application data \ between client and server
+
+- application data encrypted using
+
+server hello: “resumption master secret”
+« selected cipher sui | — . ;
+s Dl roy aaeamont from earlier connection
+protocol, parameters
+«—| = application data (reply) . vulnerable to replay attacks!
+« maybe OK for get HTTP GET or
+client serfver client requests not modifying
+
+server state
+UNIVERST
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 3/4: labs/lab1_cisco/Lab1_Simulation of Network Topology using Cisco Packet Tracer.docx.pdf
+PAGES: 7 | EXTRACTED CHARACTERS: 5,828
+################################################################################
+
+@res
+UNIVERSITY
+COMPUTER NETWORKS - UE25CS243A
+Lab 1: Designing and Simulation of Network Topology using
+Cisco Packet Tracer
+
+Objectives:
+
+- To understand the purpose of Cisco Packet Tracer.
+
+- To navigate, choose network and end devices and customize them.
+
+- To interconnect devices and configure them using a simple interface.
+
+- To become familiar with building topologies in Packet Tracer.
+
+- To simulate data interactions traveling through a network.
+
+Prerequisites:
+
+This lab assumes some understanding of the building blocks of communication
+
+networks and the internet. At this point, we haven’t discussed other protocols but you
+
+may use Packet Tracer in later labs to discuss those as well. Several types of devices and
+
+network connections can be used. For this experiment we will keep it simple by using
+
+end devices, switches, routers, and connections.
+
+Steps to install Cisco Packet Tracer:
+
+1.
+
+Go to the download page:
+
+Visit this link: Download Cisco Packet Tracer
+
+Download Packet Tracer:
+Scroll down and download the version compatible with your operating system
+
+(Windows or Mac or Linux).
+
+. Install Packet Tracer:
+
+Once the download is complete, run the installer and follow the on-screen
+instructions to complete the installation.
+
+Disable your internet connection:
+
+Before launching Packet Tracer for the first time, turn off your internet
+connection. This will prevent it from asking for registration.
+
+Launch Packet Tracer:
+
+Open the installed Cisco Packet Tracer. Since you are offline, it will allow you to
+
+use the program without requiring registration.
+@ UNIVERSITY
+
+Steps to install Cisco Packet Tracer on Mac OS:
+
+6. Go to the download page:
+
+Visit this link: Download Cisco Packet Tracer
+
+7. Download Packet Tracer:
+Scroll down and download the version compatible with your OS.
+
+8. Install Packet Tracer:
+Once the download is complete, open the .dmg file. Drag the Cisco Packet Tracer
+application into the Applications folder as instructed.
+
+9. Adjust mac OS Security Settings (if required):
+On first launch, mac OS may block the app.Go to System Settings — Privacy &
+Security.Under Security, click Open Anyway for Cisco Packet Tracer.
+
+10. Disable your internet connection:
+Before launching Packet Tracer for the first time, turn off your internet
+connection. This will prevent it from asking for registration.
+
+11. Launch Packet Tracer:
+Open Applications — Cisco Packet Tracer. Since you are offline, it will allow
+
+you to use the program without requiring registration.
+Task 1 - Demo
+
+Network Topology:
+
+PES
+
+UNIVERSITY
+
+To replicate the given scenario, create a topology in packet tracer, as shown in the
+
+following image.
+
+p110001 przsne
+0220002 ‘subnet:20.0.0.0 L
+________ -
+oo
+abnet10000
+ot o o
+PCo PC1 PC2
+10002 10003 vone
+
+Step 1 - Drag and drop the PC, router and switch.
+
+Time: 00
+
+(Select a Device to Drag and Drop to the Workspace)
+
+ELEIT-E
+
+Im s w223
+
+2621XM
+
+NOTE: Use only 1841 router for labs unless mentioned
+
+5Ubnet:30.0.0.0
+
+il
+3
+
+30003
+@ UNIVERSITY
+
+Step 2 - Now connect them using wire (the first one) according to the
+topology above.
+
+yPmFme £\ AAEL
+B
+
+Automaticallv Choosa Connaction Tuna 1
+Step 3 - Network setup
+
+PC & Router Configuration Details:
+
+PCO: IP Address ---> 10.0.0.1
+Gateway --->10.0.0.3
+
+PC1: IP Address ---> 10.0.0.2
+Gateway --->10.0.0.3
+
+PC2: IP Address --->30.0.0.2
+Gateway --->30.0.0.1
+
+PC3: IP Address --->30.0.0.3
+Gateway --->30.0.0.1
+
+Check if it is the right port for which you are adding the IP address for the
+router by toggling the Port status button.
+
+Router 0:
+FastEthernet0/0 --->10.0.0.3
+FastEthernet0/1 --->20.0.0.1
+Router 1:
+FastEthernet0/0 --->20.0.0.2
+FastEthernet0/1 --->30.0.0.1
+@ UNIVERSITY
+
+Step 4 - Routing Table Entries:
+Router Network Next Hop (Go to Routing->Static)
+
+[ XN ] Router0
+Physical _Config | CLI  Atributes
+GLUEAR Static Routes
+Settings Network
+Algorithm Settings
+Mask
+ROUTING
+Next Hop
+Static
+RIP Add
+SWITCHING
+Router0
+
+Network: 30.0.0.0
+Mask: 255.0.0.0
+Next Hop: 20.0.0.2
+
+Routerl
+
+Network: 10.0.0.0
+Mask: 255.0.0.0
+Next Hop: 20.0.0.1
+
+Execution Procedure:
+
+Step 1: Design a network topology with desktops, switches and routers similar
+
+to the network depicted in the above diagram.
+
+Step 2: Configure the PCs and routers with the details provided above.
+Step 3: Send a simple PDU from any PC on network 10.0.0.0 to any other PC on
+
+other network 30.0.0.0 and vice-versa.
+
+Step 4: Simulate the network and observe the packet flow from one network to
+another.
+PES
+
+UNIVERSITY
+
+Figure of the topology, simulation hop table and the table where
+successful transmission is seen
+
+EERBO0CLAh 201 QACAOE BESE ?
+= B/ meg¢ S
+
+o
+
+ImsweIBIIBOOC
+
+PES
+
+UNIVERSITY
+
+Task 2 (Mandatory)
+
+Task 2
+
+In this task, students should explore how to add interfaces to the router. Connect all
+routers, switches and hosts with their IP addresses as shown below.
+
+30018
+
+256026
+‘Swicht
+
+Al 50018 7
+PCo AT
+
+et #e3
+
+Route
+PC1-1.0028 7 e PC4-30038
+
+g‘
+
+PG4
+PC2-50028
+
+Deliverables/Submission:
+
+1. Screenshot of the working topology including the successful transmission
+of packet with your SRN in place holder.
+
+2. Simulation hop table
+
+3. What is your observation and understanding of this concept that you have
+implemented?
+
+4. Why is it necessary to assign an IP address to the newly added interface?
+
+5. What is a routing table and why is it important?
+
+Conclusion (Final Submission)
+
+o A PDF document with all the mandatory tasks (Task 2).
+
+Naming convention: SRN_ NAME LABI1
+
+Observations and answers to all the questions for all these tasks are
+mandatory.
+
+All the screenshots must be clear, if not marks will not be allotted.
+
+Every component should have a placeholder name with its IP address.
+Your SRN in placeholder is mandatory.
+
+Any plagiarism found will be straight away rejected and the lab will be
+awarded 0 marks. Be careful.
+
+
+
+
+################################################################################
+FILE 4/4: labs/lab2_wireshark/Lab 2-HTTP Persistent and Non-persistent Connections.pdf
+PAGES: 11 | EXTRACTED CHARACTERS: 10,641
+################################################################################
+
+@ PES
+COMPUTER NETWORKS - UE25CS243A
+
+Lab 2: Understanding Persistent and Non-persistent HTTP
+Connections
+
+Objective: To understand persistent and non-persistent HTTP
+connections and corresponding performance impact.
+
+Task:
+
+Create a web page with N (e.g. 10) embedded images. Each image should be of
+minimum 2 MB size. Configure your browser (Firefox) with following settings (each
+setting requires repeat of experiment):
+
+a. Non persistent connection
+b. 2 persistent connections
+C. 4 persistent connections
+
+I. System Requirements
+
+Software
+
+Ubuntu Linux (Server & Client machines / VMs)
+Apache HTTP Server
+
+Mozilla Firefox
+
+Wireshark
+
+VirtualBox / VMware (if using VMs)
+
+Hardware / Network
+
+e Two systems (or two VMs): Server and Client
+
+e Connected via a bridged network (if using 2 systems)
+
+e Or, Create groups of 2 such that one student’s desktop will be the server, the other
+will be the client.
+@ UNIVERSITY
+
+II. Theory: Apache Server, Client, and Host
+Apache HTTP Server
+
+The Apache HTTP server is the most widely-used web server in the world. It provides
+many powerful features including dynamically loadable modules, robust media support,
+and extensive integration with other popular software.
+
+Client and Host Interaction
+
+In a web system, the client (e.g., a browser) sends HTTP requests to the Apache server,
+and the server (host) listens for those requests and responds with the requested
+resources. Apache acts as the intermediary between the client and the files or services
+hosted on the server machine, handling everything from static page requests to dynamic
+content generation.
+
+Persistent vs. Non-Persistent Connections
+When HTTP clients and servers communicate, they do over a TCP connection:
+
+e Non-persistent connections open a new TCP connection for each object
+requested, increasing overhead.
+
+e Persistent connections (also called HTTP Keep-Alive) allow multiple HTTP
+requests/responses over a single TCP connection, reducing latency and resource
+usage.
+
+Apache supports persistent HTTP connections via its KeepAlive directive (KeepAlive
+On/Off), which enables clients and the server to reuse the same TCP connection for
+multiple HTTP requests as long as both sides agree.
+) PES
+
+UNIVERSITY
+
+III. Apache Server Setup (Server Machine)
+
+Step 1: Install Apache
+
+sudo apt-get update
+sudo apt-get install apache2
+
+seed@seedvm200!
+
+@seedv )52
+
+S sudo apt-get update
+
+https://download.docker.com/linux/ubuntu jammy InRelease
+http://ports.ubuntu.
+http://ports.ubuntu.
+http://ports.ubuntu.
+://ports.ubuntu.
+://ports.ubuntu.
+
+://ports.ubuntu.
+
+.ubuntu.
+
+.ubuntu
+
+com/ubuntu-ports
+com/ubuntu-ports
+com/ubuntu-ports
+com/ubuntu-ports
+com/ubuntu-ports
+
+com/ubuntu-ports
+com/ubuntu-ports
+
+.com/ubuntu-ports
+
+jammy InRelease
+
+jammy-updates InRelease
+jammy-backports InRelease
+jammy-security InRelease [129 kB]
+jammy-security/main armé64 Packages [2
+
+jammy-security/main arm64 c-n-f Metad
+jammy-security/universe arm64 Package
+
+jammy-security/universe armé64 c-n-f M
+
+Fetched 3,947 kB in 15s (270 kB/s)
+Reading package lists... Done
+dvm2 :-$ sudo apt-get install apache2
+Reading package lists... Done
+Building dependency tree. Done
+Reading state information Done
+lapache2 is already the newest version (2.4.52-1ubuntu4.16).
+
+0 upgraded, © newly installed, © to remove and 10 not upgraded.
+
+seed@seedvm2005:~$ I
+
+Step 2: Verify Apache Status
+sudo systemctl status apache2
+If not running:
+
+sudo systemctl restart apache2
+
+daseedvn2005: tenctl status apach
+
+® apache2.service - The Apache HTTP Server
+Loaded: (/lib/systend/syst:
+
+ince Mon
+
+; enabled; vendor p
+
+Active: act unning :08 UTC; 2h 6min ago
+Do
+
+Erocast exited, status
+
+Main PID
+
+16492
+16493
+16494
+
+: Starting The Apache HTTP Server..
+AHEO558: apache2: Could not reliablf
+
+eedvn2005
+eedvn2005
+
+) PES
+
+UNIVERSITY
+
+Step 3: Verify Web Server
+Open a browser on the client and enter:
+http://<server-ip>
+
+Check server ip through ifconfig (for linux/MacOS) or ipconfig (for windows)
+command.
+
+Server side:
+
+$ ifconfig
+: flags=4099<UP,BROADCAST ,MULTICAST> mtu 1500
+inet 172.17.6.1 netmask 255.255.0.0 broadcast 172.17.255.255
+ether 3a:8d:cc:23:95:e4 txqueuelen © (Ethernet)
+RX packets © bytes © (0.0 B)
+RX errors © dropped © overruns 0 frame ©
+TX packets @ bytes 0 (0.0 B)
+TX errors © dropped 0 overruns @ carrier ® collisions @
+
+ens160: flags=4163<UP,BROADCAST ,RUNNING,MULTICAST> mtu 1500
+inet 192.168.34.128 netmask 255.255.255.0 broadcast 192.168.34.255
+inet6 fe80::20c:29ff:fed3:fesb prefixlen 64 scopeid ©x20<link>
+ether 00:0c:29:d3:f0:5b txqueuelen 1000 (Ethernet)
+RX packets 163331 bytes 194866063 (194.8 MB)
+
+RX errors @ dropped @ overruns © frame ©
+
+TX packets 97963 bytes 114138592 (114.1 MB)
+
+TX errors © dropped © overruns © carrier ® collisions @
+device interrupt 46 memory ©x3fe00000-3fe20000
+
+lo: flags=73<UP,LOOPBACK,RUNNING> mtu 65536
+inet 127.0.0.1 netmask 255.0.0.0
+inet6 ::1 prefixlen 128 scopeid 6x10<host>
+loop txqueuelen 1000 (Local Loopback)
+RX packets 42558 bytes 108807052 (108.8 MB)
+RX errors ® dropped @ overruns 0 frame ©
+TX packets 42558 bytes 108807052 (108.8 MB)
+TX errors ® dropped @ overruns @ carrier @ collisions @
+
+Note: the apache default page must be accessible at 127.0.0.1 on the server side and
+corresponding ip address (in this case, port ens160 and ip = 192.168.34.128).
+
+Client side:
+
+@ Not Secur
+
+Index of /
+
+Name Last modified Size Description
+
+Apachel2.4.52 (Ubuntu) Server at 192.168.34.128 Port 80
+
+The Apache default page or previously set index file should load.
+@ UNIVERSITY
+
+IV. Web Page Preparation
+Step 4: Prepare Content
+
+) Use 10 images, each of minimum size 2 MB
+[ Use the HTML file provided by the faculty
+
+Step 5: Copy Files to Web Directory
+sudo cp /path/to/images/* /var/www/html/
+
+Note: path/to/images/* can be checked by pwd command
+
+$ sudo cp e/seed/Downloads/CNlab2/* /var/www/
+$ls
+
+S |
+
+HTML file location:
+/var/www/html/file name.html
+Ensure correct permissions:
+
+sudo chmod -R 755 /var/www/html/
+
+V. Browser Configuration (Client Machine)
+
+Open Firefox and type:
+about:config
+
+Search for the following settings and modify them according to the experiment:
+
+Parameter Non-Persistent Persistent
+network.http.keep-alive false true
+network.http.max-persistent-connections-per-server 0 2/4/6/8/10
+
+IMPORTANT: Clear browser cache before each experiment.
+PES
+
+UNIVERSITY
+
+O Brvencarmon  x o+
+
+# Firsfox abouticonfig
+
+network http keep-alive
+
+network http keep-aive.timeout
+
+network http.keep-alive
+
+(X & nced re +
+
+d « c irefox about:config
+
+network http.max-persistent-connections-per-server [
+
+Note: these values have to be changed depending on the experiment and deliverables.
+
+Experiment 1: Non-Persistent HTTP Connection
+
+Server Configuration
+
+Edit Apache configuration:
+1. In the terminal, enter:
+
+sudo nano /etc/apache2/apache2.conf
+
+2. Set:
+) PES
+
+UNIVERSITY
+
+KeepAlive Off
+
+seed@seedvm2005: ~
+
+GNU_nano 6.2 apache2/apache2.conf *
+
+DefaultRuntimeDir ${APACHE_RUN_DIR}
+
+1dFile ${APACHE_PID_FILE}
+
+eepAlive Off
+
+axKeepAliveRequests 100
+
+File Name to Write:
+DOS Format
+{8 cancel [l Mac Format Prepend
+
+Useful nano shortcuts:
+Saving a file sequence: Ctrl + X -> Y -> enter
+
+Search: Ctrl + W
+
+3. Restart Apache:
+
+sudo systemctl restart apache2
+
+Client Configuration
+
+Set max-persistent-connections-per-server = 0 in firefox settings, as directed above.
+apture St
+
+1. Start Wireshark on the server.
+
+2. Choose en0 or in this case, ens160 (or any corresponding port acting as a bridge
+between VM and host system).
+
+3. Apply filter: http
+
+4. Access the page from client:
+
+http://<server-ip>/file_name.html
+
+g38u8IRLLLLLE2E
+gasatrrestLirees3
+¥EIESHYTLL LTSS
+N¥g2sREELLILERILT
+PEIFA3IILLELELLLY
+esaraseEyuiLeasey
+2gRREsaEsRRLRLENS
+gxvIEIsITIELLLLLS
+g33IIeBE 2LV
+veezaseusysLesEesy
+
+28RRIBRANIRERES:
+EEE I TTTE TS
+pEIIEBYYILELELI
+
+© 7 yperten Tanterpotact rotscel Paches 7126 Daplayd: 26 04%) profe oeta
+
+4. Record the total time taken to download all 10 images
+
+Note 1: The wireshark should capture the packets between the client and the server
+while the file is accessed.
+
+Note 2: The images in the HTML page should have all the permissions specified
+through the server for the proper access.
+@ UNIVERSITY
+
+Experiment 2: Persistent HTTP Connections
+
+Case A: 2 Persistent Connections
+
+1. Client: Change the firefox settings again and set
+max-persistent-connections-per-server = 2.
+
+2. Server: Change the apache2 configuration files (apache2.conf) by rewriting
+KeepAlive On.
+
+3. Restart Apache and repeat the capture steps.
+
+Case B: 4+ Persistent Connections
+
+1. Repeat the above steps (Case A 1-3) with:
+max-persistent-connections-per-server = 4.
+
+2. Clear browser cache between every capture, and change
+max-persistent-connections-per-server accordingly (6/8/10).
+
+V. Deliverables
+
+A. Experiment Observations:
+
+Capture traffic until all 10 images are loaded and note the start and end
+timestamps from Wireshark.
+
+For each experiment and sub-part, calculate:
+Total Load Time = End Time — Start Time
+Record the values directly from Wireshark timestamps.
+
+Observation table:
+
+Connection Type Persistent Connections Start Time (s) | End Time (s) | Load Time (s)
+
+Non-Persistent 0
+Persistent 2
+Persistent 4
+
+0
+A}
+o
+
+UNIVERSITY
+
+10
+
+Frane 51513 bytes o wire (418 bits), 513 bytes capared (4108 bits) on oterfuce 18, 14 8
+
+Wi st
+
+Persistent
+Persistent
+Persistent
+
+Example:
+
+[rxaz32axengrazsnsssssazasarss
+23232485328 5585 282 33RRR 328G
+358208882333 23233523288530R%
+foxasazaggesensnazsonenInsang
+532323237328 3573332R3 328323
+
+2224323333535 3A 35353023 AR
+
+snsnzaszzecazasecassesniax
+Js223522223x220 098030 0n R 0Rs
+33322532 4K S RSRTAX3ARTTIABE
+3753272725323 835783885386853
+
+HH
+
+etemet Protocol Versien 4, Src: 127.0.0.1, Dot 1.0.0.1
+Mopertent Trasster Praecal
+
+10
+
+0.051785s
+
+X-axis: Number of Persistent Connections (0, 2, 4, 6, 8, 10)
+Y-axis: Total Page Load Time (seconds)
+
+End time - Start time
+
+Students may use Excel / LibreOffice Calc / Python / MATLAB.
+
+Students must plot a graph using the observed values.
+
+Graph Requirements:
+
+Start time = 0.00496s
+End time = 0.056745s
+B. Graph Plot:
+
+Load time
+PES
+
+UNIVERSITY
+
+Example plot:
+
+Total Page Load Time vs. Number of Persistent
+Connections
+
+0.06
+
+Total Page Load Time (seconds)
+
+0 1 2 3 4
+
+Number of Persistent Connections.
+
+C. Screenshots Required for Submission:
+
+. Wireshark capture for non-persistent connection (all 10 images visible)
+. Wireshark capture for persistent connection — 2 connections
+
+. Wireshark capture for persistent connection — 4, 6, 8, 10 connections
+
+. Graph screenshot showing load time vs number of connections
+
+N O S
+
+Conclude by Summarizing how HTTP connection persistence impacts page load time
+and network efficiency.
+
+11
+
+

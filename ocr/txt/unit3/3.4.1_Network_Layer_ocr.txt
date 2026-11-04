@@ -1,0 +1,320 @@
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+S)PES
+
+Unit — 3 Network Layer and Internet Protocol
+
+4.1 Overview of Network Layer
+COMPUTER NETWORKS
+
+Network-layer Services and Protocol
+
+transport segment from
+sending to receiving host
+
+* sender: encapsulates segments
+into datagrams, passes to link layer
+
+* receiver: delivers segments to
+
+transport layer protocol
+network layer protocols in
+every Internet device: hosts,
+routers
+
+routers:
+
+* examines header fields in all IP
+datagrams passing through it
+
+* moves datagrams from input ports
+to output ports to transfer
+datagrams along end-end path
+
+mobile
+
+applicatio
+o
+
+< >
+
+Jink
+physical
+
+link
+Dhysical
+
+link
+physical
+
+enterprise
+
+network
+
+nal or global
+
+link
+Dhysical
+
+link
+physical
+link datacenter
+Dhysical network
+
+applicatio
+
+L 4
+
+link
+physical
+
+COMPUTER NETWORKS
+Two Key Network-layer Functions
+
+network-layer functions:
+
+« forwarding: move packets from a
+router’s input link to appropriate
+router output link
+
+routing: determine route taken by
+packets from source to destination
+
+* routing algorithms
+
+analogy: taking a trip
+
+forwarding: process of getting
+through single interchange
+
+routing: process of planning trip
+from source to destination
+
+forwarding
+
+routing
+
+&
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Interplay between Routing and Forwarding
+
+routing algorithm
+
+routing algorithm determines
+end-end-path through network
+
+forwarding table determines
+local forwarding at this router
+
+value in
+arriving
+packet’s
+header
+
+S
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Network Layer: Data Plane, Control Plane
+
+&%) PES
+
+UNIVERSITY
+
+Data plane:
+
+= Jocal, per-router function
+
+= determines how datagram
+arriving on router input port is
+
+forwarded to router output port
+
+values in arriving
+packet header
+
+Control plane
+network-wide logic
+
+determines how datagram is routed
+among routers along end-end path from
+source host to destination host
+
+= two control-plane approaches:
+
+* traditional routing algorithms:
+implemented in routers
+
+* software-defined networking (SDN):
+implemented in (remote) servers
+COMPUTER NETWORKS
+%% PES
+Per-router Control Plane
+
+Individual routing algorithm components in each and every router interact in the
+
+control plane
+= =
+
+control
+plane
+
+data
+plane
+
+values in arriving
+packet headel
+COMPUTER NETWORKS
+. . %% PES
+Software-Defined Networking (SDN) Control Plane
+
+Remote controller computes, installs forwarding tables in routers
+
+Remote Controller
+
+n i i 0
+
+values in arriving | | i i ‘
+packet header E v
+
+COMPUTER NETWORKS
+
+'S\ PES
+Network Service Model ‘%
+
+UNIVERSITY
+
+Q: What service model for “channel” transporting datagrams
+from sender to receiver?
+
+example services for individual example services for a flow of
+datagrams: datagrams:
+
+= guaranteed delivery * in-order datagram delivery
+
+= guaranteed delivery with
+
+* guaranteed minimum bandwidth to flow
+less than 40 msec delay &
+
+* restrictions on changes in inter-packet
+spacing
+COMPUTER NETWORKS
+
+A2\ PES
+Network-layer Service Model ‘%
+
+UNIVERSITY
+
+. . 2
+Network Service Quality of Service (QoS) Guarantees?
+
+Architecture Model Bandwidth Loss Order Timing
+
+Internet best effort none no no no
+
+Internet “best effort” service model
+
+No guarantees on:
+i. successful datagram delivery to destination
+ii. timing or order of delivery
+iii. bandwidth available to end-end flow
+
+COMPUTER NETWORKS
+Network-layer Service Model
+
+Network
+Architecture
+
+Service
+Model
+
+Quality of Service (QoS) Guarantees ?
+
+Bandwidth
+
+Order
+
+Internet
+
+best effort
+
+no
+
+ATM
+
+Constant Bit Rate
+
+Constant rate
+
+yes
+
+ATM
+
+Available Bit Rate
+
+Guaranteed min
+
+yes
+
+Internet
+
+Intserv Guaranteed
+(RFC 1633)
+
+yes
+
+Internet
+
+Diffserv (RFC 2475)
+
+possible possibly
+
+possibly
+COMPUTER NETWORKS
+
+'S\ PES
+Reflections on best-effort Service ‘%
+
+UNIVERSITY
+
+= simplicity of mechanism has allowed Internet to be widely deployed
+adopted
+
+= sufficient provisioning of bandwidth allows performance of real-time
+applications (e.g., interactive voice, video) to be “good enough” for “most of
+the time”
+
+= replicated, application-layer distributed services (datacenters, content
+distribution networks) connecting close to clients’ networks, allow services
+
+to be provided from multiple locations
+= congestion control of “elastic” services helps
+
+It’s hard to argue with success of best-effort service model .
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY

@@ -1,0 +1,195 @@
+UE25CS243A: COMPUTER NETWORKS (4-0-0-4-4)
+
+# of Credits: 4
+
+Course Information
+
+# of Slots: 56
+
+Class | Chapter Title % of Portion covered
+# /Reference Topics to be Covered
+Literature % of Syllabus | Cumulative %
+Unit — 1: Computer Networks and the Internet, Application Layer-1
+111 Introduction to computer networks, What
+o is internet? A Nuts-and-Bolts description
+1
+1.1.2,1.1.3 A services description, What is a Protocol?
+121 Network edge: Access networks
+122 Physical media
+2
+131 Network core: Packet switching, Circuit
+o switching
+Network of Networks, Delay, Loss &
+133 Throughput
+. P 25% 25%
+141 Overview of delay in Packet-switched
+o networks
+5 142 Queuing delay, Packet loss
+6 143 End-to-End delay, Throughput in computer
+networks
+144
+The OSI model
+7
+1.5(T1) 2.3 (R1) | TCP/IP protocol suite
+8 Introduction to Network devices
+
+Network application principles &
+
+11 211 architectures
+2.12 Processes communication
+12 2.1.3 Transport services available to applications
+2.14 Transport services by Internet
+The web and HTTP, Non-persistent and
+13 221,222 Persistent connection, HTTP message
+format
+Cookies, Web caching,
+14 223 HTTP vs HTTPS, TLS1.3
+Unit — 2: Application Layer-2, Transport Layer-UDP
+16 2.4.1 DNS — Services provided
+17 242 Overview of how DNS works
+243 DNS records and messages
+18
+2.5.1 Peer-to-Peer applications
+Introduction to transport layer
+20 3.1 Relationship b/w transport & network layer
+Overview of the transport layer in the 25% 50%
+Internet
+21 32 Multiplexing & Demultiplexing
+22 2.7.1 Socket Programming with UDP
+23 272 Socket Programming with TCP
+Connectionless transport: UDP
+24 33
+Segment structure, Checksum
+Principles of reliable data transfer-
+341 .
+Overview
+25 .
+343 Go-Back-N protocol, Selective Repeat,
+
+Problems
+
+26
+
+35.1,35.2,35.3
+
+Connection Oriented Transport: TCP, The
+TCP connection
+
+354
+
+TCP segment structure
+
+27
+
+355
+
+Flow control
+
+3.5.6
+
+TCP connection management
+
+Unit — 3: Network Layer and Internet Protocol
+
+29
+
+3.6
+
+TCP congestion control
+
+30
+
+3.8
+
+QUIC Protocol
+
+Overview of network layer, Forwarding
+
+T1: 41 and routing, Network service models
+421422 Inside router: Input port processing and
+e Destination-based forwarding, Switching
+32
+Output port processing, Where does
+423,424,425 Queueing occur?, Packet scheduling
+33 431 The Internet Protocol — IPv4, Datagram
+format
+34 432 Fragmentation, Fragmentation- Problems
+433 IPv4 Addressing
+35
+433 IPv4 Addressing - Problems-1
+36 433 IPv4 Addressing - Problems-2
+433 NAT
+37
+4.4 Introduction to SDN
+38 44 Overview of OpenFlow protocol, P4
+
+25%
+
+75%
+
+25%
+
+Unit — 4 Network Layer and Internet Protocol, Link Layer and LAN
+26.1, IPv6 Addressing: Introduction
+26.2,26.3 (R1) | Address space allocation
+43 27.1 IPv6 Addressing: Packet format
+Transition from IPv4 to IPv6
+27.2,27.3 (R1)
+Transition from IPv4 to IPv6
+Network layer protocols: DHCP
+44 433
+ICMP
+50 Introduction to routing algorithms: Link
+46 ) state
+52 Link state - Problems
+52 Distance vector
+47
+52 Distance vector - Problems
+TI: 6.1 Introduction to link layer
+48
+Error-detection and correction techniques:
+Parity Checks-Problems
+49 6.2,6.2.1 Cyclic redundancy check - Problems
+50 6.2.2 Multiple access protocols: CSMA/CD
+6.2.3 Switched LAN: Link layer addressing
+51 6.2.3,64.1 ARP, Ethernet
+52 6.4.2 Link-layer switches, VLAN
+643 Retrospective: A day in the life of a web
+o page request
+53
+6.4.4 Physical layer: Purpose, Signals to Packets
+6.7 Transmission media
+53 7.3 (T1)
+
+100%
+
+32 (R1)
+
+Wireless LANs: IEEE 802.11 LAN
+architecture
+
+" Publication Information
+Book Type Code Title & Author Edition Publisher Year
+“Computer Networking - A Top - Down
+Text Books T Approach”, James F Kurose, Keith W. 8 Pearson 2022
+Reference | py | «TCp IP Protocol Suite”, Behrouz Forouzan | 4 | McGraw-Hill | 2010
+Books
+Evaluation Policy:
+Component Description Conducted Scaled
+For To
+ISA-1 Unit-1 & Unit-2 (Hybrid Mode) 40 15
+ISA-2 Unit-3 & Unit-4 (Hybrid Mode) 40 15
+Labs Individual — 60 10
+3 labs — level 1 (Banana type) [Cisco packet tracer,
+UDP with DNS, Ethernet/ARP]
+3 labs — Level 2 (Orange type) [ HTTP Persistent &
+Non-Persistent, TCP Congestion, Hardware]
+Hackathon / Level 3 (Jackfruit) — group of 3 students 40 10
+Mini-Project To choose from over 30 different projects with two
+deliverables each.
+SDN + Socket Programing — (Evaluated based on
+the Rubrics)
+ISA total 50
+ESA Hybrid 100 50
+Total 100
+

@@ -1,0 +1,264 @@
+@res \
+
+COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+
+-
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Given the IP address 172.21.35.17, determine the network address using the appropriate address
+
+mask.
+
+1. Identify the class of the given IP address.
+
+2. Determine the corresponding subnet mask in dotted-decimal notation.
+
+3. Explain how the mask is used to separate the network portion from the host portion of the IP
+address.
+
+4. Determine the resulting network address.
+
+Answer: Determining the Network Address Using a Subnet Mask
+Given IP address: 172.21.35.17
+
+1. Identify the class of the IP address
+
+The first octet of the IP address is 172.
+
+Class A: 1-126
+
+Class B: 128-191
+
+Class C: 192-223
+
+Therefore, 172.21.35.17 is a Class B IP address.
+COMPUTER NETWORKS
+
+%% PES
+IPv4 Addressing & Subnetting — Numerical Example
+2. Determine the subnet mask Truth Table for Boolean AND:
+The default subnet mask for a Class B address is:
+Dotted-decimal: 255.255.0.0 0o 1
+0ANDO0=0
+-0 0[O0 |0
+IP address: 172.21.35.17 i
+10101100.00010101.00100011.00010001 Tanmgoy 1o
+
+Subnet mask: 255.255.0.0
+
+11111111.11111111.00000000.00000000 10101100000101010010001100010001 = 172.21.35.17
+AND J 11111111111111110000000000000000 = 255.255.0.0
+
+3. 10101100000101010000000000000000 = 172.21.0.0
+Each bit of this class B address is ANDed with the
+
+corresponding bit of the address mask to derive * Network portion: 172.21
+
+the network address * Host portion: 35.17
+
+4. Therefore, the network address is: 172.21.0.0
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+123.56.77.32/29
+
+180.34.64.64/30
+200.17.21.128/27
+
+4
+XD
+) A
+
+S
+|
+
+—..
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+123.56.77.32/29
+
+/29 subnet means there are 32 - 29 = 3 bits left for host addresses.
+
+Binary Subnet Mask: 11111111.11111111.11111111.11111000
+
+Subnet Mask: 255.255.255.248 (since the first 29 bits are for the network portion)
+Number of Addresses: 23 = 8 total addresses
+
+Network Address: 123.56.77.32
+
+Usable IP Range: 123.56.77.33 to 123.56.77.38 (8 - 2 = 6 Addresses)
+Broadcast Address: 123.56.77.39
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+180.34.64.64/30
+/30 subnet means there are 32 - 30 = 2 bits left for host addresses.
+Binary Subnet Mask: 11111111.11111111.11111111.11111100
+Subnet Mask: 255.255.255.252 (since the first 30 bits are for the network portion)
+Number of Addresses: 22 = 4 total addresses
+Network Address: 180.34.64.64
+Usable IP Range: 180.34.64.65 to 180.34.64.66 (4 - 2 = 2 Addresses)
+Broadcast Address: 180.34.64.67
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the range of addresses in the following blocks.
+200.17.21.128 /27
+127 subnet means there are 32 - 27 = 5 bits left for host addresses.
+Binary Subnet Mask: 11111111.11111111.11111111.11100000
+Subnet Mask: 255.255.255.224 (since the first 30 bits are for the network portion)
+Number of Addresses: 25 = 32 total addresses
+Network Address: 200.17.21.128
+Usable IP Range: 200.17.21.129 - 200.17.21.158 (32 - 2 = 30 Addresses)
+Broadcast Address: 200.17.21.159
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+You are given the network address 175.200.0.0; you are
+required to have 4 subnets.
+
+What is the minimum number of Host Bits can you take in to
+the Network Bits for this purpose?
+
+Write down the addresses of 4 subnets.
+
+Write the subnet mask for the network.
+
+4
+
+1SS
+
+) A
+
+. \
+|
+
+—..
+COMPUTER NETWORKS
+IPv4 Addressing & Subnetting — Numerical Example
+
+In a block of addresses, we know the IP address of one host is
+25.34.12.56/16.
+
+What are the first address (network address) and the last
+address (limited broadcast address) in this block?
+
+Please explain in full with detailed steps showing the
+calculation.
+
+&%) PES
+
+UNIVERSITY
+
+2
+
+-
+
+'y
+—
+|
+
+o 4
+COMPUTER NETWORKS
+IPv4 Addressing & Subnetting — Numerical Example
+
+An organization is granted the block 16.0.0.0/8. The
+administrator wants to create 500 fixed- length subnets.
+
+i)  find the subnet mask
+ii) find the number of addresses in each subnet.
+
+iii) find the first and last address in first subnet and in the
+last subnet (500t subnet).
+
+&%) PES
+
+UNIVERSITY
+
+2
+
+-
+
+'y
+—
+|
+
+o 4
+COMPUTER NETWORKS
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+An organization is granted a block of addresses with the
+beginning address 14.24.74.0/24. The organization needs to
+
+have 3 subblocks of addresses to use in its three subnets:
+one subblock of 10 addresses, one subblock of 60
+addresses, and one subblock of 120 addresses. Design the
+subblocks.
+
+S
+
+T
+——
+COMPUTER NETWORKS
+
+%g PES
+IPv4 Addressing & Subnetting — Numerical Example
+
+UNIVERSITY
+
+Find the network address and the directed broadcast
+address of subnetted Class B IPv4 address 172.25.171.182
+
+with a subnet mask of 255.255.224.0. ,
+
+.-
+
+g
+T
+|
+"\_/\_/
+%% UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+P Es Department of Computer Science and Engineering
+
+UNIVERSITY

@@ -1,0 +1,3192 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A) — UNIT Course_Info_and_Labs SOURCE DOCUMENTS EXTRACTED TEXT
+UNIT TITLE: Course Policies, Syllabi, Setup Guides, Project & Extra Problems
+TOTAL SOURCE FILES: 9
+================================================================================
+
+TABLE OF CONTENTS:
+  1. resources/Textbook & Course Info/Computer Networks-syllabus-2026.pdf
+  2. resources/Textbook & Course Info/Lesson Plan_UE25CS243A.pdf
+  3. resources/Textbook & Course Info/UE25CS243A_CN - Evaluation Policy.pdf
+  4. resources/Extra Problems.pdf
+  5. labs/setup_and_tools/Demo of Basic Commands.pdf
+  6. labs/setup_and_tools/VMBox_Ubuntu24_Windows.pdf
+  7. labs/setup_and_tools/VM Installation with VMWare Fusion.docx.pdf
+  8. labs/setup_and_tools/WIRESHARK INSTALLATION.pdf
+  9. project/first_presentation/Project_25_Presentation.pdf
+
+================================================================================
+
+
+################################################################################
+FILE 1/9: resources/Textbook & Course Info/Computer Networks-syllabus-2026.pdf
+PAGES: 3 | EXTRACTED CHARACTERS: 6,836
+################################################################################
+
+Course Code UE25CS243A Course Title Computer Networks
+Program B.Tech Hours per week/ L T P S C
+Credit Assigned
+4 [] 0 4 4
+Semester 3 Type of Course Core Course
+Tools/Language | Cisco Packet Tracer, Desirable
+s Wireshark, Mininet Knowledge
+Simulator, Python.
+Prelude
+This is a foundation course on Computer Networking which focuses on building blocks of the Internet. We
+trace the journey of messages sent over the Internet from an application residing on one host machine
+(source) to another (Destination) using a top-down layered approach. The course contents are organized
+based on the TCP/IP Protocol stack.
+Course ® To provide a comprehensive understanding of the fundamental principles and architectures of
+Objectives: computer networks and the Internet.
+
+© To enable students to design, implement, and analyze network applications using socket programming
+and understand the role of application layer protocols.
+
+® To equip students with the knowledge to analyze and evaluate transport layer protocols, including
+their mechanisms for reliable data transfer and congestion control, and to introduce them to the
+concepts of Software Defined Networking (SDN).
+
+o To familiarize students with link layer protocols, error detection/correction techniques, and routing
+algorithms, enabling them to understand the operational aspects of local area networks and network
+routing.
+
+Course Unit 1: Computer Networks and the Internet, Application Layer
+Contents Introduction to Computer Networks, Internet: A Nuts—and-Bolts Description, A Services Description,
+
+Protocol, The Network Edge: Access Networks, Physical Media, Introduction to physical layer devices, The
+Network Core, Packet Switching, Circuit Switching, A Network of Networks, Delay, Loss, and Throughput in
+Packet—Switched Networks, Overview of Delay in Packet Switched Networks — Queuing Delay and Packet
+Loss, End—-to—End Delay, Throughput in Computer Networks, The OSI Model and the TCP/IP Protocol Suite,
+Protocol Layers, The OSI Model, TCP/IP Protocol Suite. Network Application Principles: Network Application
+Architectures, Processes Communication, Transport Services available to Applications, Transport Services
+provided by Internet. The Web, HTTP and HTTPS, Non persistent and persistent connection, HTTP Message
+Format, TLS 1.3, User Server Interaction: Cookies, Web Caching.
+
+14 Hours
+
+Unit 2: Application Layer, Transport Layer — UDP
+Domain Name Server (DNS), The Internet’s Directory Service: Services provided by DNS; How DNS works:
+DNS Records and messages; Peer to peer Applications - Overview; Socket Programming with TCP and UDP;
+Other Application Layer Protocols: FTP, SMTP, SNMP, Telnet, SSH.
+Introduction to Transport Layer Services: Relationship Between Transport and Network Layer, Overview of
+the Transport layer on the Internet, Multiplexing and Demultiplexing; Connectionless Transport UDP: UDP
+Segment Structure, UDP Checksum. Overview of Principles of Reliable Data Transfer, Go—Back—N Protocol,
+Selective—Repeat; Connection Oriented Transport TCP: TCP Segment Structure, Flow Control, TCP
+Connection Management
+
+14 Hours
+
+Unit 3: Transport Layer — TCP, Network Layer and Internet Protocol
+TCP Congestion Control. Numerical on TCP congestion control mechanisms—TCP Tahoe, Reno, QUIC
+Protocol — with HTTP3
+Overview of Network Layer: Forwarding and routing, what’s Inside a Router?, The Internet Protocol (IP)
+IPV4: Datagram Format, Fragmentation, Addressing, NAT, Introduction to SDN, Components and
+Architecture of SDN, OpenFlow and P4, Data Center Networking — Modern Clos/Fat-tree vs Traditional 3-
+Tier, Multicast Routing — Case Study.
+
+14 Hours
+
+Unit 4: Network Layer and Internet Protocol, Link Layer and LAN
+Introduction to Network layer Protocols: DHCP, ICMP; IPv6 Protocol: Packet Format, Transition from IPv4
+to IPv6; Introduction to Routing Algorithms: Link State: Dijkstra’s algorithm and Distance Vector: Bellman—
+Ford Algorithm. Link layer — Error-Detection and Correction techniques, Parity checks, Internet Checksum,
+Cyclic Redundancy Check, and Multiple Access Protocols: CSMA/CD; Switched LAN: Link layer addressing
+and ARP, Ethernet: Link—layer switching, VLAN. Retrospective: A Day in the Life of a Web Page Request.
+Physical Layer — Purpose, Signals to Packets, Transmission media. Wireless LANs: IEEE 802.11 LAN
+architecture.
+
+14 Hours
+
+Text Book(s):
+
+“Computer Networking: A Top — Down Approach”, James F. Kurose, Keith W. Ross, 8th Edition, Pearson
+Publication, 2022.
+
+Reference
+Book(s):
+
+“TCP IP Protocol Suite”, Behrouz Forouzan, 4th Edition, McGraw-Hill, 2010.
+
+Course
+Outcome
+
+© Analyze and apply fundamental networking concepts, including protocol layers, network architectures,
+addressing schemes (IPv4, IPv6).
+
+® Evaluate and implement key application layer protocols (HTTP, DNS, SMTP) and understand their role in|
+network communication. Apply socket programming concepts with TCP and UDP to develop network
+applications.
+
+® Design and analyze transport layer protocols (UDP, TCP), including reliable data transfer, flow control, a
+congestion control mechanisms, and evaluate their impact on network performance. Additionally, gain
+introductory understanding of Software Defined Networking (SDN) concepts.
+
+® Explain and apply link layer protocols (Ethernet, Wi-Fi), error detection/correction techniques, and routil
+algorithms (Dijkstra, Bellman-Ford) for efficient network operation.
+
+Labs:
+
+Designing and Simulation of Network Topology using Cisco Packet Tracer. This experiment introduces
+students to Cisco Packet Tracer, enabling them to create basic network topologies, configure devices,
+and visualize data flow within a network.
+
+Understanding Persistent and Non-persistent HTTP Connections. Students use Wireshark to analyze
+HTTP traffic and understand the differences between persistent and non-persistent connections,
+focusing on real-world scenarios like web page loading.
+
+Exploring UDP with DNS using Wireshark. Analyzing DNS queries and responses to understand UDP
+using Wireshark.
+
+Understanding TCP Congestion Window using Wireshark. This experiment emphasizes on the
+practical application of TCP congestion control mechanisms, sliding window and varying the size of
+the congestion window. This lab also includes sequencing of packets in TCP and retransmission.
+Analyzing Ethernet Protocol and ARP using Wireshark This lab is designed to learn about Ethernet and
+ARP protocol, by analyzing the ethernet frames and observing ARP protocol in action. By using
+Wireshark packet sniffer, the students get to learn about the behavior of ARP cache, format and
+meaning of messages sent and received.
+
+Understanding Hardware Components in Networking. Students explore physical networking
+components, such as routers, switches, and cables, gaining hands-on experience with hardware setup
+and troubleshooting.
+
+
+
+
+################################################################################
+FILE 2/9: resources/Textbook & Course Info/Lesson Plan_UE25CS243A.pdf
+PAGES: 5 | EXTRACTED CHARACTERS: 4,361
+################################################################################
+
+UE25CS243A: COMPUTER NETWORKS (4-0-0-4-4)
+
+# of Credits: 4
+
+Course Information
+
+# of Slots: 56
+
+Class | Chapter Title % of Portion covered
+# /Reference Topics to be Covered
+Literature % of Syllabus | Cumulative %
+Unit — 1: Computer Networks and the Internet, Application Layer-1
+111 Introduction to computer networks, What
+o is internet? A Nuts-and-Bolts description
+1
+1.1.2,1.1.3 A services description, What is a Protocol?
+121 Network edge: Access networks
+122 Physical media
+2
+131 Network core: Packet switching, Circuit
+o switching
+Network of Networks, Delay, Loss &
+133 Throughput
+. P 25% 25%
+141 Overview of delay in Packet-switched
+o networks
+5 142 Queuing delay, Packet loss
+6 143 End-to-End delay, Throughput in computer
+networks
+144
+The OSI model
+7
+1.5(T1) 2.3 (R1) | TCP/IP protocol suite
+8 Introduction to Network devices
+
+Network application principles &
+
+11 211 architectures
+2.12 Processes communication
+12 2.1.3 Transport services available to applications
+2.14 Transport services by Internet
+The web and HTTP, Non-persistent and
+13 221,222 Persistent connection, HTTP message
+format
+Cookies, Web caching,
+14 223 HTTP vs HTTPS, TLS1.3
+Unit — 2: Application Layer-2, Transport Layer-UDP
+16 2.4.1 DNS — Services provided
+17 242 Overview of how DNS works
+243 DNS records and messages
+18
+2.5.1 Peer-to-Peer applications
+Introduction to transport layer
+20 3.1 Relationship b/w transport & network layer
+Overview of the transport layer in the 25% 50%
+Internet
+21 32 Multiplexing & Demultiplexing
+22 2.7.1 Socket Programming with UDP
+23 272 Socket Programming with TCP
+Connectionless transport: UDP
+24 33
+Segment structure, Checksum
+Principles of reliable data transfer-
+341 .
+Overview
+25 .
+343 Go-Back-N protocol, Selective Repeat,
+
+Problems
+
+26
+
+35.1,35.2,35.3
+
+Connection Oriented Transport: TCP, The
+TCP connection
+
+354
+
+TCP segment structure
+
+27
+
+355
+
+Flow control
+
+3.5.6
+
+TCP connection management
+
+Unit — 3: Network Layer and Internet Protocol
+
+29
+
+3.6
+
+TCP congestion control
+
+30
+
+3.8
+
+QUIC Protocol
+
+Overview of network layer, Forwarding
+
+T1: 41 and routing, Network service models
+421422 Inside router: Input port processing and
+e Destination-based forwarding, Switching
+32
+Output port processing, Where does
+423,424,425 Queueing occur?, Packet scheduling
+33 431 The Internet Protocol — IPv4, Datagram
+format
+34 432 Fragmentation, Fragmentation- Problems
+433 IPv4 Addressing
+35
+433 IPv4 Addressing - Problems-1
+36 433 IPv4 Addressing - Problems-2
+433 NAT
+37
+4.4 Introduction to SDN
+38 44 Overview of OpenFlow protocol, P4
+
+25%
+
+75%
+
+25%
+
+Unit — 4 Network Layer and Internet Protocol, Link Layer and LAN
+26.1, IPv6 Addressing: Introduction
+26.2,26.3 (R1) | Address space allocation
+43 27.1 IPv6 Addressing: Packet format
+Transition from IPv4 to IPv6
+27.2,27.3 (R1)
+Transition from IPv4 to IPv6
+Network layer protocols: DHCP
+44 433
+ICMP
+50 Introduction to routing algorithms: Link
+46 ) state
+52 Link state - Problems
+52 Distance vector
+47
+52 Distance vector - Problems
+TI: 6.1 Introduction to link layer
+48
+Error-detection and correction techniques:
+Parity Checks-Problems
+49 6.2,6.2.1 Cyclic redundancy check - Problems
+50 6.2.2 Multiple access protocols: CSMA/CD
+6.2.3 Switched LAN: Link layer addressing
+51 6.2.3,64.1 ARP, Ethernet
+52 6.4.2 Link-layer switches, VLAN
+643 Retrospective: A day in the life of a web
+o page request
+53
+6.4.4 Physical layer: Purpose, Signals to Packets
+6.7 Transmission media
+53 7.3 (T1)
+
+100%
+
+32 (R1)
+
+Wireless LANs: IEEE 802.11 LAN
+architecture
+
+" Publication Information
+Book Type Code Title & Author Edition Publisher Year
+“Computer Networking - A Top - Down
+Text Books T Approach”, James F Kurose, Keith W. 8 Pearson 2022
+Reference | py | «TCp IP Protocol Suite”, Behrouz Forouzan | 4 | McGraw-Hill | 2010
+Books
+Evaluation Policy:
+Component Description Conducted Scaled
+For To
+ISA-1 Unit-1 & Unit-2 (Hybrid Mode) 40 15
+ISA-2 Unit-3 & Unit-4 (Hybrid Mode) 40 15
+Labs Individual — 60 10
+3 labs — level 1 (Banana type) [Cisco packet tracer,
+UDP with DNS, Ethernet/ARP]
+3 labs — Level 2 (Orange type) [ HTTP Persistent &
+Non-Persistent, TCP Congestion, Hardware]
+Hackathon / Level 3 (Jackfruit) — group of 3 students 40 10
+Mini-Project To choose from over 30 different projects with two
+deliverables each.
+SDN + Socket Programing — (Evaluated based on
+the Rubrics)
+ISA total 50
+ESA Hybrid 100 50
+Total 100
+
+
+
+
+
+################################################################################
+FILE 3/9: resources/Textbook & Course Info/UE25CS243A_CN - Evaluation Policy.pdf
+PAGES: 1 | EXTRACTED CHARACTERS: 885
+################################################################################
+
+&
+
+PES
+
+UNIVERSITY
+
+UE25CS243A — Aug — Dec 2026
+
+III Semester
+
+Evaluation Policy
+
+Component Description Conducted For Scaled To
+1SA-1 Unit-1 & Unit-2 (Hybrid Mode) 40 15
+1SA-2 Unit-3 & Unit-4 (Hybrid Mode) 40 15
+Labs Individual - 60 10
+3 labs — level 1 (Banana type) [Cisco packet
+tracer, UDP with DNS, Ethernet/ARP]
+3 labs — Level 2 (Orange type) [ HTTP Persistent
+& Non-Persistent, TCP Congestion, Hardware]
+Hackathon / Level 3 (Jackfruit) — group of 2 students 40 10
+Mini-Project To choose from over 30 different projects with
+two deliverables each.
+SDN + Socket Programing — (Evaluated based
+on the Rubrics)
+ISA total 50
+ESA Hybrid 100 50
+Total 100
+
+Grading Policy for Labs:
+Plagiarism of Lab reports = 0 marks (for both who have shared and copied)
+Submission on the date = graded out of complete 10 Marks
+
+1daylate=-1
+2 day late =-2
+3=-5
+
+No late submissions will be entertained
+
+
+
+
+
+################################################################################
+FILE 4/9: resources/Extra Problems.pdf
+PAGES: 24 | EXTRACTED CHARACTERS: 13,080
+################################################################################
+
+Delay Problems Questions
+Q1] Suppose that the packet length is 4000 bits, and
+that the link transmission rate along the link from the
+first router to the second is 10 MBps. What is the
+transmission delay?
+
+* L=4000 bits
+* Transmission Rate, R=10 MBps =10 x 8 x 106 bps = 80Mbps
+* Transmission Delay = L/R=4000/ (10 x 8 x 109)
+
+= 0.00005s = 50 microseconds
+Q2] There are two ways you can send a 10TB of data
+from Bengaluru to Chennai. You have a dedicated link for
+this very purpose transmitting at 100Mbps and a special
+courier option with delivery in one day. Which would you
+prefer to use?
+
+* Convert total data to bits
+* 10TB=10*10"2* 8 bits = 8x10"'3 bits
+
+* Using the dedicated link, transmission time will take
+10 *10'2* 8/ (100 * 10%) = 800,000 seconds/86,400 ~ 9.26 days.
+Network = 9.3 days
+
+But with the special courier option, it would arrive in a single day. Hence
+the courier option would be preferred for speedy delivery.
+Q3] An optical fiber cable is able to transfer packets
+across the network at a speed of 70% of the speed of
+light in 10 microseconds. What is the distance the
+packet traverses?
+
+* Distance = Speed x Time
+
+* Speed of propagation = 70% of 3 x 108 m/s
+=0.7x3x108
+=2.1x108m/s
+
+* Propagation delay = d/s
+
+* Distance traversed = Propagation delay x speed of propagation
+=2.1x108x10x10=2100 m = 2.1km
+Q4] The time taken by a packet to travel across a link is 1000
+times the time taken for the packet to be inserted in the link.
+Assuming no queuing and processing delay, what is the
+transmission delay of the link if it connects an end to end distance
+
+of 2km in the network in a total of 3 microseconds ?
+* Given: Distance = 2 km, Total delay = 3 us
+* Propagation delay = 1000 x transmission delay
+* Assuming no queuing and processing delay,
+
+* End to end delay = Transmission delay + Propagation delay
+
+* End-to-end delay:
+* 3 micro =Trans delay + Propagation delay =TD + (1000 TD) = 1001TD
+* Solving gives:
+
+* Transmission delay ~2.997nano sec ~ 3ns
+Q5] Data traveling in Alice’s network of 2 computers, takes a
+one hop transmission delay of 0.003ms to go from one
+computer to the other. If the queuing delay is 1 microsecond
+and the distance between the two systems is 3km, find the
+time taken by Alice’s router for bit level error checking and
+processing if the total nodal delay is 0.04ms.
+
+CInodal= dproc+ dqueue+ CItrans + CIprop
+0.04x103=d_.+0.001 x 103+ 0.003 x 10-+ 3000/(3 x 108)
+Processing delay,
+
+dproc = (0.04 - 0.01-0.001 - 0.003) x 10-3=0.026 ms
+Throughput Problems
+Q6] Hosts Alice and Bob are connected to each othervia a
+router. The bandwidth of each link between Alice and the router
+is 15Mbps. If the efficiency of data transfer in the entire network
+is 80%, what is the actual throughput of the network?
+
+* Ideal Throughput = min{15, 15} = 15M bps
+
+* Efficiency = Amount of data transferred through the network per
+second / Amount of data that could be transferred per second
+
+80/100* 15
+* Throughput(x) = 12M bps
+Q7] Consider a 10 Mbps link being shared by 7 users. What is
+
+the maximum throughput if the network is using circuit
+
+switching?
+
+* In circuit switching, the link bandwidth is divided equally among
+all users.
+
+* Maximum throughput per user:
+
+10 Mbps
+
+* Throughput peruser = -
+
+* = 1.4286 Mbps
+* =~ 1.43 Mbps
+* The throughput is nearly equal to half of the bandwidth.
+Q8] Alice and Bob are connected to each other via a router. The
+bandwidth of each link between the router and Bob is 20Mbps.
+If the network allows for the actual transmission of data at
+20Mbps, then what is the time taken for a packet of size 1000
+bits to enter the network?
+
+* Transmission Delay=Packet Size /Transmission Rate = L/R
+* Packet Size =1000, R =20Mbps
+
+* Delay=20x108
+. _ _ 1000
+"~ 20,000,000
+
+« = 5x107° seconds
+* =50 microsec
+Q9] This elementary problem begins to explore propagation delay and transmission delay,
+two central concepts in data networking. Consider two hosts, A and B, connected by a single
+link of rate R bps. Suppose that the two hosts are separated by m meters, and suppose the
+
+propagation speed along the link is s meters/sec. Host Ais to send a packet of size L bits to
+Host B.
+
+a. Express the propagation delay, d,,,, interms of m and s.
+
+Propagation delay is: Distance
+d
+
+PTOP " propagation speed
+
+d m
+prop s
+
+b. Determine the transmission time of the packet, d,,., in terms of L and R.
+
+Transmission delay is the time required to push all L bits onto the link:
+
+Packet size
+
+d = —
+trans — Transmission rate
+
+L
+dirans = E
+
+c. Ignoring processing and queuing delays, obtain an expression for the end-to-end delay.
+Total delay=dtrans+dprop
+
+L m
+dend— =—-+—|sec
+end—end R s
+
+d. SEpF’)’ose Host A begins to transmit the packet at time t = 0. At time t =dtrans, where is the last bit of the
+packet?
+
+Att = dipqns, the sender has just finished transmitting the last bit.
+So:
+
+The last bit is just leaving Host A (at the beginning of the link).
+
+e. Suppose dprop is greater than dtrans. At time t = dtrans, where is the first bit of the packet?
+The first bitis in the link and has not reached Host B.
+
+f. Suppose dprop is less than dtrans. At time t = dy.ns, Where is the first bit of the packet?
+
+dprop< dtrans.
+
+* If propagation delay is smaller:
+
+* The first bit reached Host B at time dop ,which is earlier.
+The first bit has already arrived at Host B.
+g. Squose s =2.5* 108, L= 1500 bytes, and R= 10 Mbps. Find the distance m so that d,,,,,
+
+equals dtrans-
+
+$=2.5x108 m/s
+L = 1500 bytes = 15008 = 12000 bits
+
+R = 10 Mbps = 10x10° bps
+We are asked to find distance msuch that: dp,op = dtrans
+
+Compute transmission delay
+12000
+
+* dirans = 1o g6 = 1.2x1073 seconds = 0.0012 s
+* Set equal to propagation delay
+« ™= 0.0012
+S
+*m=s5-0.0012
+
+m = (2.5x10%)(0.0012)
+m = 3x10° meters
+m = 300,000 meters = 300 km
+Q10] Suppose two hosts, A and B, are separated by 20,000
+kilometers and are connected by a direct link of R = 5 Mbps.
+Suppose the propagation speed over the link is 2.5 * 108
+meters/sec.
+
+* Calculate the bandwidth-delay product, R * d
+* Distance = 20,000 km =2x10"m
+« R=5 Mbps = 5x10°bps; Propagation speed s = 2.5x108m/s
+
+2x107
+[ ] = o
+dpmp m/s 2.5%108
+
+* R-dyrop=(5%106)(0.08) = 4x10° bits = 400,000 bits
+
+prop*
+
+= 0.08 seconds
+* Consider sending a file of 800,000 bits from Host A to Host B.
+Suppose the file is sent continuously as one large message. What
+is the maximum number of bits that will be in the link at any given
+time?
+
+If the file is sent continuously, the maximum number of bits that can
+be “in flight” equals the bandwidth-delay product.
+
+Since file size = 800,000 bits (which is larger than 400,000),
+Maximum bits in link = 400,000 bits
+* Provide an interpretation of the bandwidth-delay product.
+
+The bandwidth-delay product represents:
+
+The maximum number of bits that can be in transit (in the link)
+at any given time.
+
+* What is the width (in meters) of a bit in the link? Is it longer than a
+football field?
+
+First find transmission time of one bit:
+
+1
+ime per bi R~ Ex106
+
+Now multiply by propagation speed:
+1
+Bit width = sX B = (2.5x108)(2%x1077) = 50 meters
+
+A football field = 100 meters.
+50m< 100 m
+No, it is about half a football field.
+
+=2x10"7 sec
+
+Q10] For the above problem, now with a link of R=1 Gbps.
+
+a. Calculate the bandwidth-delagl product, R * dprop.
+dprop=mM/s =2x107/2.5%108=0.08 s
+
+R-dprop=(10°)(0.08)=8x107 = 80,000,000 bits
+80 million bits (80 Mb)
+
+b. Consider sending a file of 800,000 bits from Host A to Host B. Suppose the file is sent continuously as
+one big message. What is the maximum number of bits that will be in the link at any given time?
+
+File size = 800,000 bits
+Bandwidth-delay product = 80,000,000 bits
+
+Since the file size is much smaller than the pipe size:
+Maximum bits in the link = 800,000 bits
+
+c. What is the width (in meters) of a bit in the link?
+
+Width of one bit: s
+Bit width = —
+_ 2.5x10
+
+10°
+= 0.25 meters
+
+0.25 meters (25 cm)
+
+Q11] An ISP offers internet connections with transmission speeds of 10 Mbps. To
+attract customers, it promises less than 5 ms of end-to-end delay while playing
+online games, if the other players are also their customers and are no more than
+10,000 km away. Assume an idle network with propagation speed of 2.5 x 108 m/s
+and no processing and queuing delays. If the average amount of data generated per
+second is 100 Kilo Bytes, find out if the ISP can deliver on their promise.
+
+*Transmission rate R =10 Mbps = 10x1086 bps
+*Distance m=10,000m = 10,000 km = 10" m
+*Propagation speed s=2.5x108 m/s
+
+*No processing or queuing delay
+
+*Data generated per second = 100 KB/s
+*Propagation Delay
+
+* dprop=Mm/s =107/2.5x10% = 0.04 seconds = 40 ms
+*Transmission Delay
+
+* 100 KB per second: =100x1000 = 100,000 bytes/sec
+
+* Convertto bits: =100,000x8 = 800,000 bits/sec
+
+800,000
+10x106
+
+* Transmission delay per second of data: drgns = = 0.08 seconds =80 ms
+
+* dtotal=dprop+dtrans = 40 + 80 = 120 ms
+
+Promised delay: <5 ms
+Actual delay: ® 120 ms. The ISP cannot deliver on their promise.
+
+Q12] Two hosts are separated by a distance of 5,000 km. Two packets that are 4
+Mega Bytes in size must be sent from one host to the other. The queuing delay at the
+host is 10 ms and the the propagation speed of the link is 2.5 x 108m /s. Find the
+transmission speed at the source such that it finishes transmitting the second
+packet when the first packet just arrives at the destination.
+
+Distance m = 5000 km = 5x106m
+Packet size =4 MB
+
+Number of packets = 2
+Queuing delay = 10 ms
+Propagation speed s = 2.5x108 m/s
+
+Propagation Delay = dpop=d/s =5x108/2.5%108 = 0.02 sec = 20 ms
+
+Convert Packet Size = 4 MB=4x106 bytes = 4x10°x8 = 32x10° bits
+
+The source finishes transmitting the second packet exactly when the first packet arrives.
+When does the first packet arrive?
+The first packet must:
+
+1. Wait 10 msin queue
+
+2. Betransmitted > dtrans
+3. Propagate > 20 ms
+
+Time when first packet arrives: dgyeye + dirans + dprop = 10 + dirgns + 20
+=304+di0e (in ms)
+* When does the second packet finish transmitting?
+
+The second packet:
+Waits 10 ms in queue
+
+First packet is transmitted > dtrans
+
+Then second packet is transmitted > another dtrans
+
+Time when second packet finishes transmission:
+dqueue + Zdtruns
+=10 + 2d¢rans
+
+For the second packet to finish transmitting exactly when the first arrives:
+Transmission delay must equal propagation delay.
+Finish transmitting second packet=Arrival of first packet
+
+10+2dtrans=30+dtrans
+2d¢rans — dirans = 30 — 10
+
+dirans = 20 ms
+Transmission Rate:
+
+dyans= L/R
+
+trans~
+
+_32x10°
+- R
+_32x10°
+~70.02
+
+R = 1.6x10° bps
+R=1.6Gbps
+Q13] 100 Tera Bytes of data is to be transferred between two hosts, Host Ain
+Bengaluru and Host B in Chennai, separated by a distance of 350 km. The
+transmission speed at Host Ais 1 Gbps and the propagation speed of the dedicated
+link is 2 x 108 m/s. Which one of these is better:
+
+e to transfer the data over the link or
+
+¢ to drive to Chennai to deliver the data and drive back to Bengaluru, if a one-way
+trip takes 7 hours
+
+Which component is dominant in the total time taken for the data transmission?
+Assume negligible processing and queuing delays.
+
+Data size =100 TB, Distance = 350 km
+*Transmission rate R = 1 Gbps = 10° bps
+*Propagation speed s = 2x108 m/s
+*One-way drive time = 7 hours
+
+*Negligible processing and queuing delays
+
+» Convert Data to bits: = 100x1012x8 = 8x10'* bits
+
+14
+* TransmissionTime: d;.qus= % = 8x10° second = 800,000 seconds
+
+800,000
+* Convert to hours:
+3600
+
+~ 222 hours = 9.25 days
+* Propagation Delay
+
+350x103
+prov = 5 708 0.00175 sec = 1.75ms
+
+This is negligible compared to days.
+
+Total Network time = 9.25 days
+
+Round Trip time (driving) = 7+ 7 = 14hrs
+
+Driving is much faster
+
+* Dominant Component: The Transmission Delay (d,,,,s) is the
+dominant component. While the propagation delay is a mere 1.75
+
+msec, the time required to push 100 TB of data through a 1 Gbps
+"pipe" is so massive that it accounts for 99.99% of the total time.
+Q14] There are two paths to transmit 100 packets each of size 16 Mega Bytes from
+host A to host B: a lossy channel with loss probability of 50% and transmission
+speed of 20Gbps; and a lossless channel with transmission speed of 10 Gbps. If
+both the channels have a propagation speed of 2 x 108 m/s and the queuing delay at
+the host is 10 ms per packet, which path is better? Assume all lost packets are re-
+transmitted with no additional overhead.
+
+» Convert Packet Size = 16MB = 16*8*10° = 128Mbits
+* Lossless (10 Gbps)
+* Transmission delay per packet
+
+6
+* derans = oot = 0.0128 5 = 12.8 ms
+
+* Total delay per packet
+*10+12.8 =22.8ms
+* For 100 packets
+
+*100%x22.8 = 2280 ms =|2.28 seconds
+
+* Path 2: Lossy (20 Gbps, 50% loss)
+Expected transmissions per packet:
+
+1 _ 2
+1-05
+So total transmissions:
+100x2 = 200
+* Transmission delay per packet
+128x10° = 0.0064 s =64
+2ox100 s=64ms
+
+* Total per transmission: 10 + 6.4 = 16.4 ms
+* For 200 transmissions
+
+200x16.4 = 3280 ms =|3.28 seconds
+
+Even though the lossy link has double bandwidth, the 50% retransmissions double the
+number of transmissions and increase queuing delay significantly.
+
+Use the lossless 10 Gbps channel.
+
+
+
+
+
+################################################################################
+FILE 5/9: labs/setup_and_tools/Demo of Basic Commands.pdf
+PAGES: 16 | EXTRACTED CHARACTERS: 14,199
+################################################################################
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS - UE24CS252B
+Demonstration Of Basic Commands
+
+1. ipconfig
+
+e Syntax:
+
+ipconfig [options]
+
+For Mac/Linux:
+
+ifconfig [options]
+
+Example:
+
+ipconfig /all
+
+For Mac/Linux:
+
+ifconfig -a
+
+o  What It’s Used For:
+o Displays network configuration details like IP address, subnet mask, and default gateway.
+o Can be used to release or renew IP addresses (/release, /renew).
+
+e Why It’s Important:
+o Helps diagnose and resolve network configuration issues, such as incorrect IP settings or
+
+connectivity problems.
+B Command Prompt
+
+C:\Users\Adarsh Nema>ipconfig
+
+Windows IP Configuration
+
+Ethernet adapter Ethernet
+
+Media State a0 . . . : Media disconnected
+Connection-specific DNS Suffix . :
+
+Ethernet adapter Ethernet U:
+
+Connection-specific DNS Suffix
+Link-local IPv6 Address . . . . . : fe80::fcbl:555f:a69:bbSb%9
+IPvd Address. . . . . . . . ... :192.168.56.1
+
+Subnet Mask . 260 . . : 255.255.255.0
+
+Default Gateway
+
+Wireless LAN adapter Local Area Connectionx 1:
+
+Media State . . a6 0 . . : Media disconnected
+Connection-specific DNS Suffix .
+
+Wireless LAN adapter Local Area Connection* 2:
+
+Media State . . . . . . . ... . : Media disconnected
+Connection-specific DNS Suffix
+
+Wireless LAN adapter Wi-Fi
+
+For Mac/Linux:
+
+zapQyabsolutely $>ifconfig
+
+1o@: flags=8049<UP,LOOPBACK, RUNNING,MULTICAST> mtu 16384
+options=1203<RXCSUM, TXCSUM, TXSTATUS, SW_TIMESTAMP>
+inet 127.0.0.1 netmask @xffeeeeeo
+ineté ::1 prefixlen 128
+inet6 fe8 1%1l0@ prefixlen 64 scopeid @x1
+ndé options=201<PERFORMNUD, DAD>
+
+=8010<POINTOPOINT,MULTICAST> mtu 1280
+
+anpi@: flags=8863<UP,BROADCAST, SMART,RUNNING, SIMPLEX,MULTICAST> mtu 1500
+options=40@<CHANNEL_IO>
+ether 56:71:9a:df:3d:d3
+media: none
+status: inactive
+anpil: flags=8863<UP,BROADCAST, SMART, RUNNING, SIMPLEX, MULTICAST> mtu 1500
+options=400<CHANNEL_IO>
+ether 56:71:9a:df:3d:d4
+media: none
+status: inactive
+en3: flags=8863<UP,BROADCAST, SMART, RUNNING, SIMPLEX,MULTICAST> mtu 1500
+options=40@<CHANNEL_IO>
+ether 56:71:9a:df:3d:b3
+ndé options=201<PERFORMNUD, DAD>
+
+2. ping (Same for Mac/Linux)
+
+e Syntax:
+
+PES
+
+UNIVERSITY
+
+% UNIVERSITY
+
+ping [hostname or IP address]
+
+Example:
+
+ping google.com
+
+o  What It’s Used For:
+o Tests connectivity between your computer and a remote server.
+0 Measures packet loss and latency.
+
+e Why It’s Important:
+
+o Quickly identifies if a host is reachable and helps troubleshoot connection problems.
+
+2 Command Prompt
+
+rs\Adarsh Nema>ping wiw.google. com
+
+ou] with 32 of data;
+
+Reply from 240!
+Reply rom
+
+For Mac/Linux:
+
+[zap@yabsolutely $>ping google.com
+
+PING google.com (142.251.43.142): 56 data bytes
+64 bytes from 142.251.43.142: icmp_seq=0 ttl=118
+64 bytes from 142.251.43.142:
+
+64 bytes from 142.251.43.142:
+
+64 bytes from 142.251.43.142: icmp_seq=3
+
+64 bytes from 142.251.43.142: icmp_se
+
+64 bytes from 142.251.43.142: icmp_seq=5 ttl=118
+
+AC
+
+——— google.com ping statistics -—-
+
+6 packets transmitted, 6 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 16.102/19.257/24.124/2.590 ms
+
+3. netstat (Same for Mac/Linux)
+
+e Syntax:
+
+netstat [options]
+
+Example:
+netstat -an
+
+o  What It’s Used For:
+
+o Displays active network connections, listening ports, and protocol statistics.
+
+o Can show processes using specific ports with -b option.
+
+e Why It’s Important:
+
+PES
+
+UNIVERSITY
+
+o Useful for monitoring network activity and identifying applications consuming bandwidth or
+
+exposing vulnerabilities.
+
+For Mac/Linux:
+
+Addre
+
+zap@yabsolutely $>netstat -an
+Active Internet connections (including servers)
+
+Proto Recv-Q Send-Q
+toph
+teph
+toph
+teph
+toph
+toph
+toph
+topé
+toph
+toph
+toph
+toph
+teph
+toph
+teph
+toph
+teph
+toph
+toph
+toph
+tcpé
+toph
+
+4. tracert/traceroute
+
+e Syntax:
+
+Local Address
+192.168.2.34.62547
+192.168.2.34.62546
+192.168.2.34.62544
+192.168.2.34.62528
+192.168.2.34.62520
+192.168.2.34.62517
+127.0.0.1.631
+111,631
+192.168.2.34.62485
+192.168.2.34.62474
+192.168.2.34.62471
+192.168.2.34.62468
+192.168.2.34.62423
+192.168.2.34.62422
+192.168.2.34.62416
+192.168.2.34.62408
+192.168.2.34.62407
+192.168.2.34.62406
+192.168.2.34.62405
+192.168.2.34.62404
+*.62360
+
+*.62360
+
+STENTNG
+STENTNG
+STENING
+ENING
+ENING
+ISTENING
+ISTENTNG
+STENTNG
+STENTNG
+
+Foreign Address
+172.67.176.196.443
+173.45.77.90.443
+173.45.77.90.443
+172.67.70.217.443
+172.67.70.217.443
+64.29.17.67.443
+*%
+
+xx
+172.64.148.235.443
+142.251.222.133.443
+142.251.222.133.443
+142.251.222.133.443
+142.251.10.108.993
+142.251.10.108.993
+142.251.43.202.443
+74.125.24.188.5228
+74.125.24.188.5228
+74.125.24.188.5228
+74.125.24.188.5228
+74.125.24.188.5228
+*ok
+
+*.%
+
+(state)
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+LISTEN
+LISTEN
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+ESTABLISHED
+LISTEN
+LISTEN
+
+tracert [hostname or IP address]
+
+o]
+
+xample:
+
+tracert google.com
+
+[ r—
+
+\Users\Adarsh Nema>tracert goog
+
+cing route to goog: 14009:811
+3
+
+a maxinun of
+
+8c76
+
+timed out
+
+200e]
+
+1
+
+204::51
+
+Adarsh Nema>
+
+For Mac/Linux:
+
+traceroute [hostname or IP address]
+
+traceroute HYPERLINK "http://goo
+
+gle.com"googl
+
+c.com
+
+zap@yabsolutely $>traceroute google.com
+
+traceroute to google.com (142.251.222.206), 64 hops max, 4@ byte packets
+
+1 192.168.2.1 (192.168.2.1)
+dsldevice.lan (192.168.1.1)
+
+6.693 ms
+
+125.21.0.185 (125.21.0.185)
+125.21.0.149 (125.21.0.149)
+
+116.119.68.108 (116.119.68.108)
+116.119.57.99 (116.119.57.99)
+* K %
+
+* K %
+
+142.251.55.206 (142.251.55.206)
+142.251.51.118 (142.251.51.118)
+142.250.208.230 (142.250.208.230)
+142.251.51.118 (142.251.51.118)
+172.253.70.167 (172.253.70.167)
+142.251.55.240 (142.251.55.240)
+216.239.56.70 (216.239.56.70)
+142.251.55.239 (142.251.55.239)
+
+142.250.63.172 (142.250.63.172)
+
+2 7.318 ms
+
+3 abts-kk-dynamic-1.72.76.171.airtelbroadband.in (171.76.72.1)
+
+4 8.101 ms
+
+8.163 ms
+
+nsg-corporate-193.159.186.122.airtel.in (122.186.159.193)
+14.739 ms *
+
+37.439 ms
+
+4.970 ms
+3.346 ms
+
+2.521 ms
+3.431 ms
+
+8.780 ms 8.425 ms
+
+7.591 ms
+
+19.883 ms * *
+18.750 ms
+18.028 ms
+15.143 ms
+16.717 ms
+13.273 ms
+15.47@ ms
+14.973 ms
+hkg@7s55-in-f14.1e100.net (142.251.222.206)
+13.788 ms
+
+21.092 ms
+
+8.975 ms
+
+PES
+
+UNIVERSITY
+5. nslookup
+
+e Syntax:
+
+PES
+
+UNIVERSITY
+
+nslookup [hostname or IP address]
+
+Example:
+
+nslookup example.com
+
+o  What It’s Used For:
+
+o Queries the DNS to resolve domain names into IP addresses and vice versa.
+
+o Provides DNS record details.
+
+e Why It’s Important:
+
+o Diagnoses DNS-related issues like domain resolution failures or DNS server unavailability.
+
+For Mac/Linux:
+
+[&*] command Prompt
+
+C:\Users\Adarsh Nema>nslookup google.com
+Server: UnKnown
+Address: fe80::1
+
+Non-authoritative answer:
+
+Name : google.com
+
+Addresses: 2404:6800:4009:811::200e
+142.2560.183.14
+
+zap@yabsolutely $>nslookup google.com
+Server: 192.168.1.1
+Address: 192.168.1.1#53
+
+Non-authoritative answer:
+Name: google.com
+Address: 142.251.223.238
+
+PES
+
+UNIVERSITY
+
+arp [options]
+
+Example:
+
+arp -a
+
+o  What It’s Used For:
+o Displays or modifies the ARP (Address Resolution Protocol) cache.
+
+o Shows mappings between IP addresses and MAC addresses.
+
+e Why It’s Important:
+
+o Helps troubleshoot issues with device communication on a local network.
+
+B Command Prompt
+
+rs\Adarsh Nem:
+
+Interface: 192.168.1.9 —
+Internet Addre Physical Address Type
+168.1.1 c8: ~bb-bd-49-e® dynamic
+168.1.5 9c-b1-dc-bb-U1-13 dynamic
+.168.1.255 FE—F—FE—FF—Ff—FF static
+2 01-00-5e-00-00-16 static
+251
+252
+255.250 01-00-5e-7f—ff-fa
+255.255 FE-FF-Ff—FF—Ff-FF
+
+Interface: 192.168.56.1 —— 0x9
+Internet Addre Physical Address
+192.16 FE-FF—Ff-FF—FF—FF
+24 2 01-00-5e-00-00-16
+224.0.0.251 01-00-5e-00-00—Fb
+224.6.6.252 01-00-5e-00-00—fc static
+239.255.255.250 01-00-5e-7f—Ff—fa static
+
+For Mac/Linux:
+
+[zap@yabsolutely $>arp -a
+? (192.168.2.1) at ec:22:80:d0: 4 on en@ ifscope [ethernet]
+
+? (192.168.2.255) at ff:ff:ff:f f:ff on en@ ifscope [ethernetl]
+mdns.mcast.net (224.0.0.251) at 1: :0:fb on en@ ifscope permanent [ethernet]
+
+7. netsh
+
+e Syntax:
+
+netsh [context]
+
+Example:
+
+netsh wlan show profiles
+
+PES
+
+UNIVERSITY
+
+For Mac:
+
+networksetup [option
+
+]
+
+For Linux:
+
+nmcli [options]
+
+o  What It’s Used For:
+
+o Configures and monitors Windows networking settings.
+
+o Useful for managing wireless profiles, firewall rules, and network adapters.
+e Why It’s Important:
+
+o Enables advanced network troubleshooting and configuration directly from the command line.
+
+[ r—
+
+C:\Users\Adarsh Nem h wlan show profiles
+
+Profiles on interface Wi-Fi
+
+Group policy profil
+
+Profile
+
+Profile
+Profile
+Profile
+
+For Mac:
+PES
+
+UNIVERSITY
+
+zapQyabsolutely $>networksetup -listallnetworkservices
+An asterisk (x) denotes that a network service is disabled.
+USB 10/100/1000 LAN
+
+Thunderbolt Bridge
+
+Wi-Fi
+
+zapQyabsolutely $>networksetup —getinfo Wi-Fi
+
+DHCP Configuration
+
+IP address: 192.168.2.34
+
+Subnet mask: 255.255.255.0
+
+Router: 192.168.2.1
+
+Client ID:
+
+IPv6: Automatic
+
+IPvé IP address: none
+
+IPv6 Router: none
+
+Wi-Fi ID: 2c: 14b:72:5e
+
+8. getmac
+
+e Syntax:
+
+getmac [options]
+
+Example:
+
+getmac /v
+
+For Mac/Linux:
+
+ifconfig [network name] | grep ether
+
+Example
+
+ifconfig en0 | grep ether
+
+zap@yabsolutely $>ifconfig en@ | grep ether
+
+ether 3a:a7:41:1e:c@:ee
+
+o  What It’s Used For:
+o Displays the MAC addresses of network interfaces.
+o Shows details of enabled network adapters.
+e Why It’s Important:
+o Essential for verifying the hardware addresses of network cards, especially when
+
+troubleshooting connectivity or security issues.
+PES
+
+UNIVERSITY
+
+9. tasklist
+
+e Syntax:
+
+tasklist [options]
+
+Example:
+
+tasklist /sve
+
+For Mac/Linux:
+
+ps aux
+
+o  What It’s Used For:
+o Lists all running processes on the system, including those associated with networking tasks.
+e Why It’s Important:
+
+o Identifies processes using high network resources or conflicting with other applications.
+
+10. route
+
+e Syntax:
+
+route [options]
+
+Example:
+
+route print
+
+For Mac/Linux:
+
+netstat -rn
+
+o  What It’s Used For:
+o Displays and modifies the routing table.
+o Can be used to add or delete static routes.
+e Why It’s Important:
+o Helps troubleshoot routing issues in complex network setups, such as multiple gateways or
+
+VPN connections.
+
+10
+% UNIVERSITY
+
+Command Prompt
+
+On-Link
+
+For Mac/Linux:
+
+zap@yabsolutely §
+Routing tables
+
+Internet:
+
+Destination Gateway Flags Netif Expire
+default 192.168.2.1 UGScg end
+127 127.0.0.1 ucs 1lo0@
+127.0.0.1 127.0.0.1 UH lo@
+169.254 link#11 ucs end
+192.168.2 link#11 ucs eno@
+192.168.2.1/32 link#11 ucs end
+192.168.2.1 ec:22:80:d0:f:74 UHLWIir end
+192.168.2.34/32 link#11 ucs end
+192.168.2.255 ffiffiffiffiff:ff UHLWDI eno@
+224.0.0/4 link#11 UmCS end
+224.0.0.251 U HTHH R ) UHmMLWI end
+255.255.255.255/32 link#11 ucs end
+
+11. whoami (Same For Mac/Linux)
+
+e Syntax:
+
+whoami
+
+o  What It’s Used For:
+
+o Displays the username and domain of the currently logged-in user.
+
+e Why It’s Important:
+
+PES
+
+UNIVERSITY
+
+o Helps verify identity and permissions, especially when troubleshooting user- specific network
+
+or access issues.
+
+[cs] Command Prompt
+
+C:\Users\Adarsh Nema>whoami
+laptop—-fugvs®s7\adarsh nema
+
+12. powercfg/pmset -g/upower -d
+
+e Syntax:
+
+powercfg [options]
+
+Example:
+
+powercfg /energy
+
+For Mac:
+
+pmset -g
+
+For Linux:
+
+ipower -d
+
+o  What It’s Used For:
+
+o Analyzes power consumption and provides a report on energy efficiency.
+
+e Why It’s Important:
+
+o Useful for diagnosing power issues that may affect network device performance, such as
+
+power-saving modes disabling network adapters.
+
+13. systeminfo
+
+e Syntax:
+
+systeminfo
+
+12
+PES
+
+UNIVERSITY
+
+For Mac/Linux:
+
+name -a
+
+o  What It’s Used For:
+o Displays detailed information  about the system, including
+network configuration and updates.
+e Why It’s Important:
+o Useful for gathering system details during network troubleshooting or hardware compatibility
+
+checks.
+
+14. sc
+
+e Syntax:
+
+sc¢ [command] [service name]
+
+Example:
+
+sc query dnscache
+
+For Mac:
+
+launchetl [options]
+
+For Linux:
+
+systemctl [options]
+
+o  What It’s Used For:
+o Manages Windows services, such as starting, stopping, or querying the status of
+networking-related services.
+e Why It’s Important:
+
+o Critical for diagnosing issues with services like DNS, DHCP, or networking drivers.
+
+15. telnet (Same for Mac/Linux)
+
+13
+PES
+
+UNIVERSITY
+
+e Syntax:
+
+telnet [hostname or IP address] [port]
+
+Example:
+
+telnet example.com 80
+
+o  What It’s Used For:
+
+o Connects to remote servers using the Telnet protocol to test open ports or communicate with
+
+services.
+e Why It’s Important:
+
+o Useful for diagnosing server communication or port accessibility issues.
+
+16. fsutil/diskutil
+
+e Syntax:
+
+fsutil behavior set disable8dot3 1
+
+For Mac:
+
+diskutil list
+
+o  What It’s Used For:
+o Performs advanced file and volume management tasks, such as managing filesystems that
+might interact with network shares.
+e Why It’s Important:
+o Useful for ensuring optimal performance when using shared network drives or distributed
+filesystems.
+
+17. wmic
+
+e Syntax:
+
+wmic [context]
+
+Example:
+
+wmic nic get name, macaddress
+
+o  What It’s Used For:
+14
+PES
+
+UNIVERSITY
+
+o Executes Windows Management Instrumentation (WMI) queries for detailed information
+about network adapters and other hardware.
+e Why It’s Important:
+o Provides low-level details about hardware and network interfaces that can assist in
+
+troubleshooting.
+
+NOTE: there is no single command for wmic in macOS. To know about the hardware and others you
+
+can use networksetup.
+
+18. net user
+
+e Syntax:
+
+net user [username]
+
+Example:
+
+net user Administrator
+
+For Mac:
+
+dscl . -read /Users/<username>
+
+For Linux:
+
+Islogins -u <username>
+
+o  What It’s Used For:
+o Displays or manages user account details, such as permissions and login status.
+e Why It’s Important:
+o Helps verify or configure user accounts that might impact network resource access or
+
+privileges.
+
+15
+B2 Command Prompt
+
+Users\Adarsh Nema>net user administrator
+
+User nane
+Full Name
+
+Comment
+
+u comment
+Country/region code
+Account active
+Account expires
+
+res
+ngeable
+Password required
+
+User nay change pass
+
+Vorkstations allowed
+Logon script
+
+Last logon
+
+Logon hours allowed
+
+Local Group Memberships
+Global Group memberships
+The comiand completed sucy
+
+C:\Users\Adars|
+
+Aduinistrator
+Built-in account for administering the computer/domain
+000 (System Default)
+
+No
+Never
+
+Never
+[
+No
+
+29:02 P
+
+essfully
+
+16
+
+PES
+
+UNIVERSITY
+
+
+
+
+################################################################################
+FILE 6/9: labs/setup_and_tools/VMBox_Ubuntu24_Windows.pdf
+PAGES: 13 | EXTRACTED CHARACTERS: 7,292
+################################################################################
+
+Ubuntu Installation on Virtual Box
+
+Go to
+
+https://www.virtualbox.org/wiki/Downloads
+
+« © % vituslboxorg/wik/Dowrloads. * D &0
+
+18 VirtualBox Home  Downlosd  Documentatien  Communty @
+
+Download VirtualBox
+
+The VirtualBox Extension Pack i available for personal and educational use on this page under the PUEL license, The VirtualBox Extension Pack Is aiso
+‘avalable under commercial or enterprise terms. By downloading, you agree to the terms and conditins of the respective license.
+
+/ e ——— T
+sz T T |
+[} macos / tatel hosts ot apply to the VirtualBox base package and/or Is source code, which are.
+1 macos / Apple Silcon hosts Teamect e verson'3ofthe o Ganerl ublc Ucanee “GPL:
+B oo A T
+4 | T e
+(PUE
+
+& AN AN AN\ N
+
+Click Window hosts
+
+Download of exe file should start
+
+Once the exe file is downloaded , open it and continue with default options
+
+For Ubuntu iso
+
+Go to: https://ubuntu.com/download/desktop
+
+Download Ubuntu Desktop
+
+Ubuntu 24.04.3 LTS
+
+dy
+
+)
+
+Ubuntu 24
+
+Click on the download button
+
+Open Virtual Box
+
+Gt startd with Vietunfon
+
+=
+
+Click on Create a new virtual machine(VM)
+
+The open source desktop operating system that powers millons of PCs and laptops
+around the word.Find out more about Ubuntu' features and how we support
+developers and organisations below.
+
+Discover Ubuntu Desktop | Check out the biog
+
+The lates TS version of bunt, for desktop PCs and laptops. LTS stands For long:
+term support —which means five yeas f free security and maintenance update,
+extended up to 15 yearswith Uburk ro.
+
+Forothe versons o Ut Desktopin he network sl st of
+
+Whatsnew  System requirements  Howtoinsall
+@ NewDeskeop nstaller with support for autointal
+
+@ NewAop Center and Firmware Updater spplicatons
+New Virtual Machine
+
+_ Virtual machine name and operating system
+VM Name _UbuntuM <
+
+VMFolder T3 CAUsers\PRANAV SHENVI\VirtualBox VMs R
+
+ISOImage |<] C:Users\PRANAV SHENVI\Downloads\ubuntu-24.04.2-desktop-amdé4.iso
+
+05 Edition ~
+05 Linux ~ ﬂ
+0 Distribution Ubuntu >
+08 Version Ubuntu (64-bit) >
+
+@ Proceed with Unattended Installation
+Set up unattended guest OS installation
+Specify virtual hardware
+Specify virtual hard disk
+
+For iso image , use the iso file which you have just downloaded
+
+15 New Virtual Machine = o X
+
+1 » Virtual machine name and operating system
+*~ Set up unattended guest OS installation
+
+User Name and Password 0S Installation Options
+
+User Name _ vboxuser 9 Productkey _ . - . -
+| Password © HostName _UbuntuvM v
+I - ’ Confirm Password ® Domain Name  myguestirtualbox.org v
+
+(O Install in Background
+
+(O Install Guest Additions-
+
+[Gmslmdmmsls&)lmaget [€1_c:\Program Files\Oracle\VirtualBox\VBoxGuestAdditions.iso v
+
+> Specify virtual hardware
+
+> Specify virtual hard disk
+
+Help Cancel
+Setup your username and your password
+
+-
+13 New Virtual Machine
+
+el A e e e ——— U
+4MB 16384 M8,
+
+Number o CUs === 8 === FRPNY
+1CPU 20 CPUs
+
+O useer
+
+‘
+
+13 New Virtual Machine
+
+ Virtual machine name and operating system
+ Set up unattended guest OS installation
+ Specify virtual hardware
+_ Specify virtual hard disk
+
+© Create a New Virtual Hard Disk
+
+1 - ’ Hard Disk File Location and Size
+
+C:\Users\PRANAV SHENVI\VirtualBox VMs\UbuntuVM\UbuntuVM vdi
+
+Disk Size .
+
+400 MB 20078
+
+v @
+
+25.00G8
+
+Hard Disk File Type and Format.
+
+VDI (VirtualBox Disk Image) ~ (O Pre-allocate Full Size
+(O split Disk Into 2 GB Parts
+
+O Use an Existing Virtual Hard Disk File
+ubuntu.di (Normal, 38.00 GB)
+
+O create Virtual Machine Without a Virtual Hard Disk
+
+Click on Create a New Virtual Hard Disk
+
+Display Settings which | have used
+
+§# UbuntuVM - Settings -
+
+o
+
+By - 4 Search setings
+
+Display
+Screen  Remote Display  Recording
+
+Video Memory
+0MB 128 MR
+Number of Virtval Monitors %
+
+Scale Factor All Moriitors v
+
+Graphics Controller VMSVGA
+
+Features () 3D Acceleration
+
+& uss
+
+i Shared Folders
+
+ﬁ User Interface
+
+[P ———————————— Ly
+
+1 8
+
+[
+100% A~ v
+Help
+
+Cancel
+
+X
+
+o
+
+General-> Features Select Shared Clipboard to Bidirectional
+3 UbuntuVM - Settings - D X
+
+Expert
+
+General
+
+Identity  Features  Description
+
+B System
+Shared Clipboard  Bidirectional v
+Display Drag-and-Drop Disabled v
+Storage
+Audio
+Network
+System
+use Motherboard  Processor
+Shared Folders Base Meniory " & - — A096MB A~
+MR 16384 MB
+Boot Device Order (BIOS only) O Hard Disk
+® © optical
+@ £ Foppy
+3 Cancel Help
+Now Start the VM
+
+If at all your VM shows an error message
+
+gbuntu 24
+
+Then in storage settings make sure that Controller:IDE is set to the iso file which u had downloaded.
+Then start the VM again.
+
+Once the VM loads
+
+Click on Install Ubuntu (Mandatory!!!)
+
+Continue with default options for most of the features
+Disk setup
+
+How do you want to install Ubuntu?
+
+© Erase diskand install Ubuntu
+tart from scrakch on your selected disk
+
+Advanced features...  None selected
+
+Manual installation
+s sk setups.
+
+Click Next
+
+Remember the credentials you set here
+
+Create your account x
+
+Create your account
+
+Your name
+
+user o
+
+mputer’s name
+
+user-VirtualBox
+
+@ Show veak password
+
+°
+
+Require my password to log in
+
+Use Active Directory
+
+Back ° Next
+It will take around 20-30 mins depending on your internet connectivity
+
+Ubuntu 26042115
+
+Private and secure
+
+Once the installation is done
+
+nstallation complete
+
+Continue testing
+
+Click Restart now
+(@)
+
+Please remove the installation medium, then press ENTER
+
+lUbuntu
+
+Press Enter at this step
+
+Account has been created
+
+o
+
+Not listed?
+
+lUbuntu
+
+previous UbuntuPro
+
+nd other compliance and hardening
+pto-modules
+
+atubuntu compro,
+
+Enable Ubuntu Pro now, or skip this step.
+Enable Ubuntupro
+
+Click on the top right skip
+
+As of now your screen is not fit to scale and the copy paste bidirectional feature may not work.
+
+To enable bidirectional copy paste and to resize the display to complete screen we need to install
+GuestAdditions
+
+Type these
+sudo apt update
+
+sudo apt install -y bzip2 tar
+
+user@user-VirtualBox: $ sudo apt update
+/security.ubuntu.con/ubuntu noble-security InRelease
+.archive.ubuntu.com/ubuntu noble InRelease
+.archive.ubuntu.com/ubuntu noble-updates InRele:
+.archive.ubuntu.com/ubuntu noble-backports InRelease
+ding package li Done
+Building dependency tree... Done
+Reading state information... Done
+216 packages can be upgraded. Run 'apt list --upgradable' to see them.
+user@user-VirtualBo; $ sudo apt install -y bzip2 tar
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+tar is already the newest version (1.35+dfsg-3build1).
+tar set to manually installed.
+Suggested packages
+bzip2-doc
+The following NEW packages will be installe
+bzip2
+© upgraded, 1 newly installed, 0 to remove and 216 not upgraded
+Need to get 34.5 kB of archives.
+After this operation, 112 kB of additional disk space will be used
+Get:1 http://in.archive.ubuntu.com/ubuntu noble-updates/main and64 bzip2 andé4 1.6.8-5.1builde.1
+[34.5 kB]
+
+Click on Devices-> Insert Guest Additions CD Image
+
+To verify Guest Addition has been added type: Is /media/$SUSER
+
+$ 1s /media/SUSER
+
+sudo sh /media/SUSER/VBox_GAs_*/VBoxLinuxAdditions.run
+
+Once this command is done executing, your screen gets adjusted to full screen
+
+Now reboot
+
+After this reboot login again
+
+Your screen shall be maximised and you should be able to copy/paste to/from your host system into
+your VM
+
+To Copy from VM Ctrl+Shift+C
+
+To Paste into VM Ctrl+Shift+V
+
+
+
+
+################################################################################
+FILE 7/9: labs/setup_and_tools/VM Installation with VMWare Fusion.docx.pdf
+PAGES: 17 | EXTRACTED CHARACTERS: 8,697
+################################################################################
+
+@ UNIVERSITY
+
+Setting Up VM with VMWare Fusion
+Building the VM on Fusion
+
+Step 1: Install VMware Fusion Player
+
+VMware Fusion Player is a free virtual machine software. It is similar to VirtualBox that we have
+been using, but VirtualBox still cannot run reliably on Apple Silicon machines.
+
+Go to VMware Fusion and either log in or register for a basic Broadcom account.
+
+NOTE: For Windows it is VMware Workstation Pro
+
+BROADCOM' *
+
+Welcome to Broadcom Support
+
+Find Solutions
+
+Product Communities Technical Documentation Knowledge
+
+Once logged in the Broadcom account, we come back to the_Broadcom Support Portal if we're
+not redirected there. We click the software dropdown to choose the vMware Cloud Foundation
+division to select My Downloads.
+PES
+
+UNIVERSITY
+
+ered Successfully! '
+
+Welcoma to Broadcom. Basec on the
+Intormation provided you now have access to
+
+\
+
+Broadcom Support Pol m:.ww services
+
+Enhance your skills through multiple © conmees
+
+avenues by creating your Broadcom . =
+LY r— °
+
+© P Ko s Ak o)
+
+Unlock additions! services by Bulking your
+Profie
+
+[ —
+e
+
+Semconsces Spon Sy
+
+@BROADCOM' rrosucts Sostons supportandsenvces Company How 1 8y Qa0 & By | wem. v
+
+ton
+
+e s My Dt Wy Erstomerss [p—
+3; ek My Downloads|
+MyCases Documarsaen Socunty Aowsords v
+Enerprise somwars
+Cyvar Sacurty Sotware
+Prosuc Loy Partr P Kromlecgo Base nco
+[ T——— o
+
+2. click VMware Cloud Foundation
+Applicton Networking and Securty
+
+Prare—"
+
+Product Communities Technical Documentation Knowledge
+Collaborste i persand vy axparts on Ackass e camprononsive ey of rocctgdes Search e Knowidgo s 0 sy fnd anmors o
+oy o s g o PrcetComunion e, vdoo i, FAGH a1 much more your quostons and e more sty procets &
+
+Find vMware Fusion iN My Downloads page.
+D BROADCOM' Frocc
+
+a0y Bv
+
+PES
+
+UNIVERSITY
+
+My Downloads - VMware Cloud Foundation
+
+VAhvars Gl Drecior Aop Lauectya
+
+VWhware Clow Decior
+
+Vibws Ara Oparsions
+
+Vibeae G iector vty
+
+click vMware Fusion 13 Pro for Personal Use dropdown to choose the 13.6.2 version(or later).
+
+O BROADCOM' Focucts soutons Support
+
+« VMware Fusion
+
+select1352vergon .
+e oos ]
+
+@ P ot
+
+In the Primary Downloads page, find the .ang file and click download button to download the
+
+dmg file manually.
+PES
+
+UNIVERSITY
+
+M BROADCOM #rovicts souions Support o
+
+VMware Fusion Pro for Personal Use (For Intel-based and Apple silicon Macs)
+«
+
+1352
+
+e Pt oo el e o s o
+
+T I— P
+
+clck downioad
+
+Installation is straight forward. Double click on the downloaded dmyg file and follow the instructions.
+
+&
+
+FUSION
+
+PLAYER 13
+
+FUSION'
+
+PRO 13
+
+VMware Fusion
+
+vmware
+
+After the installation is finished, you can start the VMware Fusion Player.
+
+You will be asked to enter a license key. Select vMware Fusion Pro for Personal Use. You will be
+asked to allow the kernel extensions. Click on open security Preferences. In the Security &
+Privacy settings, click on 2110w to allow the kernel extensions.
+
+NOTE: All the steps remain the same for Windows OS. Just install the new version of the
+Workstation and rest go on with the setup wizard.
+‘%% UNIVERSITY
+
+Step 2: Build an Ubuntu VM on VMWare Fusion.
+
+Step 2.1: Download Ubuntu 22.04 server
+Step 2.2: Create VM on VMWare Fusion
+
+Step 2.3: Install Ubuntu server
+Step 2.4: Install Ubuntu Desktop
+
+Step 2.1: Download Ubuntu 22.04 server
+
+Since the desktop versions of the Ubuntu 22 version VM for ARM are removed; we will install the
+Server version instead. We recommend downloading the Ubuntu 22.04 version.
+
+We will download the Ubuntu ISO image first. Go to Ubuntu 22.04.5 and download the Ubuntu
+22.04.5 LTS (Jammy Jellyfish) . Make sure you download the 64-bit aRM (ARMv8/AArchéd)
+server install image. Click on this link for directly downloading iso file
+
+Ubuntu Live Server for Mac
+
+NOTE: For Windows its AMD64 architecture. Click this link to download the iso image
+Ubuntu Live Server for Windows
+
+ubuntu® releases
+
+Select an image
+
+Ubuntuis distributed on four types of images described below.
+
+64-bit ARM (ARMVB/AArch64) server install image
+
+Server install image
+
+For 64-bit ARMYB processors and above.
+
+The server instalimage allows you to install Ubuntu PowerPC64 Litte-Endian server install imag
+permanently on a computer for use as 3 server. I will ot For POWERS and POWERT0 Litle-Endian sysberns
+install a graphical user inerface.
+
+18M System  server install image
+
+For IBM System z series mainframes, such as 1BM LinuxONE.
+A
+&)FPES
+
+Step 2.2: Create VM on VMWare Fusion/Workstation
+
+After the download is finished, start the VMware Fusion Player. Click on create a New Virtual
+
+Machine.
+
+In select the Installation Method, Select Tnstall from disc or image and click on continue.
+
+Select the Installation Method
+
+o
+
+ate a custom Get Windows Create a virtual machine on
+Virtual machine from Microsoft aremote
+
+Cancel
+
+Select the downloaded Ubuntu ISO image, and then click on continue.
+
+Create a New Virtual Machine
+
+This will guide you through installing Windows or another operating system in a virtual machine
+on your Mac
+
+Choose an operating system installation disc or image:
+
+. ubuntu-22.045-live
+
+of the set
+
+PES
+
+UNIVERSITY
+
+In the next screen, make sure that 2 CPUs and 4 GB of RAM are selected. Click on rinish. The
+VM will be created and started.
+
+Finish
+
+‘The configuration of the virtual machine is now complete.
+
+Chaose Disc Configuration
+orimage
+
+Virtual Machine Summary
+Guest Operating System Ubuntu 64-bit Arm Server 22.04.5
+New Hard Disk Capacity 20 GB
+Memory 4 GB
+Networking Share with my Mac (NAT)
+
+Device Summary 2 CPU cores, CD/DVD, USB Controller,
+Sound Card
+
+To change the defauit virtual machine settings, click Customize Settings. To run the
+virtual machine now, click Finish.
+
+Customize Settings.
+
+Cancel Finish
+
+Step 2.3: Install Ubuntu server
+
+After the VM is started, click on Try or install Ubuntu Server.
+
+B seedvm2204
+
+Try or Install Ubuntu Server
+Ubuntu Server with the HUE kernel
+Boot from next volune
+
+UEFI Firmsare Settings
+
+PES
+
+UNIVERSITY
+
+We will be greeted with the installation interface. Following the instructions below:
+
+e Select the language as English.
+
+s UP, DOKN and ENTER
+
+onckn
+paincra
+
+1f you choose to update, the update will be dounloaded ation will continue from here.
+
+For Keyboard Configuration, select pone directly.
+PES
+
+UNIVERSITY
+
+elou, or select “Identify kesboard” to detect your layout
+
+third-party o
+
+For Network Configuration, select pone directly.
+PES
+
+UNIVERSITY
+
+For Ubuntu Archive Mirror Configuration, wait until it completes the mirror location test and select
+pone directly.
+PES
+
+UNIVERSITY
+
+Computer Network Security | 2025
+Setting Up SEED VWM for Apple
+Silicon
+
+For Storage Configuration, select bone and continue directly.
+PES
+
+UNIVERSITY
+
+For Profile Configuration, create a user with name seed and select a password (you can use the
+standard password dees that we use for all SEED VMs). Then select porne.
+
+B SeedvM2204
+
+ervers nane:
+Pick a usernane: (SN
+Choose a passuord: S
+PES
+
+UNIVERSITY
+
+Select continue directly.
+
+ith FecRaNP
+
+t Ubuntu Pro » 1
+
+ble Ubuntu P
+
+kip for now
+
+For SSH Configuration, we recommend you to enable it, so select tnstall openssi server and
+Done.
+
+PES
+
+UNIVERSITY
+
+For Featured Server Snaps, select pone directly.
+
+These are popular snap ! jeselect with SPACE, pre
+
+itto MaTT broker
+e store by Coreos
+
+e Interface for Ans:
+
+r API Tool
+cean connand
+
+conjure-up ‘ conjure-up spe
+
+postgresalio pouerful, open source
+
+keepalived g 11abi1ity VRRP/BFD and load
+
+B Seedvi2204
+
+PES
+
+UNIVERSITY
+
+Computer Network Security | 2025
+Setting Up SEED WM for Apple
+
+SNiaye you will encounter a situation like Failed unmounting /cdrom, press enter directly.
+
+B SeedvM22.04
+
+After the cloud-init operation, press enter and login to your account:
+
+Step 2.4: Install Ubuntu Desktop
+
+In most SEED labs, we need to have a GUI to check the result. We will install ubuntu-desktop in
+the VM to get it.
+
+Use sudo apt update first and
+sudo apt install ubuntu-desktop
+PES
+
+UNIVERSITY
+
+B SeedvM22.04
+
+Wait until it finishes the installation. This may take a long time. Then sudo reboot and we will get
+the GUI we want!
+
+B SecaVM22.04
+
+.Ubuntu
+
+PES
+
+UNIVERSITY
+
+Step 3: Lab Setup
+
+We are now ready to install all the software packages needed
+Do not upgrade your Ubuntu version!
+
+e Step 3.1: Setup Bidirectional Shared Clipboard
+e Step 3.2: Install the Software
+
+Step 3.1: Setup Bidirectional Shared Clipboard
+
+In the default setting, the copy-and-paste does not work between your host Apple machine and
+the VM running inside VMware Fusion. This is quite inconvenient. You can install vmware tools
+to set up a bidirectional shared clipboard. Run the following commands.
+
+P ———
+
+Step 3.2: Install the Software
+
+Go to terminal, first download cur1 using
+
+
+
+
+################################################################################
+FILE 8/9: labs/setup_and_tools/WIRESHARK INSTALLATION.pdf
+PAGES: 10 | EXTRACTED CHARACTERS: 7,997
+################################################################################
+
+COMPUTER NETWORK LAB
+
+WIRESHARK INSTALLATION
+
+Wireshark is a powerful network protocol analyser that captures and inspects
+data packets traveling over a network in real time. It is used by network
+administrators, security analysts, and developers to troubleshoot, monitor, and
+analyse network issues.
+
+How Wireshark works:
+
+Wireshark listens to network traffic on the selected network interface. It
+captures each data packet passing through. Captured packets are decoded and
+displayed for inspection. Filters and tools allow detailed analysis, such as
+following a TCP stream or analysing latency.
+
+Installing Wireshark on Windows:
+
+Follow the below steps to install Wireshark on Windows:
+
+Step 1: Visit the https://www.wireshark.org/download.html using
+any web browser.
+
+Step 2: Click on Download, a new webpage will open with
+different installers of Wireshark.
+
+1l
+
+SO g S
+WIRESHARK
+Download Wireshark
+
+The current stable release of Wireshark is 3.6.0.
+
+Stable Release (3.6.0) - A
+
+& Windows instalier (64-bit)
+
+21d stabls Relsase (3.4,10) -
+
+COMPUTER NETWORK LAB
+
+Step 3: Downloading of the executable file will start shortly.
+It is a small 73.69 MB file that will take some time.
+
+Step 4: Now check for the executable file in downloads in
+your system and run it.
+
+Step 5: It will prompt confirmation to make changes to your
+system. Click on Yes.
+
+Welcome to Wireshark 3.6.0 64-bit
+Setup
+
+This wizard wil guide you through the installation of
+Wreshark.
+
+Before starting the installation, make sure Wireshark is not
+running,
+
+Ciick Next to continue.
+
+Next > Cancel
+
+COMPUTER NETWORK LAB
+
+Step 6: Setup screen will appear, click on Next.
+
+Step 7: The next screen will be of License Agreement, click
+on Noted.
+
+Step 8: This screen is of choosing shortcuts like start menu
+or desktop icon along with file extensions which can be
+intercepted by Wireshark, tick all boxes and click on Next
+button.
+
+| Additional Tasks
+Create shortcuts and associate file extensions.
+
+Create Shortcuts
+[¥] Wireshark Start Menu Item
+[V] Wireshark Desktop Icon
+[} wireshark Quick Launch Tcon
+Associate File Extensions
+7] Associate trace file extensions with Wireshark
+Extensions indlude Svw, acp, apc, atc, bff, cap, enc, erf, fdc, ipfix, kcap,
+
+mplog, ntar, out, pcap, pcapng, pKig, pkt, rf5, snoop, sy, tpc, 1, trace,
+trc, v, wpc, and wpz.
+
+<Back | Next> | [ concel
+
+COMPUTER NETWORK LAB
+
+Step 9: The next screen will be of installing location so choose the
+drive which will have sufficient memory space for installation. It
+
+needed only a memory space of 223.4 MB.
+
+Choose Install Location
+Choose the folder in which to instal Wireshark 3.6.0 64-bit.
+
+Choose a directory in which to install Wireshark.
+
+Destination Folder
+
+C:Program Files\Wireshark
+
+Space required: 223.4MB
+Space avalable: 60.2GB
+
+Step 10: Next screen has an option to install Npcap which is
+used with Wireshark to capture packets pcap means packet
+capture so the install option is already checked don’t change
+anything and click the next button.
+
+Packet Capture
+Wireshark requires either Npcap or WinPcap to capture five network data,
+
+Currently installed Npcap or WinPcap version
+
+Tnstal
+[} Install Npcap 1.55
+(Use Add/Remove Programs first to uninstall any undetected old Npcap or WinPcap
+
+Important notice
+1f your system has crashed during a Wireshark installation, you must run the command
+‘net stop npcap’ as Administrator before upgrading Npcap, so that it doesn't crash again
+Get WinPcap
+
+Learn more about Npcap and WinPcap
+
+COMPUTER NETWORK LAB
+
+Step 11: Next screen is about USB network capturing so it is
+one’s choice to use it or not, click on Install.
+
+USBPcap is required to capture USB traffic. Should USBPcap be installed
+(experimental)?
+
+Currently installed USBPcap version
+
+BRcap s currently not instal
+
+Install
+[[install UsBPcap 1.5.4.0
+(Use Add/Remove Programs first to uninstall any undetected old USBPcap versions)
+
+Important notice
+
+In case of issue after installation, please use the system restore point created or read
+https: //github. com/desowin/usbpcap fissues/3
+
+Leam more about USBPcap
+
+Installing
+Please wait while Wireshark 3.6.0 64-bit is being installed.
+
+Extract: libwireshark.dll... 8%
+
+Output folder: C:\Program Files\Wireshark
+Extract: uninstall.exe
+
+Extract: libwiretap.dil
+
+Extract: libwireshark.dl... 8%
+
+COMPUTER NETWORK LAB
+
+Step 13: This installation will prompt for Npcap installation
+as already checked so the license agreement of Npcap will
+appear to click on the / Agree button.
+
+estng
+Pese st b sk 3.0 4 b b el A
+
+Execute: T Progyam Mes Wiveshark nocap-1 55 exe” Avnpcap,_modesro foacbedt_s.03
+
+Press Pace Dowr to see the rest of he agreement.
+
+S ——— [
+
+Dkt il droves and Moy e m copyt |
+
+b
+K re.Com LLC (The Hoep Project). Al 1t
+
+wwd
+
+[Even thaugn Hcap sousce code s sy avakable for revem, 24
+[not apen source scftwave ard my ot be rodstised wibhout ec
+permission from the tnap Frojc. The stancard veraan & asa
+Jrcted 35 rzalaton on e syssems. e fund the Nocap praect by
+
+1 you sccept e terms of e acyeeme, ik 1 Agree 1o contre. You must accest the
+a7 et 1 ratad g 155
+
+Step 14: Next screen is about different installing options
+of npcap, don’t do anything click on Install.
+
+o
+
+Eeecute: T Progam Flas Aveshurkpcp- 55 exe’ wrocas, node 0 foocbed agpa
+
+i Nocsp 155 Setup
+
+st dltion Optror.
+Plense review e obowng options defore rstsing 1o:sp 1.35
+
+Bmebt s s w5 Adrasas o 4.
+et ram 8021 8 e rersis ) o s clers
+
+st Hocap 1 WinPcap APL <ospattie Modk.
+
+1 previous nstatston of ocap 155 fabed, v may heed 1o sl sk v
+ek ok Hocap 1,31 s
+
+COMPUTER NETWORK LAB
+
+Step 15: After this installation process will start which will
+take only a minute.
+
+Installing
+Please wait whie Wireshark 3.6.0 64-bitis being installed. ‘
+
+Ej??—}'£= g - Prggram Hes\Wi(esharkbpcap-l. Ss.gxe‘ /whpcap_mrodefmrﬁogpbad(_s\mpq
+
+?v Npcap 1.55 Setup
+
+Installing
+Please wait while Npcap 1.55 is being installed.
+
+Clearing Npcap entries from driver store
+
+COMPUTER NETWORK LAB
+
+Step 16: After this installation process will complete click on
+the Next button.
+
+st
+e it Weeshrk 36,064t b sl A
+
+Exeaute: C:\Program Fles\Wireshark\npcap-1,55.exe” fwinpcap_mode =no floopback suppor
+|
+
+Installation Complete ‘
+Setup was complted successfly,
+
+Completed
+
+Instaling NDIS fiter driver
+Nocap LWF driver has been successfully installed!
+
+The npcap service was successfuly created
+
+Vit service optons to registry
+
+Startng the npcap driver
+
+Output folder: C:Program Flespcap
+
+Extract; ChedkStatus.bat
+
+Creating npcapwatchdog scheduled task
+
+SUCCESS: The schedued task Tipcapwatchdog” has successflly been reated.
+
+Completed =
+
+Step 17: Click on Finish after the installation process is
+complete.
+
+eairg
+P e W 34,044 g e A
+
+Eamc.tm: TPy Eenierastr s 55 a1 e pcap_veske o bk maes
+
+—
+b Npcp 135 Setup
+
+COMPUTER NETWORK LAB
+
+Step 18: After this installation process of Wireshark will
+complete click on the Next button.
+
+Installation Complete
+Setup was completed successfully.
+
+Completed
+
+Extract: x-colorize-packets.png
+
+Extract: x-resize-columns.png
+
+Extract: x-stay-ast.png
+
+Extract: zoom-in.png
+
+Extract: zoom-original.png
+
+Extract: zoom-out.png
+
+Output folder: C:\Program Files\Wireshark\Wireshark User's Guide
+Output folder: C:\Program Files\Wireshark
+
+Extract: fag.html
+
+Step 19: Click on Finish after the installation process of
+Wireshark is complete.
+
+Completing Wireshark 3.6.0 64-bit
+Setup
+
+Wireshark 3.6.0 64-bit has been installed on your computer.
+Click Finish to dose Setup.
+
+[ show News
+
+COMPUTER NETWORK LAB
+
+Wireshark is successfully installed on the system and an icon
+is created on the desktop as shown below:
+
+Welcome to Wireshark
+Capture
+using this fiter: (I [Enter 2 capture Ater =] [Alinterfaces shown = | I
+
+Learn
+User'sGuide - Wiki * Questions and Answers © Mailing Lists
+You are running Wireshark 3.6.0 (v3.6,0-0-03a34e44d02c3), You receive automatic updates.
+
+7 Ready toload or capture | NoPackets. | Profile: Defauit
+
+Congratulations!! At this point, you have successfully
+installed Wireshark on your windows system.
+
+
+
+
+
+################################################################################
+FILE 9/9: project/first_presentation/Project_25_Presentation.pdf
+PAGES: 8 | EXTRACTED CHARACTERS: 6,854
+################################################################################
+
+AegisFlow
+
+Computer Networks Mini Project — Topic #25 - Low-Level TCP Sockets + OpenFlow 1.3
+THE PROBLEM (Best-Effort Edge Networks)
+
+o Unfiltered Ingress Storms
+
+Dumb edge switches forward all packets blindly based solely on
+destination IP.
+
+o FIFO Backlog Saturation
+
+Adversarial port scans and connection bursts exhaust TCP listen
+queues and file descriptors.
+
+o Severe Collateral Damage
+
+Legitimate users suffer connection timeouts, packet drops, and
+severe latency spikes.
+
+Consequence: Handling malicious probes consumes 100% of
+server CPU, causing severe packet loss for legitimate clients.
+
+Network Intrusion Defense: Problem & Solution
+
+Overcoming Best-Effort Network Vulnerabilities with SDN-Driven Programmable QoS
+
+THE SOLUTION (SDN-Based Edge Defense)
+
+o Real-Time Telemetry Tracking
+
+SDN Controller monitors Packetln connection velocity and
+destination port diversity in real time.
+
+e Dynamic OpenFlow Flow Control
+
+Sliding-window engine detects anomalies in ~120 ms and pushes
+high-priority drop rules in < 1 ms.
+
+® Line-Rate Hardware Enforcement
+
+Edge switches discard malicious frames at ingress datapath,
+shielding server resources entirely.
+
+Outcome: 100% of attacker traffic dropped in switch hardware;
+legitimate clients enjoy 0.44 ms latency and 100% availability.
+
+Architecture & Tech Stack: Protected TCP Service
+
+e Python 3 BSD Sockets: Raw socket.AF_INET and Legitimate Client (h1): Dispatches TCP SYN to 10.0.0.3:8080
+socket.SOCK_STREAM binding to 0.0.0.0:8080
+
+e Kernel SO_REUSEADDR: Eliminates OS kernel TIME_WAIT socket
+
+A
+rebinding locks ) L. |
+. Open vSwitch (s1): Matches Priority 1 L2 Forwarding Rule
+e POSIX Concurrency: Multi-threaded daemon pool
+A
+
+(threading.Thread) with 100-connection backlog
+
+Protected Server (h3): Dedicated Thread Spawned via accept()
+
+® Zero Overhead: Bypasses heavy WSGI/ASGI stacks for pristine
+wire-speed packet analysis
+
+A
+
+e Queue Visibility: Direct kernel-level socket queue buffer
+
+management and connection lifecycle Application Layer: Client Transmits HTTP GET /data
+A
+
+e Deterministic RTT: Client (client.py) measures round-trip time on
+
+every HTTP 200 payload Payload Delivery: Server Responds HTTP 200 OK (64 Bytes)
+e Wire-Speed Delivery: Delivers 0.44 ms baseline latency with
+100% packet delivery v
+
+Metric Verification: End-to-End RTT Measured = 0.44 ms
+
+e Vertical Port Scan: Iterates across common service ports [21, 22,
+23, 25, 80, 443, 8080]
+
+® DoS Connection Flood: Bursts 30+ simultaneous connections to
+exhaust listen queue
+
+o Host Attribution: Attacker emulated on isolated Mininet host h2
+(10.0.0.2)
+
+e Native OS Probing: Returns O for open ports and errno for
+blocked without raising exceptions
+
+e Rapid Execution: Completes reconnaissance scan across entire
+port range in < 500 ms
+
+® Precision Timestamping: Monitors nanosecond probe dispatch
+and the exact drop cutoff
+
+o Delivery Accounting: Calculates drop ratio before and after
+OpenFlow intervention
+
+Architecture & Tech Stack: Adversarial Threat Modeling
+
+Adversary (h2: 10.0.0.2): Initiates Sequential Port Scan
+
+Probe 5 (Port 80): THRESHOLD BREACHED (>= 5 Ports in 10s)
+
+v
+
+OpenFlow PacketlIn: Switch Notifies Ryu Controller IDS
+
+v
+
+Dynamic FlowMod: Priority 200 DROP Installed in < 1 ms
+
+v
+
+Subsequent Probes (Ports 443, DROPPED IN
+HARDWARE
+
+Architecture & Tech Stack: Real-Time IDS Engine
+
+o collections.deque: O(1) time complexity append and left-pop per Ingress Packet: Extract (src_ip, dst_port, timestamp)
+source IP
+
+e Window Bounds: 10-second active window with monotonic time
+
+tracking
+
+Sliding Window Deque: Evict Records Older Than 10 Seconds
+
+o Rule 1 (Reconnaissance): Distinct destination ports >= 5 within
+10s window
+
+o Rule 2 (Volumetric Flood): Connection attempts >= 10 per
+
+second within 1.0s window Threshold Evaluation: Distinct Ports >=5 OR Conns/sec >= 10?
+
+e Instant Alert: Detection latency = ~120 ms for scans and < 50 ms
+for floods
+
+o Zero False Positives: Legitimate client requests to port 8080 pass Decision: Threshold Breached —» TRIGGER SECURITY ALERT!
+without friction
+
+v
+
+Action: Dispatch Priority 200 OFPFlowMod DROP to Open
+vSwitch
+
+Architecture & Tech Stack: Dynamic SDN Control Plane
+
+® Ryu Controller Framework: Event-driven OpenFlow 1.3 controller Open vSwitch Table 0: Flow Evaluation by Priority Order
+operating on TCP port 6633
+
+@ Open vSwitch (s1): Kernel-space OpenFlow datapath executing
+hardware-level packet drops
+
+PRIORITY 200: Match ipv4_src=10.0.0.2 —» DROP IN
+
+HARDWARE
+e OFPFlowMod Message: Pushes match rule: eth_type=IPv4,
+
+ip_proto=TCP, ipv4_src=10.0.0.2 v
+
+o Action List = []: Empty action list instructs switch datapath to
+drop packet instantly
+
+e hard_timeout=60s: Enforces 60-second penalty box before rule
+auto-expires
+
+v
+o Priority Override: Priority 200 (Drop) evaluates before Priority 1 PRIORITY 0: Table-Miss —» SEND TO RYU CONTROLLER
+(Forwarding)
+
+v
+
+e Hardware Response: Rule active in switch datapath in < 1 ms
+
+PRIORITY 1: Match eth_dst=h3 —» FORWARD TO PORT 3
+
+Outcome: Attacker Isolated | Legitimate Traffic 100% Wire-
+Speed
+
+Complete System Architecture Overview
+End-to-End Master Blueprint Combining Data Plane, SDN Network, and Control Plane
+
+1. PacketIn Telemetry Ingestion | 2. Sliding-Window Threshold Evaluation | 3. Priority 200 DROP FlowMod Injection
+
+. PRIORITY 200: DROP RULE (Open vSwitch) v
+e Match: ipv4_src=10.0.0.2 (Attacker Host) e Match: ipv4_src=10.0.0.1 (Legitimate Client)
+o Action: Discard at ingress hardware (0 CPU) e Action: Forward to Port 3 (Wire speed 0.44 ms)
+
+Attacker Host (h2)
+10.0.0.2
+
+Port Scan & Floods Normal HTTP GET /data Multi-Threaded TCP Service
+100% Dropped at Edge 0.44 ms Latency (100% SLA) Zero CPU Load Under Attack
+
+Experimental Evaluation & Conclusion
+
+Key Analytical Takeaways, Quantitative Benchmarks & Live Verification
+
+Key Analytical Takeaways
+
+® 100% Attacker Traffic Quarantined: Attacker drop rate reaches 100% at the edge switch datapath, neutralizing port scans and floods.
+® 97.6% Latency Reduction: Legitimate client transit delay reduced from 18.5 ms (queue backlog) to 0.44 ms wire-speed.
+® Zero Server Resource Degradation: Switch hardware offload shields server CPU, thread pool, and socket listen queue from all attacks.
+
+Performance Metric Baseline (No Defense) With AegisFlow SDN Defense Quantitative Impact
+
+Attacker Attack Delivery 100.0% (Hits server) < 10.0% (Dropped at switch) Attacker neutralized
+Server Queue Saturation Saturated (Buffer full) Zero Impact (No drops) Server 100% protected
+Legitimate Delivery Rate 60% - 70% (Timeouts) 100.0% Success Full service restored
+Legitimate Client Latency 18.50 ms (Severe delay) 0.44 ms (Wire speed) 97.6% Latency Reduction!
+Intrusion Detection Latency N/A (No detection) ~120.50 ms Real-time sliding window
+
+#7 SINGLE-COMMAND VERIFICATION: git clone https://github.com/imyash0722/AegisFlow.git && python3 run.py
+
+
+
