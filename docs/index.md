@@ -1,7 +1,12 @@
 # Computer Networks (UE25CS243A) — Exam Prep
 
-**PES University** | **Semester III (Aug–Dec 2026)** | **Credits: 4**  
-**Course Code**: UE25CS243A | **Textbook**: Kurose & Ross, *Computer Networking: A Top-Down Approach*, 9th Edition (2026)
+| **Institution** | **Semester** | **Credits** |
+|----------------|--------------|-------------|
+| PES University | Semester III (Aug–Dec 2026) | 4 |
+
+| **Course Code** | **Textbook** |
+|-----------------|--------------|
+| UE25CS243A | Kurose & Ross, *Computer Networking: A Top-Down Approach*, 9th Edition (2026) |
 
 ---
 
@@ -36,6 +41,7 @@
 - **Unit 2 (ISA-1)** → [Transport Layer](unit2/00_overview.md)
 - **Unit 3 (ISA-2)** → [Network Layer](unit3/00_overview.md)
 - **Unit 4 (ISA-2)** → [Link Layer & LAN](unit4/00_overview.md)
+- **Live Site** → [https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/](https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/)
 
 ---
 
