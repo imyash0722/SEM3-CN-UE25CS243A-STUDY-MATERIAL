@@ -1,0 +1,195 @@
+{
+  ".serena/project.yml": {
+    "mtime": 1791481560.62,
+    "seen": 1793780538.0573812,
+    "ast_hash": "78b844d41cb149db4d39e9571b0e0581",
+    "semantic_hash": "78b844d41cb149db4d39e9571b0e0581"
+  },
+  "overrides/assets/javascripts/theme-toggle.js": {
+    "mtime": 1793730711.29,
+    "seen": 1793780538.0574746,
+    "ast_hash": "1f8c8539010dbc766f6938d64e25fd5a",
+    "semantic_hash": "1f8c8539010dbc766f6938d64e25fd5a"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/analyze_results.py": {
+    "mtime": 1791482271.78,
+    "seen": 1793780538.0575588,
+    "ast_hash": "afaada85ace55ed13f8c88330ba5f27c",
+    "semantic_hash": "afaada85ace55ed13f8c88330ba5f27c"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/attack_generator.py": {
+    "mtime": 1791482147.31,
+    "seen": 1793780538.0576441,
+    "ast_hash": "7c60e74fca7e4cc142752aedc60dfd0e",
+    "semantic_hash": "7c60e74fca7e4cc142752aedc60dfd0e"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/demo.py": {
+    "mtime": 1791482389.99,
+    "seen": 1793780538.0577025,
+    "ast_hash": "ad47c1bdded56df52412d3f39169ca0a",
+    "semantic_hash": "ad47c1bdded56df52412d3f39169ca0a"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/ids_monitor.py": {
+    "mtime": 1791482180.3,
+    "seen": 1793780538.0577595,
+    "ast_hash": "5fb7eaef011a29abde71cd3043d95e40",
+    "semantic_hash": "5fb7eaef011a29abde71cd3043d95e40"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/protocol.py": {
+    "mtime": 1791482042.1,
+    "seen": 1793780538.057816,
+    "ast_hash": "4321388719c8492ffebe304b538ce911",
+    "semantic_hash": "4321388719c8492ffebe304b538ce911"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/run_experiment.sh": {
+    "mtime": 1791482587.67,
+    "seen": 1793780538.057882,
+    "ast_hash": "5710cf914af951a6563ceddaf90c666a",
+    "semantic_hash": "5710cf914af951a6563ceddaf90c666a"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/sdn_controller.py": {
+    "mtime": 1791482223.85,
+    "seen": 1793780538.0579383,
+    "ast_hash": "9a711e55f1ad90bb7d53ab0c98705d6d",
+    "semantic_hash": "9a711e55f1ad90bb7d53ab0c98705d6d"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/tcp_client.py": {
+    "mtime": 1791482113.02,
+    "seen": 1793780538.0579953,
+    "ast_hash": "6e4060dd64b3d4b8ac2c0239e480210c",
+    "semantic_hash": "6e4060dd64b3d4b8ac2c0239e480210c"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/tcp_server.py": {
+    "mtime": 1791482094.38,
+    "seen": 1793780538.0580513,
+    "ast_hash": "f84711f39a3cd0a97a7af413f698780b",
+    "semantic_hash": "f84711f39a3cd0a97a7af413f698780b"
+  },
+  "project/first_presentation/network_intrusion_detection/advanced/test_suite.py": {
+    "mtime": 1791482333.31,
+    "seen": 1793780538.058108,
+    "ast_hash": "be96635d594f8e4afb614f88ae069439",
+    "semantic_hash": "be96635d594f8e4afb614f88ae069439"
+  },
+  "project/first_presentation/network_intrusion_detection/attacker.py": {
+    "mtime": 1791712863.55,
+    "seen": 1793780538.0581646,
+    "ast_hash": "211938cd91786b16ceab7fce0100c0f0",
+    "semantic_hash": "211938cd91786b16ceab7fce0100c0f0"
+  },
+  "project/first_presentation/network_intrusion_detection/client.py": {
+    "mtime": 1791712853.65,
+    "seen": 1793780538.0582137,
+    "ast_hash": "43b31629ebcfaa807f39f3fd44f6aa38",
+    "semantic_hash": "43b31629ebcfaa807f39f3fd44f6aa38"
+  },
+  "project/first_presentation/network_intrusion_detection/controller.py": {
+    "mtime": 1791712881.25,
+    "seen": 1793780538.0582623,
+    "ast_hash": "491fa5b8c495690f01b7da3d15f3e5cc",
+    "semantic_hash": "491fa5b8c495690f01b7da3d15f3e5cc"
+  },
+  "project/first_presentation/network_intrusion_detection/run.py": {
+    "mtime": 1791865231.77,
+    "seen": 1793780538.0583107,
+    "ast_hash": "ff0a32ae1594d44ce0649ad380d3a485",
+    "semantic_hash": "ff0a32ae1594d44ce0649ad380d3a485"
+  },
+  "project/first_presentation/network_intrusion_detection/run.sh": {
+    "mtime": 1791735059.5,
+    "seen": 1793780538.0583591,
+    "ast_hash": "b40037ae83e37d9949d8902bf13d6960",
+    "semantic_hash": "b40037ae83e37d9949d8902bf13d6960"
+  },
+  "project/first_presentation/network_intrusion_detection/server.py": {
+    "mtime": 1791712844.72,
+    "seen": 1793780538.0584078,
+    "ast_hash": "aee09dea115b5d3dbd695321234c0aca",
+    "semantic_hash": "aee09dea115b5d3dbd695321234c0aca"
+  },
+  "project/first_presentation/network_intrusion_detection/topology.py": {
+    "mtime": 1791712890.41,
+    "seen": 1793780538.0584574,
+    "ast_hash": "f675ba627c4f4e5d2769ebcf26904a6e",
+    "semantic_hash": "f675ba627c4f4e5d2769ebcf26904a6e"
+  },
+  "resources/u2/PythonScripts-Socket programming/UDPClient.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.0585055,
+    "ast_hash": "9fbe135e9438e99c27b41c752d3dd471",
+    "semantic_hash": "9fbe135e9438e99c27b41c752d3dd471"
+  },
+  "resources/u2/PythonScripts-Socket programming/UDPServer.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.0585542,
+    "ast_hash": "a6fae7b2cba8a9b8994d95603d7a82b4",
+    "semantic_hash": "a6fae7b2cba8a9b8994d95603d7a82b4"
+  },
+  "resources/u2/PythonScripts-Socket programming/UDPUpCaseClient.py": {
+    "mtime": 1770223832.0,
+    "seen": 1793780538.0586004,
+    "ast_hash": "d964e8c577458a4ee8dcb35e0e008650",
+    "semantic_hash": "d964e8c577458a4ee8dcb35e0e008650"
+  },
+  "resources/u2/PythonScripts-Socket programming/UDPUpCaseServer.py": {
+    "mtime": 1770223826.0,
+    "seen": 1793780538.0586486,
+    "ast_hash": "3c04cb9aa38786b39f16c76601810ff8",
+    "semantic_hash": "3c04cb9aa38786b39f16c76601810ff8"
+  },
+  "resources/u2/PythonScripts-Socket programming/echoClietnt.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.058696,
+    "ast_hash": "b610ade08e833f478e21ba7633991837",
+    "semantic_hash": "b610ade08e833f478e21ba7633991837"
+  },
+  "resources/u2/PythonScripts-Socket programming/echoServer.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.058743,
+    "ast_hash": "7d1925345949465697c259c3d6453a58",
+    "semantic_hash": "7d1925345949465697c259c3d6453a58"
+  },
+  "resources/u2/PythonScripts-Socket programming/tcpClient.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.05879,
+    "ast_hash": "7b96a8e5d4dc886dc9c2db3fbedc930b",
+    "semantic_hash": "7b96a8e5d4dc886dc9c2db3fbedc930b"
+  },
+  "resources/u2/PythonScripts-Socket programming/tcpServer.py": {
+    "mtime": 1684666424.0,
+    "seen": 1793780538.0588355,
+    "ast_hash": "3173b64336f6b8b1885ea0dbf8c7bde6",
+    "semantic_hash": "3173b64336f6b8b1885ea0dbf8c7bde6"
+  },
+  "site/assets/javascripts/bundle.77dd0ce9.min.js": {
+    "mtime": 1793779842.67,
+    "seen": 1793780538.0588849,
+    "ast_hash": "366d69fa8fdc78f68f32105ea7e4491f",
+    "semantic_hash": "366d69fa8fdc78f68f32105ea7e4491f"
+  },
+  "site/assets/javascripts/theme-toggle.js": {
+    "mtime": 1793779842.67,
+    "seen": 1793780538.059003,
+    "ast_hash": "1f8c8539010dbc766f6938d64e25fd5a",
+    "semantic_hash": "1f8c8539010dbc766f6938d64e25fd5a"
+  },
+  "site/assets/javascripts/workers/search.c47bb847.min.js": {
+    "mtime": 1793779842.67,
+    "seen": 1793780538.0590875,
+    "ast_hash": "5e538ea91ed325909521963abae2d474",
+    "semantic_hash": "5e538ea91ed325909521963abae2d474"
+  },
+  "site/search.json": {
+    "mtime": 1793779842.85,
+    "seen": 1793780538.059172,
+    "ast_hash": "5c24e96e842c9883cbb89f4427d3726b",
+    "semantic_hash": "5c24e96e842c9883cbb89f4427d3726b",
+    "ast_empty": true
+  },
+  "zensical.yml": {
+    "mtime": 1793776046.09,
+    "seen": 1793780538.059176,
+    "ast_hash": "9d505f59dc5cc656eeb50eb73330f86f",
+    "semantic_hash": "9d505f59dc5cc656eeb50eb73330f86f"
+  }
+}

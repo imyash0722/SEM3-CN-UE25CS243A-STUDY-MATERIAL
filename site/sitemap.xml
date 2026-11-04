@@ -19,6 +19,45 @@
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/02_chapter2_application_layer/</loc>
       </url>
       <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.1_what_is_the_internet/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.2_the_network_edge/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.3_the_network_core/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.4_delay_loss_throughput/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.5_protocol_layers/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.6_network_security/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/1.7_history/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.1_network_app_principles/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.2_web_http/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.3_email/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.4_dns/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.5_video_cdn/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/topics/2.6_socket_programming/</loc>
+      </url>
+      <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit1/unit1_complete/</loc>
       </url>
       <url>
@@ -28,16 +67,94 @@
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/03_chapter3_transport_layer/</loc>
       </url>
       <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.1_intro_transport_services/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.2_multiplexing_demultiplexing/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.3_udp/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.4_reliable_data_transfer/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.5_tcp/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/topics/3.6_3.7_congestion_control/</loc>
+      </url>
+      <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit2/unit2_complete/</loc>
       </url>
       <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/00_overview/</loc>
       </url>
       <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.1_network_layer_overview/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.2_inside_router/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.3_4.4_ipv4_fragmentation/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.5_addressing_nat/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.6_sdn/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/4.7_datacenter_networks/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/5.1_5.3_routing_algorithms/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/dhcp/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/icmp/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/topics/ipv6/</loc>
+      </url>
+      <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit3/unit3_complete/</loc>
       </url>
       <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/00_overview/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.10_wireless_lans/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.1_intro_link_layer/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.2_error_detection_correction/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.3_multiple_access/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.4_switched_lans/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.5_ethernet/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.6_switches/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.7_vlans/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.8_day_in_life/</loc>
+      </url>
+      <url>
+        <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/topics/6.9_physical_layer/</loc>
       </url>
       <url>
         <loc>https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/unit4/unit4_complete/</loc>
