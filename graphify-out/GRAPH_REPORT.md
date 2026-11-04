@@ -4,61 +4,51 @@
 - cluster-only mode — file stats not available
 
 ## Summary
-- 814 nodes · 2124 edges · 48 communities (35 shown, 13 thin omitted)
+- 857 nodes · 2167 edges · 38 communities (27 shown, 11 thin omitted)
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 193 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b899c83b`
+- Built from commit: `99f1e11f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Community 0
-- Community 1
-- Community 2
-- Community 3
-- Community 4
-- Community 5
-- Community 6
-- Community 7
-- Community 8
-- Community 9
-- Community 10
-- Community 11
-- Community 12
-- Community 13
-- Community 14
-- Community 15
-- Community 16
-- Community 17
-- Community 18
-- Community 19
-- Community 20
-- Community 21
-- Community 22
-- Community 23
-- Community 24
-- Community 25
-- Community 26
-- Community 27
-- Community 28
-- Community 29
-- Community 30
-- Community 31
-- Community 32
-- Community 34
-- Community 35
-- Community 36
-- Community 37
-- Community 38
-- Community 39
-- Community 40
-- Community 41
-- Community 42
-- Community 43
-- Community 45
-- Community 47
+- m
+- search.c47bb847.min.js
+- bundle.77dd0ce9.min.js
+- test_suite.py
+- ou
+- e
+- zensical.yml
+- ShowcaseRunner
+- socket
+- sdn_controller.py
+- tp
+- t
+- project.yml
+- q
+- IDSMonitor
+- TCPServer
+- AttackGenerator
+- TestIntrusionDetectionSystem
+- analyze_results.py
+- SDNControllerApp
+- ko
+- SimpleIDSController
+- n
+- Unit 3: Network Layer
+- Chapter 6: Link Layer & LAN
+- Chapter 2: Application Layer
+- Chapter 3: Transport Layer
+- Chapter 1: Computer Networks & the Internet
+- lu
+- nav
+- threading
+- oc
+- tn
+- Chapter 4: Data Plane
+- run.sh script
 
 ## God Nodes (most connected - your core abstractions)
 1. `m()` - 72 edges
@@ -73,179 +63,147 @@
 10. `ee()` - 22 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `add()` --indirect_call--> `e()`  [INFERRED]
-  site/assets/javascripts/workers/search.c47bb847.min.js → site/assets/javascripts/bundle.77dd0ce9.min.js
 - `ShowcaseRunner` --uses--> `IDSMonitor`  [INFERRED]
   project/first_presentation/network_intrusion_detection/advanced/demo.py → project/first_presentation/network_intrusion_detection/advanced/ids_monitor.py
 - `IDSMonitor` --uses--> `SecurityAlert`  [INFERRED]
   project/first_presentation/network_intrusion_detection/advanced/ids_monitor.py → project/first_presentation/network_intrusion_detection/advanced/protocol.py
 - `TestIntrusionDetectionSystem` --uses--> `IDSMonitor`  [INFERRED]
   project/first_presentation/network_intrusion_detection/advanced/test_suite.py → project/first_presentation/network_intrusion_detection/advanced/ids_monitor.py
-- `TestIntrusionDetectionSystem` --uses--> `StandaloneMockController`  [INFERRED]
-  project/first_presentation/network_intrusion_detection/advanced/test_suite.py → project/first_presentation/network_intrusion_detection/advanced/sdn_controller.py
+- `ShowcaseRunner` --uses--> `TCPServer`  [INFERRED]
+  project/first_presentation/network_intrusion_detection/advanced/demo.py → project/first_presentation/network_intrusion_detection/advanced/tcp_server.py
+- `TestIntrusionDetectionSystem` --uses--> `TCPServer`  [INFERRED]
+  project/first_presentation/network_intrusion_detection/advanced/test_suite.py → project/first_presentation/network_intrusion_detection/advanced/tcp_server.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 13 thin omitted)
+## Communities (38 total, 11 thin omitted)
 
-### Community 0 - "Community 0"
-Cohesion: 0.07
-Nodes (93): Ac(), ae(), af(), Ap(), Ar(), b(), bc(), bf() (+85 more)
+### Community 0 - "m"
+Cohesion: 0.08
+Nodes (89): Ac(), ae(), af(), Ap(), as(), b(), bc(), bf() (+81 more)
 
-### Community 1 - "Community 1"
+### Community 1 - "search.c47bb847.min.js"
 Cohesion: 0.06
-Nodes (62): A(), add(), ae(), At(), B(), bt(), C(), ce() (+54 more)
+Nodes (62): Wt(), A(), ae(), At(), B(), bt(), C(), ce() (+54 more)
 
-### Community 2 - "Community 2"
-Cohesion: 0.04
-Nodes (43): Ba(), Cl(), Cs(), D(), ea(), ei(), fc(), ff() (+35 more)
-
-### Community 3 - "Community 3"
+### Community 2 - "bundle.77dd0ce9.min.js"
 Cohesion: 0.05
-Nodes (4): print_banner(), ShowcaseRunner, TCPClient, TCPServer
+Nodes (42): Ba(), Cl(), constructor(), Cs(), D(), dl(), ea(), ei() (+34 more)
 
-### Community 4 - "Community 4"
-Cohesion: 0.07
-Nodes (4): BaseControllerLogic, main(), SDNControllerApp, StandaloneMockController
+### Community 3 - "test_suite.py"
+Cohesion: 0.09
+Nodes (9): main(), main(), format_alert_log(), parse_ipc_message(), SecurityAlert, serialize_ipc_message(), main(), main() (+1 more)
 
-### Community 5 - "Community 5"
-Cohesion: 0.15
-Nodes (6): main(), main(), main(), format_alert_log(), main(), main()
+### Community 4 - "ou"
+Cohesion: 0.09
+Nodes (41): a(), c(), dr(), f(), Fa(), gf(), hl(), jt() (+33 more)
 
-### Community 6 - "Community 6"
-Cohesion: 0.16
-Nodes (25): e(), B(), c(), d(), E(), f(), h(), Jr() (+17 more)
+### Community 5 - "e"
+Cohesion: 0.08
+Nodes (45): be(), bi(), co(), e(), B(), c(), d(), E() (+37 more)
 
-### Community 7 - "Community 7"
-Cohesion: 0.14
-Nodes (25): ao(), at(), bi(), co(), eo(), ft(), gn(), ia() (+17 more)
+### Community 6 - "zensical.yml"
+Cohesion: 0.05
+Nodes (38): property, provider, copyright, extra, analytics, extra_javascript, social, version (+30 more)
 
-### Community 8 - "Community 8"
+### Community 7 - "ShowcaseRunner"
+Cohesion: 0.08
+Nodes (4): main(), print_banner(), ShowcaseRunner, TCPClient
+
+### Community 8 - "socket"
+Cohesion: 0.09
+Nodes (9): connection_flood(), main(), port_scan(), main(), send_request(), find_available_port(), ProtectedServer, run_demonstration() (+1 more)
+
+### Community 9 - "sdn_controller.py"
+Cohesion: 0.10
+Nodes (3): BaseControllerLogic, main(), StandaloneMockController
+
+### Community 10 - "tp"
+Cohesion: 0.11
+Nodes (28): Bu(), cu(), ds(), Du(), ep(), fp(), gt(), Gu() (+20 more)
+
+### Community 11 - "t"
+Cohesion: 0.11
+Nodes (27): bn(), Ci(), di(), dn(), Fr(), ft(), Ga(), hi() (+19 more)
+
+### Community 12 - "project.yml"
 Cohesion: 0.09
 Nodes (22): activation_command, activation_command_timeout, added_modes, default_modes, encoding, excluded_tools, fixed_tools, ignore_all_files_in_gitignore (+14 more)
 
-### Community 9 - "Community 9"
-Cohesion: 0.19
-Nodes (19): c(), dr(), f(), Fa(), gf(), l(), nu(), o() (+11 more)
-
-### Community 11 - "Community 11"
-Cohesion: 0.15
-Nodes (21): Bu(), ds(), Du(), ep(), fp(), gt(), Gu(), Ir() (+13 more)
-
-### Community 12 - "Community 12"
-Cohesion: 0.15
-Nodes (5): connection_flood(), main(), port_scan(), main(), send_request()
-
-### Community 13 - "Community 13"
-Cohesion: 0.15
-Nodes (20): Ai(), an(), Ci(), cn(), di(), dn(), El(), hi() (+12 more)
-
-### Community 15 - "Community 15"
+### Community 13 - "q"
 Cohesion: 0.14
-Nodes (17): bn(), cu(), Fr(), Ga(), lo(), Mr(), np(), pe() (+9 more)
+Nodes (23): Ai(), an(), ao(), Ar(), at(), cn(), El(), $i() (+15 more)
 
-### Community 16 - "Community 16"
-Cohesion: 0.15
-Nodes (15): au(), bt(), Da(), es(), Hu(), ko(), na(), se() (+7 more)
-
-### Community 19 - "Community 19"
+### Community 18 - "analyze_results.py"
 Cohesion: 0.20
-Nodes (4): find_available_port(), ProtectedServer, run_demonstration(), SDNIntrusionController
+Nodes (8): calculate_metrics(), export_reports(), load_json_safe(), main(), print_comparison_table(), clean_processes(), run_experiment.sh script, show_help()
 
-### Community 20 - "Community 20"
-Cohesion: 0.24
-Nodes (5): calculate_metrics(), export_reports(), load_json_safe(), main(), print_comparison_table()
-
-### Community 22 - "Community 22"
+### Community 20 - "ko"
 Cohesion: 0.18
-Nodes (11): markdown_extensions, pymdownx.highlight, pymdownx.tabbed, pymdownx.tasklist, toc, anchor_linenums, line_spans, pygments_lang_class (+3 more)
+Nodes (13): au(), bt(), Da(), es(), Hu(), ko(), se(), tu() (+5 more)
 
-### Community 23 - "Community 23"
-Cohesion: 0.18
-Nodes (11): nav, Formulae Sheet, Home, Master Index & Study Checklist, Unit 2: Transport Layer, Unit 4: Link Layer & LAN, Chapter 3: Transport Layer, Complete Unit 2 Notes (+3 more)
-
-### Community 24 - "Community 24"
-Cohesion: 0.18
-Nodes (11): accent, primary, scheme, toggle, theme, custom_dir, features, name (+3 more)
-
-### Community 25 - "Community 25"
-Cohesion: 0.33
-Nodes (10): a(), li(), c(), l(), o(), s(), Tl(), Zr() (+2 more)
-
-### Community 27 - "Community 27"
-Cohesion: 0.31
-Nodes (4): clean_processes(), run_experiment.sh script, show_help(), run_tests()
-
-### Community 28 - "Community 28"
+### Community 22 - "n"
 Cohesion: 0.22
-Nodes (9): Do(), fs(), Ju(), ku(), lu(), Qa(), Vu(), wu() (+1 more)
+Nodes (11): fo(), Ie(), pi(), n(), o(), Tl(), uu(), wl() (+3 more)
 
-### Community 29 - "Community 29"
-Cohesion: 0.22
-Nodes (9): property, provider, extra, analytics, social, version, icon, link (+1 more)
+### Community 23 - "Unit 3: Network Layer"
+Cohesion: 0.18
+Nodes (11): DHCP, ICMP, IPv6, 4.6 SDN & OpenFlow, 4.7 Data Center Networking, 5.1-5.3 Routing Algorithms (Dijkstra/Bellman-Ford), Unit 3: Network Layer, Additional Topics (+3 more)
 
-### Community 30 - "Community 30"
-Cohesion: 0.32
-Nodes (8): Bp(), Gp(), Gr(), nc(), oc(), qp(), vn(), Yp()
+### Community 24 - "Chapter 6: Link Layer & LAN"
+Cohesion: 0.18
+Nodes (11): 6.10 Wireless LANs (802.11), 6.1 Introduction to Link Layer, 6.2 Error Detection & Correction, 6.3 Multiple Access Protocols (CSMA/CD/CA), 6.4 Switched LANs, MAC, ARP, 6.5 Ethernet, 6.6 Ethernet Switches, 6.7 VLANs (+3 more)
 
-### Community 31 - "Community 31"
-Cohesion: 0.57
-Nodes (8): ui(), a(), c(), f(), l(), p(), s(), u()
+### Community 25 - "Chapter 2: Application Layer"
+Cohesion: 0.20
+Nodes (10): 2.1 Principles of Network Applications, 2.2 The Web and HTTP, 2.3 Electronic Mail, 2.4 DNS, 2.5 Video Streaming & CDNs, 2.6 Socket Programming, Unit 1: Internet & Application Layer, Chapter 2: Application Layer (+2 more)
 
-### Community 32 - "Community 32"
+### Community 26 - "Chapter 3: Transport Layer"
+Cohesion: 0.20
+Nodes (10): 3.1 Transport Services, 3.2 Multiplexing & Demultiplexing, 3.3 UDP, 3.4 Reliable Data Transfer (GBN/SR), 3.5 TCP, 3.6-3.7 Congestion Control, Unit 2: Transport Layer, Chapter 3: Transport Layer (+2 more)
+
+### Community 27 - "Chapter 1: Computer Networks & the Internet"
 Cohesion: 0.25
-Nodes (7): copyright, extra_javascript, repo_name, repo_url, site_description, site_name, site_url
+Nodes (8): 1.1 What Is the Internet?, 1.2 The Network Edge, 1.3 The Network Core, 1.4 Delay, Loss, and Throughput, 1.5 Protocol Layers, 1.6 Network Security, 1.7 History of Networking, Chapter 1: Computer Networks & the Internet
 
-### Community 35 - "Community 35"
+### Community 29 - "lu"
+Cohesion: 0.29
+Nodes (7): Do(), fs(), Ju(), ku(), lu(), wu(), xu()
+
+### Community 30 - "nav"
+Cohesion: 0.29
+Nodes (7): nav, Formulae Sheet, Home, Master Index & Study Checklist, Unit 4: Link Layer & LAN, Complete Unit 4 Notes, Overview
+
+### Community 32 - "oc"
+Cohesion: 0.40
+Nodes (6): Bp(), Gp(), Gr(), oc(), qp(), vn()
+
+### Community 33 - "tn"
 Cohesion: 0.40
 Nodes (5): ns(), rn(), tn(), vi(), xl()
 
-### Community 36 - "Community 36"
+### Community 34 - "Chapter 4: Data Plane"
 Cohesion: 0.40
-Nodes (5): Unit 1: Internet & Application Layer, Chapter 1: Computer Networks & the Internet, Chapter 2: Application Layer, Complete Unit 1 Notes, Overview & Syllabus
-
-### Community 37 - "Community 37"
-Cohesion: 0.50
-Nodes (4): as(), be(), ge(), jo()
-
-### Community 38 - "Community 38"
-Cohesion: 0.50
-Nodes (4): dl(), en(), ml(), oa()
-
-### Community 39 - "Community 39"
-Cohesion: 0.67
-Nodes (3): constructor(), iu(), yt()
-
-### Community 40 - "Community 40"
-Cohesion: 0.67
-Nodes (3): fo(), Ie(), wl()
-
-### Community 41 - "Community 41"
-Cohesion: 0.67
-Nodes (3): is(), pu(), Ya()
-
-### Community 43 - "Community 43"
-Cohesion: 0.67
-Nodes (3): Unit 3: Network Layer, Complete Unit 3 Notes, Overview
+Nodes (5): 4.1 Network Layer Overview, 4.2 Inside a Router, 4.3-4.4 IPv4 & Fragmentation, 4.5 IPv4 Addressing & NAT, Chapter 4: Data Plane
 
 ## Knowledge Gaps
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `e()` connect `Community 6` to `Community 0`, `Community 1`, `Community 2`, `Community 35`, `Community 7`, `Community 9`, `Community 11`, `Community 13`, `Community 15`, `Community 25`, `Community 28`, `Community 30`?**
-  _High betweenness centrality (0.074) - this node is a cross-community bridge._
+- **Why does `e()` connect `e` to `m`, `oc`, `bundle.77dd0ce9.min.js`, `tn`, `ou`, `search.c47bb847.min.js`, `tp`, `t`, `q`, `n`, `lu`?**
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
 - **Are the 24 inferred relationships involving `e()` (e.g. with `bi()` and `d()`) actually correct?**
   _`e()` has 24 INFERRED edges - model-reasoned connections that need verification._
-- **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.0729955348476024 - nodes in this community are weakly interconnected._
-- **Why does `se()` connect `Community 1` to `Community 6`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **Should `m` be split into smaller, more focused modules?**
+  _Cohesion score 0.0756545042259328 - nodes in this community are weakly interconnected._
+- **Why does `se()` connect `search.c47bb847.min.js` to `e`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Are the 27 inferred relationships involving `t()` (e.g. with `bundle.77dd0ce9.min.js` and `Cr()`) actually correct?**
   _`t()` has 27 INFERRED edges - model-reasoned connections that need verification._
-- **Should `Community 1` be split into smaller, more focused modules?**
+- **Should `search.c47bb847.min.js` be split into smaller, more focused modules?**
   _Cohesion score 0.06335403726708075 - nodes in this community are weakly interconnected._
-- **Why does `BaseControllerLogic` connect `Community 4` to `Community 18`, `Community 27`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `BaseControllerLogic` connect `sdn_controller.py` to `test_suite.py`, `SDNControllerApp`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._

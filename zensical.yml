@@ -2,40 +2,62 @@ site_name: Computer Networks Exam Prep — UE25CS243A
 site_description: Complete study guide for Computer Networks (UE25CS243A) covering Units 1-4
 site_url: https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/
 repo_url: https://github.com/imyash0722/SEM3-CN-UE25CS243A-STUDY-MATERIAL
-repo_name: SEM3-CN-UE25CS243A-STUDY-MATERIAL
+repo_name: GitHub
 
 theme:
   name: zensical
   custom_dir: overrides
+  language: en
   palette:
+    # Light scheme (default)
     - scheme: default
       primary: indigo
       accent: indigo
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
+    # Dark scheme (slate)
     - scheme: slate
       primary: indigo
       accent: indigo
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
+  # NOTE: Do NOT add `toggle:` under palette items above! The theme toggle is
+  # handled cleanly by `theme-toggle.js` to avoid the duplicated button bug.
+
   features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - navigation.tracking
-    - search.highlight
-    - search.share
-    - content.code.copy
-    - content.code.annotate
-    - toc.follow
-    - content.tabs.link
-    - color.mode
+    - navigation.tabs           # Top horizontal unit tabs
+    - navigation.sections       # Collapsible sections
+    - navigation.expand         # Auto-expand sections
+    - navigation.top            # Back to top button
+    - navigation.tracking       # URL updates with scroll position
+    - navigation.footer         # Next page and Previous page buttons at bottom of current page
+    - search.highlight          # Highlight search terms in pages
+    - search.share              # Shareable search links
+    - content.code.copy         # Click-to-copy code blocks
+    - content.code.annotate     # Code block annotations
+    - content.tabs.link         # Link tabbed content across pages
+    - toc.follow                # Auto-scrolling right table of contents
+    - color.mode                # Palette mode switching support
 
 extra_javascript:
   - assets/javascripts/theme-toggle.js
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
 
 nav:
   - Home: index.md
@@ -100,25 +122,6 @@ nav:
   - "Formulae Sheet": formulae_sheet.md
   - "Master Index & Study Checklist": MASTER_INDEX.md
 
-markdown_extensions:
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - toc:
-      permalink: true
-  - tables
-  - attr_list
-  - md_in_html
-  - footnotes
-
 copyright: |
   &copy; 2026 Computer Networks (UE25CS243A) — PES University, Semester 3
   <br>
@@ -129,13 +132,9 @@ copyright: |
   Live site: <a href="https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/">https://imyash0722.github.io/SEM3-CN-UE25CS243A-STUDY-MATERIAL/</a>
 
 extra:
+  generator: false
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/imyash0722
     - icon: fontawesome/brands/gitlab
       link: https://gitlab.com/imyash0722
-  version:
-    provider: mike
-  analytics:
-    provider: google
-    property: G-XXXXXXXXXX
