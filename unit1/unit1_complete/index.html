@@ -4773,6 +4773,86 @@
 </ul>
 </li>
 </ol>
+<hr />
+<h1 id="extra-problems-from-course-materials">Extra Problems (from Course Materials)<a class="headerlink" href="#extra-problems-from-course-materials" title="Permanent link">&para;</a></h1>
+<h2 id="delay-problems">Delay Problems<a class="headerlink" href="#delay-problems" title="Permanent link">&para;</a></h2>
+<h3 id="q1-transmission-delay">Q1: Transmission Delay<a class="headerlink" href="#q1-transmission-delay" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Packet length = 4000 bits, link rate = 10 MBps. What is the transmission delay?
+- L = 4000 bits
+- R = 10 MBps = 10 × 8 × 10⁶ bps = 80 Mbps
+- <strong>Answer</strong>: Transmission Delay = L/R = 4000 / (10 × 8 × 10⁶) = 0.00005s = <strong>50 microseconds</strong></p>
+<h3 id="q2-dedicated-link-vs-courier">Q2: Dedicated Link vs Courier<a class="headerlink" href="#q2-dedicated-link-vs-courier" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Send 10 TB from Bengaluru to Chennai. Dedicated link: 100 Mbps. Courier: 1 day delivery.
+- 10 TB = 10 × 10¹² × 8 bits = 8×10¹³ bits
+- Link time: 8×10¹³ / (100 × 10⁶) = 800,000 seconds ≈ <strong>9.26 days</strong>
+- Courier: <strong>1 day</strong>
+- <strong>Answer</strong>: Courier is faster</p>
+<h3 id="q3-optical-fiber-distance">Q3: Optical Fiber Distance<a class="headerlink" href="#q3-optical-fiber-distance" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Optical fiber at 70% speed of light, propagation time = 10 μs. What distance?
+- Speed = 0.7 × 3×10⁸ = 2.1×10⁸ m/s
+- Distance = Speed × Time = 2.1×10⁸ × 10×10⁻⁶ = <strong>2100 m = 2.1 km</strong></p>
+<h3 id="q4-transmission-vs-propagation-delay-ratio">Q4: Transmission vs Propagation Delay Ratio<a class="headerlink" href="#q4-transmission-vs-propagation-delay-ratio" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Propagation delay = 1000 × transmission delay. Total delay = 3 μs, distance = 2 km.
+- Total = d_trans + d_prop = d_trans + 1000×d_trans = 1001×d_trans = 3 μs
+- <strong>Answer</strong>: d_trans ≈ <strong>3 ns</strong></p>
+<h3 id="q5-processing-delay-calculation">Q5: Processing Delay Calculation<a class="headerlink" href="#q5-processing-delay-calculation" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: One-hop d_trans = 0.003 ms, d_queue = 1 μs, distance = 3 km, total nodal delay = 0.04 ms. Find d_proc.
+- d_nodal = d_proc + d_queue + d_trans + d_prop
+- d_prop = 3000 / (3×10⁸) = 0.01 ms
+- 0.04 = d_proc + 0.001 + 0.003 + 0.01
+- <strong>Answer</strong>: d_proc = <strong>0.026 ms</strong></p>
+<hr />
+<h2 id="throughput-problems">Throughput Problems<a class="headerlink" href="#throughput-problems" title="Permanent link">&para;</a></h2>
+<h3 id="q6-actual-throughput-with-efficiency">Q6: Actual Throughput with Efficiency<a class="headerlink" href="#q6-actual-throughput-with-efficiency" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Link bandwidth = 15 Mbps each direction, efficiency = 80%.
+- Ideal = min(15, 15) = 15 Mbps
+- <strong>Answer</strong>: Actual = 0.8 × 15 = <strong>12 Mbps</strong></p>
+<h3 id="q7-circuit-switching-throughput">Q7: Circuit Switching Throughput<a class="headerlink" href="#q7-circuit-switching-throughput" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 10 Mbps link, 7 users, circuit switching.
+- <strong>Answer</strong>: Per user = 10/7 ≈ <strong>1.43 Mbps</strong></p>
+<h3 id="q8-transmission-delay">Q8: Transmission Delay<a class="headerlink" href="#q8-transmission-delay" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 20 Mbps link, 1000-bit packet. What is transmission delay?
+- <strong>Answer</strong>: 1000 / (20×10⁶) = <strong>50 μs</strong></p>
+<h3 id="q9-propagation-transmission-delay-formulas">Q9: Propagation &amp; Transmission Delay Formulas<a class="headerlink" href="#q9-propagation-transmission-delay-formulas" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Hosts A, B separated by m meters, link rate R bps, packet size L bits, prop speed s m/s.
+- d_prop = m/s
+- d_trans = L/R
+- End-to-end = d_trans + d_prop
+- At t = d_trans: last bit just leaving A
+- If d_prop &gt; d_trans: first bit in link; if d_prop &lt; d_trans: first bit arrived at B
+- For d_prop = d_trans: m = s × (L/R)
+- Example: s=2.5×10⁸, L=1500 bytes, R=10 Mbps → m = <strong>300 km</strong></p>
+<h3 id="q10-bandwidth-delay-product">Q10: Bandwidth-Delay Product<a class="headerlink" href="#q10-bandwidth-delay-product" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 20,000 km, R=5 Mbps, s=2.5×10⁸ m/s.
+- d_prop = 2×10⁷ / 2.5×10⁸ = 0.08 s
+- R×d_prop = (5×10⁶)×0.08 = <strong>400,000 bits</strong>
+- File = 800,000 bits &gt; BDP → max bits in link = <strong>400,000 bits</strong>
+- Bit width = s/R = 2.5×10⁸/5×10⁶ = <strong>50 meters</strong> (half football field)
+- For R=1 Gbps: BDP = 80,000,000 bits, bit width = <strong>0.25 meters</strong></p>
+<h3 id="q11-isp-delay-promise">Q11: ISP Delay Promise<a class="headerlink" href="#q11-isp-delay-promise" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 10 Mbps, 10,000 km, 100 KB/s data, promised &lt; 5 ms delay.
+- d_prop = 10⁷/2.5×10⁸ = 40 ms
+- d_trans = (100×1000×8)/10⁷ = 80 ms
+- Total = <strong>120 ms</strong> &gt; 5 ms
+- <strong>Answer</strong>: <strong>Cannot deliver on promise</strong></p>
+<h3 id="q12-transmission-speed-for-packet-timing">Q12: Transmission Speed for Packet Timing<a class="headerlink" href="#q12-transmission-speed-for-packet-timing" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 5000 km, 2 packets of 4 MB, queue delay = 10 ms, s=2.5×10⁸. Find R so 2nd packet finishes when 1st arrives.
+- d_prop = 20 ms
+- 1st packet arrival = 10 + d_trans + 20 = 30 + d_trans
+- 2nd packet finish = 10 + 2×d_trans
+- Set equal: 10 + 2d_trans = 30 + d_trans → d_trans = 20 ms
+- R = L/d_trans = (4×10⁶×8)/0.02 = <strong>1.6 Gbps</strong></p>
+<h3 id="q13-100-tb-transfer-network-vs-driving">Q13: 100 TB Transfer - Network vs Driving<a class="headerlink" href="#q13-100-tb-transfer-network-vs-driving" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 100 TB, 350 km, 1 Gbps, s=2×10⁸, drive time = 7 hrs one way.
+- d_trans = 8×10¹³/10⁹ = 8×10⁴ sec = <strong>222 hours (9.25 days)</strong>
+- d_prop = 3.5×10⁵/2×10⁸ = 1.75 ms (negligible)
+- Drive round trip = 14 hours
+- <strong>Answer</strong>: <strong>Driving is faster</strong>; d_trans is dominant (99.99% of total)</p>
+<h3 id="q14-lossy-vs-lossless-channel">Q14: Lossy vs Lossless Channel<a class="headerlink" href="#q14-lossy-vs-lossless-channel" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: 100 packets × 16 MB. Path 1: lossless 10 Gbps. Path 2: 50% loss, 20 Gbps. Queue = 10 ms/packet.
+- Lossless: d_trans = 128/10000 = 12.8 ms → total = 22.8 ms/packet → 100 × 22.8 = <strong>2.28 sec</strong>
+- Lossy (50% loss): 2 transmissions/packet → 200 transmissions × (10+6.4) = <strong>3.28 sec</strong>
+- <strong>Answer</strong>: <strong>Use lossless 10 Gbps channel</strong></p>
 
 
 
