@@ -1,0 +1,280 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 3: Transport Layer Services, Logical Communication & Household Analogy
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 1 to 12)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 12
+================================================================================
+
+================================================================================
+SLIDE 1: Course Title & Department Information
+================================================================================
+
+COMPUTER NETWORKS
+Transport Layer
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+
+================================================================================
+SLIDE 2: Transport Layer Unit Title
+================================================================================
+
+COMPUTER NETWORKS
+Transport Layer
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University
+
+================================================================================
+SLIDE 3: Transport Layer Roadmap (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topics Covered:
+3.1 Transport-Layer Services
+3.2 Multiplexing and Demultiplexing
+2.5 Socket Programming with UDP and TCP (Concepts from Chapter 2)
+3.3 Connectionless Transport: UDP
+3.4 Principles of Reliable Data Transfer (RDT)
+
+================================================================================
+SLIDE 4: Transport Layer Roadmap (Part 2)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Detailed Unit Structure:
+• 3.1 Transport-layer Services
+• 3.2 Multiplexing and Demultiplexing
+• 2.5 Socket Programming with UDP and TCP
+• 3.3 Connectionless Transport: UDP
+• 3.4 Principles of Reliable Data Transfer (rdt 1.0 -> rdt 3.0, GBN, SR)
+• 3.5 Connection-Oriented Transport: TCP
+  - Segment structure
+  - Reliable data transfer & timeout estimation
+  - Flow control
+  - Connection management (3-way handshake & teardown)
+
+================================================================================
+SLIDE 5: Transport Services and Protocols
+================================================================================
+
+COMPUTER NETWORKS: Transport Services and Protocols
+
+Purpose & Definition:
+• Provide logical communication between application processes running on different hosts.
+• From an application's perspective, processes communicate as if the hosts were directly connected, regardless of the physical distance or intermediate routers.
+
+Transport Protocol Actions in End Systems:
+• Sender Side:
+  - Receives application-layer messages from the local application process.
+  - Breaks messages into smaller units called transport-layer segments.
+  - Prepends a transport-layer header to each segment.
+  - Passes segments down to the network layer (IP).
+• Receiver Side:
+  - Receives segments from the underlying network layer (IP).
+  - Inspects segment headers and extracts application-layer messages.
+  - Reassembles messages and delivers them to the correct application process via sockets.
+
+Two Core Internet Transport Protocols:
+• TCP (Transmission Control Protocol)
+• UDP (User Datagram Protocol)
+
+ASCII Diagram:
+   Host A (Sender)                                       Host B (Receiver)
++--------------------+                                +--------------------+
+| Application Process|                                | Application Process|
++---------+----------+                                +---------^----------+
+          | Application Message                                 | Application Message
++---------v----------+                                +---------+----------+
+|  Transport Layer   | ========= Logical End-to-End =========>|  Transport Layer   |
+|     (Segments)     |             Communication              |     (Segments)     |
++---------+----------+                                +---------^----------+
+          | Transport Segments                                  | Transport Segments
++---------v----------+                                +---------+----------+
+|   Network (IP)     |                                |   Network (IP)     |
++--------------------+                                +--------------------+
+          \                                                     /
+           +----------------- Network Core --------------------+
+                      (Routers, switches, physical links)
+
+================================================================================
+SLIDE 6: Transport vs. Network Layer Services: The Household Analogy
+================================================================================
+
+COMPUTER NETWORKS: Transport vs. Network Layer Services and Protocols
+
+The Household Analogy:
+Consider two large families living in two separate houses:
+• Ann's House in Boston: Contains 12 children (Ann, Alice, Bob, etc.)
+• Bill's House in Los Angeles: Contains 12 children (Bill, Carol, Dave, etc.)
+• The children in Ann's house write letters to the children in Bill's house every week.
+
+Mapping to Networking Concepts:
++-------------------------------+---------------------------------------+
+| Household Analogy Entity      | Computer Network Concept              |
++-------------------------------+---------------------------------------+
+| Houses (Ann's and Bill's)     | Hosts (End Systems / Computers)       |
++-------------------------------+---------------------------------------+
+| Kids (writing/reading letters)| Application Processes                 |
++-------------------------------+---------------------------------------+
+| Letters inside envelopes      | Application-Layer Messages            |
++-------------------------------+---------------------------------------+
+| Ann and Bill (collecting &    | Transport Layer Protocol (TCP / UDP)  |
+| distributing letters at home) |                                       |
++-------------------------------+---------------------------------------+
+| Postal Service (USPS trucks,  | Network Layer Protocol (IP)           |
+| sorting offices, planes)      |                                       |
++-------------------------------+---------------------------------------+
+
+Explanation:
+• Ann collects letters from each of her 12 siblings, puts them in a bundle, and gives them to the mail carrier.
+• Bill receives the bundle from the postal carrier and delivers each individual letter to the specific child named on the envelope.
+• Ann and Bill provide process-to-process delivery (Transport Layer)!
+• The Postal Service delivers mail house-to-house (Network Layer)!
+
+================================================================================
+SLIDE 7: Transport vs. Network Layer Services: Core Distinction
+================================================================================
+
+COMPUTER NETWORKS: Transport vs. Network Layer Services and Protocols
+
+Fundamental Architectural Difference:
+• Network Layer (IP):
+  - Provides logical communication between HOSTS (host-to-host delivery).
+  - Uses IP addresses to steer datagrams across routers to the destination computer.
+• Transport Layer (TCP / UDP):
+  - Provides logical communication between PROCESSES (process-to-process delivery).
+  - Relies on, and enhances, the underlying network-layer service.
+  - Uses port numbers to steer segments to the exact application process.
+
+Transport Protocol Capabilities vs. Network Guarantees:
+• Even if the underlying network layer is unreliable (drops, delays, or duplicates packets), the transport layer (TCP) can provide reliable data transfer and encryption to applications.
+• However, certain guarantees CANNOT be provided if the network layer does not support them:
+  - The transport layer CANNOT guarantee minimum bandwidth or delay bounds if the network layer does not provide quality-of-service guarantees.
+
+================================================================================
+SLIDE 8: Transport Layer Actions at Sender
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Actions
+
+Sender-Side Execution Steps:
+1. Passed an Application-Layer Message:
+   - Application writes data into a socket.
+2. Segment Creation & Header Formatting:
+   - Determines transport header field values (Source Port, Destination Port, Sequence Numbers, Checksum).
+   - Packages application data into one or more segments (`[Transport Header | Application Message]`).
+3. Hand-off to Network Layer:
+   - Passes the completed segment down to IP, which encapsulates it in an IP datagram (`[IP Header | Transport Header | Application Message]`).
+
+ASCII Layer Encapsulation at Sender:
+   +-------------------------------------------------------+
+   | Application: Message                                  |
+   +-------------------------------------------------------+
+                              |
+                              v
+   +-----------------------+-------------------------------+
+   | Transport Header (Th) | Application Message           |  <-- Segment
+   +-----------------------+-------------------------------+
+                              |
+                              v
+   +-------------------+-----------------------+-----------+
+   | Network Hdr (IP)  | Transport Header (Th) | App Msg   |  <-- Datagram
+   +-------------------+-----------------------+-----------+
+
+================================================================================
+SLIDE 9: Transport Layer Actions at Receiver
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Actions
+
+Receiver-Side Execution Steps:
+1. Receives Segment from Network Layer:
+   - Network layer strips IP header and delivers transport segment.
+2. Validates Header Fields:
+   - Verifies transport-layer checksum to detect bit errors.
+   - Handles sequence numbers and ACKs.
+3. Extracts Message:
+   - Strips transport-layer header to recover raw application message.
+4. Demultiplexes Message:
+   - Inspects destination port (and IP 4-tuple) to route message to the correct application socket.
+
+ASCII Layer Decapsulation at Receiver:
+   +-------------------+-----------------------+-----------+
+   | Network Hdr (IP)  | Transport Header (Th) | App Msg   |  <-- Datagram arrives
+   +-------------------+-----------------------+-----------+
+                              | Strips IP Header
+                              v
+   +-----------------------+-------------------------------+
+   | Transport Header (Th) | Application Message           |  <-- Segment checked
+   +-----------------------+-------------------------------+
+                              | Strips Transport Header
+                              v
+   +-------------------------------------------------------+
+   | Application: Message delivered via Socket             |  <-- App gets data
+   +-------------------------------------------------------+
+
+================================================================================
+SLIDE 10: Principal Internet Transport Protocols: TCP vs. UDP
+================================================================================
+
+COMPUTER NETWORKS: Principal Internet Transport Layer protocols
+
+1. TCP: Transmission Control Protocol [RFC 793, 1122, 1323, 2018, 2581]:
+   • Reliable, In-Order Delivery: All bytes delivered without corruption, loss, or duplicates in proper sequence.
+   • Connection Setup: Explicit 3-way handshake initializes connection state before data flows.
+   • Flow Control: Prevents sender from overwhelming receiver socket buffers.
+   • Congestion Control: Throttles sender rate to protect network links and router queues.
+
+2. UDP: User Datagram Protocol [RFC 768]:
+   • Unreliable, Unordered Delivery: "No-frills" bare-bones extension of best-effort IP.
+   • Connectionless: No preliminary handshake; datagrams dispatched immediately.
+   • No congestion control, no flow control, no retransmissions.
+
+Services NOT Available in Either Protocol:
+• Delay Guarantees: Neither TCP nor UDP guarantees maximum end-to-end packet delivery time.
+• Bandwidth Guarantees: Neither protocol guarantees a reserved transmission bitrate.
+
+================================================================================
+SLIDE 11: TCP or UDP? Practical Selection Criteria
+================================================================================
+
+COMPUTER NETWORKS: TCP or UDP ?
+
+Scenario Analysis:
+• Downloading a PDF from a Course Website:
+  - Protocol: TCP
+  - Rationale: Every single byte must arrive accurately; order matters; a corrupted byte ruins the PDF; no real-time urgency.
+• Live Video Call on Skype / Zoom:
+  - Protocol: UDP
+  - Rationale: A dropped video frame is imperceptible; waiting for a TCP retransmit causes audio/video freezes and ruins real-time interactivity.
+• Sending an Email (SMTP):
+  - Protocol: TCP
+  - Rationale: Message integrity and reliability matter far more than delivery speed.
+• Online Multiplayer Gaming Position Updates:
+  - Protocol: UDP
+  - Rationale: Stale position data is useless once the player moves; receiving the next fresh position immediately is superior to retransmitting old positions.
+• DNS Query:
+  - Protocol: UDP (mostly)
+  - Rationale: Small, one-shot request/response; speed and low latency matter; connection setup overhead is wasteful.
+• Streaming Stored Video (Netflix / YouTube):
+  - Protocol: TCP
+  - Rationale: Delivered as HTTP chunks (DASH / HLS); client buffers seconds of video ahead of playback, so reliability of each chunk matters more than raw microsecond speed.
+
+================================================================================
+SLIDE 12: Suggested Readings: Transport Layer
+================================================================================
+
+COMPUTER NETWORKS: Suggested Readings
+
+Video Resources:
+• Transport Layer – Explained: https://youtu.be/FxFJ1XlWtdI
+• Transport Layer Services – IIT Kharagpur: https://youtu.be/8-3CSAkscYU
+• Transport Layer – Process-to-Process Delivery: https://youtu.be/9e4vTcaEYCg

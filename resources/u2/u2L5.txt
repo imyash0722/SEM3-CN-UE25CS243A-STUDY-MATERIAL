@@ -1,0 +1,299 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 5: Socket Programming with UDP and TCP (Python Implementations)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 33 to 45)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 13
+================================================================================
+
+================================================================================
+SLIDE 33: Roadmap: Socket Programming
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+2.5 Socket Programming with UDP and TCP
+• Building real-world client/server network applications in Python.
+
+================================================================================
+SLIDE 34: Socket Programming Concepts
+================================================================================
+
+COMPUTER NETWORKS: Socket Programming
+
+Goal:
+• Learn how to build client-server applications that communicate across the network using sockets.
+
+Socket Definition:
+• A socket is the software interface ("door") between the application process and the underlying end-to-end transport protocol.
+• Application developer controls everything on the application side of the socket.
+• Operating System controls everything on the transport and network side of the socket.
+
+================================================================================
+SLIDE 35: Socket Types & Sample Uppercase Application
+================================================================================
+
+COMPUTER NETWORKS: Socket Programming
+
+Two Socket Types for Two Transport Services:
+1. UDP Socket: `SOCK_DGRAM` — Unreliable, connectionless datagram service.
+2. TCP Socket: `SOCK_STREAM` — Reliable, connection-oriented byte stream.
+
+Sample Application Specification:
+1. Client reads a line of characters from the keyboard and sends it to the server.
+2. Server receives the string and converts all characters to UPPERCASE.
+3. Server transmits the modified uppercase string back to the client.
+4. Client receives modified string and displays it on the screen.
+
+================================================================================
+SLIDE 36: Socket Programming with UDP
+================================================================================
+
+COMPUTER NETWORKS: Socket Programming with UDP
+
+Characteristics of UDP Sockets:
+• No handshaking before data is sent.
+• Sender explicitly attaches Destination IP and Port Number to every outgoing packet.
+• Receiver extracts Sender IP and Port Number from every incoming packet.
+• Data may be lost or arrive out-of-order.
+
+================================================================================
+SLIDE 37: Client/Server Socket Interaction: UDP
+================================================================================
+
+COMPUTER NETWORKS: Client/Server socket interaction: UDP
+
+Interaction Sequence:
+   SERVER (Port x)                                     CLIENT
+   +------------------------------+                    +------------------------------+
+   | serverSocket =               |                    |                              |
+   | socket(AF_INET, SOCK_DGRAM)  |                    |                              |
+   | serverSocket.bind(('', x))   |                    | clientSocket =               |
+   |                              |                    | socket(AF_INET, SOCK_DGRAM)  |
+   | serverSocket.recvfrom()      |<--- UDP Packet --- | clientSocket.sendto()        |
+   | (Blocks waiting for data)    |     (Request)      |                              |
+   |                              |                    | clientSocket.recvfrom()      |
+   | serverSocket.sendto()        |--- UDP Packet ---> | (Blocks waiting for reply)   |
+   |                              |     (Response)     |                              |
+   |                              |                    | clientSocket.close()         |
+   +------------------------------+                    +------------------------------+
+
+================================================================================
+SLIDE 38: UDP Client Implementation in Python
+================================================================================
+
+COMPUTER NETWORKS: Example app: UDP client
+
+Python UDPClient Code:
+```python
+from socket import *
+
+serverName = 'hostname'          # Server hostname or IP address
+serverPort = 12000               # Target server port number
+
+# Create UDP socket (AF_INET = IPv4, SOCK_DGRAM = UDP)
+clientSocket = socket(AF_INET, SOCK_DGRAM)
+
+# Prompt user for input sentence
+message = input('Input lowercase sentence:')
+
+# Attach server address (IP, port) to packet and send into socket
+clientSocket.sendto(message.encode(), (serverName, serverPort))
+
+# Read reply bytes and server address from socket (buffer size = 2048 bytes)
+modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+
+# Decode bytes to string and print
+print(modifiedMessage.decode())
+
+# Close socket
+clientSocket.close()
+```
+
+================================================================================
+SLIDE 39: UDP Server Implementation in Python
+================================================================================
+
+COMPUTER NETWORKS: Example app: UDP server
+
+Python UDPServer Code:
+```python
+from socket import *
+
+serverPort = 12000
+
+# Create UDP socket
+serverSocket = socket(AF_INET, SOCK_DGRAM)
+
+# Bind socket to local port number 12000 (empty string '' means any local interface)
+serverSocket.bind(('', serverPort))
+
+print('The server is ready to receive')
+
+# Loop forever accepting datagrams
+while True:
+    # Read incoming message and record client address (IP and port)
+    message, clientAddress = serverSocket.recvfrom(2048)
+    
+    # Process data: convert to uppercase
+    modifiedMessage = message.decode().upper()
+    
+    # Send modified data back to client using clientAddress
+    serverSocket.sendto(modifiedMessage.encode(), clientAddress)
+```
+
+================================================================================
+SLIDE 40: Socket Programming with TCP
+================================================================================
+
+COMPUTER NETWORKS: Socket programming with TCP
+
+TCP Connection Establishment:
+• Server process must be running before client attempts to contact it.
+• Server creates a "welcoming door" (welcoming socket).
+• Client initiates contact by creating a TCP socket specifying the server's IP and port.
+• Client TCP establishes a connection (3-way handshake) with server TCP.
+• When contacted, server TCP creates a NEW dedicated socket (`connectionSocket`) specifically for that client!
+• Application Viewpoint: TCP provides a reliable, in-order byte-stream pipe between processes.
+
+================================================================================
+SLIDE 41: TCPServer Architecture: The Two Sockets
+================================================================================
+
+COMPUTER NETWORKS: The TCPServer Process has Two Sockets
+
+Distinction Between Sockets in TCPServer:
+1. Welcoming Socket (`serverSocket`):
+   - Created first; bound to the well-known server port (e.g., 12000).
+   - Listens for incoming connection requests (`listen()`).
+   - Does NOT exchange application data; acts like a receptionist welcoming new guests.
+2. Connection Socket (`connectionSocket`):
+   - Created dynamically by `accept()` when a specific client connects.
+   - Dedicated exclusively to data transfer with that particular client.
+   - Enables the server to converse concurrently with multiple clients.
+
+ASCII Diagram:
+   Client Process                               Server Process
+   +--------------+                        +-----------------------+
+   |              |                        |  Welcoming Socket     |
+   |              | ----- Connect Req ---> |  (Port 12000)         |
+   | clientSocket |                        +-----------+-----------+
+   |              |                                    | accept() creates
+   |              |                                    v
+   |              | <===== Dedicated Data Pipe ======> | Connection Socket |
+   +--------------+                                    +-------------------+
+
+================================================================================
+SLIDE 42: Client/Server Socket Interaction: TCP
+================================================================================
+
+COMPUTER NETWORKS: Client/server socket interaction: TCP
+
+Interaction Sequence:
+   SERVER (Host B)                                     CLIENT
+   +------------------------------+                    +------------------------------+
+   | serverSocket =               |                    |                              |
+   | socket(AF_INET, SOCK_STREAM) |                    |                              |
+   | serverSocket.bind(('', x))   |                    |                              |
+   | serverSocket.listen(1)       |                    | clientSocket =               |
+   | connectionSocket, addr =     |                    | socket(AF_INET, SOCK_STREAM) |
+   |   serverSocket.accept()      |<== TCP 3-way =====>| clientSocket.connect((B, x)) |
+   | (Blocks until connected)     |    Handshake       |                              |
+   |                              |                    | clientSocket.send()          |
+   | connectionSocket.recv()      |<--- Data Bytes --- |                              |
+   | connectionSocket.send()      |--- Data Bytes ---> | clientSocket.recv()          |
+   | connectionSocket.close()     |                    | clientSocket.close()         |
+   +------------------------------+                    +------------------------------+
+
+================================================================================
+SLIDE 43: TCP Client Implementation in Python
+================================================================================
+
+COMPUTER NETWORKS: Example app: TCP client
+
+Python TCPClient Code:
+```python
+from socket import *
+
+serverName = 'servername'
+serverPort = 12000
+
+# Create TCP socket (SOCK_STREAM = TCP)
+clientSocket = socket(AF_INET, SOCK_STREAM)
+
+# Initiate 3-way handshake to connect to remote server
+clientSocket.connect((serverName, serverPort))
+
+sentence = input('Input lowercase sentence:')
+
+# Send raw bytes into stream (no need to attach destination address each time)
+clientSocket.send(sentence.encode())
+
+# Receive reply bytes from stream (buffer size = 1024)
+modifiedSentence = clientSocket.recv(1024)
+
+print('From Server:', modifiedSentence.decode())
+
+# Close TCP connection
+clientSocket.close()
+```
+
+================================================================================
+SLIDE 44: TCP Server Implementation in Python
+================================================================================
+
+COMPUTER NETWORKS: Example app: TCP server
+
+Python TCPServer Code:
+```python
+from socket import *
+
+serverPort = 12000
+
+# Create welcoming socket
+serverSocket = socket(AF_INET, SOCK_STREAM)
+
+# Bind welcoming socket to port 12000
+serverSocket.bind(('', serverPort))
+
+# Listen for incoming connections (backlog parameter = 1)
+serverSocket.listen(1)
+
+print('The server is ready to receive')
+
+while True:
+    # Accept returns a NEW connectionSocket and client address
+    connectionSocket, addr = serverSocket.accept()
+    
+    # Read bytes from client
+    sentence = connectionSocket.recv(1024).decode()
+    capitalizedSentence = sentence.upper()
+    
+    # Send processed bytes back through connectionSocket
+    connectionSocket.send(capitalizedSentence.encode())
+    
+    # Close connection socket to this client (welcoming socket remains open!)
+    connectionSocket.close()
+```
+
+================================================================================
+SLIDE 45: Review Questions: UDP Header & Checksum
+================================================================================
+
+COMPUTER NETWORKS: Questions
+
+1. Name the four fields of the UDP header, in order.
+   Answer: Source port #, Destination port #, Length, Checksum.
+
+2. How many bytes is a UDP header, and how does that compare with TCP?
+   Answer: Exactly 8 bytes (four 16-bit fields), compared with a minimum of 20 bytes for TCP.
+
+3. The header is always exactly 8 bytes. So why is a length field needed?
+   Answer: The payload data is variable in length, and UDP maintains no connection state. Each datagram must be entirely self-describing so the receiver knows exactly where the datagram ends.
+
+4. What does the length field actually count?
+   Answer: The entire UDP segment in bytes, INCLUDING the 8-byte header (not just the payload).
+
+5. Why transmit the complement rather than the sum itself?
+   Answer: So the receiver can simply add up all the received 16-bit words (including the checksum) and check if the result is all 1s (`1111 1111 1111 1111`), rather than recomputing the sum and performing a separate equality comparison.

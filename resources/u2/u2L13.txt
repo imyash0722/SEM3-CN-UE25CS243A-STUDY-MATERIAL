@@ -1,0 +1,148 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 13: TCP Connection Management (3-Way Handshake SYN/ACK, 4-Way FIN Teardown, TIME_WAIT)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 124 to 130)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 7
+================================================================================
+
+================================================================================
+SLIDE 124: Roadmap: TCP Connection Management
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.5 Connection-Oriented Transport: TCP
+• TCP Connection Establishment (3-Way Handshake) and Connection Teardown.
+
+================================================================================
+SLIDE 125: TCP Connection Management: Preliminaries
+================================================================================
+
+COMPUTER NETWORKS: TCP connection management
+
+Handshake Agreement:
+Before transmitting application data, client and server must agree to establish a connection:
+1. Confirm both sides are alive and willing to communicate.
+2. Initialize connection parameters (Initial Sequence Numbers, `RcvBuffer` sizes, MSS).
+
+Socket States:
+• Both sides transition to state `ESTABLISHED` (`ESTAB`).
+
+================================================================================
+SLIDE 126: TCP 3-Way Handshake: Step-by-Step State Transitions
+================================================================================
+
+COMPUTER NETWORKS: TCP 3-way handshake
+
+Three-Way Handshake Walkthrough:
+
+Step 1: Client -> Server (SYN Segment):
+• Client TCP sends a segment with flag `SYN = 1`.
+• Chooses random client Initial Sequence Number (`Seq = x`).
+• Carries no application data.
+• Client state: Transitions from `CLOSED` to `SYN_SENT`.
+• Server state: Was in `LISTEN`.
+
+Step 2: Server -> Client (SYN-ACK Segment):
+• Server allocates TCP buffers and variables.
+• Responds with flags `SYN = 1` and `ACK = 1`.
+• Sets acknowledgment number to next expected byte: `ACKnum = x + 1`.
+• Chooses random server Initial Sequence Number (`Seq = y`).
+• Server state: Transitions from `LISTEN` to `SYN_RCVD`.
+
+Step 3: Client -> Server (ACK Segment):
+• Client allocates buffers and variables.
+• Responds with flag `ACK = 1`.
+• Sets acknowledgment number to next expected byte: `ACKnum = y + 1`.
+• Sequence number is `Seq = x + 1`.
+• This 3rd segment MAY contain application data payload (e.g., HTTP GET)!
+• Client state: Transitions to `ESTABLISHED`.
+• Server state: Upon receipt, transitions to `ESTABLISHED`.
+
+ASCII 3-Way Handshake Diagram:
+   Client (Host A)                                Server (Host B)
+      [CLOSED]                                       [LISTEN]
+         |                                               |
+         | ----- 1. SYN=1, Seq=x ----------------------> | [SYN_RCVD]
+   [SYN_SENT]    (Allocate no buffers yet)               | (Allocate buffers)
+         |                                               |
+         | <---- 2. SYN=1, ACK=1, Seq=y, ACKnum=x+1 ---- |
+   [ESTABLISHED]                                         |
+         |                                               |
+         | ----- 3. ACK=1, Seq=x+1, ACKnum=y+1 --------> | [ESTABLISHED]
+         |          (May contain HTTP GET payload)       |
+         v                                               v
+
+================================================================================
+SLIDE 127: Closing a TCP Connection: Independent Teardown
+================================================================================
+
+COMPUTER NETWORKS: Closing a TCP connection
+
+Mechanics of Connection Teardown:
+• Full-duplex connections are torn down independently in each direction.
+• Either endpoint can initiate closure by sending a segment with flag `FIN = 1`.
+• The other side acknowledges the FIN with an `ACK`.
+• The other side then sends its own `FIN = 1`, which is acknowledged in turn.
+• Four segments total are exchanged (commonly called the "4-Way FIN Handshake").
+
+================================================================================
+SLIDE 128: Closing a TCP Connection: State Machine Walkthrough
+================================================================================
+
+COMPUTER NETWORKS: Closing a TCP connection
+
+State Transition Walkthrough:
+
+Client States:
+1. `ESTABLISHED`: Client calls `clientSocket.close()`.
+2. `FIN_WAIT_1`: Client sends segment with `FIN = 1, Seq = x`.
+3. `FIN_WAIT_2`: Receives `ACK = x + 1` from server. Client cannot send data, but can still receive data.
+4. `TIME_WAIT`: Receives `FIN = y` from server; transmits final `ACK = y + 1`.
+   - Client stays in `TIME_WAIT` for $2 \times \text{MSL}$ (Maximum Segment Lifetime, typically 30s to 2 minutes)!
+   - Purpose of `TIME_WAIT`: Ensures the final ACK is reliably delivered to the server (if lost, server retransmits FIN); ensures lingering packets in network expire before new connection reuses same port.
+5. `CLOSED`: Timer expires; client socket closes completely.
+
+Server States:
+1. `ESTABLISHED`: Receives `FIN = x` from client.
+2. `CLOSE_WAIT`: Server sends `ACK = x + 1`. Can still send pending data to client.
+3. `LAST_ACK`: Server calls `close()`, transmits `FIN = 1, Seq = y`.
+4. `CLOSED`: Receives final `ACK = y + 1` from client; server socket closed immediately.
+
+ASCII Teardown Sequence Diagram:
+   Client                                                Server
+   [ESTABLISHED]                                      [ESTABLISHED]
+         |                                                  |
+         | ----- 1. FIN=1, Seq=x -------------------------> | [CLOSE_WAIT]
+   [FIN_WAIT_1]                                             |
+         | <---- 2. ACK=1, ACKnum=x+1 --------------------- |
+   [FIN_WAIT_2]                                             | (Server flushes pending data)
+         |                                                  |
+         | <---- 3. FIN=1, Seq=y -------------------------- | [LAST_ACK]
+   [TIME_WAIT]                                              |
+   (Wait 2*MSL)                                             |
+         | ----- 4. ACK=1, ACKnum=y+1 --------------------> | [CLOSED]
+         |                                                  v
+     [CLOSED]
+
+================================================================================
+SLIDE 129: Suggested Readings: Transport Layer
+================================================================================
+
+COMPUTER NETWORKS: Suggested Readings
+
+Thank you for your attention!
+Suggested textbooks and reference literature:
+• Kurose & Ross: Computer Networking: A Top-Down Approach (8th Edition), Chapter 3.
+• W. Richard Stevens: TCP/IP Illustrated, Volume 1: The Protocols.
+
+================================================================================
+SLIDE 130: Conclusion & Department Closing Slide
+================================================================================
+
+THANK YOU
+
+Department of Computer Science and Engineering
+PES University

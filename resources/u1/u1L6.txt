@@ -1,0 +1,1113 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 6: HTTP Messages, Cookies, Web Caching, HTTP/2, HTTP/3 & HTTPS/TLS
+Source Deck: Slides_Unit_1_Part_2.pdf (Slides 30 to 70)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 41
+================================================================================
+
+================================================================================
+SLIDE 30: Section Divider: HTTP Messages, Cookies & Web Caching
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 1 Application Layer
+
+Outline:
+2.1 Principles of Network Applications
+2.2 Web, HTTP and HTTPS
+
+================================================================================
+SLIDE 31: HTTP Request Message Structure
+================================================================================
+
+COMPUTER NETWORKS: HTTP Request Message
+
+Two Types of HTTP Messages:
+1. Request Message
+2. Response Message
+
+Characteristics of HTTP Request Message:
+• Formatted in human-readable ASCII text.
+• Structure:
+  - Request Line: Method, URL, Version, followed by Carriage Return (`\r`) and Line Feed (`\n`).
+  - Header Lines: Field name followed by value, ending with `\r\n`.
+  - Empty Line: A solitary `\r\n` indicates the end of the header section.
+  - Optional Entity Body: Carries payload data (e.g., POST form submissions).
+
+Annotated Example:
+--------------------------------------------------------------------------------
+GET /index.html HTTP/1.1\r\n              <-- Request line (Method: GET, Path: /index.html, Ver: HTTP/1.1)
+Host: www-net.cs.umass.edu\r\n            <-- Host header (target domain)
+User-Agent: Firefox/3.6.10\r\n            <-- Browser user-agent string
+Accept: text/html,application/xhtml+xml\r\n<-- MIME types accepted
+Accept-Language: en-us,en;q=0.5\r\n       <-- Preferred languages
+Accept-Encoding: gzip,deflate\r\n         <-- Supported compression algorithms
+Accept-Charset: ISO-8859-1,utf-8;q=0.7\r\n<-- Character encodings
+Keep-Alive: 115\r\n                       <-- Connection keep-alive duration
+Connection: keep-alive\r\n                <-- Persistent connection requested
+\r\n                                      <-- Carriage return, line feed: END OF HEADERS
+--------------------------------------------------------------------------------
+
+* Kurose & Ross interactive exercise: http://gaia.cs.umass.edu/kurose_ross/interactive/
+
+================================================================================
+SLIDE 32: HTTP Request Message: General Format
+================================================================================
+
+COMPUTER NETWORKS: HTTP Request Message: General Format
+
+General Syntax Diagram:
++--------+----+-----+----+---------+----+----+
+| Method | sp | URL | sp | Version | cr | lf |  <-- Request Line
++--------+----+-----+----+---------+----+----+
+| Header field name | :  |  Value  | cr | lf |  <-- Header Line 1
++-------------------+----+---------+----+----+
+| Header field name | :  |  Value  | cr | lf |  <-- Header Line 2
++-------------------+----+---------+----+----+
+| ...                                        |
++-------------------+----+---------+----+----+
+| Header field name | :  |  Value  | cr | lf |  <-- Header Line N
++-------------------+----+---------+----+----+
+| cr     | lf |                                 <-- Blank line (CRLF)
++--------+----+------------------------------+
+|                Entity Body                 |  <-- Optional Body
++--------------------------------------------+
+
+Specifications: RFC 1945 (HTTP/1.0), RFC 2616 (HTTP/1.1), RFC 7540 (HTTP/2).
+
+================================================================================
+SLIDE 33: HTTP Request Message – Wireshark Capture Analysis
+================================================================================
+
+COMPUTER NETWORKS: HTTP Request Message – Wireshark Capture
+
+Packet Capture Details:
+• Packet / Frame Number: 44
+• Time: 1.734232835 seconds
+• Source IP: 192.168.1.95 (Client)
+• Destination IP: 63.33.73.205 (Web Server)
+• Layer 4 Protocol: TCP (Src Port: 33862, Dst Port: 80, Seq: 1, Ack: 1, Len: 609)
+• Layer 7 Protocol: HTTP (Length: 677 bytes on wire, 609 bytes HTTP payload)
+• Request Info: `GET /file1.html HTTP/1.1`
+
+Extracted HTTP Request Headers:
+--------------------------------------------------------------------------------
+GET /file1.html HTTP/1.1\r\n
+Host: wireshark.grydeske.net\r\n
+Connection: keep-alive\r\n
+Pragma: no-cache\r\n
+Cache-Control: no-cache\r\n
+Upgrade-Insecure-Requests: 1\r\n
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36\r\n
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\r\n
+Referer: http://localhost:8080/wireshark/wireshark-http.html\r\n
+Accept-Encoding: gzip, deflate\r\n
+Accept-Language: en-US,en;q=0.9,da;q=0.8\r\n
+Cookie: __utma=231828553.1458339319.1536683537.1537430811.1537432942.3\r\n
+\r\n
+--------------------------------------------------------------------------------
+[Full request URI: http://wireshark.grydeske.net/file1.html]
+[Response captured in Frame 50: HTTP/1.1 200 OK (text/html)]
+
+================================================================================
+SLIDE 34: Other HTTP Request Methods
+================================================================================
+
+COMPUTER NETWORKS: Other HTTP Request Messages
+
+1. POST Method:
+   • Often used when a web page includes form input (e.g., login credentials, search forms, file uploads).
+   • User input is transmitted in the Entity Body of the HTTP POST request message.
+
+2. GET Method (for sending user data):
+   • User data can also be transmitted via a GET request by encoding parameters directly into the URL query string following a question mark (`?`):
+     Example: `www.somesite.com/animalsearch?monkeys&banana`
+
+3. HEAD Method:
+   • Instructs the server to return ONLY the HTTP headers that would have been returned for a GET request, without transmitting the entity body.
+   • Used by developers, web caches, and crawlers for debugging, checking if an object was modified, or determining file size.
+
+4. PUT Method:
+   • Uploads an entire object to a specified path on the server.
+   • Completely replaces whatever file exists at the specified URL with the content provided in the entity body of the PUT message.
+
+================================================================================
+SLIDE 35: HTTP Response Message Structure
+================================================================================
+
+COMPUTER NETWORKS: HTTP Response Message
+
+Structure of HTTP Response Message:
+1. Status Line: Protocol Version, Status Code, Status Phrase (e.g., `HTTP/1.1 200 OK\r\n`).
+2. Header Lines: Metadata about server and payload.
+3. Blank Line: Solitary `\r\n` indicating end of headers.
+4. Entity Body: The requested data/file (e.g., HTML, image, JSON).
+
+Annotated Example:
+--------------------------------------------------------------------------------
+HTTP/1.1 200 OK\r\n                        <-- Status line: Version, Code, Reason Phrase
+Date: Sun, 26 Sep 2010 20:09:20 GMT\r\n   <-- Date and time response was generated
+Server: Apache/2.0.52 (CentOS)\r\n        <-- Server software and OS
+Last-Modified: Tue, 30 Oct 2007 17:00:02 GMT\r\n <-- Timestamp object was last changed
+ETag: "17dc6-a5c-bf716880"\r\n             <-- Entity tag (checksum/hash of object)
+Accept-Ranges: bytes\r\n                   <-- Server supports partial byte-range requests
+Content-Length: 2652\r\n                   <-- Size of entity body in bytes
+Keep-Alive: timeout=10, max=100\r\n       <-- Timeout (10s), max requests (100)
+Connection: Keep-Alive\r\n                 <-- Connection kept persistent
+Content-Type: text/html; charset=ISO-8859-1\r\n <-- MIME type and character set
+\r\n                                      <-- Carriage return, line feed: END OF HEADERS
+data data data data data ...               <-- Entity Body (HTML page contents)
+--------------------------------------------------------------------------------
+
+================================================================================
+SLIDE 36: HTTP Response Message – Wireshark Capture Analysis
+================================================================================
+
+COMPUTER NETWORKS: HTTP Response Message – Wireshark Capture
+
+Packet Capture Details:
+• Packet / Frame Number: 241
+• Timestamp: 21:13:59.150482000
+• Source IP: 128.119.245.12 (Server: gaia.cs.umass.edu)
+• Destination IP: 10.36.40.181 (Client)
+• Layer 4 Protocol: TCP (Src Port: 80 [http], Dst Port: 55990, Seq: 4381, Ack: 420, Len: 398)
+• TCP Reassembly: 5 reassembled TCP segments (total 4778 bytes):
+  - Segment #234 (1423 bytes)
+  - Segment #237 (1460 bytes)
+  - Segment #239 (1460 bytes)
+  - Segment #235 (37 bytes)
+  - Segment #241 (398 bytes)
+
+Extracted HTTP Response Headers:
+--------------------------------------------------------------------------------
+HTTP/1.1 200 OK\r\n
+Date: Wed, 27 Feb 2013 02:14:00 GMT\r\n
+Server: Apache/2.2.3 (CentOS)\r\n
+Last-Modified: Wed, 27 Feb 2013 02:13:01 GMT\r\n
+ETag: "d6c97-1194-50408540"\r\n
+Accept-Ranges: bytes\r\n
+Content-Type: text/html; charset=UTF-8\r\n
+Content-Length: 4500\r\n
+Connection: Keep-Alive\r\n
+Age: 0\r\n
+\r\n
+[Data: 4500 bytes HTML content]
+--------------------------------------------------------------------------------
+
+================================================================================
+SLIDE 37: HTTP Response Status Codes
+================================================================================
+
+COMPUTER NETWORKS: HTTP Response Status Codes
+
+Overview:
+• Status code appears in the 1st line of the server-to-client response message (Status Line).
+• Status codes are 3-digit integers categorized into 5 classes:
+  - 1xx: Informational
+  - 2xx: Success
+  - 3xx: Redirection
+  - 4xx: Client Error
+  - 5xx: Server Error
+
+Key Status Codes from Slide:
+• 200 OK
+  - Request succeeded. The requested object is provided later in the message body.
+• 301 Moved Permanently
+  - Requested object has been permanently moved to a new URL. The new URL is specified in the `Location:` header field.
+• 400 Bad Request
+  - Generic error indicating the request message could not be understood or parsed by the server.
+• 404 Not Found
+  - The requested document does not exist on this server.
+• 505 HTTP Version Not Supported
+  - The server does not support, or refuses to support, the HTTP protocol version used in the request message.
+
+================================================================================
+SLIDE 38: Introduction to Cookies
+================================================================================
+
+COMPUTER NETWORKS: Cookies
+
+Website / HTTP / Internet Cookies:
+• A small piece of data generated by a specific website and stored locally on a user's computer by the web browser.
+• Purpose: Allows stateless HTTP websites to identify, remember, and keep track of users across separate requests and sessions.
+• Example Uses:
+  - Language selection / localization preferences
+  - User session authentication
+  - Shopping cart contents
+
+================================================================================
+SLIDE 39: Maintaining User/Server State: Cookies
+================================================================================
+
+COMPUTER NETWORKS: Maintaining user/server state: cookies
+
+Stateless vs. Stateful Interaction:
+• Recall: HTTP GET/response interaction is fundamentally stateless.
+  - No notion of multi-step message exchanges required to complete a transaction.
+  - No need for client or server to maintain complex state tables across requests.
+  - All HTTP requests are completely independent of each other.
+  - No need for client/server to "recover" from a partially completed transaction.
+
+The Challenge of Stateful Protocols:
+• Consider a stateful protocol where a client makes two updates to resource X:
+  Client                                           Server
+    |                                                |
+    | ------------ Lock data X --------------------> | [Records state: X locked]
+    | <----------- OK ------------------------------ |
+    | ------------ Update X -----------------------> | [Updates X -> X']
+  t'| <----------- OK ------------------------------ |
+    | ------------ Update X again -----------------> | [Updates X' -> X'']
+    | <----------- OK ------------------------------ |
+    | ------------ Unlock X -----------------------> | [Unlocks X'']
+    | <----------- OK ------------------------------ |
+    v                                                v
+
+Question: What happens if the network connection or client crashes at time t'?
+• The server is left in a locked, inconsistent state! Complex recovery, timeouts, and two-phase commit protocols are required.
+• Stateless protocols avoid this nightmare.
+
+================================================================================
+SLIDE 40: Four Components of Cookie Technology
+================================================================================
+
+COMPUTER NETWORKS: Maintaining user/server state: cookies (more)
+
+Cookies allow websites and client browsers to maintain user state on top of stateless HTTP.
+
+Four Core Components of Cookie Technology:
+1. Cookie header line in the HTTP RESPONSE message: `Set-cookie: <id/value>`
+2. Cookie header line in the subsequent HTTP REQUEST message: `Cookie: <id/value>`
+3. Cookie file kept on the user's host, managed securely by the user's web browser.
+4. Backend database at the Web site storing user profiles, history, and state associated with each cookie ID.
+
+Example Walkthrough:
+• Susan uses a browser on her laptop and visits a specific e-commerce website for the first time.
+• When the initial HTTP request arrives at the site:
+  - The site generates a unique identification number (e.g., 1678).
+  - The site creates an entry in its backend database indexed by ID 1678.
+  - The server includes `Set-cookie: 1678` in its HTTP response.
+• Susan's browser appends `amazon: 1678` to its local cookie file.
+• In subsequent visits/requests, the browser automatically includes `Cookie: 1678` in the request header, allowing the site to identify Susan.
+
+================================================================================
+SLIDE 41: Cookie State Flow Diagram
+================================================================================
+
+COMPUTER NETWORKS: Maintaining user/server state: cookies (Interaction Flow)
+
+ASCII Sequence & Architecture Diagram:
+
+   CLIENT (Browser)                                    SERVER (Amazon)
+   +--------------------+                              +--------------------+
+   | Cookie File:       |                              | Backend Database   |
+   | ebay: 8734         |                              |                    |
+   +--------------------+                              +--------------------+
+             |                                                   |
+             | ----- 1. Usual HTTP request msg ----------------> | [Server creates ID 1678]
+             |                                                   | [Creates DB entry for 1678]
+             | <---- 2. Usual HTTP response msg ---------------- |
+             |          Set-cookie: 1678                         |
+   +---------v----------+                                        |
+   | Cookie File:       |                                        |
+   | ebay: 8734         |                                        |
+   | amazon: 1678       |                                        |
+   +--------------------+                                        |
+             |                                                   |
+             | ----- 3. Usual HTTP request msg ----------------> | [Accesses DB entry 1678]
+             |          Cookie: 1678                             | [Executes cookie-specific action]
+             | <---- 4. Usual HTTP response msg ---------------- |
+             |                                                   |
+             : (One week later...)                               :
+             |                                                   |
+             | ----- 5. Usual HTTP request msg ----------------> | [Accesses DB entry 1678]
+             |          Cookie: 1678                             | [Recognizes returning user]
+             | <---- 6. Usual HTTP response msg ---------------- |
+             v                                                   v
+           Time                                                Time
+
+================================================================================
+SLIDE 42: Cookie Use Cases & Privacy Implications
+================================================================================
+
+COMPUTER NETWORKS: HTTP Cookies: Comments
+
+What Cookies Can Be Used For:
+• Tracking a user's browsing history
+• Remembering login details and authorization sessions
+• Tracking visitor counts and analytics
+• Managing e-commerce shopping carts across sessions
+• Generating personalized product recommendations
+• Saving coupon codes and promo preferences
+
+The Architectural Challenge: How to Keep State?
+• At protocol endpoints: Senders and receivers maintain complex state machines over multiple transactions (heavyweight).
+• In messages: Stateless protocols where messages carry the state token (Cookies approach).
+
+Aside: Cookies and User Privacy:
+• Cookies allow websites to learn a massive amount of personal information about users.
+• First-Party Cookies:
+  - Set by the domain the user is directly visiting (e.g., `nytimes.com`).
+  - Used for site functionality, login, and preferences.
+• Third-Party Cookies (Tracking Cookies):
+  - Set by a third-party domain (e.g., ad network `AdX.com`) whose content/tracker is embedded on multiple disparate websites.
+  - Allows an advertising network to track a user's browsing behavior across hundreds of independent websites without the user ever explicitly navigating to the tracker's domain!
+  - Modern browsers now block or severely restrict third-party tracking cookies by default.
+
+================================================================================
+SLIDE 43: Cookie Walkthrough: Displaying a Page with Third-Party Ads
+================================================================================
+
+COMPUTER NETWORKS: Example for Cookies: Display a NY Times web page
+
+Scenario:
+A user navigates to `nytimes.com`. The page includes an embedded advertisement served by third-party ad network `AdX.com`.
+
+Step-by-Step Flow:
+1. Browser sends an HTTP GET request to `nytimes.com` for the base HTML file.
+2. `nytimes.com` responds with the base HTML file.
+3. The browser parses the HTML and discovers a reference to an advertisement script/image hosted on `AdX.com`.
+4. Browser sends an HTTP GET request to `AdX.com` requesting the ad banner.
+5. `AdX.com` delivers the ad image/script to the browser.
+6. Browser renders and displays the fully composed web page (NY Times content + embedded AdX advertisement).
+
+ASCII Diagram:
+   [ Client Browser ] -------- (1) HTTP GET -------------> [ nytimes.com ]
+                      <------- (2) Base HTML -------------
+                            \
+                             \--- (3) HTTP GET Ad -------> [ AdX.com ]
+                             <--- (4) Ad Content ---------
+
+================================================================================
+SLIDE 44: Cookie Walkthrough: Tracking Browsing History
+================================================================================
+
+COMPUTER NETWORKS: Example for Cookies: Tracking a user’s browsing history
+
+Date: February 15, 2022
+User navigates to `nytimes.com` (Sports section).
+
+Step-by-Step Interactions:
+1. Client -> `nytimes.com`: `HTTP GET /sports`
+2. `nytimes.com` -> Client:
+   - Sets a First-Party Cookie: `Set-cookie: 1634`
+   - Returns base HTML (containing reference to `AdX.com` ad).
+   - `nytimes.com` database records: `ID 1634: sports, 2/15/22`.
+3. Client browser updates local cookie store:
+   - `NY Times: 1634`
+4. Client -> `AdX.com`:
+   - Browser requests the ad: `HTTP GET /ad`
+   - Browser includes `Referrer: NY Times Sports`
+5. `AdX.com` -> Client:
+   - Sets a Third-Party Cookie: `Set-cookie: 7493`
+   - Returns ad creative.
+   - `AdX.com` database logs: `ID 7493: NY Times sports, 2/15/22`.
+6. Client browser updates cookie store:
+   - `NY Times: 1634`
+   - `AdX: 7493`
+
+================================================================================
+SLIDE 45: Cookie Walkthrough: Tracking Browsing Behavior Across Sites
+================================================================================
+
+COMPUTER NETWORKS: Example for Cookies: Tracking a user’s browsing behavior
+
+Date: February 16, 2022
+User navigates to a completely separate website: `socks.com`.
+`socks.com` also partners with and embeds advertisements from `AdX.com`.
+
+Step-by-Step Interactions:
+1. Client -> `socks.com`: `HTTP GET /`
+2. `socks.com` -> Client: Returns HTML containing embedded ad from `AdX.com`.
+3. Client -> `AdX.com`:
+   - Browser fetches the ad: `HTTP GET /ad`
+   - Headers sent by browser:
+     * `Referrer: socks.com`
+     * `Cookie: 7493` (AdX cookie saved previously from the NY Times visit!)
+4. `AdX.com` Server Action:
+   - Identifies the user as ID 7493.
+   - Updates backend profile:
+     * `7493: NY Times sports, 2/15/22`
+     * `7493: socks.com, 2/16/22` (User is shopping for socks!)
+5. `AdX.com` returns the ad:
+   - AdX now knows this individual browses sports news and is shopping for socks across different domains.
+
+================================================================================
+SLIDE 46: Cookie Walkthrough: Targeted Advertising (One Day Later)
+================================================================================
+
+COMPUTER NETWORKS: Example for Cookies: Tracking a user’s browsing behavior (one day later)
+
+Date: February 17, 2022
+User navigates back to `nytimes.com` (Arts section).
+
+Step-by-Step Interactions:
+1. Client -> `nytimes.com`: `HTTP GET /arts` with `Cookie: 1634`.
+2. `nytimes.com` -> Client: Returns base HTML with AdX ad tag.
+   - `nytimes.com` logs: `1634: arts, 2/17/22`.
+3. Client -> `AdX.com`:
+   - Browser requests the ad: `HTTP GET /ad`
+   - Headers: `Referrer: nytimes.com`, `Cookie: 7493`.
+4. `AdX.com` Server Action:
+   - Inspects database record for 7493:
+     * Visited NY Times sports (2/15)
+     * Visited socks.com (2/16)
+     * Currently on NY Times arts (2/17)
+   - AdX selects an advertisement tailored to the user's prior behavior:
+     --> Returned ad for SOCKS!
+5. User sees an ad for socks while reading the arts section of the NY Times!
+
+================================================================================
+SLIDE 47: Web Caches (Proxy Servers) - Principles & Architecture
+================================================================================
+
+COMPUTER NETWORKS: Web Caches (Proxy Servers)
+
+Goal: Satisfy client requests without involving the origin Web server.
+
+How It Works:
+• User configures their browser to point to a Web Cache (Proxy Server).
+• The browser directs all HTTP requests to the proxy cache.
+• Cache Behavior:
+  - Cache Hit: If the requested object is currently in the cache, the cache returns the object directly to the client.
+  - Cache Miss: If the requested object is not in the cache, the cache requests the object from the origin server, stores a copy in its local storage, and then returns the object to the client.
+
+ASCII Architecture Diagram:
+      +----------+
+      |  Client  |----+
+      +----------+    | HTTP Request
+                      v
+             +-----------------+               HTTP Request
+             |   Proxy Server  |---------------------------------> +---------------+
+             |   (Web Cache)   |                                   | Origin Server |
+             +-----------------+ <--------------------------------- +---------------+
+                      |                        HTTP Response
+                      | HTTP Response
+                      v
+      +----------+
+      |  Client  |
+      +----------+
+
+================================================================================
+SLIDE 48: Web Caches (Proxy Servers): Characteristics & Advantages
+================================================================================
+
+COMPUTER NETWORKS: Web Caches (Proxy Servers)
+
+Dual Role of a Web Cache:
+• A cache acts as BOTH a server and a client simultaneously:
+  - Acts as a SERVER to the requesting browser client.
+  - Acts as a CLIENT to the origin server.
+
+Deployment:
+• Typically installed by network providers: Universities, corporations, or residential ISPs.
+• Cache control headers sent by origin servers indicate allowable caching durations (e.g., `Cache-Control: max-age=...`, `Expires: ...`).
+
+Why Use Web Caching?
+1. Speed (Reduced Response Time):
+   - Cache is geographically and topographically much closer to the client than distant origin servers.
+2. Bandwidth Savings:
+   - Substantially reduces network traffic on an institution's expensive access link to the public Internet.
+3. Content Delivery for Smaller Providers:
+   - A dense network of caches (and CDNs) enables resource-constrained content providers to reliably serve massive audiences.
+4. Privacy & Management:
+   - Enables anonymous web browsing (origin servers only see proxy IP).
+   - Facilitates organizational content filtering and activity logging.
+
+================================================================================
+SLIDE 49: Web Caching Numerical Problem: Baseline Setup
+================================================================================
+
+COMPUTER NETWORKS: Caching example
+
+Scenario Parameters:
+• Access link rate: 1.54 Mbps (T1 line)
+• Institutional LAN rate: 1 Gbps
+• RTT from institutional router to origin server: 2.00 seconds
+• Average Web object size: 100 Kbits (100,000 bits)
+• Average request rate from browsers to origin servers: 15 requests/second
+• Average data rate required by browsers:
+    Data Rate = 15 req/sec * 100 Kbits/req = 1,500 Kbits/sec = 1.50 Mbps
+
+Baseline Performance Calculations:
+1. Institutional LAN Utilization:
+     Utilization_LAN = (15 req/sec * 100 Kbits/req) / (1 Gbps)
+                     = 1.50 Mbps / 1000 Mbps = 0.0015 (0.15%)  <-- Extremely low!
+
+2. Access Link Utilization:
+     Utilization_Access = (15 req/sec * 100 Kbits/req) / (1.54 Mbps)
+                        = 1.50 Mbps / 1.54 Mbps = 0.974 (97.4%) <-- Near saturation!
+
+3. Total End-to-End Delay:
+     End-to-End Delay = Internet Delay + Access Link Delay + LAN Delay
+                      = 2 seconds + Minutes (queueing explosion at 97.4% utilization) + Microseconds
+                      = MINUTES!
+   * Problem: Extremely high access link utilization causes packet queueing delay to explode toward infinity!
+
+ASCII Topology Diagram:
+   +-------------------------------------------------------------+
+   |                     INSTITUTIONAL NETWORK                   |
+   |                                                             |
+   |    [ Browser ]          [ Browser ]                         |
+   |         \                    /                              |
+   |          +---- 1 Gbps LAN --+                               |
+   |                     |                                       |
+   |             [ Router / Switch ]                             |
+   +---------------------+---------------------------------------+
+                         |
+                         | 1.54 Mbps Access Link (Utilization = 97.4%)
+                         v
+                (( Public Internet ))  (RTT = 2.0 sec)
+                         |
+                         v
+                 [ Origin Servers ]
+
+================================================================================
+SLIDE 50: Caching Numerical Problem: Option 1 – Buy Faster Access Link
+================================================================================
+
+COMPUTER NETWORKS: Caching example: buy a faster access link
+
+Strategy:
+• Upgrade the institutional access link from 1.54 Mbps to 154 Mbps (a 100x increase).
+
+Recalculated Performance:
+1. Institutional LAN Utilization:
+     Utilization_LAN = 1.50 Mbps / 1 Gbps = 0.0015 (Unchanged, negligible)
+
+2. Upgraded Access Link Utilization:
+     Utilization_Access = 1.50 Mbps / 154 Mbps = 0.0097 (0.97%)
+
+3. Total End-to-End Delay:
+     End-to-End Delay = Internet Delay + Access Link Delay + LAN Delay
+                      = 2 seconds + Milliseconds (queueing delay now negligible) + Microseconds
+                      ≈ 2.01 seconds
+
+Evaluation:
+• Queueing delay on the access link is eliminated.
+• Major Drawback: Upgrading access links by 100x is extremely expensive in recurring ISP transit costs!
+
+================================================================================
+SLIDE 51: Caching Numerical Problem: Option 2 – Install a Local Web Cache
+================================================================================
+
+COMPUTER NETWORKS: Caching example: install a web cache
+
+Strategy:
+• Keep the original, inexpensive 1.54 Mbps access link.
+• Install a local Web Cache (Proxy Server) inside the institutional 1 Gbps LAN.
+
+Scenario Setup:
+• Access link rate: 1.54 Mbps
+• Institutional LAN rate: 1 Gbps
+• RTT to origin servers: 2 seconds
+• Web object size: 100 Kbits
+• Request rate: 15 req/sec
+• Data rate: 1.50 Mbps
+• Cost: A local server for web caching is cheap (one-time hardware cost, zero extra monthly ISP bandwidth fees).
+
+Question to Solve:
+• How do we compute link utilization and average end-to-end delay with the web cache?
+
+ASCII Topology Diagram with Web Cache:
+   +-------------------------------------------------------------+
+   |                     INSTITUTIONAL NETWORK                   |
+   |                                                             |
+   |    [ Browser ]       [ Browser ]      [ Local Web Cache ]   |
+   |         \                 |                 /               |
+   |          +----------- 1 Gbps LAN ----------+                |
+   |                           |                                 |
+   |                   [ Institutional ]                         |
+   |                   [    Router     ]                         |
+   +---------------------------+---------------------------------+
+                               |
+                               | 1.54 Mbps Access Link
+                               v
+                      (( Public Internet ))  (RTT = 2.0 sec)
+                               |
+                               v
+                       [ Origin Servers ]
+
+================================================================================
+SLIDE 52: Caching Numerical Problem: Calculation with Local Web Cache
+================================================================================
+
+COMPUTER NETWORKS: Caching example: install a web cache (Solution)
+
+Calculating Access Link Utilization and End-to-End Delay:
+• Suppose the local cache has a Cache Hit Rate of 0.4 (40%):
+  - 40% of requests are satisfied locally by the web cache.
+  - 60% of requests miss the cache and must be satisfied by the origin server across the access link.
+
+1. Traffic and Utilization on Access Link:
+   - Only 60% of requests traverse the access link:
+       Data Rate on Access Link = 0.60 * 1.50 Mbps = 0.90 Mbps
+   - Access Link Utilization:
+       Utilization_Access = 0.90 Mbps / 1.54 Mbps = 0.584 (58.4%)
+   - With 58% utilization, the access link operates well below saturation, meaning queueing delay is negligible (a few milliseconds)!
+
+2. Average End-to-End Delay:
+     Average Delay = 0.60 * (Delay from Origin Servers) + 0.40 * (Delay when Satisfied at Cache)
+                   = 0.60 * (2.01 seconds) + 0.40 * (~milliseconds over LAN)
+                   ≈ 1.206 seconds + 0.001 seconds
+                   ≈ 1.2 seconds!
+
+Conclusion:
+• Installing a local web cache provides a LOWER average end-to-end delay (~1.2 seconds) than even upgrading to a 154 Mbps link (~2.01 seconds)!
+• And it is dramatically cheaper to implement!
+
+================================================================================
+SLIDE 53: Conditional GET – Browser Caching Mechanism
+================================================================================
+
+COMPUTER NETWORKS: Conditional Get – Browser Caching
+
+Goal:
+• Do not retransmit an object over the network if the client or cache already possesses an up-to-date copy.
+• Eliminates unnecessary transmission delay and minimizes link utilization.
+
+How It Operates:
+1. Cache / Client specifies the timestamp of its currently cached copy in the HTTP request header:
+     `If-modified-since: <date>`
+2. Origin Server evaluates the object's last-modified timestamp:
+   - If NOT modified since `<date>`:
+     * Server returns a lightweight response containing NO entity body:
+       `HTTP/1.0 304 Not Modified`
+   - If MODIFIED after `<date>`:
+     * Server returns standard success response containing the updated object:
+       `HTTP/1.0 200 OK`
+       `<data payload>`
+
+ASCII Sequence Diagram:
+   Client / Cache                                        Origin Server
+         |                                                     |
+         | ----- HTTP GET (If-modified-since: <date>) -------> | [Object NOT modified]
+         | <---- HTTP/1.0 304 Not Modified ------------------- | (No data sent!)
+         |                                                     |
+         :                                                     :
+         | ----- HTTP GET (If-modified-since: <date>) -------> | [Object HAS been modified]
+         | <---- HTTP/1.0 200 OK (with data payload) --------- | (Updated object sent)
+         v                                                     v
+
+================================================================================
+SLIDE 54: Conditional GET – Wireshark Capture Analysis
+================================================================================
+
+COMPUTER NETWORKS: Conditional Get (more) – Wireshark Capture
+
+Packet Capture Trace Analysis:
+• Initial Fetch:
+  - Packet 340 (Time: 20:33:09.383): `GET /wireshark-labs/HTTP-wireshark-file2.html HTTP/1.1`
+  - Packet 341 (Time: 20:33:09.407): `HTTP/1.1 200 OK (text/html)`
+    * Server returned `Last-Modified: Wed, 27 Feb 2013 01:33:01 GMT`
+    * Server returned `ETag: "d6c96-173-c1336d40"`
+
+• Subsequent Conditional GET (5 seconds later):
+  - Packet 347 (Time: 20:33:14.318):
+    * Source: 10.36.40.181 (Client), Destination: 128.119.245.12 (gaia.cs.umass.edu)
+    * `GET /wireshark-labs/HTTP-wireshark-file2.html HTTP/1.1`
+    * Headers Sent:
+      `If-Modified-Since: Wed, 27 Feb 2013 01:33:01 GMT\r\n`
+      `If-None-Match: "d6c96-173-c1336d40"\r\n`
+      `Cache-Control: max-age=0\r\n`
+  - Packet 348 (Time: 20:33:14.331):
+    * Source: 128.119.245.12, Destination: 10.36.40.181
+    * `HTTP/1.1 304 Not Modified\r\n`
+    * Response length: Only 319 bytes total (zero object data transmitted!).
+    * Browser immediately renders its local cached copy.
+
+================================================================================
+SLIDE 55: HTTP/2: Motivation & Background
+================================================================================
+
+COMPUTER NETWORKS: HTTP/2
+
+Key Goal: Decreased delay and improved efficiency in multi-object HTTP requests.
+
+HTTP/1.1 Shortcomings:
+• Introduced multiple, pipelined GET requests over a single TCP connection.
+• Server responds strictly in-order (First-Come-First-Served / FCFS scheduling) to GET requests.
+• Head-of-Line (HOL) Blocking:
+  - With FCFS, a small object (e.g., a tiny icon or script) must wait in the server's transmission queue behind a huge object (e.g., a large video or high-res photo).
+• Packet Loss Recovery Stalls Transmission:
+  - If a single TCP segment is lost in the underlying TCP connection, TCP retransmission stalls the delivery of ALL pending objects in the connection until the missing packet is recovered.
+
+================================================================================
+SLIDE 56: HTTP/2: Core Features & Improvements
+================================================================================
+
+COMPUTER NETWORKS: HTTP/2
+
+HTTP/2 Standard: RFC 7540 (May 2015)
+
+Key Innovations:
+• Maintained High-Level Compatibility:
+  - HTTP methods (GET, POST, PUT, HEAD), status codes (200, 301, 404), and most header fields remain unchanged from HTTP/1.1.
+• Priority-Based Scheduling:
+  - Transmission order of requested objects is based on client-specified stream priorities, rather than strict FCFS.
+• Server Push:
+  - The server can proactively push unrequested resources (e.g., CSS stylesheets, critical JavaScript) to the client cache that it knows the client will need shortly.
+• Binary Framing & Multiplexing:
+  - Divides HTTP messages into independent binary frames.
+  - Interleaves (multiplexes) frames from different streams across a single TCP connection, eliminating application-layer Head-of-Line (HOL) blocking.
+
+================================================================================
+SLIDE 57: Evolution: HTTP/2 to HTTP/3
+================================================================================
+
+COMPUTER NETWORKS: HTTP/2 to HTTP/3
+
+Limitations of HTTP/2 over TCP:
+• TCP-Level Head-of-Line Blocking:
+  - Because HTTP/2 multiplexes all streams into a single underlying TCP connection, packet loss in ANY stream causes the entire TCP window to halt until retransmission succeeds, stalling ALL concurrent streams.
+  - To mitigate this, browsers still had incentives to open multiple parallel TCP connections.
+• Lack of Native Security:
+  - TCP provides no built-in encryption; TLS must be layered separately on top.
+
+HTTP/3 Innovations:
+• Built on top of QUIC (Quick UDP Internet Connections):
+  - Runs over UDP instead of TCP.
+• Native Security:
+  - TLS 1.3 is baked directly into the QUIC transport handshake.
+• Independent Stream Error- and Congestion-Control:
+  - Packet loss on one stream affects ONLY that specific stream. Other concurrent streams continue flowing without delay.
+  - Eliminates TCP Head-of-Line blocking completely!
+• Connection Migration:
+  - QUIC connections survive changes in client IP (e.g., switching from Wi-Fi to cellular) using connection IDs.
+
+================================================================================
+SLIDE 58: HTTP vs. HTTPS Overview
+================================================================================
+
+COMPUTER NETWORKS: HTTP vs HTTPS
+
+What is HTTPS?
+• HTTPS is HTTP with encryption: All communications between browser and server are encrypted in both directions (bi-directional).
+• 'S' stands for 'Secure' (HTTP over Secure Sockets Layer / TLS).
+• Uses TLS (Transport Layer Security, formerly SSL) to encrypt standard HTTP request and response messages.
+
+Security Guarantees:
+• Eavesdropping Protection: Attackers tapping the wire cannot read the transmitted data.
+• Server Authentication: You are guaranteed that you are communicating with the genuine server you intended, not an impostor.
+• Tamper Resistance: Data cannot be altered in transit without immediate detection.
+
+================================================================================
+SLIDE 59: HTTPS Technical Fundamentals
+================================================================================
+
+COMPUTER NETWORKS: HTTP vs HTTPS (more)
+
+Key Parameters:
+• Port Number: HTTPS uses port 443 (HTTP uses port 80).
+• Stack: HTTP + TLS -> Encrypted Application Stream.
+
+Public / Private-Key (Asymmetric) Cryptography:
+• Uses a mathematically linked key pair:
+  - Public Key: Distributed publicly; used by anyone to encrypt data or verify signatures.
+  - Secret Private Key: Kept strictly secret by the server; required to decrypt messages encrypted with the public key.
+• Core Rule: Any message encrypted with Bob's public key can ONLY be decrypted using Bob's matching private key.
+
+SSL / TLS Certificates:
+• A server's digital certificate issued and digitally signed by a trusted third-party Certificate Authority (CA).
+• Creates an encrypted connection and establishes identity trust.
+
+Is my certificate SSL or TLS?
+• The term "SSL Certificate" is a legacy marketing label. The underlying certificates (X.509) work identically for both SSL and TLS; modern systems exclusively execute TLS.
+
+================================================================================
+SLIDE 60: Cryptography in HTTPS: Asymmetric vs. Symmetric Encryption
+================================================================================
+
+COMPUTER NETWORKS: Benefits of HTTPS over HTTP using SSL Certificates
+
+Comparison of Encryption Models:
+
+1. Asymmetric Encryption (Public-Key Cryptography):
+   • Uses TWO different keys:
+     - Public Key (Known to everyone)
+     - Secret / Private Key (Known only to server)
+   • Data Flow:
+     Plain Text ---> [ Encryption with Public Key ] ---> Cipher Text ---> [ Decryption with Private Key ] ---> Plain Text
+   • Characteristics:
+     - Used during the initial TLS handshake to authenticate identity and securely exchange session keys.
+     - Computationally heavy / slow for bulk data transfer.
+
+2. Symmetric Encryption (Secret-Key Cryptography):
+   • Uses the SAME secret key for both encryption and decryption.
+   • Data Flow:
+     Plain Text ---> [ Encryption with Secret Key ] ---> Cipher Text ---> [ Decryption with SAME Secret Key ] ---> Plain Text
+   • Characteristics:
+     - Extremely fast and computationally efficient (hardware-accelerated via AES-NI).
+     - Used for bulk data transmission once the TLS handshake establishes the shared secret session key.
+
+================================================================================
+SLIDE 61: Transport Layer Security (TLS) Protocol Overview
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Security (TLS) Protocol
+
+Overview:
+• Widely deployed security protocol operating directly above the transport layer.
+• Supported by virtually all modern web browsers and web servers via HTTPS (port 443).
+
+Three Core Security Objectives:
+1. Confidentiality:
+   - Achieved via symmetric encryption (e.g., AES-GCM, ChaCha20).
+   - Encrypts data so eavesdroppers cannot read traffic crossing the wire.
+2. Integrity:
+   - Achieved via cryptographic hashing and MACs (Message Authentication Codes).
+   - Ensures data is not altered, injected, or corrupted in transit.
+3. Authentication:
+   - Achieved via public key cryptography and digital certificates.
+   - Verifies that the client is communicating with the genuine server, not an attacker or man-in-the-middle.
+
+Brief History:
+• Netscape developed Secure Sockets Layer (SSL) in the mid-1990s.
+• SSL was formally deprecated in 2015 due to critical cryptographic vulnerabilities.
+• Modern standard is TLS; TLS 1.3 defined in RFC 8446 (2018).
+
+================================================================================
+SLIDE 62: Evolution of SSL / TLS & Digital Certificates
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Security (TLS) Protocol (Evolution)
+
+Protocol History & Deprecation:
+• SSL (Secure Sockets Layer) — Created by Netscape in the mid-1990s:
+  - SSL 1.0: Never publicly released due to fundamental security flaws.
+  - SSL 2.0 & 3.0: Released in 1995 and 1996; broken by vulnerabilities (POODLE, DROWN); completely deprecated.
+• TLS (Transport Layer Security) — Standardized by IETF starting in 1999:
+  - TLS 1.0 (1999) & TLS 1.1 (2006): Deprecated in 2021.
+  - TLS 1.2 (2008) & TLS 1.3 (2018): The ONLY secure, active protocol versions running on the web today.
+
+TLS or SSL Certificate:
+• Digital certificates are technically called X.509 Certificates.
+• They do not care about protocol versions:
+  - A certificate contains the server's public key, domain identity, and CA signature.
+  - It works identically whether the server runs TLS 1.2, TLS 1.3, or legacy SSL.
+• The phrase "SSL Certificate" persists purely due to 30 years of industry marketing; the underlying operational protocol is TLS.
+
+================================================================================
+SLIDE 63: Handshake Privacy & Certificate Anatomy
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Security (TLS) Protocol (Privacy & Structure)
+
+Major Handshake Privacy Advancement in TLS 1.3:
+• In older protocols (SSL and TLS 1.2):
+  - The server transmitted its digital certificate in clear plaintext.
+  - Anyone monitoring the local Wi-Fi or ISP transit network could see exactly which website certificate was delivered to your computer (SNI/Cert leakage).
+• In TLS 1.3:
+  - The browser and server establish a temporary secret session key BEFORE the certificate is sent.
+  - The certificate itself is ENCRYPTED! Eavesdroppers on public networks can no longer view the certificate crossing the wire.
+
+Anatomy of an SSL/TLS (X.509) Certificate:
+• Acts like a digital passport. It contains:
+  1. Domain Name (Subject): e.g., `bank.com`, `*.pes.edu`
+  2. Server's Public Key: The public key used to verify the server
+  3. Issuer Information: Details of the issuing Certificate Authority (e.g., DigiCert, Let's Encrypt)
+  4. Validity Period: Start date and Expiration date
+  5. CA Digital Signature: An encrypted hash generated using the trusted CA's private key
+
+================================================================================
+SLIDE 64: Protocol Stack Architectures: HTTP with TLS
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Security (TLS) - Layered Architecture
+
+TLS provides an API that application protocols can use seamlessly.
+
+Comparison of Web Protocol Stacks:
+
+1. HTTP/1.0 (Plain):
+   +------------------------------------+
+   |     Application: HTTP/1.0          |
+   +------------------------------------+
+   |     Transport: TCP                 |
+   +------------------------------------+
+   |     Network: IP                    |
+   +------------------------------------+
+   |     Link & Physical                |
+   +------------------------------------+
+
+2. HTTP/2 with TLS (HTTPS):
+   +------------------------------------+
+   |     Application: HTTP/2            |
+   +------------------------------------+
+   |     Security Layer: TLS            |
+   +------------------------------------+
+   |     Transport: TCP                 |
+   +------------------------------------+
+   |     Network: IP                    |
+   +------------------------------------+
+   |     Link & Physical                |
+   +------------------------------------+
+
+3. HTTP/3 over QUIC:
+   +------------------------------------+
+   |     Application: HTTP/3 (Slimmed)  |
+   +------------------------------------+
+   |     QUIC (Incorporates TLS 1.3)    |
+   +------------------------------------+
+   |     Transport: UDP                 |
+   +------------------------------------+
+   |     Network: IP                    |
+   +------------------------------------+
+   |     Link & Physical                |
+   +------------------------------------+
+
+================================================================================
+SLIDE 65: What Actually Changed Under the Hood? (SSL vs. TLS 1.3)
+================================================================================
+
+COMPUTER NETWORKS: What Actually Changed Under the Hood?
+
+Handshake & Performance:
+• SSL Handshake:
+  - Required multiple sequential back-and-forth round trips (2-RTT setup latency).
+  - Connection setup was noticeably slow, causing perceptible lag.
+• TLS 1.3 Handshake:
+  - Radically streamlined negotiation.
+  - Cuts handshake latency in half by allowing key exchange parameters to be transmitted in the very first message (1-RTT full handshake, 0-RTT resumption).
+
+Security & Cryptography:
+• Weak Cryptography Excised:
+  - SSL allowed insecure, obsolete algorithms: RC4 stream cipher, static RSA key transport, MD5 hashing, SHA-1, DES/3DES. Hackers cracked all of these.
+  - TLS 1.3 removed all obsolete ciphers, mandating Authenticated Encryption with Associated Data (AEAD) such as AES-GCM and ChaCha20-Poly1305.
+• Mandatory Forward Secrecy (PFS):
+  - Under static RSA in SSL, if an adversary recorded encrypted traffic and stole the server's private key years later, they could retroactively decrypt all recorded past sessions!
+  - TLS 1.3 mandates Ephemeral Diffie-Hellman (ECDHE) for every session: Session keys are temporary and thrown away immediately, guaranteeing that stolen private keys cannot decrypt past recordings.
+
+* Note: Cryptographic algorithms are explored in depth in courses like Applied Cryptography.
+
+================================================================================
+SLIDE 66: How Server Authentication Works
+================================================================================
+
+COMPUTER NETWORKS: How Authentication Works
+
+Four-Step Verification Process:
+
+1. Certificate Presentation:
+   • The server transmits its digital certificate containing its Public Key and the digital signature issued by a Certificate Authority (CA).
+
+2. CA Trust Verification:
+   • The client browser validates the CA's digital signature against its built-in store of trusted Root Certificate Authorities (e.g., DigiCert, Let's Encrypt, Sectigo).
+
+3. Proof of Ownership (CertificateVerify):
+   • To prove the server is not an impostor replaying a stolen public certificate, the server signs a cryptographic hash of all preceding handshake messages using its secret Private Key.
+
+4. Public Key Verification:
+   • The client browser decrypts/verifies that signature using the Public Key extracted from the certificate.
+   • If the signature verifies, it conclusively proves that the server holds the corresponding private key, confirming its authentic identity.
+
+================================================================================
+SLIDE 67: TLS 1.3 Handshake: 1-RTT Full Handshake
+================================================================================
+
+COMPUTER NETWORKS: TLS 1.3 handshake: 1 RTT
+
+Handshake Mechanics (1 Round Trip Time):
+• Step 1: Client TLS Hello Message
+  - Guesses the key agreement protocol and parameters (sends Diffie-Hellman key shares).
+  - Advertises the list of supported cipher suites.
+• Step 2: Server TLS Hello Message
+  - Selects the matching cipher suite and Diffie-Hellman key agreement parameters.
+  - Sends server key share, server digital certificate (encrypted!), CertificateVerify signature, and Finished message.
+• Step 3: Client Processing
+  - Verifies server certificate and signature against trusted CAs.
+  - Computes the shared symmetric encryption key.
+  - Handshake complete! Can now transmit application data (e.g., HTTPS GET) immediately.
+
+ASCII Handshake Sequence Diagram:
+   Client                                                Server
+     |                                                     |
+     | ----- 1. ClientHello -----------------------------> |
+     |          Supported Cipher Suites                    |
+     |          ECDH Key Share parameters                  |
+     |                                                     |
+     | <---- 2. ServerHello ------------------------------ |
+     |          Selected Cipher Suite                      |
+     |          ECDH Server Key Share                      |
+     |          [Encrypted] Server Certificate             |
+     |          [Encrypted] CertificateVerify              |
+     |          [Encrypted] Finished                       |
+     |                                                     |
+     | (Client checks cert, derives symmetric key)         |
+     |                                                     |
+     | ===== 3. Encrypted Application Data (HTTPS GET) ==> |
+     | <==== 4. Encrypted Application Response =========== |
+     v                                                     v
+   Time                                                  Time
+
+Definition of Cipher Suite:
+• A standardized bundle of distinct cryptographic algorithms used together to secure a connection:
+  - Key Agreement / Exchange (e.g., ECDHE)
+  - Bulk Data Encryption (e.g., AES-256-GCM, ChaCha20)
+  - Message Integrity / MAC (e.g., SHA-384, Poly1305)
+  - Digital Signature (e.g., RSA, ECDSA, Ed25519)
+
+================================================================================
+SLIDE 68: TLS 1.3 Optimization & 0-RTT Resumption
+================================================================================
+
+COMPUTER NETWORKS: TLS 1.3
+
+Summary of TLS 1.3 Handshake Optimization:
+• Combines key negotiation into the very first packet:
+  - Step 1 (ClientHello + Key Share): Browser sends supported ciphers AND proactively generates its ephemeral Diffie-Hellman key share in the first message.
+  - Step 2 (ServerHello & Encrypted Certificate): Server picks cipher, returns matching key share, and derives symmetric session keys. All subsequent handshake messages (including the Server Certificate) are encrypted!
+  - Step 3 (Data Transmission): Client verifies certificate signature and derives identical symmetric key. Real HTTPS data flows immediately.
+
+0-RTT (Zero Round-Trip Time) Mode for Returning Visitors:
+• Uses a Pre-Shared Key (PSK) derived and cached from a previous TLS connection.
+• When returning to the site, the browser sends encrypted HTTP requests (e.g., `GET /home`) inside the very first packet (ClientHello)!
+• Completely eliminates handshake latency before sending requests.
+
+================================================================================
+SLIDE 69: TLS 1.3 Handshake: 0-RTT Resumption Details & Security
+================================================================================
+
+COMPUTER NETWORKS: TLS 1.3 handshake: 0 RTT
+
+0-RTT Handshake Mechanics:
+• Initial Hello message from the client contains BOTH:
+  - ClientHello (Supported ciphers, DH key agreement parameters)
+  - Encrypted Application Data (e.g., HTTP GET request payload) in the very first packet!
+• Connection Resumption:
+  - Application data is encrypted using the "Resumption Master Secret" negotiated during the earlier session.
+• Server responds with:
+  - ServerHello (Selected cipher suite, DH parameters)
+  - Encrypted Application Data reply!
+
+ASCII Handshake Sequence Diagram (0-RTT):
+   Client                                                Server
+     |                                                     |
+     | ===== 1. ClientHello + Encrypted App Data =========>| (0 RTT: Data sent in 1st packet!)
+     |          Supported Cipher Suites                    |
+     |          DH Key Share Parameters                    |
+     |          HTTP GET /home (Encrypted with PSK)        |
+     |                                                     |
+     | <==== 2. ServerHello + Encrypted App Data Reply === |
+     |          Selected Cipher Suite                      |
+     |          DH Key Share Parameters                    |
+     |          HTTP 200 OK Response                       |
+     v                                                     v
+   Time                                                  Time
+
+Security Considerations:
+• Vulnerability to Replay Attacks:
+  - Because 0-RTT data is sent without an interactive handshake, an attacker sniffing the network can intercept and re-send (replay) the initial 0-RTT packet to the server!
+  - If the request modifies state (e.g., `POST /transfer-money`), the action could be duplicated.
+• Mitigation:
+  - 0-RTT data should ONLY be permitted for idempotent, read-only requests that do not alter server-side state (e.g., simple HTTP GET requests for static resources).
+
+================================================================================
+SLIDE 70: Conclusion & Department Closing Slide
+================================================================================
+
+THANK YOU
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University

@@ -1,0 +1,985 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Part 1: Application Layer (DNS, P2P & Other Application Protocols)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides: 41
+================================================================================
+
+================================================================================
+SLIDE 1: Course Title & Department Information
+================================================================================
+COMPUTER NETWORKS
+Application Layer
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+
+================================================================================
+SLIDE 2: Application Layer Unit Title
+================================================================================
+COMPUTER NETWORKS
+Application Layer
+
+Department of Computer Science and Engineering
+PES University
+
+================================================================================
+SLIDE 3: Unit 2 Application Layer Outline
+================================================================================
+COMPUTER NETWORKS
+Unit – 2 Application Layer
+
+Topics Covered:
+2.3 The Domain Name System (DNS)
+2.4 Peer-to-Peer (P2P) Applications
+2.5 Socket Programming with TCP & UDP
+    *(Note: Socket programming is introduced conceptually and dealt with in depth alongside transport layer functions)
+2.6 Other Application Layer Protocols (FTP, SMTP, DHCP, SNMP, Telnet, SSH, NTP, LDAP)
+
+================================================================================
+SLIDE 4: DNS: Domain Name System - Purpose & Core Functions
+================================================================================
+COMPUTER NETWORKS: DNS: Domain Name System
+
+Identifiers for People vs. Network Hosts:
+• People have multiple identifiers:
+  - Social Security Number (SSN), Full Legal Name, Passport Number, Driver's License.
+• Internet Hosts and Routers have multiple identifiers:
+  - IP Address (32-bit in IPv4, 128-bit in IPv6): Used by routers and the network layer for routing and addressing datagrams.
+  - "Name" / Hostname (e.g., `cs.umass.edu`, `pes.edu`): Human-memorable strings used by people and applications.
+
+The Core Question:
+• How do we map between human-friendly hostnames and machine-routable IP addresses, and vice versa?
+
+The Domain Name System (DNS):
+1. A Distributed Database:
+   - Implemented across a global hierarchy of many specialized name servers.
+2. An Application-Layer Protocol:
+   - Host computers and name servers communicate using the DNS protocol to resolve names (address/name translation).
+   - Core Internet Function: Implemented strictly at the application layer, demonstrating the end-to-end design principle where complex functionality resides at the network's "edge" rather than inside the network core.
+
+================================================================================
+SLIDE 5: DNS Services, Hierarchy & Why Not Centralize?
+================================================================================
+COMPUTER NETWORKS: DNS: Services, Structure
+
+Key Services Provided by DNS:
+1. Hostname to IP Address Translation:
+   - Translates human-readable names (`www.example.com`) to 32-bit IP addresses (`93.184.216.34`).
+2. Host Aliasing:
+   - A host with a complicated canonical (real) hostname can have one or more alias names:
+     * Canonical Host Name: `www.abc.example.com`
+     * Alias Name: `www.example.com`
+3. Mail Server Aliasing:
+   - Allows email addresses to use clean domain names while directing mail traffic to dedicated mail servers:
+     * Canonical Mail Host Name: `mail.backup.example.com`
+     * User-facing address: `bob@example.com`
+4. Load Distribution:
+   - Replicated Web Servers: High-traffic websites run across a farm of multiple servers with distinct IP addresses.
+   - A single canonical hostname maps to a set of multiple IP addresses; DNS rotates the order of returned IP addresses with each query (round-robin DNS) to distribute incoming traffic evenly.
+
+Question: Why Not Centralize DNS into a Single Giant Server?
+Answer: A centralized DNS architecture simply DOES NOT SCALE!
+• Single Point of Failure: If the single centralized DNS server crashes, the entire global Internet fails immediately!
+• Massive Traffic Volume: A single system cannot handle global query load:
+  - Comcast DNS servers alone process over 600 Billion DNS queries per day!
+  - Akamai DNS servers alone process over 2.2 Trillion DNS queries per day!
+• Distant Centralized Database: Users far from the centralized server would suffer enormous propagation delays.
+• Impossible Maintenance: Managing billions of records on a single machine with continuous updates would be unworkable.
+
+================================================================================
+SLIDE 6: DNS: A Distributed, Hierarchical Database
+================================================================================
+COMPUTER NETWORKS: DNS: a distributed, hierarchical database
+
+Hierarchical Architecture:
+• To solve scalability, DNS partitions its database across a vast tree hierarchy of servers:
+
+ASCII Hierarchy Diagram:
+                             +-------------------+
+                             |     Root DNS      |
+                             |      Servers      |
+                             +---------+---------+
+                                       |
+          +----------------------------+----------------------------+
+          |                            |                            |
+          v                            v                            v
+   +--------------+             +--------------+             +--------------+
+   |   .com DNS   |             |   .org DNS   |             |   .edu DNS   |
+   |   Servers    |             |   Servers    |             |   Servers    |
+   +------+-------+             +------+-------+             +------+-------+
+          |                            |                            |
+     +----+----+                  +----+----+                  +----+----+
+     |         |                  |         |                  |         |
+     v         v                  v         v                  v         v
++---------+ +---------+      +---------+ +---------+      +---------+ +---------+
+|yahoo.com| |amazon   |      | pbs.org | | wikipedia|     | nyu.edu | |umass.edu|
+|   DNS   | | .com DNS|      |   DNS   | | .org DNS |     |   DNS   | |   DNS   |
++---------+ +---------+      +---------+ +---------+      +---------+ +---------+
+ [ Top-Level Domain (TLD) Servers ]          [ Authoritative DNS Servers ]
+
+Walkthrough: Resolving `www.amazon.com`:
+1. Client queries a Root DNS Server to obtain the IP addresses of the `.com` TLD name servers.
+2. Client queries a `.com` TLD DNS Server to obtain the IP address of the authoritative name server for `amazon.com`.
+3. Client queries the `amazon.com` Authoritative DNS Server to retrieve the exact IP address for `www.amazon.com`.
+
+================================================================================
+SLIDE 7: DNS Zone vs. Domain
+================================================================================
+COMPUTER NETWORKS: DNS Zone vs Domain
+
+Domain vs. Zone:
+• Domain:
+  - A subtree of the DNS namespace (e.g., everything under `example.com`).
+• Zone:
+  - A contiguous portion of the DNS namespace managed as a single administrative unit by a specific entity.
+  - A zone keeps authoritative records for the domain and subdomains that have not been delegated away.
+
+Key Differences & Practical Delegation:
+• DNS is organized strictly according to administrative zones.
+• A zone assigns management authority to a specific organization or department.
+• Multiple DNS zones can exist for a large domain:
+  - For example, an international company might create separate zones for each country: `uk.example.com`, `france.example.com`.
+  - The base zone for `example.com` contains records for hostnames that do not belong to delegated subdomains (e.g., `mail.example.com`, `ftp.example.com`).
+  - If authority for `uk.example.com` is delegated to the UK IT department, it becomes its own distinct zone, allowing local administrators to manage records without central IT intervention.
+
+ASCII Domain & Zone Tree Diagram:
+                   +------------------------+
+                   |      example.com       | <--- Base Zone (Managed by HQ)
+                   +-----------+------------+
+                               |
+             +-----------------+-----------------+
+             |                                   |
+             v                                   v
+   +--------------------+              +--------------------+
+   |   uk.example.com   |              | france.example.com |
+   +---------+----------+              +---------+----------+
+             |                                   |
+       +-----+-----+                       +-----+-----+
+       |           |                       |           |
+       v           v                       v           v
+  [ chicago ]  [ boston ]              [  paris  ]  [  lyon   ]
+  (Delegated Zone: UK Office)          (Delegated Zone: France Office)
+
+================================================================================
+SLIDE 8: DNS Root Name Servers
+================================================================================
+COMPUTER NETWORKS: DNS: root name servers
+
+Role & Critical Importance:
+• The Root Name Servers are the official "contact-of-last-resort" consulted by local name servers when a requested domain cannot be resolved locally.
+• Incredibly important Internet infrastructure: The global Internet cannot function without operational root name servers!
+• Root servers return referrals pointing to the TLD servers responsible for the queried top-level domain (.com, .org, .edu, etc.).
+
+Administration & Physical Deployment:
+• Managed by ICANN (Internet Corporation for Assigned Names and Numbers).
+• There are 13 logical Root Name Servers worldwide, conventionally labeled `a.root-servers.net` through `m.root-servers.net`.
+• Anycast Replication: While there are only 13 logical IP addresses, each logical server is replicated across hundreds of physical servers globally using IP Anycast routing (~200 physical server instances located in the US alone, and over 1,500 worldwide).
+• Security: Protected by DNSSEC (Domain Name System Security Extensions) providing cryptographic authentication and message integrity.
+
+================================================================================
+SLIDE 9: DNSSEC – Why It Matters
+================================================================================
+COMPUTER NETWORKS: DNSSEC – Why It Matters
+
+Vulnerabilities of Plain DNS:
+• Traditional DNS has NO built-in authentication:
+  - A forged DNS response claiming to come from an authoritative server could easily deceive a resolver.
+  - Vulnerable to DNS Cache Poisoning and Spoofing attacks (directing users to fraudulent banking or phishing sites).
+
+How DNSSEC Solves This:
+• Domain Name System Security Extensions (DNSSEC) adds cryptographic digital signatures to DNS responses.
+• Resource Record Digital Signatures (RRSIG):
+  - Every DNS record set is accompanied by an RRSIG record generated with the zone's private key.
+  - Resolvers use public keys (DNSKEY records) to cryptographically verify that the returned record was genuinely produced by the authoritative server and was not altered in transit.
+• Chained Trust (Chain of Trust):
+  - Trust is established hierarchically: Root -> TLD -> Authoritative Zone.
+  - Each upper level signs the public key of the level directly below it via a Delegation Signer (DS) record.
+
+Important Distinction:
+• DNSSEC provides Authentication and Data Integrity.
+• It does NOT provide Confidentiality: DNS queries and responses remain readable in plaintext on the wire (unless wrapped in DNS-over-HTTPS [DoH] or DNS-over-TLS [DoT]).
+
+================================================================================
+SLIDE 10: TLD and Authoritative Name Servers
+================================================================================
+COMPUTER NETWORKS: TLD: authoritative servers
+
+Top-Level Domain (TLD) Servers:
+• Responsible for top-level domains:
+  - Generic TLDs (gTLDs): `.com`, `.org`, `.net`, `.edu`, `.aero`, `.jobs`, `.museums`
+  - Country-Code TLDs (ccTLDs): `.in` (India), `.uk` (UK), `.fr` (France), `.ca` (Canada), `.jp` (Japan), `.cn` (China)
+• Management Entities:
+  - VeriSign / Network Solutions: Authoritative registry for `.com` and `.net` TLDs.
+  - Educause: Authoritative registry for the `.edu` TLD.
+  - Public Interest Registry (PIR): Authoritative registry for `.org`.
+
+Authoritative DNS Servers:
+• An organization's own name server(s) that house the official, authoritative hostname-to-IP mappings for that organization's publicly accessible hosts (web, mail, API servers).
+• Every organization with public internet infrastructure must provide authoritative DNS records.
+• Can be hosted directly by the organization or outsourced to a Managed DNS Service Provider (e.g., Cloudflare, AWS Route 53, Akamai).
+
+================================================================================
+SLIDE 11: Local DNS Name Servers (Default Resolvers)
+================================================================================
+COMPUTER NETWORKS: Local DNS Name Servers
+
+Characteristics:
+• Does not strictly belong to the formal DNS hierarchy.
+• Every ISP (residential ISP, university campus network, enterprise) maintains one or more Local DNS Servers (also called "default name servers" or "recursive resolvers").
+• Identifying Local DNS Server on Host Devices:
+  - macOS / Linux: Run `% scutil --dns` or `cat /etc/resolv.conf`
+  - Windows: Run `> ipconfig /all`
+
+How a Local DNS Server Operates:
+1. When a client application (browser) makes a DNS lookup, the query is dispatched directly to the host's configured Local DNS Server.
+2. The Local DNS Server handles the query by:
+   - Returning the answer immediately from its local cache if a fresh record exists.
+   - Acting as a proxy on behalf of the client, actively querying the DNS hierarchy (Root -> TLD -> Authoritative) to resolve the name if not cached.
+
+================================================================================
+SLIDE 12: DNS Name Resolution: Iterated Query
+================================================================================
+COMPUTER NETWORKS: DNS name resolution: iterated query
+
+Example Scenario:
+• Host at `engineering.nyu.edu` wants to resolve the IP address for `gaia.cs.umass.edu`.
+
+Iterated Query Principle:
+• The contacted server replies with a referral indicating the name of the next server to query:
+  "I don't know the answer to this name, but ask this specific server!"
+• The requesting Local DNS server performs all the iterative queries itself.
+
+Step-by-Step Resolution Flow:
+1. Host `engineering.nyu.edu` sends query for `gaia.cs.umass.edu` to local resolver `dns.nyu.edu`.
+2. `dns.nyu.edu` queries Root DNS Server.
+3. Root DNS Server replies with a referral to the `.edu` TLD Server.
+4. `dns.nyu.edu` queries `.edu` TLD Server.
+5. `.edu` TLD Server replies with a referral to the authoritative server `dns.cs.umass.edu`.
+6. `dns.nyu.edu` queries Authoritative Server `dns.cs.umass.edu`.
+7. `dns.cs.umass.edu` replies with the IP address of `gaia.cs.umass.edu` (128.119.245.12).
+8. `dns.nyu.edu` delivers the resolved IP address to the requesting host `engineering.nyu.edu`.
+
+ASCII Sequence Diagram:
+   Host                           Local DNS                     Root DNS
+(engineering.nyu.edu)           (dns.nyu.edu)                    Server
+       |                              |                             |
+       | --- (1) Query -------------> |                             |
+       |                              | --- (2) Query ------------> |
+       |                              | <-- (3) Referral to .edu -- |
+       |                              |
+       |                              |           .edu TLD
+       |                              |            Server
+       |                              |              |
+       |                              | --- (4) ---->|
+       |                              | <-- (5) Ref -|
+       |                              |
+       |                              |         dns.cs.umass.edu
+       |                              |       (Authoritative Server)
+       |                              |              |
+       |                              | --- (6) ---->|
+       |                              | <-- (7) IP --|
+       | <--- (8) IP Address -------- |
+       v                              v
+
+================================================================================
+SLIDE 13: DNS Name Resolution: Recursive Query
+================================================================================
+COMPUTER NETWORKS: DNS name resolution: recursive query
+
+Recursive Query Principle:
+• A recursive query places the burden of full resolution on the contacted server:
+  "I don't know the answer, but wait while I ask the next server on your behalf!"
+• Each contacted server recursively delegates the query down the chain and relays the response back up.
+
+Step-by-Step Recursive Flow:
+1. Host queries Local DNS Server `dns.nyu.edu`.
+2. `dns.nyu.edu` queries Root DNS Server.
+3. Root DNS Server queries `.edu` TLD Server.
+4. `.edu` TLD Server queries Authoritative Server `dns.cs.umass.edu`.
+5. Authoritative Server returns IP to `.edu` TLD Server.
+6. `.edu` TLD Server returns IP to Root DNS Server.
+7. Root DNS Server returns IP to Local DNS Server `dns.nyu.edu`.
+8. Local DNS Server returns IP to requesting host.
+
+Why Root and TLD Servers Do NOT Support Recursive Queries:
+• Notice how in pure recursive queries, Root and TLD servers must maintain state and wait for downstream replies!
+• This creates enormous memory load and severe bottlenecks at the highest levels of the hierarchy.
+• Therefore, in the real-world Internet, upper-level servers (Root and TLD) ONLY answer iteratively. Recursive querying is strictly restricted to the hop between the end-user client and its local resolver.
+
+================================================================================
+SLIDE 14: Iterated vs. Recursive Query – Side-by-Side Comparison
+================================================================================
+COMPUTER NETWORKS: Iterated vs Recursive Query – Side by Side
+
++---------------------------+---------------------------------------+---------------------------------------+
+| Feature                   | Iterated Query                        | Recursive Query                       |
++---------------------------+---------------------------------------+---------------------------------------+
+| Who does the walking?     | The requesting local DNS resolver     | Each contacted server, sequentially   |
+|                           | itself.                               | on the client's behalf.               |
++---------------------------+---------------------------------------+---------------------------------------+
+| Where does load land?     | Distributed — each contacted hop      | Concentrated — pushed heavily onto    |
+|                           | answers only what it knows.           | upper-hierarchy servers.              |
++---------------------------+---------------------------------------+---------------------------------------+
+| Server response style     | "I don't know this name... but ask    | "I don't know this name... let me ask |
+|                           | this server" (Referral).              | for you" (Relay).                     |
++---------------------------+---------------------------------------+---------------------------------------+
+| Where typically used?     | Local Resolver <-> Root / TLD /       | Client Host <-> Local DNS Resolver.   |
+|                           | Authoritative servers.                |                                       |
++---------------------------+---------------------------------------+---------------------------------------+
+
+================================================================================
+SLIDE 15: Caching and Updating DNS Records
+================================================================================
+COMPUTER NETWORKS: Caching and Updating DNS Records
+
+DNS Caching:
+• Example: Host `apricot.nyu.edu` queries `dns.nyu.edu` for `cnn.com`. One hour later, `kiwi.nyu.edu` also queries `dns.nyu.edu` for `cnn.com`.
+• Rule: Once ANY name server learns a mapping, it caches the mapping locally in memory and immediately returns the cached value for subsequent queries.
+• Benefits:
+  - Drastically improves response times (sub-millisecond resolution for cached entries).
+  - TLD server mappings are almost permanently cached in local DNS servers, so Root Name Servers are rarely visited!
+
+TTL (Time-To-Live) and Cache Expiration:
+• Cache entries automatically timeout and are discarded after their TTL expires (e.g., 86,400 seconds = 24 hours, or 300 seconds = 5 minutes).
+
+The Stale Cache Problem:
+• DNS caching is a "best-effort" naming service:
+  - If a company changes its server's IP address, resolvers around the world that cached the old record will continue serving the stale IP until their TTLs expire!
+• Operational Best Practice for Planned Server Migrations:
+  1. Well in advance of the migration, lower the DNS record's TTL (e.g., reduce from 86,400s to 300s).
+  2. Wait for the old long TTL to fully expire across all global resolver caches.
+  3. Change the IP address record (cutover).
+  4. Once migration is verified, raise the TTL back to a higher value.
+
+Dynamic Updates:
+• RFC 2136 specifies standard IETF mechanisms for dynamic DNS updates and notifications.
+
+================================================================================
+SLIDE 16: DNS Resource Records (RR) Format & Core Types
+================================================================================
+COMPUTER NETWORKS: DNS Records
+
+Resource Record (RR) Structure:
+• The DNS distributed database stores Resource Records (RR).
+• Standard 4-Tuple Format:
+    (name, value, type, ttl)
+
+Four Primary Record Types:
+1. Type = A (Address Record):
+   - Name: Hostname
+   - Value: IPv4 Address
+   - Example: `(relay1.bar.foo.com, 145.37.93.126, A, 86400)`
+
+2. Type = NS (Name Server Record):
+   - Name: Domain (e.g., `foo.com`)
+   - Value: Hostname of authoritative name server for this domain
+   - Example: `(foo.com, dns.foo.com, NS, 86400)`
+
+3. Type = CNAME (Canonical Name / Alias Record):
+   - Name: Alias hostname (e.g., `www.ibm.com`)
+   - Value: True Canonical hostname (e.g., `servereast.backup2.ibm.com`)
+   - Example: `(www.ibm.com, servereast.backup2.ibm.com, CNAME, 86400)`
+
+4. Type = MX (Mail Exchange Record):
+   - Name: Domain name (e.g., `example.com`)
+   - Value: Canonical hostname of the mail server handling mail for that domain
+   - Example: `(example.com, mail.example.com, MX, 86400)`
+
+================================================================================
+SLIDE 17: DNS Record Types – Extended Reference
+================================================================================
+COMPUTER NETWORKS: DNS Record Types – Extended Reference
+
++--------+-------------------------------------------------------+-------------------------------------------------------------+
+| Type   | Purpose                                               | Example (Name -> Value)                                     |
++--------+-------------------------------------------------------+-------------------------------------------------------------+
+| A      | Hostname -> IPv4 address                              | relay1.bar.foo.com -> 145.37.93.126                         |
+| AAAA   | Hostname -> 128-bit IPv6 address                      | www.example.com -> 2606:2800:220:1:248:1893:25c8:1946     |
+| NS     | Domain -> Authoritative name server hostname          | foo.com -> dns.foo.com                                      |
+| CNAME  | Alias hostname -> Canonical hostname                  | www.ibm.com -> servereast.backup2.ibm.com                   |
+| MX     | Domain -> Mail server hostname (with priority ranking)| example.com -> mail.example.com                             |
+| TXT    | Free-text data; domain verification, SPF/DKIM anti-   | example.com -> "v=spf1 include:_spf.google.com ~all"        |
+|        | phishing email security records                       |                                                             |
+| SOA    | Start of Authority; zone's primary server, admin      | example.com -> ns1.example.com admin.example.com (serial...) |
+|        | contact, zone serial number, and refresh/retry TTLs   |                                                             |
+| PTR    | Pointer record; Reverse DNS lookup (IP -> Hostname)   | 126.93.37.145.in-addr.arpa -> relay1.bar.foo.com            |
+| SRV    | Service locator; specifies host and port for specific  | _sip._tcp.example.com -> 10 60 5060 bigbox.example.com      |
+|        | services (e.g., SIP, LDAP, Active Directory)           |                                                             |
++--------+-------------------------------------------------------+-------------------------------------------------------------+
+
+================================================================================
+SLIDE 18: DNS Protocol Message Format
+================================================================================
+COMPUTER NETWORKS: DNS Protocol Messages
+
+Overview:
+• Both DNS Query and DNS Reply messages use the EXACT same standardized packet format.
+• Runs over UDP (and optionally TCP for zone transfers or large responses) on Port 53.
+• The header is strictly 12 bytes long:
+
+ASCII Header Layout:
++------------------------------------+------------------------------------+
+|         Identification (16 bits)   |             Flags (16 bits)        |  <-- 4 bytes
++------------------------------------+------------------------------------+
+|       # Questions (16 bits)        |          # Answer RRs (16 bits)    |  <-- 4 bytes
++------------------------------------+------------------------------------+
+|      # Authority RRs (16 bits)     |         # Additional RRs (16 bits) |  <-- 4 bytes
++------------------------------------+------------------------------------+
+|                   Questions (Variable number of questions)              |
++-------------------------------------------------------------------------+
+|                    Answers (Variable number of RRs)                     |
++-------------------------------------------------------------------------+
+|                   Authority (Variable number of RRs)                    |
++-------------------------------------------------------------------------+
+|                Additional Info (Variable number of RRs)                 |
++-------------------------------------------------------------------------+
+
+Header Fields (12 bytes total):
+• Identification (16 bits): A unique transaction ID chosen by the client; server matches this ID in the reply so the client can pair responses with queries.
+• Flags (16 bits):
+  - QR (1 bit): 0 for Query, 1 for Reply.
+  - Opcode (4 bits): Standard query (0), Inverse query (1), Server status (2).
+  - AA (1 bit): Authoritative Answer (1 if the responding server is authoritative).
+  - TC (1 bit): Truncation (1 if message exceeded 512 bytes over UDP).
+  - RD (1 bit): Recursion Desired (set by client if recursive resolution is wanted).
+  - RA (1 bit): Recursion Available (set by server if server supports recursive queries).
+  - RCODE (4 bits): Return response code (0 = No error, 3 = Name error / NXDOMAIN).
+• Numbers of Records:
+  - Number of Questions
+  - Number of Answer Resource Records
+  - Number of Authority Resource Records
+  - Number of Additional Resource Records
+
+================================================================================
+SLIDE 19: DNS Protocol Message Sections Breakdown
+================================================================================
+COMPUTER NETWORKS: DNS Protocol Messages (Sections Breakdown)
+
+Four Payload Sections:
+1. Questions Section:
+   - Contains fields for the query being asked:
+     * Name: The domain name being resolved (e.g., `www.example.com`)
+     * Type: The record type requested (e.g., Type A, MX, AAAA)
+     * Class: Usually IN (Internet)
+
+2. Answers Section:
+   - Contains the Resource Records (RRs) returned in direct response to the question.
+   - Each RR includes Name, Type, Value, and TTL.
+   - A reply can contain multiple RRs (e.g., multiple IPs for load distribution).
+
+3. Authority Section:
+   - Contains Resource Records pointing to the authoritative name servers for the requested domain.
+
+4. Additional Info Section:
+   - Contains additional "helpful" Resource Records that avoid extra queries.
+   - For example, if an NS record in the Authority section points to `dns1.networkutopia.com`, the Additional section provides the Type A record (IP address) for `dns1.networkutopia.com` directly ("glue record").
+
+================================================================================
+SLIDE 20: DNS Demo Toolkit – Command Cheat Sheet
+================================================================================
+COMPUTER NETWORKS: DNS Demo Toolkit – Command Cheat Sheet
+
++---------------------------+-------------------------------------------------------+-------------------------------------------------------+
+| Command                   | What It Does                                          | Practical Use Case                                    |
++---------------------------+-------------------------------------------------------+-------------------------------------------------------+
+| `dig @server name`        | Sends query directly to a specific named DNS server   | Emulating a single hop in the resolution hierarchy    |
+| `dig +trace name`         | Automatically traces Root -> TLD -> Authoritative     | Visualizing the full iterated resolution path at once |
+| `dig name`                | Performs standard lookup via local default resolver   | Baseline name-to-IP lookup                            |
+| `nslookup name`           | Cross-platform interactive and non-interactive lookup | Quick DNS check on systems without dig installed      |
+| `host name`               | Minimalist, clean one-line lookup                     | Rapid sanity check and scripting                      |
+| `scutil --dns` (macOS)    | Displays configured system resolvers and search domains| Identifying active local DNS resolver on Apple systems|
+| `ipconfig /all` (Windows) | Displays detailed adapter and DNS server IPs          | Identifying active local DNS resolver on Windows      |
++---------------------------+-------------------------------------------------------+-------------------------------------------------------+
+
+================================================================================
+SLIDE 21: Emulating Local DNS Server (Step 1: Ask Root)
+================================================================================
+COMPUTER NETWORKS: Emulating Local DNS Server (Step 1: Ask Root)
+
+Action:
+• Query the Root Name Server directly for `www.example.net` without recursion:
+  `$ dig @a.root-servers.net www.example.net`
+
+Observed Terminal Output Breakdown:
+--------------------------------------------------------------------------------
+;; QUESTION SECTION:
+;www.example.net.            IN  A
+
+;; AUTHORITY SECTION:
+net.                172800   IN  NS  m.gtld-servers.net.
+net.                172800   IN  NS  l.gtld-servers.net.
+net.                172800   IN  NS  k.gtld-servers.net.
+
+;; ADDITIONAL SECTION:
+m.gtld-servers.net. 172800   IN  A   192.55.83.30
+l.gtld-servers.net. 172800   IN  A   192.41.162.30
+k.gtld-servers.net. 172800   IN  A   192.52.178.30
+--------------------------------------------------------------------------------
+
+Analysis:
+• The Root server does NOT know the IP of `www.example.net` (No Answer section).
+• It returns referrals in the Authority Section: "Go ask the `.net` gTLD servers!"
+• In the Additional Section, it generously provides the IP addresses of those `.net` name servers (glue records), saving the resolver from performing another lookup.
+
+================================================================================
+SLIDE 22: Emulating Local DNS Server (Steps 2 & 3: Ask TLD & Authoritative)
+================================================================================
+COMPUTER NETWORKS: Steps 2-3: Ask .net & example.net servers
+
+Step 2: Query the `.net` TLD Server:
+• `$ dig @m.gtld-servers.net www.example.net`
+Output:
+--------------------------------------------------------------------------------
+;; QUESTION SECTION:
+;www.example.net.            IN  A
+
+;; AUTHORITY SECTION:
+example.net.        172800   IN  NS  a.iana-servers.net.
+example.net.        172800   IN  NS  b.iana-servers.net.
+
+;; ADDITIONAL SECTION:
+a.iana-servers.net. 172800   IN  A   199.43.135.53
+b.iana-servers.net. 172800   IN  A   199.43.133.53
+--------------------------------------------------------------------------------
+Analysis: The TLD server refers the resolver to the authoritative servers for `example.net` (`a.iana-servers.net`).
+
+Step 3: Query the Authoritative Server:
+• `$ dig @a.iana-servers.net www.example.net`
+Output:
+--------------------------------------------------------------------------------
+;; QUESTION SECTION:
+;www.example.net.            IN  A
+
+;; ANSWER SECTION:
+www.example.net.     86400   IN  A   93.184.216.34
+--------------------------------------------------------------------------------
+Analysis: Finally got the answer! Authoritative server returns the actual IP address: `93.184.216.34`.
+
+================================================================================
+SLIDE 23: Inserting Records into DNS (Domain Registration)
+================================================================================
+COMPUTER NETWORKS: Inserting records into DNS
+
+Example: Creating a New Startup "Network Utopia"
+1. Domain Registration:
+   • Register domain name `networkutopia.com` with an accredited commercial DNS Registrar (e.g., Network Solutions, GoDaddy, Namecheap).
+2. Authoritative Nameserver Configuration:
+   • Provide the registrar with the names and IP addresses of the primary and secondary authoritative DNS servers:
+     - Primary: `dns1.networkutopia.com`, IP: `212.212.212.1`
+     - Secondary: `dns2.networkutopia.com`, IP: `212.212.212.2`
+3. Registrar Actions in the TLD Registry:
+   • The registrar inserts two Resource Records into the `.com` TLD name servers:
+     - NS Record: `(networkutopia.com, dns1.networkutopia.com, NS)`
+     - Glue A Record: `(dns1.networkutopia.com, 212.212.212.1, A)`
+4. Authoritative Server Setup:
+   • On the server at `212.212.212.1`, configure the local zone file with:
+     - Type A record: `(www.networkutopia.com, 212.212.212.1, A)`
+     - Type MX record: `(networkutopia.com, mail.networkutopia.com, MX, 10)`
+
+================================================================================
+SLIDE 24: DNS Request – Wireshark Packet Capture Analysis
+================================================================================
+COMPUTER NETWORKS: DNS Request - Wireshark Packet Capture
+
+Packet Capture Analysis:
+• Packet Number: 16
+• Time: 13:51:27.041610000
+• Source IP: 10.36.41.43 (Client Host)
+• Destination IP: 10.40.4.44 (Local DNS Resolver)
+• Protocol: DNS over UDP (Destination Port: 53)
+• Length: 72 bytes
+• Summary: `Standard query 0x9f7d A www.ietf.org`
+
+Dissected Packet Details:
+• Transaction ID: `0x9f7d`
+• Flags: `0x0100` (Standard query)
+  - Query/Response: 0 (Query)
+  - Recursion Desired: 1 (Client requests recursive lookup)
+• Questions Count: 1
+• Answer RRs: 0
+• Authority RRs: 0
+• Additional RRs: 0
+• Queries Section:
+  - Name: `www.ietf.org`
+  - Type: A (Host Address)
+  - Class: IN (Internet, 0x0001)
+
+================================================================================
+SLIDE 25: DNS Response – Wireshark Packet Capture Analysis
+================================================================================
+COMPUTER NETWORKS: DNS Response - Wireshark Packet Capture
+
+Packet Capture Analysis:
+• Packet Number: 17
+• Time: 13:51:27.160178000 (Elapsed latency: ~118 ms)
+• Source IP: 10.40.4.44 (Local DNS Resolver)
+• Destination IP: 10.36.41.43 (Client Host)
+• Protocol: DNS over UDP (Source Port: 53)
+• Length: 473 bytes
+• Summary: `Standard query response 0x9f7d A 64.170.98.30`
+
+Dissected Packet Details:
+• Transaction ID: `0x9f7d` (Matches request!)
+• Flags: `0x8180` (Standard query response, No error)
+  - Query/Response: 1 (Response)
+  - Authoritative Answer: 0 (Resolver answered from cache/upstream)
+  - Recursion Desired: 1
+  - Recursion Available: 1 (Server confirms recursion support)
+  - Reply Code: 0 (No Error)
+• Questions: 1 (`www.ietf.org`)
+• Answer RRs: 1
+  - `www.ietf.org: type A, class IN, addr 64.170.98.30`
+• Authority RRs: 6
+  - `ietf.org: type NS, ns ns1.yyz1.afilias-nst.info`
+  - `ietf.org: type NS, ns ns0.ietf.org`
+  - `ietf.org: type NS, ns ns1.sea1.afilias-nst.info`
+  - `ietf.org: type NS, ns ns1.ams1.afilias-nst.info`
+  - `ietf.org: type NS, ns ns1.mia1.afilias-nst.info`
+• Additional RRs: 11 (Glue IP records for the nameservers above)
+
+================================================================================
+SLIDE 26: Suggested Readings & References
+================================================================================
+COMPUTER NETWORKS: Suggested Readings
+
+Video Resources:
+• DNS (Domain Name System) – Explained: https://youtu.be/JkEYOt08-rU
+• How a DNS Server (Domain Name System) Works: https://youtu.be/rdVPflECed8
+
+Lab Experiments:
+• Kurose & Ross Wireshark Lab: DNS v7.0:
+  http://www-net.cs.umass.edu/wireshark-labs/Wireshark_DNS_v7.0.pdf
+
+================================================================================
+SLIDE 27: Review Questions & Answers (Questions 1 to 5)
+================================================================================
+COMPUTER NETWORKS: Review Questions
+
+1. Why can't we just use IP addresses everywhere and skip names entirely?
+   Answer:
+   Names are human-memorable and remain stable even when underlying IP addresses change (due to hosting migration, ISP changes, or dynamic DHCP renumbering). DNS exists specifically to bridge "what humans use" and "what routers and switches use."
+
+2. Why isn't DNS just one giant centralized server?
+   Answer:
+   It wouldn't scale: A single centralized server would represent a catastrophic single point of failure, could not withstand the staggering traffic volume (Comcast alone handles 600B queries/day, Akamai 2.2T queries/day), would impose huge propagation delays for distant users, and would be impossible to maintain.
+
+3. Put these in order: TLD server, Authoritative server, Root server.
+   Answer:
+   Root Server -> TLD Server -> Authoritative Server.
+   The Root server directs the resolver to the appropriate TLD server, the TLD server directs it to the organization's authoritative server, and the Authoritative server delivers the actual resource record.
+
+4. What's the difference between a domain and a zone?
+   Answer:
+   A Domain is a logical subtree of the DNS namespace (e.g., everything ending in `example.com`). A Zone is an administrative boundary representing the specific portion of the domain tree managed and maintained by an organization or department. A single domain can be divided into multiple independently administered zones.
+
+5. Give a practical reason an organization would split its domain into multiple zones.
+   Answer:
+   To delegate administrative control: For example, PES University IT can delegate the `cse.pes.edu` zone to the Computer Science Department, allowing departmental staff to create hostnames and update servers directly without submitting support tickets to central IT, and ensuring an administrative error in one department's zone does not impact the rest of the university.
+
+================================================================================
+SLIDE 28: Review Questions & Answers (Questions 6 to 10)
+================================================================================
+COMPUTER NETWORKS: Review Questions (Contd.)
+
+6. In an iterated query, what does a server say when it doesn't know the answer?
+   Answer:
+   "I don't know this name, but ask this specific server instead" — it returns a referral and places the burden of following up on the querying entity.
+
+7. In a recursive query, who does the extra work of following referrals?
+   Answer:
+   The contacted server does all the work sequentially on the client's behalf, contacting downstream servers and relaying the final answer back to the client.
+
+8. Which DNS flag in a response tells you whether a server is willing to do recursive resolution for you?
+   Answer:
+   The RA (Recursion Available) flag. Root and TLD servers intentionally never set this flag because by architectural design they operate strictly iteratively.
+
+9. What does a TTL control, and what happens right after it hits zero?
+   Answer:
+   TTL (Time-To-Live) controls how long a caching resolver may continue serving a saved answer without re-validating it with the authoritative server. Once TTL hits zero, the entry expires, is purged from cache, and subsequent queries must walk the hierarchy fresh.
+
+10. A company changes a server's IP address. Why might some users still reach the old IP for hours afterward?
+    Answer:
+    DNS caching operates on a best-effort basis: Any resolver that cached the old record will continue serving the old IP until its local TTL expires. There is no global broadcast mechanism to purge caches across the worldwide Internet simultaneously.
+
+================================================================================
+SLIDE 29: Review Questions & Answers (Questions 11 to 15)
+================================================================================
+COMPUTER NETWORKS: Review Questions (Contd.)
+
+11. What's the standard operational fix for minimizing disruption during a planned IP change?
+    Answer:
+    Lower the TTL significantly (e.g., to 300 seconds) days in advance of the planned change. Wait until the old, long TTL has fully expired across all external caches. Perform the IP cutover, and once stability is confirmed, restore the TTL to its normal high value.
+
+12. Name the four primary DNS record types and what each maps.
+    Answer:
+    • Type A: Maps Hostname -> IPv4 address.
+    • Type NS: Maps Domain -> Hostname of the authoritative name server.
+    • Type CNAME: Maps Alias hostname -> Canonical (true) hostname.
+    • Type MX: Maps Domain -> Hostname of the mail server.
+
+13. What's the difference between host aliasing (CNAME) and mail server aliasing (MX)?
+    Answer:
+    CNAME maps one general hostname to another hostname (e.g., `www.ibm.com` -> `servereast.backup2.ibm.com`). MX specifically directs email traffic for a domain to a designated mail exchanger and — unlike CNAME — supports numerical priority rankings for primary and backup mail servers.
+
+14. What kind of DNS record has no fixed structure, and what are two real uses for it?
+    Answer:
+    Type TXT records (arbitrary free-text data). Two primary uses:
+    1. Domain ownership verification (e.g., `google-site-verification=...`).
+    2. Email authentication and anti-spoofing policies (SPF and DKIM records).
+
+15. What problem does DNSSEC solve that TTL/caching does not?
+    Answer:
+    Authenticity and Data Integrity: DNSSEC uses cryptographic signatures to guarantee that a response genuinely originated from the legitimate authoritative server and was not forged or altered by an attacker (preventing cache poisoning). It does not address record freshness or staleness, which is governed strictly by TTL.
+
+================================================================================
+SLIDE 30: Peer-to-Peer (P2P) Architecture
+================================================================================
+COMPUTER NETWORKS: Peer-to-peer (P2P) architecture
+
+Core Principles:
+• No Centralized Server: Communication occurs directly between arbitrary pairs of end systems (peers).
+• Mutual Service Provision: Peers request services from other peers and provide service (upload bandwidth, storage) in return to other peers.
+• Self-Scalability:
+  - As user demand increases (more downloaders), network capacity automatically expands (more uploaders).
+• Advantages:
+  - Highly cost-effective (no massive server infrastructure required).
+  - High availability (no single point of failure).
+  - Efficient resource sharing and decentralized load distribution.
+• Challenges:
+  - Churn: Peers join and leave intermittently and frequently change dynamic IP addresses, requiring robust distributed tracking and complex management.
+
+Popular Applications:
+• P2P File Sharing (BitTorrent)
+• Media Streaming (Early Spotify, P2P-Live)
+• Voice-over-IP (Early Skype)
+• Blockchain & Cryptocurrencies (Bitcoin, Ethereum)
+• Video & Content Distribution
+
+ASCII Diagram:
+   [ Peer ] <------------------------> [ Peer ]
+      ^  \                                /  ^
+      |   \                              /   |
+      |    v                            v    |
+   [ Peer ] <------------------------> [ Peer ]
+      ^                                      ^
+      |                                      |
+      +------------ [ Peer ] <---------------+
+
+================================================================================
+SLIDE 31: Unit 2 Application Layer: Agenda Note
+================================================================================
+COMPUTER NETWORKS
+Unit – 2 Application Layer
+
+Topics:
+2.3 The Domain Name System
+2.4 P2P Applications
+2.5 Socket Programming with TCP & UDP
+    *(Note: Socket Programming concepts will be integrated and dealt with in detail following the introduction of Transport Layer functions)
+2.6 Other Application Layer Protocols
+
+================================================================================
+SLIDE 32: Unit 2 Application Layer: Section Overview
+================================================================================
+COMPUTER NETWORKS
+Unit – 2 Application Layer
+
+Section Focus:
+2.6 Other Application Layer Protocols
+• FTP (File Transfer Protocol)
+• SMTP (Simple Mail Transfer Protocol)
+• DHCP (Dynamic Host Configuration Protocol)
+• SNMP (Simple Network Management Protocol)
+• Telnet & SSH (Secure Shell)
+
+================================================================================
+SLIDE 33: Other Application Layer Protocols: FTP
+================================================================================
+COMPUTER NETWORKS: Other Application Layer Protocols - FTP
+
+File Transfer Protocol (FTP):
+• Primary Purpose: Transferring files reliably between a local client and a remote server.
+• Transport: Operates over TCP.
+• Invocation: Command line terminal (`ftp host`) or graphical FTP clients (FileZilla, Cyberduck).
+• Server File Operations: Allows clients to list, upload, download, delete, rename, move, and copy files on the remote server.
+
+Out-of-Band Control Architecture (Two Separate Connections):
+• Control Connection (Port 21):
+  - Used strictly for sending control commands (USER, PASS, LIST, RETR, STOR) and receiving status codes.
+  - Remains open throughout the session ("out-of-band" control).
+• Data Connection (Port 20):
+  - Used strictly for transferring raw file data.
+  - Opened dynamically for each file transfer and closed immediately upon transfer completion.
+
+ASCII FTP Architecture:
+   [ FTP Client ] ===== TCP Control Connection (Port 21) =====> [ FTP Server ]
+   [            ] <==== TCP Data Connection (Port 20) ========> [            ]
+
+================================================================================
+SLIDE 34: Other Application Layer Protocols: SMTP
+================================================================================
+COMPUTER NETWORKS: Other Application Layer Protocols - SMTP
+
+Simple Mail Transfer Protocol (SMTP):
+• Primary Purpose: Standard protocol for transmitting email messages across the Internet.
+• Transport: Operates over TCP on Port 25 (or port 587 for message submission).
+• Push Protocol: SMTP is strictly a push mechanism:
+  - Sending mail server pushes mail to receiving mail server.
+  - (Retrieval by end users uses pull protocols: IMAP on port 143/993 or POP3 on port 110/995).
+• Store-and-Forward Relay:
+  - Messages travel hop-by-hop across mail servers until reaching the destination mailbox.
+• Security:
+  - Connections are encrypted and secured using TLS/SSL (STARTTLS).
+• Text-Based Commands:
+  - Uses human-readable 7-bit ASCII command/response pairs: `HELO`, `MAIL FROM:`, `RCPT TO:`, `DATA`, `QUIT`.
+
+================================================================================
+SLIDE 35: Other Application Layer Protocols: DHCP
+================================================================================
+COMPUTER NETWORKS: Other Application Layer Protocols - DHCP
+
+Dynamic Host Configuration Protocol (DHCP):
+• Primary Purpose: Automatically and dynamically assigns IP addresses and network configuration parameters to client hosts joining a local network.
+• Dynamic IP Leases: IP addresses are leased for a finite duration; addresses can be renewed or change over time.
+• Transport: Operates over UDP:
+  - DHCP Server listens on Port 67.
+  - DHCP Client listens on Port 68.
+
+Network Configuration Parameters Provided:
+1. Assigned Host IPv4 Address
+2. Subnet Mask (network prefix)
+3. Default Gateway Router IP Address
+4. Local DNS Server IP Address(es)
+
+Four-Step DORA Protocol Exchange:
+1. Discover (DHCPDISCOVER): Client broadcasts (`255.255.255.255:67`) to locate available DHCP servers.
+2. Offer (DHCPOFFER): DHCP server broadcasts proposed IP address and configuration.
+3. Request (DHCPREQUEST): Client broadcasts acceptance of the offered configuration.
+4. Acknowledge (DHCPACK): Server confirms assignment and starts lease timer.
+
+================================================================================
+SLIDE 36: Other Application Layer Protocols: SNMP
+================================================================================
+COMPUTER NETWORKS: Other Application Layer Protocols - SNMP
+
+Simple Network Management Protocol (SNMP):
+• Primary Purpose: Exchanging management information and monitoring the performance and health of networked devices (routers, switches, firewalls, servers).
+• Transport: Operates over UDP:
+  - Port 161: Polling / request-response messages.
+  - Port 162: Asynchronous notifications (SNMP Traps).
+
+Four Fundamental Components:
+1. SNMP Manager (Managing Entity):
+   - Central console / application monitoring network devices.
+2. Managed Devices:
+   - Network hardware running SNMP agent software (switches, routers).
+3. SNMP Agents:
+   - Software running inside managed devices that reads/modifies hardware state.
+4. MIB (Management Information Base):
+   - Hierarchical database of manageable object variables (e.g., interface packet counters, CPU temperature, bandwidth utilization).
+
+================================================================================
+SLIDE 37: Other Application Layer Protocols: Telnet & SSH
+================================================================================
+COMPUTER NETWORKS: Other Application Layer Protocols – Telnet & SSH
+
+Remote Terminal Access:
+• Enables administrators and users to log in remotely and execute commands on network equipment and remote servers.
+
+Telnet (Telecommunication Network):
+• Port: TCP Port 23.
+• Flaw: Transmits everything — including passwords, usernames, and commands — in completely unencrypted clear text!
+• Security Risk: Extremely vulnerable to packet sniffing on local networks.
+• Status: Obsolete; replaced by SSH.
+
+SSH (Secure Shell):
+• Port: TCP Port 22.
+• Security: All communications are strongly encrypted using symmetric session keys.
+• Authentication: Supports robust public-key cryptography (SSH key pairs) and password authentication.
+• Functionality: Secure terminal shell, remote file transfer (SCP, SFTP), and secure port forwarding / tunneling.
+
+================================================================================
+SLIDE 38: Summary of Application Layer Protocols
+================================================================================
+COMPUTER NETWORKS: Summary of Application Layer Protocols
+
++----------+-------------------+-----------------+-------------------------------------------------------------+
+| Port No. | Protocol          | Transport Layer | Purpose / Primary Function                                  |
++----------+-------------------+-----------------+-------------------------------------------------------------+
+| 20       | FTP (Data)        | TCP             | File Transfer Protocol — data transmission channel          |
+| 21       | FTP (Control)     | TCP             | File Transfer Protocol — command / control channel          |
+| 22       | SSH               | TCP (UDP)       | Secure Shell — encrypted remote administration & login      |
+| 23       | Telnet            | TCP             | Unencrypted remote terminal login (insecure)                |
+| 25       | SMTP              | TCP             | Simple Mail Transfer Protocol — email transmission          |
+| 53       | DNS               | UDP & TCP       | Domain Name System — hostname to IP resolution              |
+| 67, 68   | DHCP              | UDP             | Dynamic Host Configuration Protocol (Server: 67, Client: 68)|
+| 80       | HTTP              | TCP             | HyperText Transfer Protocol — unencrypted World Wide Web    |
+| 123      | NTP               | UDP             | Network Time Protocol — clock synchronization               |
+| 161, 162 | SNMP              | UDP (TCP)       | Simple Network Management Protocol (Poll: 161, Trap: 162)   |
+| 389      | LDAP              | TCP & UDP       | Lightweight Directory Access Protocol — directory services  |
+| 443      | HTTPS             | TCP (UDP/QUIC)  | HTTP Secure — encrypted Web traffic over TLS                |
++----------+-------------------+-----------------+-------------------------------------------------------------+
+
+================================================================================
+SLIDE 39: Application Layer Summary (Part 1)
+================================================================================
+COMPUTER NETWORKS: Summary
+
+Our study of the network application layer is now complete!
+
+Application Architectures:
+• Client-Server Architecture
+• Peer-to-Peer (P2P) Architecture
+
+Application Service Requirements:
+• Reliability & Data Integrity (loss-tolerant vs. 100% loss-free)
+• Throughput & Bandwidth (elastic vs. minimum rate guarantees)
+• Timing & Delay (time-sensitive vs. delay-tolerant)
+• Security (confidentiality, authentication, message integrity)
+
+Internet Transport Service Models:
+• Connection-oriented, reliable, byte-stream service: TCP
+• Lightweight, connectionless, unreliable datagram service: UDP
+
+Specific Protocols Studied:
+• HTTP & HTTPS (Web)
+• DNS (Domain Name System)
+• P2P: BitTorrent
+• Ancillary protocols: FTP, SMTP, DHCP, SNMP, SSH, Telnet
+
+Socket Programming:
+• TCP sockets (stream-oriented, connection setup)
+• UDP sockets (datagram-oriented, connectionless)
+
+================================================================================
+SLIDE 40: Application Layer Summary (Part 2) - Core Principles
+================================================================================
+COMPUTER NETWORKS: Summary (more)
+
+Most Importantly: What We Learned About Protocols!
+• Typical Request / Reply Message Exchanges:
+  - Client requests information or service.
+  - Server responds with requested data and appropriate status code.
+• Message Formats & Delineation:
+  - Headers: Standardized fields providing metadata about the data.
+  - Data / Payload: The actual information being communicated.
+
+Fundamental Enduring Themes:
+• Centralized vs. Decentralized Architectures
+• Stateless vs. Stateful Protocol Designs
+• Scalability & Hierarchy (e.g., DNS tree structure)
+• Reliable vs. Unreliable Message Transfer
+• "Complexity at the Network Edge" (End-to-End Principle): The intelligence and applications live on end systems; the core network remains simple and transparent.
+
+================================================================================
+SLIDE 41: Conclusion & Department Closing Slide
+================================================================================
+THANK YOU
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University

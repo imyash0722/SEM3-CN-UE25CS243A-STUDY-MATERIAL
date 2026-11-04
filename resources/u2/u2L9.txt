@@ -1,0 +1,183 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 9: Pipelined Protocols: Selective Repeat (SR Window, 12-Tx Problem & Window Dilemma)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 92 to 101)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 10
+================================================================================
+
+================================================================================
+SLIDE 92: Roadmap: Selective Repeat (SR)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.4 Principles of Reliable Data Transfer
+• Selective Repeat (SR) Protocol Mechanics and Calculations.
+
+================================================================================
+SLIDE 93: Selective Repeat (SR): Overview & Mechanics
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat
+
+Core Principles:
+• Pipelining: Multiple packets in flight simultaneously.
+• Individual Acknowledgments:
+  - Receiver individually acknowledges EVERY correctly received packet (no cumulative ACKs).
+  - Receiver buffers out-of-order packets until missing predecessor packets arrive to deliver in-order to upper layer.
+• Sender Mechanics:
+  - Sender maintains an individual logical timer for EACH unACKed packet.
+  - Upon timeout, retransmits ONLY the single packet that timed out!
+  - Sender window of size $N$ limits unacknowledged in-flight packets.
+
+================================================================================
+SLIDE 94: Selective Repeat: Applet & Sender/Receiver Windows
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat: sender, receiver windows
+
+Interactive Applet Links:
+• University of Camerino SR Applet:
+  https://computerscience.unicam.it/marcantoni/reti/applet/SelectiveRepeatProtocol/selRepProt.html
+• TU Berlin GBN/SR Animation:
+  https://www.tkn.tu-berlin.de/teaching/rn/animations/gbn_sr/
+
+================================================================================
+SLIDE 95: Selective Repeat: Detailed Sender and Receiver Logic
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat: sender, receiver
+
+Sender Logic:
+• Data from above: If next sequence number is within window `[sendbase, sendbase + N - 1]`, packetize and send.
+• Timeout(n): Resend single packet $n$, restart timer for packet $n$.
+• ACK(n) arrives:
+  - Mark packet $n$ as received.
+  - If $n$ is equal to `sendbase`, advance window base forward to the lowest unACKed sequence number.
+
+Receiver Logic:
+• Packet $n$ in `[rcvbase, rcvbase + N - 1]`:
+  - Send individual `ACK(n)`.
+  - If out-of-order: Buffer packet $n$.
+  - If in-order ($n == rcvbase$): Deliver packet $n$ plus any contiguous buffered packets to application; advance `rcvbase` past delivered packets.
+• Packet $n$ in `[rcvbase - N, rcvbase - 1]`:
+  - Send `ACK(n)` (must re-acknowledge previously ACKed packets to allow sender window to advance).
+• Otherwise: Ignore packet.
+
+================================================================================
+SLIDE 96: Selective Repeat in Action: Timeline Example
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat in action
+
+Timeline ($N = 4$):
+1. Sender sends `pkt0`, `pkt1`, `pkt2`, `pkt3`.
+2. Receiver receives `pkt0`, sends `ack0`.
+3. Receiver receives `pkt1`, sends `ack1`.
+4. `pkt2` is LOST!
+5. Receiver receives `pkt3` -> Buffers `pkt3`, sends individual `ack3`!
+6. Sender receives `ack0` and `ack1`, sends `pkt4` and `pkt5`.
+7. Receiver receives `pkt4` and `pkt5` -> Buffers both, sends `ack4` and `ack5`!
+8. Sender receives `ack3`, `ack4`, `ack5` (records them as received, but base cannot advance past unACKed `pkt2`).
+9. Timer for `pkt2` expires!
+10. Sender retransmits ONLY `pkt2` (does NOT retransmit 3, 4, or 5!).
+11. Receiver receives `pkt2`: Delivers buffered contiguous block (`pkt2`, `pkt3`, `pkt4`, `pkt5`) to application; sends `ack2`.
+
+================================================================================
+SLIDE 97: Selective Repeat: Window Advancement on ACK Arrival
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat in action
+
+Question: What happens when `ack2` finally arrives at the sender?
+Answer:
+• Packet 2 is marked as ACKed and its timer stops.
+• The window lurches forward by FOUR positions in a single step!
+• The base advances past all consecutively ACKed packets: 2 (done), 3 (done), 4 (done), 5 (done).
+• Base moves from 2 -> 6.
+• The sender window becomes `[6, 7, 8, 9]`.
+• The sender can immediately transmit four new packets: `pkt6`, `pkt7`, `pkt8`, and `pkt9`!
+
+================================================================================
+SLIDE 98: Selective Repeat Numerical Problem: Problem Statement
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat: example
+
+Problem Statement:
+In a Selective Repeat (SR) protocol:
+• Window size $N = 10$.
+• Exactly 10 packets (numbered 1 to 10) must be transmitted.
+• Network Failure Rule: Every 5th packet transmitted across the network is lost (transmissions #5, #10, #15, #20... are lost).
+
+Question:
+How many total packet transmissions are required to successfully deliver all 10 packets?
+
+================================================================================
+SLIDE 99: Selective Repeat Numerical Problem: Step-by-Step Breakdown
+================================================================================
+
+COMPUTER NETWORKS: Selective Repeat: example (Detailed Solution)
+
+Round 1 — Initial Transmission of Packets 1 to 10 (Transmissions 1–10):
+• Transmissions 1–4: Packets 1, 2, 3, 4 delivered and individually ACKed.
+• Transmission 5: Packet 5 is LOST (5th transmission!).
+• Transmissions 6–9: Packets 6, 7, 8, 9 delivered, buffered by receiver, and individually ACKed.
+• Transmission 10: Packet 10 is LOST (10th transmission!).
+Receiver has received and buffered: 1, 2, 3, 4, 6, 7, 8, 9.
+Missing packets at receiver: Packet 5 and Packet 10.
+
+Round 2 — Retransmit Only Missing Packets (Transmissions 11–12):
+• Transmission 11: Retransmit Packet 5 (11 is not a multiple of 5 -> Delivered successfully!).
+• Transmission 12: Retransmit Packet 10 (12 is not a multiple of 5 -> Delivered successfully!).
+
+Total Transmissions Required = 10 + 2 = 12 Transmissions!
+
+Comparison Note:
+Under identical failure conditions, Go-Back-N required 18 transmissions, whereas Selective Repeat required only 12 transmissions!
+
+================================================================================
+SLIDE 100: The Selective Repeat Dilemma: Sequence Numbers vs. Window Size
+================================================================================
+
+COMPUTER NETWORKS: Selective repeat: a dilemma!
+
+Scenario Setup:
+• Sequence numbers available: 0, 1, 2, 3 (modulo 4 arithmetic, $k = 2$ bits).
+• Window size $N = 3$.
+
+Case (a): Correct Operation (Data Packet Lost):
+• Sender sends pkts 0, 1, 2. Receiver gets 0, 1, 2, sends ACKs 0, 1, 2.
+• Receiver window slides to [3, 0, 1].
+• Sender sends pkt 3. Receiver receives pkt 3, sends ACK 3.
+• Sender sends pkt 0 (new). Receiver correctly recognizes it as new pkt 0.
+
+Case (b): Catastrophic Failure (All ACKs Lost):
+• Sender sends pkts 0, 1, 2.
+• Receiver receives pkts 0, 1, 2; delivers data; sends ACKs 0, 1, 2.
+• Receiver window advances to [3, 0, 1]!
+• BUT all ACKs (0, 1, 2) are LOST in the network!
+• Sender times out on pkt 0; retransmits duplicate pkt 0.
+• Receiver receives pkt 0. Receiver's window is [3, 0, 1].
+• The receiver CANNOT tell whether pkt 0 is a retransmission of the old packet 0 or the arrival of the brand-new packet 0!
+• Result: The receiver accepts duplicate data as new data! Protocol failure!
+
+================================================================================
+SLIDE 101: The Selective Repeat Dilemma: Mathematical Constraint
+================================================================================
+
+COMPUTER NETWORKS: Selective repeat: a dilemma!
+
+The Golden Rule of Selective Repeat:
+To prevent window overlap and duplicate packet confusion, the window size $N$ must satisfy:
+$$N_{sender} + N_{receiver} \le 2^k$$
+Since $N_{sender} = N_{receiver} = N$:
+$$2N \le 2^k \implies N \le 2^{k-1}$$
+
+Conclusion:
+In Selective Repeat, the window size must be less than or equal to HALF the sequence number space!
+• If $k = 2$ bits ($2^2 = 4$ sequence numbers): Max window size $N = 4 / 2 = 2$.
+  (A window size of 3 caused the dilemma because $3 > 2$).
+• In Go-Back-N: The constraint is $N \le 2^k - 1$.

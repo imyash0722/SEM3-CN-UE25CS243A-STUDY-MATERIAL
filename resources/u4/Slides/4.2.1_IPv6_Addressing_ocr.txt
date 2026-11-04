@@ -1,0 +1,514 @@
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+IPv6 Protocol: Rationale for Change
+
+Larger address space * initial motivation: 32-bit IPv4
+
+Better header format address space would be completely
+. allocated
+
+New options
+
+Allowance for extension
+Support for resource allocation
+
+Support for more security
+checksum: removed entirely to reduce processing time at each hop
+options: allowed, but outside of header, indicated by “Next Header” field
+ICMPv6: new version of ICMP
+fragmentation/reassembly: no
+
+Additional motivation:
+speed processing/forwarding: 40-byte fixed length header
+enable different network-layer treatment of “flows”
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+@ PES
+IPv6 Datagram Format
+flow label: identify
+priority: identify 32 bits datagrams in same
+priori;cy among ver | pri flow label ——— "flow.” (concept of
+datagrams in flow payload len next hdr | hop limit “flow” not well defined).
+& source address
+128-bit_ 11— (128 bits)
+IPv6 addresses —~__ destination address
+(128 bits)
+payload (data)
+
+What’s missing (compared with IPv4):
+
+* no checksum (to speed processing at routers)
+
+= no fragmentation/reassembly
+
+= no options (available as upper-layer, next-header protocol at router)
+COMPUTER NETWORKS PES
+Introduction to IPv6
+
+128 bits address
+340 undecillion address (340 + 33 digits) Decimal _ Binary  Hexadecimal
+IPv6 address space is 2°¢ times of the IPv4 address. : 2322
+Made up of eight 16-bit blocks (octet) o
+
+0011
+Separated by
+
+o
+
+0100
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+1100
+1101
+1110
+1111
+
+Hexadecimal, each hexadecimal character — 4 bits
+
+340,282,366,920,938,463,374,607,431,768,211,456
+Rules:
+
+WO [(RX[(an |0 | [W]|N
+
+[
+o
+
+[
+™
+
+Discard leading Zero(es)
+
+[
+N
+
+If two of more blocks contain consecutive Zero(es), omit them
+all and replace with double colon sign ::
+
+[
+w
+
+=
+>
+
+o E(o(Q|w|p|o|lo|v|a|o|s|w|N |
+
+[y
+o
+
+If Zero(es) are present in a discontinuous pattern, replace them
+with :: at only one joining.
+COMPUTER NETWORKS PES
+Introduction to IPv6
+128 bits
+B3 >
+1111110111101100 (X 1110110110101011
+Colon hexadecimal FDEC = BA98 = 7654 = 3210 = ADBF = BBFF = 2922 = FFFF
+notation
+Zero compression FDEC:0202020z2BBFF 10z FFFF -—
+Original address Zero compressed
+CIDR address FDEC 1 2 BBFF = 0 2 FFFF/60
+Rule 1 2001:0000:3238:DFE1:0063:0000:0000:FEFB 2001:0000:3238:DFE1:63:0000:0000:FEFB
+Rule 2 2001:0000:3238:DFE1:0063:0000:0000:FEFB 2001:0000:3238:DFE1:63::FEFB
+
+2001:0:3238:DFE1:63::FEFB
+COMPUTER NETWORKS @ PES
+Introduction to IPv6
+
+IPv6 compression rule #2 cannot be used more than once in an address or the result will be ambiguity about
+the full address the compressed version represents.
+
+Rule 3
+
+Only a single contiguous string of all-Os segments can be represented with a double colon;
+otherwise, the address would be ambiguous, as shown in this example:
+
+Incorrect address using two double colons:
+2001::abecd::1234
+
+Possible ambiguous choices:
+
+2001:0000:0000:0000:0000:abcd:0000:1234
+2001:0000:0000:0000:abcd:0000:0000:1234
+2001:0000:0000:abcd:0000:0000:0000:1234
+2001:0000:abcd:0000:0000:0000:0000:1234
+COMPUTER NETWORKS
+IPv6 Addressing
+
+Show the unabbreviated colon hex notation for the following IPv6
+addresses:
+
+a. An address with 64 Os followed by 64 1s.
+
+b. An address with 128 0s.
+
+c. An address with 128 1s.
+
+d. An address with 128 alternative 1s and Os.
+
+Solution
+
+a. 0000:0000:0000:0000:FFFF :FFFF:FFFF:FFFF
+
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+
+c. FFFF.FFFF.FFFF:FFFF .FFFF.FFFF:FFFF.FFFF
+
+d. AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+COMPUTER NETWORKS
+
+2\ PES
+IPv6 Addressing %v
+
+UNIVERSITY
+
+The following shows the zero contraction version of addresses in
+previous example.
+
+a. :: FFFF:FFFF:FFFF:FFFF
+
+b. ::
+
+c. FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+
+d. AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA:AAAA
+
+-~
+
+s
+COMPUTER NETWORKS
+IPv6 Addressing
+
+Show abbreviations for the following addresses:
+
+a. 0000:0000:FFFF:0000:0000:0000:0000:0000
+b.1234:2346:0000:0000:0000:0000:0000:1111
+c. 0000:0001:0000:0000:0000:0000:1200:1000
+d. 0000:0000:0000:0000:0000:FFFF:24.123.12.6
+
+Solution
+
+a. 0:0:FFFF::
+b.1234:2346::1111
+c.0:1::1200:1000
+
+d. ::FFFF:24.123.12.6
+
+A
+&) FPES
+
+T—
+.\
+...
+COMPUTER NETWORKS &) PES
+IPv6 Addressing
+
+Decompress the following addresses and show the complete
+unabbreviated IPv6 address:
+
+a. 1111::2222
+b. ::
+c. 0:1::
+d. AAAA:A:AA::1234
+@
+...
+
+Solution
+a.1111:0000:0000:0000:0000:0000:0000:2222
+b. 0000:0000:0000:0000:0000:0000:0000:0000
+c. 0000:0001:0000:0000:0000:0000:0000:0000
+d. AAAA:000A:00AA:0000:0000:0000:0000:1234
+COMPUTER NETWORKS
+
+%g PES
+IPv6 Prefix Notation
+
+UNIVERSITY
+
+* The prefix length is a decimal value that indicates the number of leftmost bits of an IP address that constitute the
+network portion.
+
+For example, consider the IPv6 address 2001:aaaa:bbbb:cccc:0:0:0:10/64.
+
+* The prefix length 64 indicates that the first 64 bits represent the network portion, while the remaining 64 bits
+represent the host (interface) portion.
+
+* Therefore, the IPv6 subnet is 2001:aaaa:bbbb:cccc::/64, and 2001:aaaa:bbbb:cccc::10 represents a node within this
+subnet.
+
+2001:0df8:00f2:0000:0000:06ee:0000:0f11
+/16
+
+/32
+
+/48
+
+/52
+/56 IPv6 Prefix Notation Example
+
+/60
+/64
+COMPUTER NETWORKS % PES
+
+Three Address Types
+In IPv6, a destination address belong to:
+Unicast Address (one-to-one) — defines a single interface . %
+; Unicast
+(computer or router). Packets sent to a unicast address p :
+
+‘{ 1>
+are delivered to the interface configured with that IPv6 address. @93 @
+Multicast Address (one-to-many) — also defines a group of @
+computers, each member of the group receives a copy. Packets @
+sent to a multicast address are delivered to all interfaces Multicast
+
+identified by that address.
+
+Anycast Address (one-to-nearest) — defines a group of PR
+computers that all share a single address. Packets sent to an
+anycast address are delivered to the "closest" interface identified Anycast | Q>
+
+by that address. "Closest" typically means the one with the best @_@_@_{é
+routing metric st Group (“4}9
+Broadcast Address (one-to-all) — x There are no broadcast
+
+addresses in IPv6. Broadcast functionality is implemented using
+
+multicast addresses.
+COMPUTER NETWORKS
+
+IPv6 Address Types
+IPv6 Address Types
+Unicast
+Sr:::baaslt Link-Local Loopback Unspecified UL’: g:le Emmded
+2000::/3  fe80::/10 ::1/128 /128 fc00::/7 ::/80
+Multicast
+|
+I I
+Well-Known Transient Solicited-Node
+ff00::/12  ff10::/12  ff02:0:0:0:0:1:ff00::/104
+
+Anycast
+
+PES
+
+UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Address Space Allocation
+
+Address space = 2128 ddresses
+1/8 1/8 1/8 1/8 1/8 1/8 "
+Reserved Reserved Reserved Reserved Reserved &“\:ﬁfg‘nﬁé
+E G H I JKLMN
+A:1/256 IPv4 Compatible D: 1/64 Reserved G: 1/16 Reserved K: 1/512 Reserved
+B: 1/256 Reserverd E: 1/32 Reserved H: 1/32 Reserved L: 1/1024 Link Local
+C: 1/128 Reserved F: 1/16 Reserved 1: 1/64 Reserved M: 1/256 Reserved
+
+J: 1/128 Unique Local Unicast N: 1/256 Multicast
+COMPUTER NETWORKS
+IPv6 Datagram Format
+
+40 bytes
+
+Up to 65,535 bytes
+
+ﬂ Base header Payload I
+.
+
+Extension headers
+
+Data packet from upper layer
+
+(optional)
+) 32 bits = 4 bytes )
+0 4 12 16 24 31
+<=| VER | Traffic Class Flow label
+Payload length Next header Hop limit
+C Source address
+
+(128 bits = 16 bytes)
+
+Destination address
+(128 bits = 16 bytes)
+
+Table 27.1 Next Header Codes
+
+UNIVERSITY
+
+Code Next Header Code Next Header
+0 Hop-by-hop option 44 | Fragmentation
+2 ICMP 50 | Encrypted security payload
+6 TCP 51 | Authentication
+17 UDP 59 Null (No next header)
+43 Source routing 60 | Destination option
+
+flow label: identify datagrams in
+same "flow.” (concept of “flow”
+
+not well defined).
+
+Format of the base header
+
+COMPUTER NETWORKS
+Transition from IPv4 to IPv6e
+
+* not all routers can be upgraded simultaneously
+* no “flag days”
+* how will network operate with mixed IPv4 and IPv6 routers?
+
+tunneling: IPv6 datagram carried as payload in IPv4 datagram
+among IPv4 routers (“packet within a packet”)
+
+* tunneling used extensively in other contexts (4G/5G)
+
+IPv4 header fields IPv6 header fields
+IPv4 squrce, dest addr IPv6 source dest addr IPv4 payload
+
+‘ UDP/TCP paylmd/
+
++«—|Pv6 datagram ——
+
++«— |Pv4d datagram———
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Tunneling and Encapsulation
+
+Ethernet connecting A °
+==
+two IPv6 routers: = IPvé
+
+__—E
+
+Ethernet connects two E
+IPv6 routers
+
+IPv6 datagram
+
+Link-layer frame  The ysual: datagram as payload in link-layer frame
+
+IPv4 network
+connecting two
+
+IPv6 routers IPv6 IPv6/v4
+
+IPv6/v4
+
+IPv4 network
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS —
+Tunneling and Encapsulation
+
+Eth t ti A B Ethernet connects two £ F
+ernet connecting —_ = IPv6 routers == ==
+two IPv6 routers: .~|P !f! 65 !\5
+v6 IPv6 4 IPv6 IPv6
+///)/ ‘ ’ ‘ IPv6 datagram
+
+Link-layer frame  The ysual: datagram as payload in link-layer frame
+
+IPv4 tunnel A B 1Pv4 %n%el t E F
+: t
+
+connecting two S S oS S
+
+IPv6 routers IPv6  IPV/v4 N >  Pwew P
+
+IPv4 datagram tunneling: IPv6 datagram as payload in a IPv4 datagram
+COMPUTER NETWORKS
+
+Tunneling %% PES
+logical Vi connegtbi/‘;; ?Iglz/%e;outers
+: .—H—M’
+oplcalview IPv6 IPv6/v4 IPv6/v4 IPv6
+A B C D E F
+physical view: S-S5
+IPv6 IPv6/v4 IPv4 1Pv4 IPv6/v4 IPv6
+
+_—
+
+Note source and
+destination
+addresses!
+
+IPv6 inside IPv6 inside |Pv6 inside
+IPv4 IPv4 IPv4
+
+E-to-F:
+COMPUTER NETWORKS —
+IPv6 Adoption
+
+https://www.akamai.com/us/en/resources/our-thinking/state-of-the-internet-report/state-of-the-internet-ipv6-
+adoption-visualization.jsp
+
++ Google!: ~ 40% of clients access services via IPv6 (2023)
+
+« NIST: 1/3 of all US government domains are IPv6 capable
+
+1Pv6 Adoption
+We are continuously measuring the availability of IPv6 connectivity among Google users. The graph shows the percentage of users that access Google over IP6,
+
+Native: 0.04% 6tod/Teredo: 0.09% | Sep 4, 2008
+
+45.00%
+40.00%
+35.00%
+30.00%
+25.00%
+20.00%
+15.00%
+10.00%
+
+5.00%
+
+0.00% 2010 2020
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY

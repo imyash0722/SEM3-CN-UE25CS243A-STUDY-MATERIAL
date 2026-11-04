@@ -1,0 +1,1436 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 1: Computer Networks and the Internet (Nuts-and-Bolts, Access Networks, Core, Delays & Throughput)
+Source Deck: Slides_Unit_1_Part_1.pdf (Slides 1 to 69)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 69
+================================================================================
+
+================================================================================
+SLIDE 1: Course Title & Department Information
+================================================================================
+
+COMPUTER NETWORKS
+Computer Networks and the Internet
+
+Team Networks
+Department of Computer Science and Engineering
+PES University
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+
+================================================================================
+SLIDE 2: Prescribed Textbook
+================================================================================
+
+COMPUTER NETWORKS: Text Book
+
+• Title: Computer Networking: A Top-Down Approach
+• Authors: James Kurose, Keith Ross
+• Publisher: Pearson, 2020
+• Edition: 8th Edition
+
+================================================================================
+SLIDE 3: Classroom Guidelines (Do's and Don'ts)
+================================================================================
+
+COMPUTER NETWORKS: Classroom Guidelines
+
+Do's:
+• Students should be on time for every lecture.
+• Students are advised to show due respect to all faculty members.
+• Students must maintain absolute discipline and decorum in the class.
+
+Don'ts:
+• Students must not use their cell phones/laptops during the lecture hours. If any student is found using their cell phone during class hours it will be confiscated.
+• No sleeping in the class.
+
+================================================================================
+SLIDE 4: Honor Code - Part 1
+================================================================================
+
+COMPUTER NETWORKS: Honor Code
+
+☞ The Honour Code is PESU statement on academic integrity.
+☞ It articulates our expectations of students and faculty in establishing and maintaining the highest standards in academic work.
+
+================================================================================
+SLIDE 5: Honor Code - Part 2
+================================================================================
+
+COMPUTER NETWORKS: Honor Code
+
+☞ The Honour Code is an undertaking of the students, individually and collectively:
+  • Students will not give or receive aid in examinations and class work, labs and assignments;
+  • Students will not give or receive unpermitted aid in class work, in the preparation of reports, or in any other work that is to be used by the instructor as the basis of grading;
+  • Students will do their share and take an active part in seeing to it that others as well as themselves uphold the spirit and letter of the Honour Code.
+
+================================================================================
+SLIDE 6: Academic Honesty - Expectations
+================================================================================
+
+COMPUTER NETWORKS: Academic Honesty
+
+☞ Academic honesty is expected from each student participating in the course.
+☞ No sharing (willing, unwilling, knowing, unknowing) of assignment code or solutions between students.
+☞ Labs and Assignments must be done by each student independently.
+☞ No submission of downloaded code (from the Internet, Campus LAN, or anywhere else) is accepted.
+
+================================================================================
+SLIDE 7: Academic Honesty - Penalties
+================================================================================
+
+COMPUTER NETWORKS: Academic Honesty
+
+☞ Any dishonesty will result in Zero marks for the assignment/work.
+• And in addition, downgrade of final subject result by ONE grade!
+• This applies for both students giving and students taking.
+  e.g., B grade will downgrade to C.
+
+================================================================================
+SLIDE 8: Industry-Relevant Roles & Hiring Companies
+================================================================================
+
+COMPUTER NETWORKS: Industry-Relevant Career Paths
+
+Industry-Relevant Roles:
+• Network Engineer
+• SDN Engineer
+• Network Automation Engineer
+• Network Security Engineer
+• Cloud Network Engineer
+• Network Software Engineer
+• Systems Engineer
+• Infrastructure Engineer
+• DevOps Engineer
+• Site Reliability Engineer (SRE)
+• SDN Application Developer
+• Cybersecurity Analyst
+• Security Operations Center (SOC) Analyst
+• Infrastructure Automation Engineer
+• Wireless Network Engineer
+
+Companies Hiring These Skills:
+• Cisco
+• Juniper Networks
+• Arista Networks
+• HPE (Hewlett Packard)
+• Extreme Networks
+• Nokia
+• Ericsson
+• IBM
+• VMware (Broadcom)
+• RedHat
+• Oracle
+• Microsoft
+• Google
+• Amazon
+• Accenture
+• Palo Alto Networks
+• Fortinet
+• F5
+• Broadcom
+• Intel
+• Qualcomm
+
+================================================================================
+SLIDE 9: Topic Introduction
+================================================================================
+
+COMPUTER NETWORKS
+Computer Networks and the Internet
+
+Team Networks
+Department of Computer Science and Engineering
+
+================================================================================
+SLIDE 10: Unit 1 Syllabus & Roadmap
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 1: Computer Networks and the Internet
+
+1.1 Introduction to Computer Networks
+1.2 What is the Internet?
+    • A nuts-and-bolts and Services description, Protocol
+1.3 Network Edge
+    • End systems, Access networks, Physical media
+1.4 Network Core
+    • Packet switching, Circuit switching, Network structure
+1.5 Delay, Loss & Throughput in Networks
+1.6 Protocol Layers, Service Models
+    • OSI model and TCP/IP protocol suite
+
+================================================================================
+SLIDE 11: Introduction to Computer Networks
+================================================================================
+
+COMPUTER NETWORKS: Introduction
+
+• Definition: Two or more devices connected together.
+• Purpose: Communicate with each other, share data, hardware, or software resources.
+
+[Device A] <---------------- Communication Link ----------------> [Device B]
+     |                                                                   |
+  Shares Data/Resources                                           Receives / Responds
+
+================================================================================
+SLIDE 12: What is the Internet?
+================================================================================
+
+COMPUTER NETWORKS: What is the Internet?
+
+• A massive network of networks.
+• A computer network that interconnects billions of computing devices throughout the world.
+• Traditional devices:
+  - PCs, Workstations, Servers (running web pages, email, etc.)
+• Non-traditional / IoT "Things":
+  - Laptops, Smartphones, PDAs, Smart TVs, Gaming consoles, Home security systems,
+    Smart home appliances, Smartwatches, Connected cars, Traffic control systems, etc.
+
+================================================================================
+SLIDE 13: The Internet: A "Nuts and Bolts" View (Overview)
+================================================================================
+
+COMPUTER NETWORKS: The Internet – Nuts & Bolts View
+
+1. End Systems (Hosts):
+   • Billions of connected computing devices.
+   • Hosts = End systems running network applications at the Internet's "edge" (clients & servers).
+2. Packet Switches:
+   • Forward packets (chunks of data) across the network.
+   • Main types: Routers (typically used in network core) and Link-layer Switches (typically used in access networks).
+3. Communication Links:
+   • Physical media: Fiber optics, Copper wire, Coaxial cable, Radio spectrum, Satellite.
+   • Transmission rate = Link Bandwidth (measured in bits per second, bps).
+4. Networks:
+   • A collection of connected devices, routers, and links managed by an organization (e.g., Enterprise network, Home network, Mobile network, Content provider network, Data center network).
+
+Network Topology Diagram:
+                     [Mobile Network]
+                            |
+                 [National / Global ISP]
+                        /       \
+             [Regional ISP]     [Content Provider Network (Google/Netflix)]
+                /        \              |
+     [Home Network]   [Enterprise]   [Data Center Network]
+           |                |                 |
+      (Smartphones)    (Workstations)     (Blade Servers)
+
+================================================================================
+SLIDE 14: "Fun" Inter-Connected Devices (IoT Landscape)
+================================================================================
+
+COMPUTER NETWORKS: Diverse Internet-Connected Devices
+
+The expanding Internet of Things (IoT):
+• Smart Home: Amazon Echo, Web-enabled toaster + weather forecaster, Internet refrigerator, Security cameras, Smart TVs.
+• Utilities & Energy: Tweet-a-watt (monitors home energy usage in real-time).
+• Lifestyle & Health: Sensorized bed mattress, Fitbit / fitness trackers, AR headsets.
+• Communication & Media: IP picture frames, Internet phones, Slingbox (remote control cable TV).
+• Scale: Over 41 Billion connected IoT devices projected by 2027.
+
+================================================================================
+SLIDE 15: The Internet: A "Nuts and Bolts" View (Protocols & Standards)
+================================================================================
+
+COMPUTER NETWORKS: Nuts and Bolts – Protocols & Standards
+
+• The Internet is a "Network of Networks":
+  - Hierarchical structure of interconnected ISPs (Internet Service Providers).
+• Protocols are Everywhere:
+  - Protocols control the sending and receiving of messages among network entities.
+  - Examples:
+    * Application: HTTP (Web), Streaming video, Skype, DNS, SMTP
+    * Transport: TCP, UDP
+    * Network: IP (Internet Protocol)
+    * Link/Physical: WiFi (802.11), 4G/5G, Ethernet
+• Internet Standards:
+  - RFC: Request for Comments (technical documents specifying Internet protocols and architectures).
+  - IETF: Internet Engineering Task Force (standards body developing Internet protocols).
+
+================================================================================
+SLIDE 16: The Internet: A "Service" View
+================================================================================
+
+COMPUTER NETWORKS: The Internet – Service View
+
+• Infrastructure that provides services to distributed applications:
+  - Web browsing, streaming video, multimedia teleconferencing, email, online gaming,
+    e-commerce, social media, interconnected cloud appliances.
+• Provides an Application Programming Interface (API) to distributed applications:
+  - Acts as "hooks" that allow sending and receiving programs running on end systems
+    to "connect" to and use the Internet transport service.
+  - Provides service options analogous to postal service options (e.g., reliable vs.
+    unreliable delivery, connection-oriented vs. connectionless).
+
+================================================================================
+SLIDE 17: What is a Protocol? (Definition & Analogy)
+================================================================================
+
+COMPUTER NETWORKS: Protocol Definition
+
+Human Protocols:
+• "What's the time?"
+• "I have a question"
+• Introductions, greetings, social conventions
+• Specific messages sent, and specific actions taken when messages are received or other events occur.
+
+Network Protocols:
+• Communication between machines/computers (devices) rather than humans.
+• All communication activity in the Internet is governed by protocols.
+
+Formal Definition:
+A PROTOCOL defines:
+1. The FORMAT of messages sent and received among network entities.
+2. The ORDER of messages exchanged.
+3. The ACTIONS taken on message transmission, message receipt, or other events (e.g., timeouts).
+
+================================================================================
+SLIDE 18: What is a Protocol? (Human vs. Network Comparison Timeline)
+================================================================================
+
+COMPUTER NETWORKS: Protocol Interaction Sequence
+
+Human Protocol Timeline:
+   Alice                                   Bob
+     |                                      |
+     | ------------ "Hi" -----------------> |
+     | <----------- "Hi" ------------------ |
+     |                                      |
+     | ------ "Got the time?" ------------> |
+     | <---------- "2:00" ----------------- |
+     V                                      V
+
+Computer Network Protocol (TCP + HTTP) Timeline:
+   Client                                 Server
+     |                                      |
+     | --- TCP Connection Request (SYN) --> |
+     | <-- TCP Connection Response (SYNACK) |
+     |                                      |
+     | --- HTTP GET http://.../index.html ->|
+     | <-- HTTP Response (Status 200 + File)-|
+     V                                      V
+
+================================================================================
+SLIDE 19: Network Edge: End Systems (Hosts)
+================================================================================
+
+COMPUTER NETWORKS: Network Edge – End Systems
+
+• The Network Edge consists of End Systems (also called Hosts).
+• End Systems are called "hosts" because they host and run application programs:
+  - Web browser client, Web server program
+  - E-mail client, E-mail server program
+  - Mobile apps, streaming video players
+• Categorization:
+  - Clients: Desktop PCs, laptops, smartphones, IoT devices.
+  - Servers: High-performance computing nodes, blades in data centers providing services.
+
+================================================================================
+SLIDE 20: Network Edge: Access Networks Definition
+================================================================================
+
+COMPUTER NETWORKS: Access Networks
+
+Definition of Access Network:
+• The network that physically connects an end system to the very first router
+  (known as the "edge router") on the path from the end system to any distant end system.
+• Media: Wired or wireless communication links.
+• Edge Router: The gateway router operated by the local ISP through which the end system enters the network core.
+
+================================================================================
+SLIDE 21: Network Structure Overview: Edge, Access, Core
+================================================================================
+
+COMPUTER NETWORKS: Network Structure Overview
+
+Three Main Components:
+1. Network Edge:
+   • Hosts: Clients and servers.
+   • Servers located in data centers.
+2. Access Networks & Physical Media:
+   • Wired and wireless communication links connecting hosts to edge routers.
+3. Network Core:
+   • Mesh of interconnected routers.
+   • The "network of networks" responsible for moving data between end systems across the globe.
+
+================================================================================
+SLIDE 22: Access Networks: Categories and Key Parameters
+================================================================================
+
+COMPUTER NETWORKS: Access Networks – Classification
+
+Connecting End Systems to Edge Routers:
+• Residential Access Networks (Home access via DSL, Cable, FTTH).
+• Institutional Access Networks (Enterprise, universities, corporate campuses).
+• Mobile Access Networks (WiFi, 4G LTE, 5G cellular).
+
+Key Metrics to Evaluate Access Networks:
+1. Transmission Rate (Bandwidth): Measured in bits per second (bps, Mbps, Gbps).
+2. Shared vs. Dedicated Access:
+   • Dedicated: The entire link capacity is reserved for a single subscriber (e.g., traditional DSL).
+   • Shared: Multiple users contend for the same physical transmission medium (e.g., HFC cable, wireless).
+
+================================================================================
+SLIDE 23: Home Access Networks: Integrated Residential Architecture
+================================================================================
+
+COMPUTER NETWORKS: Residential Home Access
+
+Integrated Home Device (All-in-One Box):
+In modern homes, multiple network functions are integrated into a single physical unit:
+• Cable/DSL/Fiber Modem: Converts signals to/from ISP central office/headend.
+• Hardware Router: Routes packets between home LAN and ISP edge.
+• Network Address Translation (NAT): Allows multiple private home devices to share one public IP.
+• Firewall: Filters unauthorized incoming traffic.
+• Wireless Access Point (AP): Provides 802.11 WiFi (54 Mbps - 1+ Gbps).
+• Ethernet Switch: Provides wired 1 Gbps ports for desktop/TV/consoles.
+
+Architecture Diagram:
+  [Wireless Devices: Phone/Laptop]
+             | (WiFi)
+             V
+  +-------------------------------------------------------------+
+  |  Home Gateway Box:                                          |
+  |  [WiFi AP] <---> [Ethernet Switch (1 Gbps)]                 |
+  |                        |                                    |
+  |             [Router / Firewall / NAT]                       |
+  |                        |                                    |
+  |             [Cable/DSL/Fiber Modem]                         |
+  +-------------------------------------------------------------+
+                           | (Fiber / Coaxial / Twisted-Pair)
+                           V
+              To ISP Headend / Central Office
+
+================================================================================
+SLIDE 24: Enterprise Access Networks (Institutional Networks)
+================================================================================
+
+COMPUTER NETWORKS: Enterprise Access Networks
+
+Features of Institutional Networks (Companies, Universities):
+• Mix of wired and wireless link technologies connecting a hierarchy of switches and routers.
+• Wired Ethernet:
+  - 100 Mbps, 1 Gbps, 10 Gbps dedicated per desktop/server.
+• Wireless (WiFi):
+  - Access Points distributed across buildings (802.11a/b/g/n/ac/ax at 11, 54, 450 Mbps, Gbps).
+• Infrastructure:
+  - End hosts connect to Ethernet switches.
+  - Switches aggregate traffic into Institutional Routers.
+  - Institutional Router connects to ISP via high-speed enterprise link (leased line / fiber).
+  - Institutional mail and web servers reside within the campus network.
+
+================================================================================
+SLIDE 25: Wireless Access Networks: WLAN vs. Cellular
+================================================================================
+
+COMPUTER NETWORKS: Wireless Access Networks
+
+Shared wireless access network connects end systems to an edge router via a base station / access point.
+
+1. Wireless Local Area Networks (WLANs - WiFi):
+   • Range: Within or around a building (~100 feet / 30 meters).
+   • Standards: 802.11b/g/n/ac/ax.
+   • Transmission Rate: 11, 54, 450 Mbps up to several Gbps.
+   • Architecture: Mobile host <---> Wireless Access Point <---> Wired Edge Router <---> Internet.
+
+2. Wide-Area Cellular Access Networks:
+   • Range: Tens of kilometers (managed by mobile network operator / cellular provider).
+   • Technology: 4G LTE, 5G (6G in development).
+   • Transmission Rate: 10's to 100's of Mbps.
+   • Architecture: Mobile device <---> Base Station (Cell Tower) <---> Telco Core Network <---> Internet.
+
+================================================================================
+SLIDE 26: Data Center Networks
+================================================================================
+
+COMPUTER NETWORKS: Data Center Networks
+
+Characteristics:
+• Interconnects tens to hundreds of thousands of servers (blade servers) together and connects them to the public Internet.
+• High-bandwidth interconnects: 10s to 100s of Gbps (often 40G, 100G, 400G optical links).
+• Extremely low internal latency and high redundancy.
+• Hosts modern cloud applications: search engines, streaming, social media, large language models.
+• Example: Massachusetts Green High Performance Computing Center (MGHPCC).
+
+================================================================================
+SLIDE 27: Physical Media: Guided vs. Unguided & Twisted Pair
+================================================================================
+
+COMPUTER NETWORKS: Physical Media Fundamentals
+
+Concepts:
+• Bit: The physical unit of data that propagates between transmitter/receiver pairs.
+• Physical Link: The transmission medium that lies between transmitter and receiver.
+• Guided Media:
+  - Waves are guided along a solid physical medium: Copper wire, Optical fiber, Coaxial cable.
+• Unguided Media:
+  - Waves propagate freely through the atmosphere or outer space without physical guides: Wireless radio, microwave, satellite.
+
+Twisted Pair (TP) Copper Wire:
+• Two insulated copper wires arranged in a regular spiral pattern to reduce electromagnetic interference (crosstalk).
+• Types:
+  - UTP: Unshielded Twisted Pair (most common for LAN cabling).
+  - STP: Shielded Twisted Pair (has extra foil shielding for noisy environments).
+• Standard Categories:
+  - Category 5 (Cat 5): 100 Mbps, 1 Gbps Ethernet (100m distance).
+  - Category 6 (Cat 6): 10 Gbps Ethernet.
+
+================================================================================
+SLIDE 28: Physical Media: Coaxial Cable and Fiber Optics
+================================================================================
+
+COMPUTER NETWORKS: Coaxial Cable vs. Optical Fiber
+
+1. Coaxial Cable:
+   • Construction: Two concentric copper conductors (central inner core and outer braided shielding), concentric rather than parallel.
+   • Characteristics: Bidirectional transmission.
+   • Broadband: Can carry multiple frequency channels simultaneously via Frequency Division Multiplexing (FDM); 100s of Mbps per channel.
+   • Common Use: Cable TV and Cable Internet (DOCSIS).
+
+2. Fiber Optic Cable:
+   • Construction: Thin, flexible glass fiber carrying pulses of light, where each pulse represents a bit.
+   • High-Speed Operation: Point-to-point transmission rates of 10s to 100s of Gbps.
+   • Low Error Rate / High Quality:
+     - Repeaters spaced far apart (tens to hundreds of kilometers).
+     - Immune to electromagnetic interference (EMI) and radio frequency noise.
+     - Very low attenuation compared to copper over long distances.
+
+================================================================================
+SLIDE 29: Physical Media: Wireless Radio & Link Duplex Modes
+================================================================================
+
+COMPUTER NETWORKS: Wireless Radio Links & Transmission Modes
+
+Wireless Radio Characteristics:
+• Signal carried in electromagnetic spectrum without physical wire.
+• Broadcast medium; signals are susceptible to:
+  - Reflection: Signals bounce off walls and terrain.
+  - Obstruction: Objects block direct path.
+  - Interference: Multiple devices transmitting on same/neighboring frequencies.
+
+Radio Link Types:
+1. Terrestrial Microwave: Point-to-point directional dishes, up to 45 Mbps channels.
+2. Wireless LAN (WiFi): Shared local coverage, up to 100s of Mbps.
+3. Wide-Area Cellular: 4G/5G mobile links, 10s to 100s of Mbps.
+4. Satellite:
+   • Up to 45 Mbps per channel.
+   • Geosynchronous (GEO): ~36,000 km altitude, ~280 ms one-way propagation delay.
+   • Low Earth Orbit (LEO): ~500-1200 km altitude (e.g., Starlink), much lower latency.
+
+Duplex Transmission Modes:
+• Half-Duplex:
+  - Data can only be transmitted in ONE direction at a time.
+  - Sender and receiver take turns using a single communication channel (e.g., Walkie-talkie, traditional WiFi).
+• Full-Duplex:
+  - Data can be transmitted and received SIMULTANEOUSLY in both directions.
+  - Uses two separate physical channels (or frequency division), one for sending and one for receiving (e.g., Telephone call, Full-duplex Ethernet).
+
+================================================================================
+SLIDE 30: Network Core: Fundamentals
+================================================================================
+
+COMPUTER NETWORKS: Network Core
+
+• Mesh of Interconnected Routers: The network core is a mesh of switches and routers that interconnect access networks across the globe.
+• Packet-Switching Principle:
+  - Hosts break application-layer messages into smaller chunks called PACKETS.
+  - Packets are forwarded from one router to the next across communication links on the path from source to destination.
+  - Each packet is transmitted across each communication link at the FULL link capacity (transmission rate).
+
+================================================================================
+SLIDE 31: Hosts: Sending Packets of Data
+================================================================================
+
+COMPUTER NETWORKS: Host Packet Transmission
+
+Host-Sending Function:
+• Takes an application message of arbitrary length.
+• Breaks application messages into chunks of size L bits (packets).
+• Transmits packet into access network at transmission rate R:
+  - Link transmission rate, also called link capacity, link bandwidth.
+
+Packet Transmission Delay:
+• Time needed to transmit (push out) an L-bit packet into a link with transmission rate R bits/sec:
+  
+                 L (bits)
+  d_trans  =  -------------   (seconds)
+                 R (bits/sec)
+
+Example:
+  Packet size L = 10,000 bits
+  Transmission rate R = 100 Mbps (10^8 bps)
+  d_trans = 10,000 / 100,000,000 = 0.0001 seconds = 0.1 ms = 100 microseconds.
+
+================================================================================
+SLIDE 32: Network Core: Packet Switching – Store-and-Forward
+================================================================================
+
+COMPUTER NETWORKS: Store-and-Forward Packet Switching
+
+Concept:
+• Store-and-Forward Transmission:
+  The packet switch must receive the ENTIRE packet before it can begin to transmit the first bit of the packet onto the outbound link.
+
+Architecture Diagram:
+  Source Host                    Router                    Destination Host
+    [ Host ] -----------------> [ Router ] -----------------> [ Host ]
+               Link rate R                 Link rate R
+              Packet size L               Packet size L
+
+Timing & Delay Analysis:
+• Step 1: Source transmits entire L-bit packet to Router at rate R.
+  - Transmission time = L/R seconds.
+• Step 2: Router receives all L bits, inspects header, and transmits onto outgoing link at rate R.
+  - Transmission time = L/R seconds.
+• End-to-End Transmission Delay (ignoring propagation and processing delays):
+  
+  Total Delay = 2 * (L / R)
+
+Pipelining with Multiple Packets:
+• If source sends 3 packets back-to-back:
+  - Time 0: Packet 1 begins transmission from Source.
+  - Time L/R: Packet 1 arrives at Router; Router starts transmitting Packet 1 to Dest; Source starts transmitting Packet 2 to Router.
+  - Time 2*(L/R): Packet 1 received at Dest; Packet 2 arrives at Router; Router starts transmitting Packet 2; Source transmits Packet 3.
+  - Time 3*(L/R): Packet 2 received at Dest; Packet 3 arrives at Router; Router starts transmitting Packet 3.
+  - Time 4*(L/R): Packet 3 received at Dest.
+• Total time for N packets over 1 router (2 hops) = (N + 1) * (L / R).
+
+================================================================================
+SLIDE 33: Network Core: Queuing Delay & Packet Loss
+================================================================================
+
+COMPUTER NETWORKS: Packet Switching – Queuing Delay & Loss
+
+Router Buffers (Queues):
+• For each attached link, the router has an output buffer (output queue).
+• If the arrival rate of packets to the link temporarily exceeds the link transmission rate (capacity):
+  - Packets cannot be transmitted immediately and must wait in line inside the buffer.
+  - This waiting time is called QUEUING DELAY.
+
+Packet Loss (Drop):
+• Router buffers have a FINITE capacity.
+• If a packet arrives when the buffer is completely full:
+  - There is no physical memory left to hold the packet.
+  - The packet is DROPPED (PACKET LOSS).
+
+Buffer Model Diagram:
+                         Router Output Buffer
+                 +-----------------------------------+
+  Incoming       | [P4] | [P3] | [P2] | [P1] (Being  | =====> Outgoing Link (Rate R)
+  Packets =====> |                           trans.) |
+                 +-----------------------------------+
+                    ^
+                    | If buffer is full,
+                      new arrivals are dropped (Loss)
+
+================================================================================
+SLIDE 34: Network Core: Two Key Functions – Routing vs. Forwarding
+================================================================================
+
+COMPUTER NETWORKS: Two Key Network-Core Functions
+
+Every packet switch/router performs two distinct, fundamental operations:
+
+1. FORWARDING (Data Plane - Local Action):
+   • Moving packets from a router's incoming input port to the appropriate outgoing output port.
+   • Takes place in hardware in nanoseconds / microseconds.
+   • Uses a local FORWARDING TABLE: looks up packet destination address to find outbound interface.
+
+2. ROUTING (Control Plane - Global Action):
+   • Determining the end-to-end path (route) taken by packets from source to destination across the entire network.
+   • Uses ROUTING ALGORITHMS (e.g., OSPF, BGP, RIP, Dijkstra, Distance Vector) to compute paths and populate local forwarding tables.
+   • Takes place in software over seconds / milliseconds.
+
+Analogy:
+• Routing is like planning the trip from New York to Los Angeles using a map.
+• Forwarding is like taking a specific exit ramp when driving through an interchange.
+
+================================================================================
+SLIDE 35: Network Core: Circuit Switching
+================================================================================
+
+COMPUTER NETWORKS: Circuit Switching
+
+Principles:
+• Dedicated Resources: The resources (buffers, link transmission rate) needed along a path between sender and receiver are RESERVED for the duration of the communication session.
+• Guaranteed Performance: Since capacity is dedicated, transmission rate is guaranteed and there is NO queuing delay or congestion once the call is established.
+• Traditional Domain: Traditional telephone networks (PSTN - Public Switched Telephone Network).
+
+Call Setup Phase:
+• Before any data can be transferred, an end-to-end connection (circuit) must be established across all intermediate switches.
+• Requires call setup signaling messages.
+
+Idle Waste:
+• If the dedicated circuit is not in use (e.g., people listening or silent), the reserved bandwidth sits IDLE and cannot be used by other callers.
+
+Circuit Switch Architecture Diagram:
+  Host A ========================[Switch 1]======================== Host B
+            Reserved Circuit                 Reserved Circuit
+          (Dedicated Bandwidth)            (Dedicated Bandwidth)
+
+================================================================================
+SLIDE 36: Multiplexing in Circuit-Switched Networks: FDM vs. TDM
+================================================================================
+
+COMPUTER NETWORKS: Circuit Multiplexing – FDM vs. TDM
+
+How a shared physical link is divided into distinct circuits:
+
+1. Frequency Division Multiplexing (FDM):
+   • The link spectrum is divided into dedicated frequency bands.
+   • Each call is allocated a unique frequency band for the entire duration of the connection.
+   • Each user transmits continuously, but only within their narrow frequency slice.
+   • Analogy: Traditional FM radio stations (each station broadcasts on its own frequency, e.g., 91.1 MHz).
+
+2. Time Division Multiplexing (TDM):
+   • Time is divided into recurring discrete time frames, and each frame is divided into a fixed number of TIME SLOTS.
+   • Each call is assigned a periodic time slot within every frame.
+   • During its assigned slot, the user gets the FULL bandwidth of the link.
+   • When the slot ends, the user must wait until the next frame.
+
+FDM vs. TDM Visual Representation:
+  Frequency
+     ^
+     |  +-----------------+           +----+----+----+----+
+     |  | Channel 4 (Call)|           | C1 | C2 | C3 | C4 | Frame 1
+     |  +-----------------+           +----+----+----+----+
+     |  | Channel 3 (Call)|           | C1 | C2 | C3 | C4 | Frame 2
+     |  +-----------------+           +----+----+----+----+
+     |  | Channel 2 (Call)|           Time Slots (TDM)
+     |  +-----------------+           Each user transmits at full
+     |  | Channel 1 (Call)|           rate during their slot.
+     |  +-----------------+
+     +----------------------> Time
+        Frequency Bands (FDM)
+
+================================================================================
+SLIDE 37: Why Packet Switching Won: Statistical Multiplexing
+================================================================================
+
+COMPUTER NETWORKS: Statistical Multiplexing
+
+The Economic & Engineering Rationale:
+• Circuit switching reserves a fixed slice of bandwidth for the entire call — even during silence.
+• In a typical human voice call, 50% to 60% of the time is silence (listening, pauses). In computer data traffic, activity is even more bursty (users click a link, then read for minutes).
+• Dedicated circuits waste massive amounts of idle capacity.
+• Packet Switching allows many bursty users to share a single link dynamically:
+  - Bandwidth is consumed ONLY when someone actually transmits a packet.
+  - This is called STATISTICAL MULTIPLEXING: packets from multiple uncoordinated sources interleave on demand according to statistical probabilities.
+
+Worked Example Comparison:
+• Setup:
+  - Shared Link Capacity = 1 Gbps (1,000 Mbps).
+  - Each user needs: 1 Mbps when actively transmitting.
+  - Users are active only 10% of the time (p = 0.1).
+
+1. Circuit Switching:
+   - Each user MUST be allocated a dedicated 1 Mbps slot.
+   - Maximum Users Supported = 1,000 Mbps / 1 Mbps = 1,000 users MAXIMUM (fixed, hard limit).
+
+2. Packet Switching:
+   - Supports 5,000+ users!
+   - Probability that more than 1,000 users are active simultaneously out of 5,000 with p = 0.1 is less than 10^-10 (virtually zero).
+   - Hence, packet switching supports 5x to 10x more users with almost no noticeable blocking.
+
+================================================================================
+SLIDE 38: Packet Switching vs. Circuit Switching: Tradeoffs
+================================================================================
+
+COMPUTER NETWORKS: Packet vs. Circuit Switching Tradeoffs
+
+Is Packet Switching a "Slam Dunk Winner"?
+Advantages of Packet Switching:
+• Ideal for bursty data: Users share bandwidth dynamically.
+• Simpler management: No complex call setup / teardown state maintained in core routers.
+• Maximum resource utilization: Idle users consume zero capacity.
+
+Disadvantages of Packet Switching:
+• Excessive congestion is possible: Packet delay and packet loss occur when buffer overflows.
+• No hard performance guarantees: Quality of Service (QoS) requires additional protocols for real-time audio/video.
+• Variable latency (jitter).
+
+Human Analogies:
+• Circuit Switching: Reserving a private restaurant table or private toll lane. Guaranteed, but if you don't show up or sit idle, it is completely wasted.
+• Packet Switching: Rush-hour public highway or cafeteria line. Highly efficient, but during peak traffic jams, you must wait in line.
+
+================================================================================
+SLIDE 39: Detailed Comparison Table: Packet vs. Circuit Switching
+================================================================================
+
+COMPUTER NETWORKS: Packet Switching vs. Circuit Switching Summary
+
+| Feature / Dimension     | Packet Switching                           | Circuit Switching                       |
+| :---------------------- | :----------------------------------------- | :-------------------------------------- |
+| Connection Type         | Connectionless                             | Connection-Oriented                     |
+| Primary Design Focus    | Data communication (bursty traffic)        | Voice communication (continuous stream) |
+| Flexibility             | Highly flexible (dynamic allocation)       | Inflexible (rigidly allocated slots)    |
+| Packet Delivery Order   | May arrive out of order (reassembled at end)| Guaranteed in-order delivery           |
+| Forwarding Mechanism    | Store-and-Forward across intermediate hops | Continuous stream across dedicated path |
+| Protocol Layer          | Network Layer (L3)                         | Physical Layer (L1)                     |
+| Bandwidth Utilization   | Efficient (bandwidth saved via sharing)    | Inefficient (idle bandwidth wasted)     |
+| Overhead / Delay        | Transmission, Queuing, Processing delays   | Call setup delay, negligible queuing    |
+| Resource Contention     | Statistical multiplexing                   | FDM / TDM fixed multiplexing            |
+
+================================================================================
+SLIDE 40: Internet Structure: A "Network of Networks" (Context)
+================================================================================
+
+COMPUTER NETWORKS: Internet Structure Introduction
+
+• End systems connect to the Internet via Access ISPs (Internet Service Providers):
+  - Residential ISPs (Comcast, Jio, Airtel, Spectrum).
+  - Corporate / Company ISPs.
+  - University / Institutional campus ISPs.
+• Access ISPs must in turn be interconnected:
+  - So that any two hosts anywhere in the world can send packets to each other.
+• The resulting "Network of Networks" is extraordinarily complex:
+  - Driven by economics, commercial contracts, and national/international policies.
+• We examine the evolution through 5 structural phases.
+
+================================================================================
+SLIDE 41: Connecting Access ISPs: The Scalability Problem
+================================================================================
+
+COMPUTER NETWORKS: Internet Evolution – The Challenge
+
+The Core Problem:
+• Given millions of independent Access ISPs worldwide, how should they be interconnected?
+
+Mesh Interconnection (Fully Meshed):
+• If every Access ISP connected directly to every other Access ISP:
+  - For N access ISPs, it would require N * (N - 1) / 2 links.
+  - Scale: O(N^2) physical connections!
+• With hundreds of thousands of ISPs, direct meshing is completely infeasible economically and physically.
+
+================================================================================
+SLIDE 42: Internet Structure: Mesh Scalability Diagram
+================================================================================
+
+COMPUTER NETWORKS: Why Direct Mesh Fails
+
+Diagram of O(N^2) Direct Mesh:
+             [Access Net 1] -------- [Access Net 2]
+                   |     \         /     |
+                   |       \     /       |
+                   |         \ /         |
+                   |         / \         |
+                   |       /     \       |
+                   |     /         \     |
+             [Access Net 3] -------- [Access Net 4]
+             
+Direct interconnection does not scale:
+• Number of links = N*(N-1)/2 = O(N^2).
+• Exponential cost of cabling, router interfaces, and administrative peering agreements.
+
+================================================================================
+SLIDE 43: Network Structure 1: Single Global Transit ISP
+================================================================================
+
+COMPUTER NETWORKS: Network Structure 1
+
+Option 1: Connect Each Access ISP to a Single Global Transit ISP:
+• Every Access ISP pays a single Global Transit ISP to carry its traffic anywhere in the world.
+• Economic Agreement:
+  - Access ISP is the CUSTOMER.
+  - Global ISP is the PROVIDER.
+  - Customer pays provider for Internet transit.
+
+Diagram:
+  [Access ISP 1] --\
+  [Access ISP 2] ---> [ Global Transit ISP ] <--- [Access ISP 3]
+  [Access ISP 4] --/                                 |
+                                             [Access ISP 5]
+
+Business Reality:
+• If one global ISP is a viable, profitable business, competitors will emerge.
+
+================================================================================
+SLIDE 44: Network Structure 2: Multiple Competing Global ISPs
+================================================================================
+
+COMPUTER NETWORKS: Network Structure 2
+
+Multiple Competing Global Transit ISPs:
+• Multiple commercial backbone providers emerge: ISP A, ISP B, ISP C.
+• Each Access ISP chooses one or more Global ISPs to purchase transit from.
+• But customers of ISP A must be able to communicate with customers of ISP B!
+• Therefore, competing Global ISPs must interconnect directly with one another.
+
+Diagram:
+  [Access ISPs] ===> [ ISP A ] <====== Peering Link ======> [ ISP B ] <=== [Access ISPs]
+                          \                                 /
+                            ==== Peering === [ ISP C ] ====/
+
+================================================================================
+SLIDE 45: Network Structure 3: Peering Links & Internet Exchange Points (IXPs)
+================================================================================
+
+COMPUTER NETWORKS: Network Structure 3
+
+Interconnection Mechanisms:
+1. Peering Links:
+   • Two ISPs connect directly to exchange traffic between their respective customers.
+   • Typically "settlement-free" peering: neither ISP pays the other, because both benefit equally.
+2. Internet Exchange Points (IXPs):
+   • A physical switching facility (often in a major carrier hotel/data center) where multiple third-party ISPs can peer with each other.
+   • Instead of running separate bilateral cables, ISPs connect to a shared high-speed switch fabric at the IXP.
+
+Diagram:
+  [Access Net] --> [ ISP A ] ----\                       /---- [ ISP B ] <-- [Access Net]
+                                +---> [ IXP Facility ] <+
+  [Access Net] --> [ ISP C ] ----/   (Shared Switch)     \---- [ ISP D ] <-- [Access Net]
+
+================================================================================
+SLIDE 46: Peering at Scale: NIXI (National Internet Exchange of India)
+================================================================================
+
+COMPUTER NETWORKS: Case Study – NIXI
+
+What is NIXI?
+• National Internet Exchange of India — Non-profit organization under MeitY, established in 2003.
+• Around 77 operational exchange nodes across India (Delhi/Noida, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad, Ahmedabad, etc.).
+• Peak traffic handled: Over 1.5 Tbps.
+
+The Problem Solved by NIXI:
+• Before domestic peering:
+  - If a user in Bengaluru sent packets to a user or server in Chennai on different ISPs, traffic was often routed across submarine cables to Singapore or the USA, and then back to Chennai!
+  - Resulted in high international transit costs and 200+ ms delays for domestic traffic.
+• With NIXI Local Peering:
+  - Traffic between Indian ISPs stays inside India through local exchange points.
+  - Reduces latency to single-digit milliseconds and dramatically reduces ISP bandwidth costs.
+
+Route Comparison:
+  Before NIXI: [Bengaluru User] ---> [Singapore / US] ---> [Chennai Server]  (~230 ms)
+  With NIXI:   [Bengaluru User] ---> [Local NIXI Node] --> [Chennai Server]  (~8 ms)
+
+================================================================================
+SLIDE 47: Network Structure 4: Regional & Tier-2 ISPs
+================================================================================
+
+COMPUTER NETWORKS: Network Structure 4
+
+Regional Networks:
+• Access ISPs often do not connect directly to Tier-1 global backbones.
+• Instead, Regional (Tier-2) ISPs arise:
+  - Regional ISPs connect local Access ISPs to larger Global ISPs.
+  - Regional ISPs connect to each other at local IXPs.
+
+Hierarchy:
+  [Tier-1 Global ISPs] <--- Peering / IXP ---> [Tier-1 Global ISPs]
+          ^                                            ^
+          | (Transit)                                  | (Transit)
+  [Regional Tier-2 ISP] <--- Peering at IXP ---> [Regional Tier-2 ISP]
+          ^                                            ^
+          | (Access)                                   | (Access)
+  [Local Access ISPs]                          [Local Access ISPs]
+
+================================================================================
+SLIDE 48: Network Structure 5: Content Provider Networks (Google, Meta, Netflix)
+================================================================================
+
+COMPUTER NETWORKS: Network Structure 5
+
+The Modern Internet Architecture:
+• Content Provider Networks (Google, Microsoft, Meta, Amazon):
+  - Build their own private global fiber optic networks.
+  - Connect their massive data centers directly to Regional ISPs and Access ISPs at IXPs.
+  - Completely BYPASS Tier-1 commercial ISPs whenever possible.
+  - Saves billions in transit fees and provides higher quality of service directly to end consumers.
+
+================================================================================
+SLIDE 49: Complete Modern Internet Hierarchy
+================================================================================
+
+COMPUTER NETWORKS: Modern Internet Hierarchy Summary
+
+The Center / Top Tier:
+• Tier-1 Commercial ISPs:
+  - Examples: AT&T, NTT, Lumen/CenturyLink, Tata Communications, Telia, Orange.
+  - National & International coverage; do NOT pay anyone for transit (they peer with all other Tier-1 ISPs).
+• Content Provider Networks:
+  - Examples: Google, Meta, Amazon, Microsoft, Apple.
+  - Private global networks connecting data centers directly to regional and access ISPs.
+• Internet Exchange Points (IXPs):
+  - Physical meeting hubs for peering among Tier-1, Tier-2, content providers, and access ISPs.
+• Regional (Tier-2) ISPs:
+  - Commercial networks operating within a state, country, or subcontinent.
+• Access ISPs (Tier-3):
+  - Connect home, enterprise, and mobile end users to the Internet.
+
+================================================================================
+SLIDE 50: CDNs: Why Netflix Doesn't Stream From California
+================================================================================
+
+COMPUTER NETWORKS: Content Delivery Networks (CDNs)
+
+Core Observation:
+• In practice, the ACCESS network and long cross-ocean propagation — NOT backbone capacity — are the major sources of delay and congestion.
+• A Content Delivery Network (CDN) places copies of popular content at the network's edge, physically close to access ISPs.
+• Examples: Netflix Open Connect, Akamai, Cloudflare, Google Global Cache.
+• Deployment:
+  - Physical CDN server appliances (storage caches) installed INSIDE ISP central offices (e.g., inside Jio and Airtel data centers in Bengaluru, Mumbai).
+  - When a user in Bengaluru clicks "Play" on Netflix, the video streams from a cache server located a few kilometers away, not across the Pacific Ocean!
+
+Latency Comparison:
+• Without CDN (From California origin server): Round-trip time ≈ 230 ms.
+• With CDN (From local Jio/Airtel edge cache): Round-trip time ≈ 8 ms.
+
+================================================================================
+SLIDE 51: Network Core: Tier-1 ISP PoP Architecture
+================================================================================
+
+COMPUTER NETWORKS: Points of Presence (PoPs)
+
+Point of Presence (PoP):
+• A group of one or more routers in the provider's network where customer networks and peer networks connect.
+• Features of Tier-1 ISPs (e.g., Sprint / T-Mobile network map):
+  - Trunks of high-speed fiber connecting internal PoPs across continents.
+  - Multiple redundant links to peer Tier-1 networks.
+  - Hundreds of links connecting customer access ISPs and corporate clients.
+
+================================================================================
+SLIDE 52: Performance: How Packet Delay and Loss Occur
+================================================================================
+
+COMPUTER NETWORKS: Sources of Packet Delay and Loss
+
+Mechanism:
+1. Packets arrive at router input ports.
+2. If packets arrive faster than the outgoing link can transmit them:
+   - Packets queue in router buffers, waiting their turn.
+   - Each queued packet experiences QUEUING DELAY.
+3. If the buffer is completely filled when a packet arrives:
+   - The router has no space to store the arriving packet.
+   - The packet is dropped, resulting in PACKET LOSS.
+
+Delay & Loss Components at Router Node:
+  [Arriving Packets] =====> [ Router Buffer ] =====> [ Link Transmitter ] =====> [ Physical Wire ]
+                                  |                         |                           |
+                            Queuing Delay           Transmission Delay          Propagation Delay
+                            (or Packet Loss          (L / R)                     (d / s)
+                             if full)
+
+================================================================================
+SLIDE 53: Performance: 4 Sources of Packet Delay (Overview & Formula)
+================================================================================
+
+COMPUTER NETWORKS: The 4 Sources of Packet Delay
+
+Total Nodal Delay Equation:
+  d_nodal = d_proc + d_queue + d_trans + d_prop
+
+1. Nodal Processing Delay (d_proc):
+   • Time required to examine the packet's header and determine where to direct the packet.
+   • Includes checking for bit-level errors in packet header.
+   • Typical magnitude: Typically microseconds (< 10 microseconds) or less.
+
+2. Queuing Delay (d_queue):
+   • Time the packet spends waiting in the buffer queue to be transmitted onto the link.
+   • Depends on router congestion level and preceding traffic.
+   • Typical magnitude: Microseconds to hundreds of milliseconds.
+
+================================================================================
+SLIDE 54: Performance: Transmission vs. Propagation Delay
+================================================================================
+
+COMPUTER NETWORKS: Transmission Delay vs. Propagation Delay Definitions
+
+3. Transmission Delay (d_trans):
+   • Time required to push ALL of the packet's bits into the link.
+   • Formula:
+     
+                  L (Packet length in bits)
+     d_trans  =  ----------------------------
+                  R (Link transmission rate, bps)
+
+4. Propagation Delay (d_prop):
+   • Time it takes for a single bit to propagate from the beginning of the link to the next router.
+   • Formula:
+     
+                  d (Length of physical link, meters)
+     d_prop   =  -------------------------------------
+                  s (Propagation speed of medium, m/s)
+
+   • Speed of light in copper/fiber: s ≈ 2 * 10^8 m/sec (about 2/3 speed of light in vacuum).
+
+CRITICAL DISTINCTION:
+• d_trans is a function of PACKET LENGTH and LINK SPEED (nothing to do with distance).
+• d_prop is a function of PHYSICAL DISTANCE and PROPAGATION SPEED (nothing to do with packet size or link speed).
+
+================================================================================
+SLIDE 55: Transmission Delay vs. Propagation Delay Comparison Table
+================================================================================
+
+COMPUTER NETWORKS: Transmission Delay vs. Propagation Delay Comparison
+
+| Dimension           | Transmission Delay (d_trans)          | Propagation Delay (d_prop)              |
+| :------------------ | :------------------------------------ | :-------------------------------------- |
+| Definition          | Time to push all packet bits onto wire| Time for a bit to travel across link    |
+| Formula             | d_trans = L / R                       | d_prop = d / s                          |
+| Governed by         | Packet length (L) & Link rate (R)     | Distance (d) & Propagation speed (s)    |
+| Distance dependence | Completely INDEPENDENT of distance    | DIRECTLY proportional to distance       |
+| Packet size depend. | DIRECTLY proportional to packet size  | Completely INDEPENDENT of packet size   |
+| Analogy             | Time to push cars through toll booth  | Time for car to drive along highway     |
+
+================================================================================
+SLIDE 56: Caravan Analogy: Scenario 1 (Slow Toll Booth, Fast Highway)
+================================================================================
+
+COMPUTER NETWORKS: Delay Analogy – Caravan Scenario 1
+
+Analogy Setup:
+• 10-car caravan (represents a 10-bit packet).
+• Toll booth services 1 car every 12 seconds (bit transmission time = 12 sec).
+• Toll booth ~ Router; Car ~ Bit; Caravan ~ Packet.
+• Cars propagate down highway at 100 km/hr (propagation speed).
+• Highway distance between Toll Booth 1 and Toll Booth 2 = 100 km.
+
+Question: How long until the entire caravan is lined up before the 2nd toll booth?
+
+Step-by-Step Solution:
+1. Time to push entire caravan through Toll Booth 1:
+   Time = 10 cars * 12 seconds/car = 120 seconds = 2 minutes (Transmission delay).
+2. Time for the LAST car to propagate from Toll Booth 1 to Toll Booth 2:
+   Time = Distance / Speed = 100 km / (100 km/hr) = 1 hour = 60 minutes (Propagation delay).
+3. Total Time = 2 minutes + 60 minutes = 62 minutes.
+
+================================================================================
+SLIDE 57: Caravan Analogy: Scenario 2 (Fast Toll Booth, Superfast Cars)
+================================================================================
+
+COMPUTER NETWORKS: Delay Analogy – Caravan Scenario 2
+
+New Parameters:
+• Toll booth services 1 car every 1 minute (60 seconds).
+• Cars travel at 1,000 km/hr.
+• Distance = 100 km.
+
+Question: Will cars begin arriving at the 2nd toll booth BEFORE all cars are serviced at the 1st toll booth?
+
+Step-by-Step Solution:
+1. Time for 1st car to clear Toll Booth 1 = 1 minute.
+2. Travel time for 1st car = 100 km / (1,000 km/hr) = 0.1 hr = 6 minutes.
+3. Total time for 1st car to reach Toll Booth 2 = 1 min + 6 min = 7 minutes.
+4. But servicing all 10 cars at Toll Booth 1 takes 10 * 1 min = 10 minutes!
+5. Answer: YES! At minute 7, the 1st car has already arrived at Toll Booth 2, while 3 cars are still waiting in line to be serviced at Toll Booth 1!
+
+================================================================================
+SLIDE 58: "Which Delay Wins?" (Numerical Comparison)
+================================================================================
+
+COMPUTER NETWORKS: Dominant Delay Analysis
+
+Scenario: Downloading a 5 Megabyte (MB) image.
+  File size = 5 MB = 5 * 10^6 bytes = 40 * 10^6 bits.
+
+Scenario A: Fast 1 Gbps fiber link across 12,000 km (Intercontinental):
+• Distance d = 12,000 km = 12,000,000 m. Speed s ≈ 2 * 10^8 m/s.
+• Propagation Delay:
+  d_prop = 12,000,000 / (2 * 10^8) = 0.06 s = 60 ms.
+• Transmission Delay (R = 1 Gbps = 10^9 bps):
+  d_trans = (5 * 10^6 * 8) / 10^9 = 40 * 10^6 / 10^9 = 0.04 s = 40 ms.
+• Conclusion: Propagation delay dominates (60 ms > 40 ms).
+
+Scenario B: Slow 1 Mbps link next door (Distance d ≈ 0):
+• Distance is tiny, so d_prop ≈ 0.
+• Transmission Delay (R = 1 Mbps = 10^6 bps):
+  d_trans = (5 * 10^6 * 8) / 10^6 = 40 seconds!
+• Conclusion: Transmission delay overwhelmingly dominates (40 seconds vs. microseconds).
+
+================================================================================
+SLIDE 59: Queuing Delay Revisited: Traffic Intensity
+================================================================================
+
+COMPUTER NETWORKS: Queuing Delay Dynamics
+
+Parameters:
+• R: Link transmission rate / bandwidth (bits/sec).
+• L: Packet length (bits).
+• a: Average packet arrival rate (packets/second).
+• L * a: Average rate at which bits arrive at the queue (bits/sec).
+• R: Rate at which bits are transmitted / serviced (bits/sec).
+
+Traffic Intensity Metric (I):
+  
+                 L * a      (Bit Arrival Rate)
+  Intensity I = -------  = --------------------
+                   R        (Bit Service Rate)
+
+Impact on Queuing Delay:
+• I ≈ 0: Arriving traffic is very light; packets rarely wait; average queuing delay is close to zero.
+• I -> 1: Traffic arrival approaches link capacity; queues build up; delay increases non-linearly.
+• I > 1: More work arrives than can be serviced; queue grows indefinitely without bound; average delay is INFINITE (buffer overflows and packet loss occur).
+• Gold Standard: Design network links such that Traffic Intensity I <= 0.7 to 0.8.
+
+================================================================================
+SLIDE 60: Queuing Delay Formula & Curve
+================================================================================
+
+COMPUTER NETWORKS: Traffic Intensity Formula & Exponential Growth
+
+Theoretical Queuing Delay Estimation Formula (M/M/1 Queue approximation):
+  
+                I * L
+  d_queue = -------------    (for I < 1)
+              R * (1 - I)
+
+Where:
+• I = L * a / R (Traffic Intensity)
+• L = Packet length (bits)
+• R = Link capacity (bps)
+
+Queue Delay Behavior:
+  Average Delay
+      ^
+      |                                              | (Asymptote at I = 1)
+      |                                             /
+      |                                            /
+      |                                           /
+      |                                          /
+      |                                        /
+      |                                     .-'
+      |                            _..---''
+      +---------------------------+------------------> Traffic Intensity (La/R)
+      0                          0.5               1.0
+  (Small delay)            (Moderate delay)   (Explodes to Infinity)
+
+================================================================================
+SLIDE 61: Queuing Delay Formula: Why It Blows Up Near I = 1
+================================================================================
+
+COMPUTER NETWORKS: Queuing Delay Mathematical Analysis
+
+Formula Regrouping:
+  d_queue = (I * L) / (R * (1 - I))  for I < 1
+  d_queue = (L / R) * [ I / (1 - I) ] = d_trans * [ I / (1 - I) ]
+
+Key Insights:
+• L/R is exactly the transmission delay (d_trans).
+• Therefore, queuing delay is simply the transmission delay scaled by a CONGESTION MULTIPLIER:
+  Multiplier = I / (1 - I)
+• The congestion multiplier depends ONLY on traffic intensity (I = La/R), not directly on packet size or link rate.
+
+Congestion Multiplier Table:
++-------------------+--------------------+---------------------------------------------+
+| Traffic Intensity | Congestion Mult.   | Physical Meaning                            |
+| I = (La / R)      | [ I / (1 - I) ]    |                                             |
++-------------------+--------------------+---------------------------------------------+
+| 0.00              | 0x                 | No waiting at all                           |
+| 0.50              | 1x                 | Queuing delay = 1 transmission time         |
+| 0.80              | 4x                 | Queuing delay = 4 transmission times        |
+| 0.90              | 9x                 | Queuing delay = 9 transmission times        |
+| 0.99              | 99x                | Queuing delay = 99 transmission times       |
+| -> 1.00           | -> Infinity        | Delay blows up indefinitely (buffer overflow)|
++-------------------+--------------------+---------------------------------------------+
+
+Worked Numerical Example:
+• Link capacity R = 10 Mbps = 10^7 bps.
+• Packet length L = 1,000 bits.
+• Base transmission delay d_trans = L / R = 1,000 / 10,000,000 = 100 microseconds (µs).
+• Case 1: Low traffic arrival rate a = 1,000 packets/sec
+  - Intensity I = (1,000 * 1,000) / 10,000,000 = 0.1
+  - d_queue = 100 µs * [ 0.1 / (1 - 0.1) ] = 100 µs * (0.1 / 0.9) ≈ 11.1 µs.
+• Case 2: High traffic arrival rate a = 9,000 packets/sec (9x increase)
+  - Intensity I = (1,000 * 9,000) / 10,000,000 = 0.9
+  - d_queue = 100 µs * [ 0.9 / (1 - 0.9) ] = 100 µs * (0.9 / 0.1) = 900 µs.
+• Takeaway: A 9x increase in traffic arrival produced an 81x increase in queuing delay!
+
+================================================================================
+SLIDE 62: "Real" Internet Delays and Routes: Traceroute Mechanism
+================================================================================
+
+COMPUTER NETWORKS: Traceroute Principles
+
+What do "real" Internet delay & loss look like?
+• The `traceroute` program provides delay measurements from source to every intermediate router along the end-to-end Internet path towards a destination.
+
+Operational Mechanism:
+• For each hop distance i = 1, 2, 3, ...:
+  - Source sends three probe packets towards destination with IP Time-To-Live (TTL) field set to i.
+  - When the i-th router on the path receives the packet, the TTL drops from 1 to 0.
+  - The router discards the packet and returns an ICMP "Time-to-Live Exceeded" (Type 11) error message back to the source.
+  - Source receives the ICMP reply and records the Round-Trip Time (RTT) interval between transmission and reply.
+  - Sending 3 probes per hop provides three RTT samples to detect jitter and variance.
+
+Diagram:
+  Source                                Router 1        Router 2        Destination
+    |                                      |               |                 |
+    | --- Probe 1,2,3 (TTL=1) -----------> | (TTL expires) |                 |
+    | <--- ICMP TTL Exceeded ------------- |               |                 |
+    |                                                      |                 |
+    | --- Probe 1,2,3 (TTL=2) ---------------------------> | (TTL expires)   |
+    | <--- ICMP TTL Exceeded ----------------------------- |                 |
+
+================================================================================
+SLIDE 63: Real Internet Trace: Umass to Eurecom (Detailed Log Analysis)
+================================================================================
+
+COMPUTER NETWORKS: Traceroute Output Walkthrough
+
+Command: traceroute from gaia.cs.umass.edu (Amherst, USA) to www.eurecom.fr (France)
+
+Sample Log Output:
+  Hop  Router FQDN / IP Address                    RTT 1   RTT 2   RTT 3   Notes
+  ---  -----------------------------------------   ------  ------  ------  --------------------------
+    1  cs-gw (128.119.240.254)                       1 ms    1 ms    2 ms  Local campus gateway
+    2  border1-rt-fa5-1-0.gw.umass.edu (128.119.3.145)1 ms  1 ms    2 ms  Campus border router
+    3  cht-vbns.gw.umass.edu (128.119.3.130)         6 ms    5 ms    5 ms  vBNS regional network
+    4  jn1-at1-0-0-19.wor.vbns.net (204.147.132.129)16 ms  11 ms   13 ms  Worcester PoP
+    5  jn1-so7-0-0-0.wae.vbns.net (204.147.136.136) 21 ms  18 ms   18 ms  Washington DC PoP
+    6  abilene-vbns.abilene.ucaid.edu (198.32.11.9)  22 ms  18 ms   22 ms  Abilene core backbone
+    7  nycm-wash.abilene.ucaid.edu (198.32.8.46)     22 ms  22 ms   22 ms  New York City PoP
+  --------------------------------- Trans-Oceanic Link (Submarine Cable) --------------------------
+    8  62.40.103.253 (62.40.103.253)               104 ms  109 ms  106 ms  Atlantic Crossing (+80 ms!)
+    9  de2-1.de1.de.geant.net (62.40.96.129)       109 ms  102 ms  104 ms  GÉANT European Backbone
+   10  de.fr1.fr.geant.net (62.40.96.50)           113 ms  121 ms  114 ms  France border
+   11  renater-gw.fr1.fr.geant.net (62.40.103.54)   112 ms  114 ms  112 ms  French National Network
+   12  nio-n2.cssi.renater.fr (193.51.206.13)       111 ms  114 ms  116 ms
+   13  nice.cssi.renater.fr (195.220.98.102)        123 ms  125 ms  124 ms  Nice, France PoP
+   14  r3t2-nice.cssi.renater.fr (195.220.98.110)   126 ms  126 ms  124 ms
+   15  eurecom-valbonne.r3t2.ft.net (193.48.50.54)  135 ms  128 ms  133 ms  Valbonne Access Link
+   16  194.214.211.25 (194.214.211.25)             126 ms  128 ms  126 ms
+   17  * * *                                                               Router drops ICMP
+   18  * * *                                                               Firewall blocks probes
+   19  fantasia.eurecom.fr (193.55.113.142)        132 ms  128 ms  136 ms  Destination Reached!
+
+Observations:
+• Hops 1-7 stay within US domestic networks (1-22 ms).
+• Hop 8 crosses the Atlantic Ocean: delay jumps by ~82 ms due to propagation delay across thousands of kilometers of submarine fiber.
+• Asterisks (`* * *`): Indicate probe packet was lost or router is configured not to return ICMP messages for security.
+• Non-monotonic delays (e.g. hop 11 lower than hop 10): Router internal load or asymmetric reverse paths.
+
+================================================================================
+SLIDE 64: How Traceroute Works (RFC Reference & Caveats)
+================================================================================
+
+COMPUTER NETWORKS: Traceroute Architecture & Standards
+
+Technical Specifications:
+• Refer to RFC 1393: "Traceroute Using an IP Option".
+• Linux/Unix traceroute traditionally uses UDP packets directed to high, unused destination ports (e.g., 33434+).
+• Windows `tracert` uses ICMP Echo Request packets directly.
+• When UDP probe reaches final destination host, the destination returns an ICMP "Port Unreachable" (Type 3, Code 3) error, terminating the trace.
+
+"Don't Trust Traceroute Completely":
+• Why delays can appear inconsistent:
+  - Reverse path asymmetry: Packets return on a completely different physical path than they were sent.
+  - Priority handling: Routers process ICMP generation at low CPU priority compared to hardware-switched data packets.
+  - MPLS tunnels: Virtual circuits inside carrier backbones may hide internal hops.
+
+================================================================================
+SLIDE 65: Performance: Packet Loss Dynamics
+================================================================================
+
+COMPUTER NETWORKS: Packet Loss Mechanisms
+
+How Packet Loss Occurs:
+• Queues (buffers) preceding links in routers have FINITE memory capacity.
+• When packets arrive at an already full queue, the arriving packet is DROPPED (LOST).
+
+What Happens to Lost Packets?
+• The lost packet may be:
+  1. Retransmitted by previous node (rare in IP core; used in some link-layer protocols like WiFi).
+  2. Retransmitted by source end system (via transport layer protocol like TCP).
+  3. Not retransmitted at all (when using UDP; e.g., real-time voice/video streaming where old packets are useless).
+
+Diagram:
+                     Router Output Buffer
+                 +---------------------------+
+  Incoming       | [P5] | [P4] | [P3] | [P2] | =====> [Transmitting P1] ===> Link
+  Packets =====> +---------------------------+
+                     ^
+                     |--- Arriving packet [P6] finds buffer FULL!
+                          [P6] is DROPPED (Packet Loss)
+
+================================================================================
+SLIDE 66: Performance: Throughput Fundamentals
+================================================================================
+
+COMPUTER NETWORKS: Throughput Definitions & Fluid Pipe Model
+
+Definition:
+• Throughput: The rate (measured in bits per second, bps) at which bits are actually delivered from sender to receiver.
+  - Instantaneous Throughput: Rate at any given instantaneous moment in time.
+  - Average Throughput: Rate measured over an extended period of time (Total bits delivered / Total elapsed time).
+
+Fluid Analogy (Pipes & Valves):
+• Think of bits as fluid flowing through pipes of different widths.
+• Server pumps fluid at rate Rs bits/sec into a pipe of capacity Rs.
+• Pipe connects to a second pipe with capacity Rc bits/sec delivering fluid to client.
+
+Diagram:
+  [Server] =====(Pipe: Rs bits/sec)=====> [Router] =====(Pipe: Rc bits/sec)=====> [Client]
+
+================================================================================
+SLIDE 67: Bottleneck Link Analysis
+================================================================================
+
+COMPUTER NETWORKS: Bottleneck Link
+
+The Bottleneck Principle:
+• The BOTTLENECK LINK is the link on the end-to-end path that constrains (limits) the end-to-end throughput.
+
+Two Primary Scenarios:
+1. Scenario 1 (Rs < Rc):
+   - Server link is narrower than client access link.
+   - Fluid can only flow as fast as the server can pump it.
+   - Average End-to-End Throughput = Rs bits/sec.
+
+2. Scenario 2 (Rs > Rc):
+   - Server link is wide, but client access link is narrow.
+   - Packets queue before the client link; throughput is constrained by Rc.
+   - Average End-to-End Throughput = Rc bits/sec.
+
+General Rule for 2-hop path:
+  Throughput = min(Rs, Rc)
+
+================================================================================
+SLIDE 68: Throughput: Numerical Example
+================================================================================
+
+COMPUTER NETWORKS: Throughput Calculation Example
+
+Problem Statement:
+• File size F = 32 million bits (32 Mbits).
+• Server transmission rate Rs = 2 Mbps.
+• Client access link rate Rc = 1 Mbps.
+• What is the time needed to transfer the file?
+
+Step-by-Step Solution:
+1. Find the bottleneck transfer rate:
+   Transfer Rate = min(Rs, Rc) = min(2 Mbps, 1 Mbps) = 1 Mbps = 1,000,000 bps.
+2. Calculate total transfer time:
+   Time = File Size / Transfer Rate
+   Time = (32 * 10^6 bits) / (1 * 10^6 bits/sec)
+   Time = 32 seconds!
+
+If Rs were 100 Mbps and Rc were 10 Mbps:
+• Rate = min(100, 10) = 10 Mbps.
+• Time = 32 / 10 = 3.2 seconds.
+
+================================================================================
+SLIDE 69: Throughput in a Shared Network Scenario
+================================================================================
+
+COMPUTER NETWORKS: Shared Backbone Bottleneck
+
+Scenario Setup:
+• 10 independent servers download files to 10 independent clients simultaneously.
+• Each server has access link Rs.
+• Each client has access link Rc.
+• All 10 connections share a common backbone link of capacity R bits/sec.
+• The shared backbone link divides its transmission capacity equally among the 10 active connections.
+
+General Formula:
+  Throughput per connection = min(Rs, Rc, R / 10)
+
+Worked Example:
+• Rs = 2 Mbps
+• Rc = 1 Mbps
+• Shared backbone capacity R = 5 Mbps
+• Fair share of backbone link per connection = R / 10 = 5 Mbps / 10 = 0.5 Mbps = 500 kbps.
+• Bottleneck evaluation:
+  min(Rs, Rc, R/10) = min(2 Mbps, 1 Mbps, 0.5 Mbps) = 0.5 Mbps (500 kbps).
+• Result: The shared backbone link is the bottleneck; each client gets 500 kbps throughput.

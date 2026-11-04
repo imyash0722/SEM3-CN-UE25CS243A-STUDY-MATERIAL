@@ -1,0 +1,124 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 8: Pipelined Protocols: Go-Back-N (GBN Window, Cumulative ACKs & 18-Tx Problem)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 85 to 91)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 7
+================================================================================
+
+================================================================================
+SLIDE 85: Roadmap: Go-Back-N (GBN) Protocol
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.4 Principles of Reliable Data Transfer
+• Go-Back-N (GBN) Protocol Mechanics and Calculations.
+
+================================================================================
+SLIDE 86: Go-Back-N (GBN): Sender Perspective
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N: Sender
+
+Sender Window Rules:
+• Sliding window of up to $N$ consecutive transmitted but unacknowledged packets.
+• Range of sequence numbers: $k$-bit field yields sequence numbers $0$ to $2^k - 1$.
+
+Sequence Number Space:
++-------------------+-----------------------+-------------------+-------------------+
+| Already ACKed     | Sent, UnACKed         | Usable, Not Yet   | Not Usable Until  |
+|                   | ("In-Flight", up to N)| Sent (within win) | Window Slides     |
++-------------------+-----------------------+-------------------+-------------------+
+ ^                   ^                       ^                   ^
+ 0                 base                  nextseqnum            base+N
+
+Key Sender Mechanisms:
+• Cumulative ACK: `ACK(n)` acknowledges all packets up to and including sequence number $n$.
+• Window Slide: Upon receiving `ACK(n)`, the window base advances forward to $n + 1$.
+• Single Timer: The sender maintains a single timer for the oldest in-flight (unACKed) packet (`base`).
+• Timeout Event: Upon timeout, the sender retransmits ALL $N$ packets currently in the window starting from `base` ("Goes back $N$ steps").
+
+================================================================================
+SLIDE 87: Go-Back-N (GBN): Receiver Perspective
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N: Receiver
+
+Receiver Behavior:
+• Strictly In-Order Delivery:
+  - Expects packet with sequence number `rcv_base`.
+  - Upon receiving in-order packet: Delivers to application, sends `ACK(rcv_base)`, advances `rcv_base = rcv_base + 1`.
+• Handling Out-of-Order Packets:
+  - If a packet arrives with a higher or out-of-order sequence number:
+    * The receiver DISCARDS it (does NOT buffer it!).
+    * Re-sends an ACK for the highest in-order packet successfully received so far.
+• State Memory:
+  - The GBN receiver needs to maintain only a single variable: `rcv_base`.
+
+================================================================================
+SLIDE 88: Go-Back-N in Action: Timeline Example
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N in action
+
+Timeline ($N = 4$):
+1. Sender sends `pkt0`, `pkt1`, `pkt2`, `pkt3`. Window is full [0, 1, 2, 3].
+2. Receiver receives `pkt0`, sends `ack0`.
+3. Receiver receives `pkt1`, sends `ack1`.
+4. `pkt2` is LOST in transit!
+5. Receiver receives `pkt3` (out of order!). Receiver DISCARDS `pkt3` and re-sends `ack1`.
+6. Sender receives `ack0` -> Window slides to [1, 2, 3, 4], sends `pkt4`.
+7. Sender receives `ack1` -> Window slides to [2, 3, 4, 5], sends `pkt5`.
+8. Receiver receives `pkt4` and `pkt5` -> DISCARDS both and re-sends `ack1`.
+9. Timeout for `pkt2` fires at sender!
+10. Sender retransmits ALL in-flight packets in current window: `pkt2`, `pkt3`, `pkt4`, `pkt5`!
+
+================================================================================
+SLIDE 89: Go-Back-N Numerical Problem: Problem Statement
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N: example
+
+Problem Statement:
+In a Go-Back-N (GBN) protocol:
+• Window size $N = 10$.
+• Exactly 10 distinct packets (numbered 1 to 10) must be transmitted.
+• Network Failure Rule: Every 5th packet transmitted across the network is lost (i.e., transmission #5, #10, #15, #20... are lost).
+
+Question:
+How many total packet transmissions are required to successfully deliver all 10 packets?
+
+================================================================================
+SLIDE 90: Go-Back-N Numerical Problem: Answer
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N: example
+
+Answer: 18 Transmissions
+
+================================================================================
+SLIDE 91: Go-Back-N Numerical Problem: Step-by-Step Breakdown
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N: example (Detailed Solution)
+
+Round 1 — Initial Transmission of Packets 1 to 10 (Transmissions 1–10):
+• Transmissions 1, 2, 3, 4: Packets 1, 2, 3, 4 delivered successfully.
+• Transmission 5: Packet 5 is LOST (5th transmission!).
+• Transmissions 6, 7, 8, 9: Packets 6, 7, 8, 9 arrive out of order; receiver DISCARDS all of them!
+• Transmission 10: Packet 10 is LOST (10th transmission!).
+Receiver has successfully delivered packets 1–4. Sender times out on packet 5 and goes back to packet 5.
+
+Round 2 — Retransmit Packets 5 to 10 (Transmissions 11–16):
+• Transmissions 11, 12, 13, 14: Packets 5, 6, 7, 8 delivered successfully.
+• Transmission 15: Packet 9 is LOST (15th transmission!).
+• Transmission 16: Packet 10 arrives out of order; receiver DISCARDS it.
+Receiver now has successfully delivered packets 1–8. Sender times out on packet 9 and goes back to packet 9.
+
+Round 3 — Retransmit Packets 9 and 10 (Transmissions 17–18):
+• Transmission 17: Packet 9 delivered successfully (17 is not a multiple of 5).
+• Transmission 18: Packet 10 delivered successfully (18 is not a multiple of 5).
+
+Total Transmissions Required = 10 + 6 + 2 = 18 Transmissions!

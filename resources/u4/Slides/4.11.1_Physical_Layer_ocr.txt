@@ -1,0 +1,333 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS e@
+Unit — 4 Link Layer and LAN Roadmap
+
+Physical layer
+COMPUTER NETWORKS
+Physical Layer — OSI Reference Model
+
+Device A
+
+Intermediate Intermediate
+node node
+
+— <
+
+Device B
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+4-3 interface
+Network
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Layer-to-layer communication (7th layer)
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+
+4-3 interface
+Network
+
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Physical communication
+
+@ UNIVERSITY
+
+Implemented
+in Software
+
+Implemented
+in Hardware
+COMPUTER NETWORKS @ PES
+Purpose of Physical Layer nersiTy
+
+7 Application ’
+6 Presentation
+
+5 Session
+
+Transport
+
+Network
+
+Data Link
+
+a1
+1 Physical
+
+The Physical layer interconnects our data networks.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Physical Layer Services
+
+The role of Physical Layer is to:
+
+encode the binary digits that represent data link layer frames into
+signals
+
+Analog signal — continuous-
+valued (amplitudes,
+
+copper wires, optical fiber, and wireless that connect network devices. frequencies)
+Digital signal — discrete-valued
+
+Physical medium - conduct a signal in the form of voltage, light, or  (0s & 1s)
+radio waves from one device to another.
+
+to transmit and receive these signals cross the physical media
+
+Media Signal Type
+Copper cable Patterns of electrical pulses
+Time Time Fiber-optic cable Patterns of light pulses
+
+Analog signal Digital signal
+Wireless Patterns of radio transmissions
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Physical Layer Services
+
+The delivery of frames across the local media requires the
+following physical layer elements:
+
+The physical media and associated connectors .
+Physical Layer
+
+A representation of bits on the media Devices
+Encoding of data and control information * Hub
+Transmitter and receiver circuitry on the network : I\R/Iezeater
+; ° odem
+devices
+) S « Cables
+Components to understand Physical Layer functions includes: « Network Adapters
+
+Physical components
+Encoding
+Signaling
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+Physical Layer Services
+
+Source Node Destination Node
+A
+Application Application
+Encapsulation
+PDU Presentation o Presentation PDU
+Application |Data
+Data Session Session Data
+Data| | Data| | Data
+Segment Transport Transport Segment
+Network Deta
+Packet Network Header Network Packet
+Frame Data Link Frame |Network| = |Frame Data Link Frame
+Header | Header Trailer
+Bits Physical 1lol1lolol1l1]1]olo]1 Physical Bits
+Bits
+
+Nighnigiieiiminmiimii
+
+Physical Layer Encoding
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Physical Layer Principles
+
+Encoding| 1[0 [1[ofo[1[1][1]o]0][1]
+
+Signaling EpigiEpipE gty s
+
+Media
+
+COMPUTER NETWORKS @ —
+Signalling Bits for the Media
+
+Varying Amplitude
+
+Varying Frequency
+
+Varying Phase
+
+Clock
+
+- bit time -
+COMPUTER NETWORKS @9 PES
+
+UNIVERSITY
+
+Signalling Methods
+
+Bit
+Time
+—
+
++ Volts
+
+NRZ (Non Return to Zero) Encoding — A
+oo O low voltage being 0 and a higher voltage
+representing a 1.
+
+1 o 1 0 1
+
+0 Volts
+
+Bit
+Time
+
+| Manchester Encoding
+
+* Avoltage change from low to high within the
+
+" bit time represents a 1.
+
+* Avoltage drop within the bit time from a
+high to a low voltage represents a 0.
+
++ Volts
+
+-Volts
+
+COMPUTER NETWORKS
+Physical Layer Standards
+
+Some of the key organizations:
+The International Organization for Standardization
+(1SO)
+The Institute of Electrical and Electronics Engineers
+(IEEE)
+The American National Standards Institute (ANSI)
+The International Telecommunication Union (ITU)
+
+The Electronics Industry
+
+Alliance/Telecommunications Industry Association
+(EIA/TIA)
+
+National telecommunications authorities such as the
+Federal Communications Commission (FCC) in the
+United States
+
+@ UNIVERSITY
+
+Standards set by:
+ISO IEEE
+ANSI ITU
+EIA/TIA FCC
+COMPUTER NETWORKS
+
+Types of Physical Transmission Media
+
+Specification
+
+10BASE-T
+
+CAT 3,4 or 5 UTP (4 pair)
+
+Maximum
+Segment Length
+
+100m
+
+Connector
+
+100BASE-TX
+
+CAT 5 UTP (2 pair)
+
+100m
+
+100BASE-FX
+
+62.5/125 multimode fiber
+
+2km
+
+1000BASE-CX
+
+STP
+
+25m
+
+1000BASE-T
+
+CAT 5 UTP (4 pair)
+
+100m
+
+1000BASE-SX
+
+62.5/50 multimode fiber
+
+62.5 - 275m
+50 — 550m
+
+1000BASE-LX
+
+62.5/50 multimode
+9-micron single-mode fiber
+
+62.5/50 — 550m
+9 —-10 km
+
+1000BASE-ZX
+
+9-micron single-mode fiber
+
+70km
+
+10GBASE-ZR
+
+9-micron single-mode fiber
+
+80km
+
+@
+
+PES
+
+UNIVERSITY
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

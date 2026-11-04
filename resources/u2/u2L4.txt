@@ -1,0 +1,359 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 4: Multiplexing and Demultiplexing (UDP Port Demux vs TCP 4-Tuple)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 13 to 32)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 20
+================================================================================
+
+================================================================================
+SLIDE 13: Roadmap: Multiplexing and Demultiplexing
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.2 Multiplexing and Demultiplexing
+• Extending host-to-host delivery (IP) to process-to-process delivery (Transport).
+
+================================================================================
+SLIDE 14: Multiplexing & Demultiplexing: The Big Picture (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Concept:
+• Multiple application processes run concurrently on a single host.
+• The transport layer multiplexes outgoing data from various sockets into a single stream for IP, and demultiplexes incoming data from IP to the appropriate destination socket.
+
+================================================================================
+SLIDE 15: Multiplexing & Demultiplexing: Adding Transport Headers (Part 2)
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Header Addition:
+• The sender transport layer takes the HTTP message and attaches a transport header (`Ht`) containing source and destination port numbers.
+
+================================================================================
+SLIDE 16: Multiplexing & Demultiplexing: Network Encapsulation (Part 3)
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Network Layer Encapsulation:
+• Network layer attaches an IP header (`Hn`) containing source and destination IP addresses.
+
+================================================================================
+SLIDE 17: Multiplexing & Demultiplexing: Traversing Physical Links (Part 4)
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Link Layer Encapsulation:
+• Encapsulated packet traverses routers and physical links across the Internet.
+
+================================================================================
+SLIDE 18: Multiplexing & Demultiplexing: Multiple Sockets (Part 5)
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Multiple Concurrent Applications:
+• Host can run multiple clients (`client1`, `client2`) communicating with the same or different servers simultaneously.
+
+================================================================================
+SLIDE 19: Multiplexing at Sender vs. Demultiplexing at Receiver
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing and Demultiplexing
+
+Definitions:
+• Multiplexing at Sender:
+  - Gathering data chunks from multiple sockets.
+  - Encapsulating each data chunk with transport header fields (source and destination ports) to create segments.
+  - Passing segments to the network layer.
+• Demultiplexing at Receiver:
+  - Inspecting transport header fields (ports) and network header fields (IPs).
+  - Delivering received segment payload to the correct socket.
+
+ASCII Diagram of Sockets & Multiplexing:
+   APPLICATION LAYER                APPLICATION LAYER
+   +-----+     +-----+              +-----+     +-----+
+   | P1  |     | P2  |              | P3  |     | P4  |  <-- Processes
+   +--+--+     +--+--+              +--+--+     +--+--+
+      |           |                    ^           ^
+    [S1]        [S2]                 [S3]        [S4]    <-- Sockets
+      \           /                    \           /
+   ====\=========/======================\=========/====  (OS Interface)
+        v       v                        ^       ^
+     +-------------+                  +-------------+
+     | Multiplexing|                  |Demultiplex  |    <-- Transport Layer
+     +------+------+                  +------+------+
+            |                                ^
+            v                                |
+     +-------------+                  +-------------+
+     | Network (IP)|                  | Network (IP)|    <-- Network Layer
+     +-------------+                  +-------------+
+
+================================================================================
+SLIDE 20: How Demultiplexing Works: Segment Format & Port Ranges
+================================================================================
+
+COMPUTER NETWORKS: How demultiplexing works
+
+Mechanics:
+• Host receives IP datagrams containing source IP and destination IP.
+• Each datagram carries one transport-layer segment containing Source Port and Destination Port.
+• The receiving host uses these IP addresses and port numbers to steer segments to the proper socket.
+
+TCP/UDP Segment Header (First 32 Bits):
+ 0                   15 16                  31
++----------------------+----------------------+
+|  Source Port Number  | Destination Port Num |  <-- 32 bits
++----------------------+----------------------+
+|          Other Protocol Header Fields       |
++---------------------------------------------+
+|          Application Data (Payload)         |
++---------------------------------------------+
+
+Port Number Ranges:
+• Port numbers are 16-bit unsigned integers: Range from 0 to 65535.
+• Well-Known Port Numbers (0 to 1023):
+  - Reserved for standard server protocols (HTTP: 80, HTTPS: 443, SSH: 22, DNS: 53, SMTP: 25).
+  - Require administrative / root privileges to bind.
+• Registered & Ephemeral Ports (1024 to 65535):
+  - Used dynamically by client applications as temporary source ports.
+
+================================================================================
+SLIDE 21: Connectionless Demultiplexing (UDP)
+================================================================================
+
+COMPUTER NETWORKS: Connectionless demultiplexing
+
+UDP Demultiplexing Principle:
+• A UDP socket is identified SOLELY by a 2-tuple:
+    (Destination IP Address, Destination Port Number)
+• When creating a UDP socket:
+  - Bind to host-local port: `DatagramSocket mySocket1 = new DatagramSocket(12534);`
+• When dispatching a UDP datagram:
+  - Sender specifies: Destination IP and Destination Port.
+• When receiving a UDP datagram:
+  - Host inspects ONLY the destination port number in the segment.
+  - Delivers segment to the socket bound to that destination port.
+
+Key Consequence:
+• If two UDP datagrams have different source IP addresses or different source port numbers, but share the SAME destination IP and destination port, they are directed to the EXACT SAME SOCKET at the receiving host!
+
+================================================================================
+SLIDE 22: Connectionless Demultiplexing: Example
+================================================================================
+
+COMPUTER NETWORKS: Connectionless demultiplexing: example
+
+Scenario:
+• Host A (Client): Running process P1 with `mySocket1 = DatagramSocket(5775)`.
+• Host B (Server): Running process P3 with `serverSocket = DatagramSocket(9157)`.
+• Host C (Client): Running process P4 with `mySocket2 = DatagramSocket(6428)`.
+
+Data Exchange Flow:
+1. P1 sends to Server:
+   - Source Port: 5775, Destination Port: 9157.
+   - Server receives at port 9157, routes to P3.
+2. P4 sends to Server:
+   - Source Port: 6428, Destination Port: 9157.
+   - Server receives at port 9157, routes to SAME process P3!
+3. Server P3 replies to P4:
+   - Source Port: 9157, Destination Port: 6428.
+   - Routed to P4 on Host C.
+4. Server P3 replies to P1:
+   - Source Port: 9157, Destination Port: 5775.
+   - Routed to P1 on Host A.
+
+================================================================================
+SLIDE 23: Connection-Oriented Demultiplexing (TCP)
+================================================================================
+
+COMPUTER NETWORKS: Connection-oriented demultiplexing
+
+TCP Demultiplexing Principle:
+• A TCP socket is identified by a full 4-TUPLE:
+  1. Source IP Address
+  2. Source Port Number
+  3. Destination IP Address
+  4. Destination Port Number
+
+Demultiplexing Action:
+• Upon receiving a TCP segment, the receiving host inspects ALL FOUR VALUES of the 4-tuple to direct the segment to the appropriate socket.
+• A server host can support many simultaneous TCP sockets bound to the same listening port (e.g., port 80).
+• Each client connection is assigned its own dedicated connection socket identified by its unique 4-tuple.
+• Non-persistent HTTP creates a new socket for each distinct object request.
+
+================================================================================
+SLIDE 24: Connection-Oriented Demultiplexing: Example
+================================================================================
+
+COMPUTER NETWORKS: Connection-oriented demultiplexing: example
+
+Scenario Architecture:
+• Server (IP Address B): Running web server on Port 80.
+• Client Host A (IP Address A): Process P1 uses source port 9157.
+• Client Host C (IP Address C): Process P2 uses source port 5775; Process P3 uses source port 9157.
+
+Demultiplexing on Server B:
+• Segment 1 from Host A:
+  - Tuple: (Src: A, SrcPort: 9157, Dst: B, DstPort: 80) -> Demuxed to Socket P4.
+• Segment 2 from Host C:
+  - Tuple: (Src: C, SrcPort: 5775, Dst: B, DstPort: 80) -> Demuxed to Socket P5.
+• Segment 3 from Host C:
+  - Tuple: (Src: C, SrcPort: 9157, Dst: B, DstPort: 80) -> Demuxed to Socket P6.
+
+Conclusion:
+• Three segments, all arriving at Destination IP B and Destination Port 80, are demultiplexed to THREE ENTIRELY DIFFERENT SOCKETS (P4, P5, P6) because their 4-tuples are unique!
+
+================================================================================
+SLIDE 25: Summary: Multiplexing and Demultiplexing
+================================================================================
+
+COMPUTER NETWORKS: Summary
+
+Key Takeaways:
+• Multiplexing and Demultiplexing are based on segment and datagram header fields.
+• UDP Demultiplexing: Uses Destination Port Number only.
+• TCP Demultiplexing: Uses the full 4-Tuple (Source IP, Source Port, Dest IP, Dest Port).
+• Multiplexing/demultiplexing occurs at every layer of the protocol stack!
+
+Core Architectural Question:
+• Why does UDP get away with just checking the destination port, while TCP needs the full 4-tuple?
+  - Answer: UDP is connectionless and stateless; each datagram is completely independent. TCP maintains persistent connection state (sequence numbers, buffers, timers, flow control windows); it needs the full 4-tuple to know which connection's state an incoming segment belongs to!
+
+================================================================================
+SLIDE 26: Quiz: How Many TCP Connections Can a Server Handle?
+================================================================================
+
+COMPUTER NETWORKS: Quiz
+
+Question: Can a server handle more than 65,535 TCP connections simultaneously?
+Answer: YES, DRAMATICALLY MORE!
+• Misconception: People assume a server is limited to 65,535 connections because port numbers are 16-bit integers (max 65,535).
+• Reality: The server's listening port (e.g., 80) stays the SAME for all connections. What distinguishes connections is the 4-tuple:
+    (Server IP, Server Port, Client IP, Client Port)
+• Even for a single client IP, the client can use 65,000 ephemeral ports. Across millions of different client IPs on the Internet, a server can theoretically support billions of concurrent 4-tuples!
+• Real-World Bottleneck: The practical limit is NOT port numbers, but operating system RAM (memory per socket buffer), CPU processing, and maximum file descriptors (`ulimit -n`).
+
+================================================================================
+SLIDE 27: Well-Known Port Numbers – Quick Reference
+================================================================================
+
+COMPUTER NETWORKS: Well-Known Port Numbers – Quick Reference
+
++----------+-------------------+-----------------+---------------------------------------------+
+| Port     | Service           | Transport Layer | Context / Description                       |
++----------+-------------------+-----------------+---------------------------------------------+
+| 20 / 21  | FTP (data/control)| TCP             | Out-of-band file transfer                   |
+| 22       | SSH               | TCP             | Secure remote shell administration          |
+| 23       | Telnet            | TCP             | Unencrypted remote terminal (insecure)      |
+| 25       | SMTP              | TCP             | Electronic mail transmission                |
+| 53       | DNS               | TCP / UDP       | Domain name translation (UDP queries)       |
+| 67 / 68  | DHCP (srv/cli)    | UDP             | Dynamic IP configuration (DORA exchange)    |
+| 80       | HTTP              | TCP             | Plaintext World Wide Web                    |
+| 443      | HTTPS             | TCP (UDP/QUIC)  | Encrypted Web browsing over TLS             |
++----------+-------------------+-----------------+---------------------------------------------+
+
+================================================================================
+SLIDE 28: TCP vs. UDP – Comprehensive Comparison
+================================================================================
+
+COMPUTER NETWORKS: TCP vs UDP – Which One, and When?
+
++-------------------+-----------------------------------+-----------------------------------+
+| Feature           | TCP                               | UDP                               |
++-------------------+-----------------------------------+-----------------------------------+
+| Reliability       | Guaranteed delivery; retransmits  | No guarantee; lost packets are    |
+|                   | lost segments                     | gone forever                      |
++-------------------+-----------------------------------+-----------------------------------+
+| Ordering          | Strictly in-order byte stream     | No ordering guarantees            |
++-------------------+-----------------------------------+-----------------------------------+
+| Setup Cost        | 3-way handshake adds 1 RTT setup  | Zero connection setup delay       |
++-------------------+-----------------------------------+-----------------------------------+
+| Flow & Congestion | Built-in flow and congestion      | None; "no-frills" raw datagram    |
+| Control           | control                           | blast                             |
++-------------------+-----------------------------------+-----------------------------------+
+| Optimal For...    | When every byte must be accurate  | When speed, freshness, and low    |
+|                   | over speed                        | latency beat perfection           |
++-------------------+-----------------------------------+-----------------------------------+
+| Real Examples     | Web (HTTP), Email, File transfer, | VoIP, Zoom, DNS queries, live     |
+|                   | Video streaming (DASH/HLS)        | gaming, DHCP                      |
++-------------------+-----------------------------------+-----------------------------------+
+
+================================================================================
+SLIDE 29: Multiplexing & Demultiplexing at Every Layer
+================================================================================
+
+COMPUTER NETWORKS: Multiplexing & Demultiplexing – At Every Layer
+
++-------------------+-------------------------------------------+-----------------------------------------------+
+| Layer             | What Sorts Traffic Here                   | Real-World Analogy                            |
++-------------------+-------------------------------------------+-----------------------------------------------+
+| Transport Layer   | Port numbers (or 4-tuple for TCP)         | Mailbox / Apartment number inside a building  |
++-------------------+-------------------------------------------+-----------------------------------------------+
+| Network Layer (IP)| Protocol Field in IP Header (TCP: 6,      | Front-desk sorting mail vs. packages vs.      |
+|                   | UDP: 17, ICMP: 1)                         | flyers                                        |
++-------------------+-------------------------------------------+-----------------------------------------------+
+| Link Layer (Eth)  | EtherType Field in Ethernet Frame         | Street delivery truck handing packages to the |
+|                   | (0x0800: IPv4, 0x86DD: IPv6, 0x0806: ARP) | correct building entrance                     |
++-------------------+-------------------------------------------+-----------------------------------------------+
+
+================================================================================
+SLIDE 30: Review Questions on Transport Services & Demux (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: Questions
+
+1. Why does TCP need a connection "setup" step before any data flows, while UDP just sends?
+   Answer:
+   TCP must establish shared connection state between sender and receiver (initial sequence numbers, buffer allocations, flow control windows, congestion parameters). UDP maintains no connection state, which is why it is called a "no-frills" extension of IP.
+
+2. Name two things neither TCP nor UDP guarantees, no matter which one you pick.
+   Answer:
+   Delay guarantees (maximum latency) and Bandwidth guarantees (minimum throughput).
+
+3. A segment header's first 32 bits hold two fields. What are they, and how wide is each?
+   Answer:
+   Source Port Number (16 bits) and Destination Port Number (16 bits).
+
+4. If two different applications on your laptop both tried to bind to port 5775 at the same time, what would happen?
+   Answer:
+   The second bind attempt would fail (`Address already in use` error). A given port number on a host can only be bound by one process at a time for a given protocol.
+
+5. Why is a DNS query typically sent over UDP rather than TCP?
+   Answer:
+   A DNS query is a small, one-shot request-response exchange. The overhead of a TCP 3-way handshake adds an unnecessary RTT of latency, so UDP's speed wins out.
+
+================================================================================
+SLIDE 31: Review Questions on Demux & Sockets (Part 2)
+================================================================================
+
+COMPUTER NETWORKS: Questions (Contd.)
+
+1. What would break if TCP demultiplexed using only the destination port, the same way UDP does?
+   Answer:
+   Every client connecting to the same server port (e.g., port 80) would collide into a single socket! Destination port alone cannot distinguish between different clients, destroying separate TCP connection states.
+
+2. In the connection-oriented example, two segments came from the same source IP (C) but different source ports, and still landed on different sockets. What does that prove about how TCP demultiplexes?
+   Answer:
+   It proves that TCP demultiplexes using the ENTIRE 4-tuple, not just IP addresses. A single client computer can sustain multiple independent connections to the same server, each tracked by its unique socket.
+
+3. Your laptop opens two browser tabs to the same website at the same time. Do they use the same source port or different ones?
+   Answer:
+   They use DIFFERENT ephemeral source ports! Each outgoing TCP connection is allocated a unique random port above 1023, keeping the 4-tuple unique even though the destination IP and port are identical for both tabs.
+
+================================================================================
+SLIDE 32: Suggested Readings: Multiplexing and Demultiplexing
+================================================================================
+
+COMPUTER NETWORKS: Suggested Readings
+
+Video Resources:
+• Transport Layer Multiplexing and Demultiplexing: https://youtu.be/hgWCMry9EYo
+• Transport Layer – Process to Process Delivery: https://youtu.be/9e4vTcaEYCg

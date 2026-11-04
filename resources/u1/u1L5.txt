@@ -1,0 +1,333 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 5: The Web and HTTP (Non-Persistent vs Persistent, RTT Delays & Calculations)
+Source Deck: Slides_Unit_1_Part_2.pdf (Slides 17 to 29)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 13
+================================================================================
+
+================================================================================
+SLIDE 17: Section Divider: Web, HTTP and HTTPS
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 1 Application Layer
+
+Topic:
+2.2 Web, HTTP and HTTPS
+
+================================================================================
+SLIDE 18: Web Objects and URL Structure
+================================================================================
+
+COMPUTER NETWORKS: Web, HTTP and HTTPS
+
+First, a quick review...
+• A Web page consists of objects, each of which can be stored on different Web servers.
+• An Object can be:
+  - An HTML file
+  - A JPEG / PNG image
+  - A Java applet / JavaScript file
+  - An audio / video file
+  - A CSS stylesheet
+• Structure of a Web Page:
+  - A base HTML file which includes several referenced objects.
+  - Each referenced object is addressable by its Uniform Resource Locator (URL).
+
+URL Structure:
+  http://www.someschool.edu/someDept/pic.gif
+         \________________/\_______________/
+             Host Name         Path Name
+
+Example:
+• If a Web page contains HTML text and 5 JPEG images, then the Web page consists of 6 distinct objects:
+  - 1 Base HTML file
+  - 5 Referenced JPEG image files
+
+================================================================================
+SLIDE 19: HTTP Overview
+================================================================================
+
+COMPUTER NETWORKS: HTTP Overview
+
+Definition:
+• HTTP: HyperText Transfer Protocol
+• The Web's application-layer protocol
+• Follows the Client / Server Model:
+  - Client: Web browser that requests, receives (using the HTTP protocol), and renders ("displays") Web objects.
+  - Server: Web server that sends (using the HTTP protocol) objects in response to incoming client requests.
+
+Standards:
+• HTTP/1.0: RFC 1945 (1996)
+• HTTP/1.1: RFC 2616 (1999) / RFC 7230-7235 (2014)
+
+ASCII Architecture Diagram:
+      +--------------------+
+      |  PC running        |
+      |  Firefox browser   |----+
+      +--------------------+    | HTTP Request
+                                | --------------------> +--------------------+
+                                | <-------------------- | Server running     |
+      +--------------------+    | HTTP Response         | Apache / Nginx /   |
+      |  iPhone running    |----+                       | IIS Web Server     |
+      |  Safari browser    |                            +--------------------+
+      +--------------------+
+
+================================================================================
+SLIDE 20: HTTP Overview (more): Transport & Statelessness
+================================================================================
+
+COMPUTER NETWORKS: HTTP Overview (more)
+
+HTTP Uses TCP:
+1. Client initiates a TCP connection (creates a socket) to the server on port 80 (or 443 for HTTPS).
+2. Server accepts the incoming TCP connection from the client.
+3. HTTP messages (application-layer protocol messages) are exchanged between the browser (HTTP client) and the Web server (HTTP server).
+4. TCP connection is closed.
+
+HTTP is "Stateless":
+• The server maintains NO information about past client requests.
+• If a client requests the same object twice within a second, the server resends it completely from scratch without remembering the previous request.
+
+Aside: Why Statelessness?
+• Protocols that maintain state are complex:
+  - Past history (state) must be tracked and persisted across multiple requests.
+  - If the server or client crashes, their respective views of "state" may become inconsistent and must be laboriously reconciled.
+  - Stateless design simplifies server architecture and enables high horizontal scalability.
+
+================================================================================
+SLIDE 21: HTTP Connections: Non-Persistent vs. Persistent
+================================================================================
+
+COMPUTER NETWORKS: HTTP Connections: Two Types
+
+1. Non-Persistent HTTP (HTTP/1.0):
+   • Step 1: TCP connection opened.
+   • Step 2: At most ONE object is sent over the TCP connection.
+   • Step 3: TCP connection is immediately closed.
+   • Result: Downloading multiple objects requires establishing multiple, separate TCP connections.
+
+2. Persistent HTTP (HTTP/1.1 default):
+   • Step 1: TCP connection opened to a server.
+   • Step 2: MULTIPLE objects can be sent and received over the single, shared TCP connection between the client and that server.
+   • Step 3: TCP connection closed only after an idle timeout or explicit `Connection: close`.
+
+================================================================================
+SLIDE 22: Non-Persistent HTTP: Step-by-Step Example (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: Non-persistent HTTP: example
+
+User enters URL: `www.someSchool.edu/someDepartment/home.index`
+(Base HTML file containing text and references to 10 JPEG images)
+
+Step-by-Step Flow:
+• 1a. HTTP client initiates a TCP connection to the HTTP server (process) at `www.someSchool.edu` on port 80.
+• 1b. The HTTP server at host `www.someSchool.edu` waiting for TCP connections at port 80 accepts the connection and notifies the client.
+• 2.  The HTTP client sends an HTTP request message (containing the URL `/someDepartment/home.index`) into its TCP connection socket. The message indicates that the client wants the base HTML object.
+• 3.  The HTTP server receives the request message, forms a response message containing the requested object, and sends the message into its socket.
+
+================================================================================
+SLIDE 23: Non-Persistent HTTP: Step-by-Step Example (Part 2)
+================================================================================
+
+COMPUTER NETWORKS: Non-persistent HTTP: example (more)
+
+Continuation of Example:
+• 4.  The HTTP server tells TCP to close the TCP connection (TCP connection is closed after the response is delivered).
+• 5.  The HTTP client receives the response message containing the HTML file and displays the HTML. Parsing the HTML file, the browser discovers references to 10 JPEG objects.
+• 6.  Steps 1 through 5 are repeated for each of the 10 JPEG objects!
+      - That means 10 additional TCP connections must be opened, used for one object each, and closed!
+
+================================================================================
+SLIDE 24: Non-Persistent HTTP: Response Time & RTT
+================================================================================
+
+COMPUTER NETWORKS: Non-persistent HTTP: response time
+
+Definition of RTT (Round-Trip Time):
+• Time required for a small packet to travel from client to server and back.
+
+HTTP Response Time Breakdown (per object):
+• 1 RTT to initiate and establish the TCP connection (SYN / SYN-ACK).
+• 1 RTT for the HTTP request message to travel and the first bytes of the HTTP response to return.
+• File Transmission Time: Time required for the server to transmit all the packets of the object file.
+
+Formula:
+  Non-persistent HTTP response time = 2 * RTT + File Transmission Time
+
+ASCII Timeline Diagram:
+   Client                                                   Server
+     |                                                        |
+     | ------------ TCP SYN (Initiate Connection) ----------> |
+     |                                                        | --- RTT (TCP setup)
+     | <----------- TCP SYN-ACK (Accept Connection) --------- |
+     |                                                        |
+     | ------------ HTTP Request (GET ...) -----------------> |
+     |                                                        | --- RTT (HTTP req/resp)
+     | <----------- HTTP Response (Status + First bytes) ---- |
+     | <........... File Data Transmission .................. | --- File Transmission Time
+     |                                                        |
+     v                                                        v
+   Time                                                     Time
+
+Total Time per object = 2 RTT + File Transmission Time
+
+================================================================================
+SLIDE 25: Persistent HTTP (HTTP/1.1) Motivation & Mechanics
+================================================================================
+
+COMPUTER NETWORKS: Persistent HTTP (HTTP 1.1)
+
+Issues with Non-Persistent HTTP:
+• Requires 2 RTTs per object downloaded.
+• High OS overhead for each TCP connection:
+  - Allocation of TCP buffers and protocol control blocks (PCBs) on both client and server.
+• Browsers historically attempted to mitigate this by opening multiple parallel TCP connections (typically 6-8) to fetch referenced objects in parallel, placing heavy load on servers.
+
+Persistent HTTP (HTTP/1.1):
+• Server leaves the TCP connection open after sending a response.
+• Subsequent HTTP messages between the same client and server are sent over the already-open TCP connection.
+• Client sends requests as soon as it encounters a referenced object in the parsed HTML.
+• Performance Benefit:
+  - Requires as little as ONE RTT for all referenced objects (cutting response time substantially!).
+
+================================================================================
+SLIDE 26: Connection Management in HTTP/1.x
+================================================================================
+
+COMPUTER NETWORKS: Connection Management in HTTP/1.x
+
+Comparison of HTTP Connection Strategies:
+
+1. Short-Lived Connections (HTTP/1.0):
+   Each request/response requires an entire TCP handshake and teardown.
+   Client                 Server
+     |                      |
+     |=== Establish TCP ===>|
+     |--- HTTP GET obj 1 -->|
+     |<-- HTTP Resp obj 1---|
+     |==== Close TCP =======|
+     |                      |
+     |=== Establish TCP ===>|
+     |--- HTTP GET obj 2 -->|
+     |<-- HTTP Resp obj 2---|
+     |==== Close TCP =======|
+     v                      v
+
+2. Persistent Connection Without Pipelining (HTTP/1.1 Default):
+   Connection stays open. Requests are sent sequentially (stop-and-wait).
+   Client                 Server
+     |                      |
+     |=== Establish TCP ===>|
+     |--- HTTP GET obj 1 -->|
+     |<-- HTTP Resp obj 1---|
+     |--- HTTP GET obj 2 -->|
+     |<-- HTTP Resp obj 2---|
+     |--- HTTP GET obj 3 -->|
+     |<-- HTTP Resp obj 3---|
+     |==== Close TCP =======|
+     v                      v
+
+3. Persistent Connection With HTTP Pipelining (HTTP/1.1 Optional):
+   Client issues all GET requests back-to-back without waiting for previous responses.
+   Responses return in the exact order requested (FCFS).
+   Client                 Server
+     |                      |
+     |=== Establish TCP ===>|
+     |--- HTTP GET obj 1 -->|
+     |--- HTTP GET obj 2 -->|
+     |--- HTTP GET obj 3 -->|
+     |<-- HTTP Resp obj 1---|
+     |<-- HTTP Resp obj 2---|
+     |<-- HTTP Resp obj 3---|
+     |==== Close TCP =======|
+     v                      v
+
+================================================================================
+SLIDE 27: Persistent HTTP Numerical Exercise: Non-Persistent HTTP
+================================================================================
+
+COMPUTER NETWORKS: Persistent HTTP (HTTP 1.1) Numerical Problem
+
+Problem Statement:
+A webpage consists of:
+• 1 Base HTML file
+• 6 Embedded images
+Total Objects = 1 + 6 = 7 objects.
+
+Assumptions:
+• One RTT = 80 ms
+• Object transmission time is negligible.
+
+Questions:
+1. Calculate the total time required to download the webpage using Non-Persistent HTTP.
+2. Calculate the total time required using Persistent HTTP (without pipelining).
+3. Calculate the total time required using Persistent HTTP with pipelining.
+4. Which approach provides better performance? Justify.
+
+--------------------------------------------------------------------------------
+Solution Part 1: Non-Persistent HTTP
+--------------------------------------------------------------------------------
+• For each object, Non-Persistent HTTP requires:
+  - 1 RTT to establish the TCP connection
+  - 1 RTT for the HTTP request and response
+  - Total per object = 2 RTT
+• Total objects = 7 (1 HTML file + 6 images)
+• Total RTTs = 7 * 2 RTT = 14 RTT
+• Total Time = 14 * 80 ms = 1120 ms = 1.12 seconds
+
+Answer: 1120 ms (1.12 s)
+
+================================================================================
+SLIDE 28: Persistent HTTP Numerical Exercise: Without Pipelining
+================================================================================
+
+COMPUTER NETWORKS: Persistent HTTP (HTTP 1.1) Numerical Problem (Contd.)
+
+Solution Part 2: Persistent HTTP — Without Pipelining
+• With Persistent HTTP, the server keeps the TCP connection open after sending a response.
+• Subsequent objects can be requested over this existing connection.
+• Because it is WITHOUT pipelining, the client must wait for the current response to arrive before issuing the next request.
+
+Breakdown of RTTs:
+• 1 RTT to establish the initial TCP connection (performed only once).
+• 1 RTT to request and receive the base HTML file.
+• 6 RTTs to request and receive the 6 images sequentially (1 RTT per image).
+
+Calculation:
+• Total Time = 1 RTT (TCP Setup) + 1 RTT (HTML) + 6 RTT (Images) = 8 RTTs
+• Alternatively: 1 RTT (TCP Setup) + 7 RTTs (1 per object) = 8 RTTs
+• Total Time = 8 * 80 ms = 640 ms = 0.64 seconds
+
+Answer: 640 ms (0.64 s)
+
+================================================================================
+SLIDE 29: Persistent HTTP Numerical Exercise: With Pipelining & Comparison
+================================================================================
+
+COMPUTER NETWORKS: Persistent HTTP (HTTP 1.1) Numerical Problem (Contd.)
+
+Solution Part 3: Persistent HTTP — With Pipelining
+• With pipelining, the client opens a single TCP connection and sends multiple HTTP requests back-to-back without waiting for each response.
+• After downloading the HTML:
+  - 1 RTT to establish the single TCP connection.
+  - 1 RTT to request and receive the base HTML file.
+  - The client parses the HTML file, discovers all 6 referenced images, and immediately sends requests for all 6 images together in a single batch.
+  - Approximately 1 RTT is needed to request and receive all 6 images in parallel.
+• Total Time = 1 RTT (TCP Setup) + 1 RTT (HTML) + 1 RTT (All 6 images) = 3 RTTs
+• Total Time = 3 * 80 ms = 240 ms = 0.24 seconds
+
+--------------------------------------------------------------------------------
+Performance Comparison Table:
+--------------------------------------------------------------------------------
++-------------------------------+-----------------+------------+------------+-----------------------+
+| HTTP Approach                 | RTT Calculation | Total RTTs | Total Time | Relative Performance  |
++-------------------------------+-----------------+------------+------------+-----------------------+
+| Non-persistent HTTP           | 7 * 2           | 14 RTT     | 1120 ms    | Slowest (Baseline 1.0x)|
+| Persistent HTTP (no pipeline) | 1 + 7           | 8 RTT      | 640 ms     | Better (1.75x faster) |
+| Persistent HTTP + pipelining  | 1 + 1 + 1       | 3 RTT      | 240 ms     | Best (4.67x faster)   |
++-------------------------------+-----------------+------------+------------+-----------------------+
+
+Justification:
+Persistent HTTP with pipelining delivers the best performance (a 4.67x speedup over non-persistent HTTP) because it eliminates repetitive TCP connection handshakes and batches all object requests concurrently in a single round trip.

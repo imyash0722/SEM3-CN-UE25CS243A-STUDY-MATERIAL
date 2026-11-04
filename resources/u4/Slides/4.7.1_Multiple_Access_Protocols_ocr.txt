@@ -1,0 +1,251 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Multiple access protocols
+COMPUTER NETWORKS
+Multiple access links, Protocols
+
+@ UNIVERSITY
+
+two types of “links”:
+point-to-point
+* point-to-point link between Ethernet switch, host
+* PPP, HDLC
+
+broadcast (shared wire or medium)
+
+¢ old-fashioned Ethernet
+
+* upstream HFC in cable-based access network
+¢ 802.11 wireless LAN, 4G/5G, satellite
+
+1 g8
+Ws g>
+e 2 > . < e 5 s
+
+X & oo £ g
+s(:r;%rlzg VI\EIitLeeﬁﬁ'egt')’ shared radio: 4G/5G shared radio: WiFi
+
+b 3B W ¢
+
+shared radio: satellite humans at a cocktail party
+
+As humans, we've evolved an elaborate set of protocols
+for sharing the broadcast channel:
+
+“Give everyone a chance to speak.”
+
+“Don’t speak until you are spoken to.”
+“Don’t monopolize the conversation.”
+
+“Raise your hand if you have a question.”
+“Don’t interrupt when someone is speaking.”
+“Don’t fall asleep when someone is talking.”
+
+(shared air, acoustical)
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Multiple access protocols
+
+Single shared broadcast channel
+
+Two or more simultaneous transmissions by nodes: interference
+* collision if node receives two or more signals at the same time
+
+— Multiple access protocol
+
+Distributed algorithm that determines how nodes share
+channel, i.e., determine when node can transmit
+
+Communication about channel sharing must use
+channel itself!
+
+* no out-of-band channel for coordination
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Two kinds of links
+
+Shared or private? For each link, decide whether other nodes compete for the same channel.
+
+Link Shared or private?
+Your laptop's cable to a switch port [ Private (one at each end)
+The Wi-Fi in this classroom ’ Shared (one radio channel)
+Cable-TV internet, homes sending upstream [ Shared (one cable)
+Your phone to a cell tower ’ Shared (the tower schedules)
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+An ideal Multiple access protocol
+
+Given: multiple access channel (MAC) of rate R bps
+
+desiderata(needed):
+1. when one node wants to transmit, it can send at rate R.
+2. when M nodes want to transmit, each can send at average rate R/M
+3. fully decentralized:
+* no special node to coordinate transmissions
+* no synchronization of clocks, slots
+4. simple
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+MAC protocols : Taxonomy
+
+Three broad classes:
+
+channel partitioning (TDMA, FDMA, Mealtple-scoess
+oA
+
+* divide channel into smaller “pieces”
+
+(time slots, frequency, code)
+* allocate piece to node for exclusive use -
+
+random access (ALOHA, slotted ALOHA,
+
+CSMA, CSMA/CD, CSMA/CA —Q;JA:A | — Reservation [ roma
+
+* channel not divided, allow collisions | csMA/CD _$°L"”9 A _Z‘;m
+o . - | OKenNn passin —
+
+* “recover” from collisions L csmaka peng
+
+“taking turns”
+
+* nodes take turns, but nodes with more Included in the syllabus
+to send can take longer turns
+COMPUTER NETWORKS @ PES
+CSMA (Carrier Sense Multiple Access)
+
+Simple CSMA: listen before transmit:
+* if channel sensed idle: transmit entire frame
+* if channel sensed busy: defer transmission Listen before speaking — Carrier Sensing
+
+Human analogy: don’t interrupt others!
+If someone else begins talking at the same
+
+CSMA/CD: CSMA with collision detection time, stop talking - Collision Detection
+
+* collisions detected within short time
+* colliding transmissions aborted, reducing channel wastage
+* collision detection easy in wired, difficult with wireless
+
+human analogy: the polite conversationalist
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+CSMA Collisions spatial layout of nodes
+
+collisions can still occur with carrier
+sensing:
+* propagation delay means two nodes may 0
+
+not hear each other’s just-started
+transmission
+
+<« time
+
+collision: entire packet transmission
+time wasted
+
+* distance & propagation delay play role in in
+determining collision probability
+COMPUTER NETWORKS @ -
+CSMA/cD UNIVERSITY
+
+spatial layout of nodes
+
+CSMA/CD reduces the amount of time
+wasted in collisions
+* transmission aborted on collision detection
+
+collision
+detect/abort
+time
+
+COMPUTER NETWORKS @ —
+Ethernet CSMA/CD Algorithm
+
+1. NIC receives datagram from network layer, creates frame
+
+2. If NIC senses channel:
+if idle: start frame transmission.
+if busy: wait until channel idle, then transmit
+
+3. If NIC transmits entire frame without collision, NIC is done with frame!
+
+4. If NIC detects another transmission while sending: abort, send jam
+signal
+5. After aborting, NIC enters binary (exponential) backoff:
+* after n collisions, NIC chooses K at random from {0,1,2, ..., 2m-1}.
+
+NIC waits K'512 bit times, returns to Step 2
+* more collisions: longer backoff interval
+COMPUTER NETWORKS
+Is collision detection still used?
+
+@ UNIVERSITY
+
+Then: one shared cable, or a hub
+
+‘ Host ’ | Host I ‘ Host ’ | Host I
+
+X clash
+
+any two can send at once
+
+Now: a switch, one cable per device
+
+o ) — S ——(~ |
+tl
+
+each direction has its own channel
+
+m Two ends per cable
+
+A switch gives each cable to one device and one switch port. No
+third sender.
+
+m Each direction has its own channel
+
+Separate wires, or separated electronically on faster copper. Both
+ends send at once.
+
+m Contention moves into the switch
+
+Frames for the same output port wait in a queue. A full queue drops
+frames.
+
+m Wi-Fi is still shared
+Everyone uses one radio channel, so clashes still happen (slide 110).
+
+[ Switched, full-duplex Ethernet has nothing to collide with, so collision detection is switched off.
+
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

@@ -1,0 +1,2036 @@
+L
+
+% UNIVERSIT
+
+(%%) COMPUTER NETWORKS
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
+%% UNIVERSITY
+
+COMPUTER NETWORKS
+
+Application Layer
+
+‘ Department of Computer Science and Engineering
+COMPUTER NETWORKS % PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.1 Principles of Network Applications
+COMPUTER NETWORKS %% PES
+Application Layer: Overview UNIVERSTTY
+
+Our goals: Learn about protocols by
+examining popular
+application-layer protocols
+s HTTP
+
+Conceptual and implementation
+aspects of application-layer
+protocols
+
+* transport-layer service
+models
+
+* client-server paradigm
+* peer-to-peer paradigm
+COMPUTER NETWORKS
+Some Network Apps
+
+social networking (e.g., TikTok,
+Facebook, Instagram, X, and
+WeChat)
+
+Web
+
+text messaging
+
+e-mail (e.g., Gmail and Yahoo Mail)
+multi-user network games
+
+streaming stored video (YouTube,
+Hulu, Netflix)
+
+P2P file sharing
+
+voice over IP
+
+real-time video conferencing
+(e.g., Skype, Hangouts)
+
+Internet search
+remote login
+
+generative Al (chatbots, text to
+image/video)
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS S\ PES
+- Wv UNIVERSITY
+Creating a Network App
+
+transport
+network
+data link
+physical
+
+write programs that:
+
+run on (different) end systems
+
+communicate over network
+
+e.g., web server software
+communicates with browser
+
+software
+
+no need to write software for
+network-core devices
+
+network-core devices do not run
+user applications
+
+transport
+network
+
+transport
+network
+data link
+
+physical
+
+physical
+
+applications on end systems allows
+for rapid app development, g
+propagation
+
+COMPUTER NETWORKS S\ PES
+- - ‘v UNIVERSITY
+Client-Server Paradigm
+
+server:
+always-on host —
+permanent IP address
+often in data centers, for scaling
+
+clients:
+contact, communicate with server
+may be intermittently connected
+may have dynamic IP addresses
+
+do not communicate directly with
+each other
+
+examples: HTTP, IMAP, FTP @
+COMPUTER NETWORKS
+Peer-to-Peer Architecture
+
+no always-on server
+
+arbitrary end systems directly
+communicate
+
+peers request service from other
+peers, provide service in return to
+other peers
+
+* self scalability — new peers bring new
+service capacity, as well as new service
+demands
+
+peers are intermittently
+connected and change IP
+addresses
+
+* complex management
+example: P2P file sharing
+[BitTorrent]
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS S\ PES
+- - Wv UNIVERSITY
+Processes Communicating
+
+process: program running _ clients, servers
+within a host client process: process that
+within same host, two initiates communication
+processes communicate server process: process that
+using inter-process waits to be contacted
+communication (defined by
+0S)
+
+processes in different hosts
+communicate by exchanging
+messages
+
+note: applications with P2P
+architectures have client
+processes & server
+processes
+COMPUTER NETWORKS
+Sockets
+
+process sends/receives messages to/from its socket
+
+socket analogous to door
+
+* sending process shoves message out door
+
+* sending process relies on transport infrastructure on other
+side of door to deliver message to socket at receiving
+
+process
+
+e two sockets involved: one on each side
+
+socket \
+
+Internet
+
+application controlled by
+
+app developer
+
+controlled
+by OS
+
+g
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Addressing Processes
+
+to receive messages, process
+must have identifier
+
+host device has unique 32-bit
+IP address
+
+Q: does IP address of host on
+which process runs suffice for
+identifying the process?
+
+A: no, many processes
+can be running on
+same host
+
+identifier includes both IP
+address and port numbers
+associated with process on
+
+host.
+
+example port numbers:
+e HTTP server: 80
+* mail server: 25
+
+to send HTTP message to
+
+gaia.cs.umass.edu web server:
+
+* IP address: 128.119.245.12
+* port number: 80
+
+more shortly...
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+An Application-layer Protocol defines:
+
+UNIVERSITY
+
+types of messages exchanged, open protocols:
+
+* e.g., request, response
+
+message syntax:
+
+» what fields in messages &
+how fields are delineated
+
+message semantics
+
+* meaning of information in
+fields
+
+rules for when and how
+
+processes send & respond to
+messages
+
+defined in RFCs, everyone
+
+has access to protocol
+
+definition
+
+allows for interoperability
+
+e.g., HTTP, SMTP
+proprietary protocols:
+
+e.g., Skype
+COMPUTER NETWORKS
+
+What transport service does an App needs?
+
+data integrity
+some apps (e.g., file transfer,
+web transactions) require
+100% reliable data transfer
+
+other apps (e.g., audio) can
+tolerate some loss
+
+timing
+some apps (e.g., Internet
+telephony, interactive
+
+games) require low delay to
+be “effective”
+
+throughput
+
+some apps (e.g., multimedia)
+require minimum amount of
+throughput to be “effective”
+
+other apps (“elastic apps”)
+make use of whatever
+throughput they get
+
+security
+encryption, data integrity, ...
+
+/1)
+@) LES
+COMPUTER NETWORKS
+Transport service requirements: common apps
+
+/1)
+@) LES
+
+application data loss throughput time sensitive?
+file transfer/download  no loss elastic no
+e-mail noloss elastic no
+Web documents  no loss elastic no
+
+real-time audio/video
+
+streaming audio/video
+interactive games
+text messaging
+
+loss-tolerant
+
+loss-tolerant
+loss-tolerant
+no loss
+
+audio: 5Kbps-1Mbps
+video:10Kbps-5Mbps
+same as above
+Kbps+
+
+elastic
+
+yes, 10’s msec
+
+yes, few secs
+yes, 10’s msec
+yes and no
+COMPUTER NETWORKS
+Internet Transport Protocol Services
+
+TCP service:
+
+reliable transport between sending
+and receiving process
+
+flow control: sender won’t
+overwhelm receiver
+
+congestion control: throttle sender
+when network overloaded
+
+does not provide: timing, minimum
+throughput guarantee, security
+
+connection-oriented: setup
+required between client and server
+processes
+
+UDP service:
+
+unreliable data transfer
+between sending and
+receiving process
+
+does not provide: reliability,
+flow control, congestion
+control, timing, throughput
+guarantee, security, or
+connection setup.
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Internet Transport Protocol Services
+
+application transport
+
+application layer protocol protocol
+
+file transfer/download FTP [RFC 959] TCP
+
+e-mail SMTP [RFC 5321] TCP
+
+Web documents HTTP 1.1 [RFC 7320] TCP
+
+Internet telephony SIP [RFC 3261], RTP [RFC TCP or UDP
+3550], or proprietary (Skype)
+
+streaming audio/video DASH TCP
+
+interactive games WOW, FPS (proprietary) UDP or TCP
+
+/1)
+@) LES
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.2 Web, HTTP and HTTPS
+COMPUTER NETWORKS %% PES
+Web, HTTP and HTTPS UNIVERSITY
+
+First, a quick review...
+
+web page consists of objects, each of which can be stored on
+different Web servers
+
+object can be HTML file, JPEG image, Java applet, audio file,...
+
+web page consists of base HTML-file which includes several
+referenced objects, each addressable by a URL, e.g.,
+
+If a Web page contains HTML text and 5 JPEG images, then the
+Web page has 6 objects: the base HTML file plus the 5 images.
+
+www . someschool.edu/someDept/pic.gif
+
+host name path name
+COMPUTER NETWORKS
+HTTP Overview
+
+HTTP: hypertext transfer protocol
+Web’s application layer protocol
+client/server model:
+
+* client: browser that requests,
+receives, (using HTTP protocol) and
+“displays” Web objects
+
+* server: Web server sends (using
+HTTP protocol) objects in response
+to requests
+
+Defined in RFC 1945; RFC 2616
+
+PC running 5
+Firefox browser
+
+iPhone running
+Safari browser
+
+«® server running
+
+Apache/IIS Web
+server
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Overview (more)
+
+HTTP uses TCP:
+
+client initiates TCP connection
+(creates socket) to server, port 80
+
+server accepts TCP connection
+from client
+
+HTTP messages (application-layer
+protocol messages) exchanged
+between browser (HTTP client)
+and Web server (HTTP server)
+
+TCP connection closed
+
+HTTP is “stateless”
+
+server maintains no
+information about past
+client requests
+
+aside
+
+protocols that maintain
+“state” are complex!
+
+past history (state) must be
+maintained
+
+if server/client crashes, their
+views of “state” may be
+inconsistent, must be reconciled
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Connections: two types
+
+Non-persistent HTTP
+1. TCP connection opened
+
+2. at most one object sent over
+TCP connection
+
+3. TCP connection closed
+
+downloading multiple objects
+required multiple connections
+
+Persistent HTTP
+
+TCP connection opened to a
+server
+
+multiple objects can be sent
+over single TCP connection
+between client, and that
+server
+
+TCP connection closed
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+Non-persistent HTTP: example UNIVERSTTY
+
+User enters URL: www.someSchool.edu/someDepartment/home.index
+(base HTML file containing text, references to 10 jpeg images)
+
+w
+<« la. HTTP client initiates TCP E 1b. HTTP server at host .
+www.someSchool.edu waiting for TCP
+
+connection to HTTP server
+
+(process) at \ connection at port 80 “accepts”
+
+connection, notifying client
+
+www.someSchool.edu on port
+80
+2. HTTP client sends HTTP request 3. HTTP server receives request
+
+message (containing URL) into \ message, forms response
+TCP connection socket. message containing
+Message indicates that client requested object, and sends
+wants object message into its socket
+
+someDepartment/home.index
+COMPUTER NETWORKS %% PES
+Non-persistent HTTP: example (more) UNIVEREFY
+
+User enters URL: www.someSchool.edu/someDepartment/home. index
+(containing text, references to 10 jpeg images)
+
+g
+
+e
+
+4. HTTP server closes TCP
+
+. . connection.
+5. HTTP client receives response /
+
+message containing html file,
+displays html. Parsing html file, finds
+10 referenced jpeg objects
+
+6. Steps 1-5 repeated for each of
+10 jpeg objects
+COMPUTER NETWORKS
+
+Non-persistent HTTP: response time
+
+RTT (definition): time for a small
+packet to travel from client to
+server and back
+
+HTTP response time (per object):
+one RTT to initiate TCP connection
+
+one RTT for HTTP request and first few
+bytes of HTTP response to return
+
+obect/file transmission time
+
+initiate TCP__ :
+
+connection
+RTT.
+
+request file /
+
+file received
+
+. time to
+I+ transmit
+- file
+
+time time
+
+Non-persistent HTTP response time = 2RTT+ file transmission time
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Persistent HTTP (HTTP 1.1)
+
+/1)
+@) LES
+
+Non-persistent HTTP Persistent HTTP (HTTP1.1):
+
+issues: server leaves connection
+requires 2 RTTs per open after sending
+object response
+0S overhead for each subsequent HTTP
+
+TCP connection (TCP messages between same
+buffer and variables) client/server sent over
+
+open connection
+browsers often open
+
+multiple parallel TCP client sends requests as
+referenced objects in referenced object
+parallel as little as one RTT for all
+
+the referenced objects
+
+(cutting response time in
+half)
+
+Establishment
+
+\SYN\‘ —
+TCP connection {
+
+obi2 HTTP
+l—
+Obj4
+.
+TCP connection
+closing
+
+o
+—FINACK
+
+client server
+
+g %
+
+
+COMPUTER NETWORKS
+
+Connection Management in HTTP/1.x
+
+Client Server
+
+Establish connection
+
+Close connection
+
+Establish connection
+
+Close connection
+
+Establish connection
+
+Close connection
+
+Short-lived connections
+
+awiy
+
+Client Server
+
+Establish connection
+
+Persistent connection
+
+Client Server
+
+Establish connection
+
+Close connection
+
+awi|
+
+HTTP Pipelining
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Persistent HTTP (HTTP 1.1)
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+
+A webpage consists of: @ 1 HTML file ® 6 images Assume: ® One RTT = 80 ms ® Object transmission time is
+
+negligible.
+
+Calculate the total time required to download the webpage using Non-Persistent HTTP.
+
+Calculate the total time required using Persistent HTTP (without pipelining).
+
+1
+2
+3. Calculate for HTTP persistent with pipelining
+4
+
+Which approach provides better performance? Justify.
+
+Solution:
+
+a) Non-Persistent HTTP: For each object, non-persistent HTTP requires:
+
+1 RTT to establish TCP connection
+1 RTT for HTTP request and beginning of response
+Total per object =2 RTT
+
+There are 7 objects: 7X2RTT = 14RTT == 14X80 =
+Answer: 1120 ms =1.12 s
+
+1120 ms
+
+COMPUTER NETWORKS %% PES
+Persistent HTTP (HTTP 1.1) UNIVERSITY
+
+b) Persistent HTTP — without pipelining
+
+With Persistent HTTP, the server keeps the TCP connection open after sending a response. Subsequent objects
+can be sent over this existing connection. Because it is without pipelining, the client must wait for the
+current response before issuing the next request.
+
+With persistent HTTP: TCP connection is established only once - 1 RTT
+1 RTT to establish the initial TCP connection
+
+1 RTT to request and receive the base HTML file
+
+6 RTT to request and receive the 6 images sequentially (1 RTT per image)
+Total Time = 1 RTT (TCP) + 1 RTT (HTML) + 6 RTT (images) = 8 RTTs
+
+Each of the 7 objects requires an HTTP request/response cycle > 7 RTTs
+Therefore: 1RTT + 7RTT = 8RTT == 8x80 =640 ms
+
+Answer: 640 ms =0.64 s
+
+COMPUTER NETWORKS %% PES
+Persistent HTTP (HTTP 1.1) UNIVERSITY
+
+d) Persistent HTTP with pipelining
+
+With Persistent HTTP with pipelining, the client opens a single TCP connection and can send multiple HTTP requests back-to-back without
+waiting for each response.
+
+After downloading the HTML:
+1 RTT to establish the single TCP connection.
+1 RTT to request and receive the base HTML file.
+
+1 RTT to request and receive all 6 images. The client parses the HTML file, discovers all 6 images, and sends requests for all of them
+together in a single batch.
+
+With pipelining, it sends requests for all 6 images without waiting for individual responses.
+Approximately 1 RTT is needed for the requests and responses to begin.
+Total Time = 1 RTT (TCP) + 1 RTT (HTML) + 1 RTT (All 6 images) = 3 RTT
+Since RTT = 80 ms: ==>3x80 =|240 ms
+
+Performance Calculation:
+
+HTTP approach RTT calculation Total RTTs Total time | Relative performance
+Non-persistent HTTP (7 \times 2) 14RTT 1120 ms | Slowest (Baseline 1.0x)
+Persistent HTTP, no (A+7) 8RTT 640 ms | Better (1.75x faster)
+pipelining
+
+Persistent HTTP +
+
+S (1+1+1) 3RTT 240 ms | Best (4.67x faster)
+pipelining
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unit — 1 Application Layer
+
+2.2 Web, HTTP and HTTPS
+COMPUTER NETWORKS %% PES
+HTTP Request Message UNIVERSITY
+
+two types of HTTP messages: request, response
+
+HTTP request message:
+
+* ASCll (human-readable format)
+carriage return character
+
+line-feed character
+
+request line (GET,
+"~ GET /index.html HTTP/1.1\r\n
+
+POST, Host: www-net.cs.umass.edu\r\n
+HEAD commands) User-Agent: Firefox/3.6.10\r\n
+Accept: text/html,application/xhtml+xml\r\n
+header Accept-Language: en-us,en;qg=0.5\r\n
+
+lines | Accept-Encoding: gzip,deflate\r\n
+Accept-Charset: IS0-8859-1,utf-8;9=0.7\r\n
+Keep-Alive: 115\r\n
+| Connection: keep-alive\r\n
+carriage return, line feed — \r\n
+at start of line indicates
+
+end of header lines * Check out the online interactive exercises for more
+examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+
+COMPUTER NETWORKS
+HTTP Request Message: General Format
+
+method |sp URL sp| version |cr| If
+header field name value |cr|If
+header field name value |cr| If
+cr|lIf
+= entity body =
+
+request
+
+1 line
+
+header
+lines
+
+body
+
+HTTP specifications [RFC 1945; RFC 2616; RFC 7540]
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+HTTP Request Message — Wireshark Capture AV
+
+Capturing from any
+File Edit View Go Capture Analyze Statistics Telephony Wireless Tools Help
+
+AN A WHRE QLK >F k<= @eEaE
+
+[WThetp - Expression... +
+No. Time Source inati Protocol Length Info
+
+44 1.7342 5  192.168.1.95 205 677 GET /filel.html HTTP/1.1
+
+50 1.831703556  63.33.73.205 HTTP 326 HTTP/1.1 200 OK (text/html)
+
+52 1.874581455 192.168.1.95 63.33.73.205 HTTP 558 GET /favicon.ico HTTP/1.1
+
+54 1.970307494 63.33.73.205 192.168.1.95 HTTP 326 HTTP/1.1 404 Not Found (application/json)
+
+» Frame 44: 677 bytes on wire (5416 bits), 677 bytes captured (5416 bits) on interface
+» Linux cooked capture
+» Internet Protocol Version 4, Src: 192.168.1.95, Dst: 63.33.73.205
+» Transmission Control Protocol, Src Port: 33862, Dst Port: 80, Seq: 1, Ack: 1, Len: 609
+»
+Host: wireshark.grydeske.net\r\n
+Connection: keep-alive\r\n
+Pragma: no-cache\r\n
+Cache-Control: no-cache\r\n
+Upgrade-Insecure-Requests: 1\r\n
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36\r\n
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9, image/webp, image/apng, */*;q=0.8, application/signed-exchange;v=b3\r\n
+Referer: http://localhost:8080/wireshark/wireshark-http.html\r\n
+Accept-Encoding: gzip, deflate\r\n
+Accept-Language: en-US,en;q=0.9,da;q=0.8\r\n
+Cookie: __utma=231828553.1458339319.1536683537.1537430811.1537432942.3\r\n
+\r\n
+[Full request URI: http://wireshark.grydeske.net/filei.html]
+[HTTP request 1/2]
+Response in frame: 50
+[Next request in frame: 52]
+0000 00 04 00 061 00 06 NN L 00 00 08 00 B
+0016 45 00 02 95 53 6b 40 00 40 06 9a 02 cO a8 01 5f E ske- @- - - -
+3f 21 49 cd 84 46 00 50 68 d6 3c f@ c3 38 b6 49 ?!I--F-P h-<--8-I
+80 18 01 06 4d 7d 60 60 01 01 68 Ga €0 c1 51 3b M} ;
+@046 5f £3 Bh d1 47 45 54 20 2f 66 69 6c 65 31 e 68 GFT /file1.h
+
+COMPUTER NETWORKS
+Other HTTP Request Messages
+
+POST method: HEAD method:
+web page often includes form input requests headers (only) that would be
+user input sent from client to server in returned if specified URL were requested
+entity body of HTTP POST request with an HTTP GET method.
+message
+
+GET method (for sending data to server): PUT method:
+include user data in URL field of HTTP GET uploads new file (object) to server
+request message (following a ‘?’): completely replaces file that exists at
+
+specified URL with content in entity body
+of POST HTTP request message
+
+www.somesite.com/animalsearch?monkeysé&banana
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Response Message
+
+/1)
+@) LES
+
+status line (protocol ——————— grrp/1.1 200 OK\r\n
+
+status code status phrase)
+
+header
+lines
+
+Date: Sun, 26 Sep 2010 20:09:20 GMT\r\n
+
+Server: Apache/2.0.52 (CentOS)\r\n
+
+Last-Modified: Tue, 30 Oct 2007 17:00:02
+GMT\r\n
+
+ETag: "17dc6-a5c-b£f716880"\r\n
+
+Accept-Ranges: bytes\r\n
+
+Content-Length: 2652\r\n
+
+Keep-Alive: timeout=10, max=100\r\n
+
+Connection: Keep-Alive\r\n
+
+Content-Type: text/html; charset=ISO-8859-
+1\r\n
+
+L_\r\n
+
+data, e.g., requested ———— data data data data data ...
+
+HTML file
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+COMPUTER NETWORKS PES
+HTTP Response Message — Wireshark Capture
+
+UNIVERSITY
+
+fle Bt Vew Go Capture Analyze Statistics Telephony Tools _Intemals Help
+SHood BEXTE A¢e+»aTF L2 (OB QA #¥B% B
+
+No. Time Source Destination Protocol Length_Info B
+
+| 222.21:13:58.590670000 10.36.40.181 239.255.255.250  SSDP 528 NOTIFY * WTTR/1.1
+
+| 223 21:13:58.590877000  fe80::4195:59f3:544Ff02::c  SSDP  SS6NOTIFY * WTTR/1.1
+
+L L
+241 21:13:59.150482000  128.119.245.12 10.36.40.181 452 HTTP/1.1 200 OK (text/html)
+
+kl
+
+@ Internet Protocol Version 4, Src: 128.119.245.12 (128.119.245.12), Dst: 10.36.40.181 (10.36.40.181)
+@ Transmission Control Protocol, src Port: http (80), Dst Port: 55990 (55990), Seq: 4381, Ack: 420, Len: 398
+@ [5 Reassembled TCP Segments (4778 bytes): #234(1423), #237(1460), #239(1460), #235(37), #241(398)]
+
+- Hypertext Transfer protocol
+CHTTR/LL1 200 OK\r\n
+
+Date: wed, 27 Feb 2013 02:14:00 GMT\r\n
+server: Apache/2.2.3 (Centos)\r\n
+Last-Modified: wed, 27 Feb 2013 02:13:01 GMT\r\n
+ETag: "d6c97-1194-50408540"\r\n
+Accept-Ranges: bytes\r\n
+Content-Type: text/html; charset=UTF-8\r\n
+@ Content-Length: 4500\r\n
+Connection: Keep-Alive\r\n
+Age: O\r\n
+
+nnen_ B 20
+Frame (452 bytes) | Reassembled TCP (4778 bytes)|
+
+O ® | Frame (frame), 452 bytes | Packets: 336 Displayed: 40 Marked: 0 Profile: Default
+
+COMPUTER NETWORKS %% PES
+HTTP Response Status Codes UNIVERSITY
+
+status code appears in 1st line in server-to-client response message.
+some sample codes:
+
+200 OK
+
+* request succeeded, requested object later in this message
+
+301 Moved Permanently
+
+* requested object moved, new location specified later in this message (in
+Location: field)
+
+400 Bad Request
+
+* request msg not understood by server
+
+404 Not Found
+
+* requested document not found on this server
+
+505 HTTP Version Not Supported
+COMPUTER NETWORKS
+Cookies
+
+Website/HTTP/Internet cookies
+
+Piece of data from a specific
+website
+
+Stored on a user’s computer
+Allows sites to keep track of users
+Eg: language selection
+
+We value your privacy
+
+We use cookies to enhance your browsing experience,
+serve personalized ads or content, and analyze our traffic.
+
+By clicking "Accept All", you consent to our use of cookies.
+
+Customize Reject All Accept All
+
+This website uses cookies to ensure you get
+the best experience on our website.
+
+Learn mode
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Maintaining user/server state: cookies
+
+Recall: HTTP GET/response
+interaction is stateless
+
+no notion of multi-step exchanges
+of HTTP messages to complete a
+Web “transaction”
+
+* no need for client/server to track
+“state” of multi-step exchange
+
+* all HTTP requests are independent of
+each other
+
+* no need for client/server to “recover”
+from a partially-completed-but-never-
+completely-completed transaction
+
+a stateful protocol: client makes
+two changes to X, or none at all
+
+g W
+e
+
+: lock dat, record x
+
+t:
+
+: Update ye_ X :
+
+Unlock x
+
+Q: what happens if network connection or
+client crashes at t’?
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Maintaining user/server state:
+
+cookies (more)
+
+Web sites and client
+browser use cookies to
+maintain some state
+between transactions
+
+four components:
+
+1) cookie header line of
+HTTP response message
+
+2) cookie header line in next
+HTTP request message
+
+3) cookie file kept on user’s
+host, managed by user’s
+browser
+
+4) back-end database at
+Web site
+
+Example:
+
+Susan uses browser on laptop,
+visits specific e-commerce site
+for first time
+
+when initial HTTP requests
+arrives at site, site creates:
+
+* unique ID (aka “cookie”)
+
+* entry in backend database
+for ID
+
+* subsequent HTTP requests
+from Susan to this site will
+contain cookie ID value,
+allowing site to “identify”
+Susan
+
+/1)
+\/
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Maintaining user/server state: cookies (more)
+
+cIientg
+
+T
+: usual HTTP request msg
+
+cookie file
+
+m server
+
+—>
+
+usual HTTP response
+
+merooall | set-cookie: 1678
+amazon 1678
+
+—  usual HTTP request msg
+
+cookie: 1678
+
+usual HTTP response msg
+
+“~
+
+one week later:
+
+ebay 8734 — usual HTTP request msg
+amazon 1678 Iy cookie: 1678
+
+usual HTTP response msg
+
+Amazon server
+creates ID
+
+1678 for user  create
+
+entry , database
+
+cookie- access
+
+specific
+action
+
+access
+
+cookie- /
+
+specific
+action
+
+/!
+
+backend
+
+&
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+HTTP Cookies: Comments
+
+/1)
+@) LES
+
+What cookies can be used for:
+
+track user’s browsing history
+
+remembering login details
+(authorization)
+
+track visitor count
+shopping carts
+Recommendations
+
+save coupon codes for you
+
+Challenge: How to keep state:
+at protocol endpoints: maintain
+state at sender/receiver over
+multiple transactions
+In messages: cookies - HTTP
+messages carry state
+
+: ) aside
+cookies and privacy.
+
+cookies permit sites to learn a lot about
+you on their site.
+
+third party cookies (tracking cookies)
+allow common identity (cookie value) to
+be tracked across multiple web sites,
+disabled by default or restricts them.
+
+track user behavior on a given website
+(first party cookies)
+
+track user behavior across multiple
+websites (third party cookies) without
+user ever choosing to visit tracker site (!)
+COMPUTER NETWORKS %% PES
+Example for Cookies: Display a NY Times web page e
+
+GET base html file
+from nytimes.com
+
+(3). fetch ad from nytimes.com
+
+& adX.com # %}
+HTTP HTTP
+(7) display composed GET reply
+page
+
+4\ d o ==
+
+NY times page with
+embedded ad displayed
+
+COMPUTER NETWORKS %% PES
+Example for Cookies: Tracking a user’s browsing history e
+
+“first party” cookie —
+from website you chose
+to visit (provides base
+
+HTTP [ | HTTP ;
+
+Set cookie: 1634
+
+“third party” cookie —
+from website you did not
+choose to visit AdX: 74193
+
+HTTP reply
+NY Times: 1634 Set cookie: 7493
+
+3 l 7493: NY Times sports, 2/15/22
+
+dX.com
+
+COMPUTER NETWORKS &) PES
+Example for Cookies: Tracking a user’s browsing behavior e
+
+. AdX:
+socks HTTIP = tracks my web browsing
+.com reply . .
+\é\ over sites with AdX ads
+HTTP ® can return targe_ted gds
+GET based on browsing history
+HTTP GET
+Referrer: socks.com, cookie: 7493
+/D ]
+N
+%’/ ~\ 7493: NY Times sports, 2/15/22
+5 7493:kocks.com, 2/16/22
+HTTP reply
+NY 34 Set cookie: 7493 AdX ©
+
+93
+
+COMPUTER NETWORKS &) PES
+Example for Cookies: Tracking a user’s browsing behavior (one day later) e
+
+:larts, 2/17/22
+
+nytimes.com (arts)
+
+HTTP HTTP
+GET reply
+cookie: 1634 Set cookie: 1634
+
+HTTP GET
+Referrer: nytimes.com, cookie: 749
+® —
+Fa\ 7493: NY Times sports, 2/15/22
+5 7493:kocks.com, 2/16/22
+HTTP reply 7493;NY Times arts, 2/15/22
+634 Set cookie: 7493 AdX com
+
+AdX: 7§93 Returned ad for socks!
+
+COMPUTER NETWORKS %% PES
+Web Caches (Proxy ServerS) UNIVERSITY
+
+Goal: satisfy client request without involving origin server
+
+user configures browser
+
+to point to a Web cache ﬂ/ oroxy
+browser sends all HTTP X, server E
+
+requests to cache client 477, ™" origin
+* if object in cache:
+
+. oL -
+cache returns object to « @ <
+client ¥ (\Q(e&"“
+
+* else cache requests
+object from origin
+server, caches received origin
+object, then returns
+object to client
+
+COMPUTER NETWORKS %% PES
+Web Caches (Proxy ServerS) UNIVERSITY
+
+Web cache acts as both Why Web caching?
+client and server
+
+* server for original requesting
+client
+
+reduce response time for client request
+(speed)
+
+. - * cache is closer to client
+* client to origin server
+
+typically cache is installed by reduce traffic on an institution’s access
+
+ISP (university, company, link (saves bandwidth)
+residential ISP) internet is dense with caches
+
+* enables “poor” content providers to more
+
+server tells cache about effectively deliver content
+
+object’s allowable caching in _ _
+response header: privacy — surf the internet anonymously
+
+Cache-Control: max-age=<seconds> activity logging
+
+Cache-Control: no-cache
+COMPUTER NETWORKS
+Caching example (15 reg/sec) * (100 Kbits/req)/(1.54 Mbps) = 0.974
+Scenario: (15 req/sec) * (100 Kbits/req)/(1 Gbps) = 0.0015
+
+access link rate: 1.54 Mbps
+
+RTT from institutional router to server:
+2 sec
+
+Web object size: 100K bits
+
+Average request rate from browsers to
+origin servers: 15/sec
+
+average data rate to browsers:
+
+origin
+servers
+
+1.50 Mbps 1.54 Mbps
+. access link
+Performance: problem: large i i
+LAN utilization: .0015 delays at high
+
+access link utilization = utilization!
+end-end delay = Internetdelay +
+
+access link delay + LAN delay
+= 2 sec + minutes + usecs
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @9 PES
+Caching example: buy a faster access link MR
+
+Scenario: 154 Mbps
+access link rate: 24 Mbps origin
+RTT from institutional router to server: 2 sec servers
+
+Web object size: 100K bits
+Avg request rate from browsers to origin
+servers: 15/sec
+
+avg data rate to browsers: 1.50 Mbps ML5piMbps
+
+access link
+
+Performance:
+LAN utilization: .0015
+access link utilization = ==—— 0097
+
+end-end delay = Internet delay +
+access link delay + LAN delay
+
+= 2 sec+ m=ules + usecs
+Cost: faster access link (expensive!) msecs
+
+
+COMPUTER NETWORKS
+Caching example: install a web cache
+
+Scenario:
+
+access link rate: 1.54 Mbps
+
+RTT from institutional router to
+
+server: 2 sec
+
+Web object size: 100K bits
+
+Avg request rate from browsers to
+
+origin servers: 15/sec
+avg data rate to browsers: 1.50
+Mbps
+
+Performance: How to compute link
+LAN utilization: .?  utilization, delay?
+
+origin
+servers
+
+1.54 Mbps
+access link
+
+institution
+
+access link utilization = ?
+average end-end delay =7
+
+local web cache
+
+Cost: web cache (cheap!)
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Caching example: install a web cache
+
+@ UNIVERSITY
+
+Calculating access link utilization, end-
+
+end delay with cache:
+
+suppose cache hit rate is 0.4: 40% requests
+satisfied at cache, 60% requests satisfied at
+
+origin
+
+access link: 60% of requests use access link
+
+data rate to browsers over access link
+=0.6 * 1.50 Mbps = .9 Mbps
+utilization = 0.9/1.54 = .58
+
+average end-end delay
+= 0.6 * (delay from origin servers)
+
++ 0.4 * (delay when satisfied at cache)
+
+=0.6 (2.01) + 0.4 (®msecs) =~ 1.2 secs
+
+origin
+servers
+
+1.54 Mbps
+access link
+
+local web cache
+
+lower average end-end delay than with 154 Mbps link (and cheaper too!)
+COMPUTER NETWORKS %% PES
+Conditional Get — Browser Caching UNTVERSITY
+
+client g server
+Goal: don’t send object if cache has <
+up-to-date cached version
+
+* no object transmission delay
+
+HTTP request msg
+
+« lower link utilization If-modified-since: <date> Ot:joetCt
+cache: specify date of cached HTTP response — mb“f"f'e‘j
+copy in HTTP request “ HTTP/1.0 <§act)£i
+If-modified-since: <date> 304 Not Modified
+server: response containsno =~ - -T - ---------------
+object if cached copy is up-to-
+date: ] HTTP request msg
+HTTP/1.0 304 Not Modified If-modified-since: <date> — obj_e_ct
+modified
+HTTP response — after
+T HTTP/1.0 200 OK <date>
+<data>
+
+COMPUTER NETWORKS
+Conditional Get (more)
+
+B El
+
+Source Destination Protocol Length Info
+
+347 20:33:14.318343000  10.36.40.181 128.119.245.12 586 GET /wireshark-labs/HTTP-wireshark-file2.html HTTP/1.1
+
+K
+0
+
+@ Ethernet II, Src: HonHaiPr_Oa:de:6b (cc:af:78:0a:de:6b), Dst: Cisco_4c:61:3f (00:1e:f7:4c:61:3f)
+@ Internet Protocol Version 4, src: 10.36.40.181 (10.36.40.181), Dst: 128.119.245.12 (128.119.245.12)
+@ Transmission Control Protocol, Src Port: 55404 (55404), Dst Port: http (80), Seq: 750, Ack: 1126, Len: 532
+a
+@
+Host: gaia.cs.umass.edu\r\n
+connection: keep-alive\r\n
+cache-control: max-age=0\r\n
+Accept: text/html,application/xhtml+xml,application/xm1;q=0.9,%/%;q=0.8\r\n
+User-Agent: Mozilla/5.0 (windows NT 6.1; wow64) Applewebkit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.97 safari/537.22\r\n
+Accept-Encoding: gzip,deflate,sdch\r\n
+Accept-Language: en-us,en;g=0.8\r\n
+Accept-Charset: IS0-8859-1,utf-8;g=0.7,%;g=0.3\r\n
+
+m
+
+Full request URI: http://gaila.cs.umass.edu/wireshark-labs/HTTP-wireshark-file2.html]
+49 53 4f 2d 38 38 35
+
+6e 65 If-None
+2d 31 37 33 Zd 63 31 33 33 36 "d6c96-1 73—:1336
+
+© B[ Textitem (text), 50 bytes Packets: 367 Displeyed: 10 Marked: 0 Dropped: 0 Profile: Default
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS %% PES
+HTTP/2 UNIVERSITY
+
+Key goal: decreased delay in multi-object HTTP requests
+
+HTTP1.1: introduced multiple, pipelined GETs over single TCP
+connection
+
+* server responds in-order (FCFS: first-come-first-served scheduling) to
+GET requests
+
+* with FCFS, small object may have to wait for transmission (head-of-line
+(HOL) blocking) behind large object(s)
+
+* |oss recovery (retransmitting lost TCP segments) stalls object
+transmission
+COMPUTER NETWORKS %% PES
+HTTP/2 UNIVERSITY
+
+Key goal: decreased delay in multi-object HTTP requests
+HTTP/2: rec 7540, 2015) increased flexibility at server in sending
+objects to client:
+
+* methods, status codes, most header fields unchanged from HTTP 1.1
+
+® transmission order of requested objects based on client-specified
+object priority (not necessarily FCFS)
+
+= push unrequested objects to client
+= divide objects into frames, schedule frames to mitigate HOL blocking.
+COMPUTER NETWORKS %% PES
+HTTP/2 to HTTP/3
+
+HTTP/2 over single TCP connection means:
+
+= recovery from packet loss still stalls all object transmissions
+
+* asin HTTP 1.1, browsers have incentive to open multiple parallel TCP
+connections to reduce stalling, increase overall throughput
+
+" no security over TCP connection
+
+= HTTP/3: adds security, per object error- and congestion-
+control (more pipelining) over UDP
+COMPUTER NETWORKS
+HTTP vs HTTPS
+
+PES
+
+UNIVERSITY
+
+@
+
+€ C
+
+A Not secure example.com
+
+& = (C @ Secure https//www.example.com H
+
+HTTP vs HTTPS
+
+Normal HTTP (80)
+
+User
+[ — /‘ \ [« -]
+=1 ’ Insecure [« ]
+\ _/ Connection
+User Secure HTTPS (443)
+[ — =
+ﬁ = =
+- Encrypted [= | a
+Connection
+
+SSL Certificate
+
+HTTPS is HTTP with encryption — All communications between browser
+
+and server are encrypted (bi-directional).
+
+‘S’ refers ‘Secure’ or HTTP over Secure Socket Layer.
+Uses TLS (SSL) to encrypt normal HTTP requests and responses.
+
+Attackers can't read the data crossing the wire and you know you are
+talking to the server you think you are talking too.
+COMPUTER NETWORKS
+HTTP vs HTTPS (more)
+
+@
+
+HTTP + TLS -> Encrypted
+
+Uses port no. 443 for data
+communication.
+
+HTTPS is based on public/private-key
+cryptography.
+* The public key is used for encryption
+* The secret private key is required for
+decryption.
+SSL certificate is a web server’s digital
+certificate issued by a third party CA.
+* Create an encrypted connection and
+establish trust.
+
+Is my certificate SSL or TLS?
+
+HTTPS
+
+Any message encrypted with Bob’s
+public key can be only decrypted
+with Bob’s private key.
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Benefits of HTTPS over HTTP using SSL Certificates
+
+Asymmetric Encryption
+
+1Y
+
+&
+
+Symmetric Encryption
+
+Public Different Keys Secret
+Key Key
+A4Sh*L@9.
+T6=#/>B#1 r
+ecryption
+RO6/J2.>1L
+1PRL39P20
+Plain Text Cipher Text Plain Text
+Secret
+Key
+
+G~
+
+Plain Text
+
+Y
+
+Same Key
+
+A4$h*L@9.
+
+Te=#/>B#1
+
+R06/J2.>1L
+1PRL39P20
+
+Cipher Text
+
+Secret
+Key
+
+PES
+
+UNIVERSITY
+
+Plain Text
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol
+
+= widely deployed security protocol above the transport layer
+* supported by almost all browsers, web servers: https (port 443)
+
+= provides:
+* confidentiality: via symmetric encryption (Encrypts data so eavesdroppers can't
+read it.)
+* integrity: via cryptographic hashing (Ensures data isn't altered or corrupted in
+transit.)
+* authentication: via public key cryptography (Verifies that the client is actually
+talking to the genuine server, not an impostor.)
+
+= history:
+* early research, implementation: secure network programming, secure sockets
+* secure socket layer (SSL) deprecated [2015]
+* TLS 1.3: RFC 8846 [2018]
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol DA RReerv
+
+* SSL (Secure Sockets Layer): Created by Netscape in the mid-1990s.
+
+* SSL 1.0: Never released publicly due to major flaws.
+
+* SSL 2.0 & 3.0: Released in 1995 and 1996, but later broken by critical vulnerabilities.
+
+* TLS (Transport Layer Security): Created by the IETF starting in 1999 as the official
+standard successor.
+
+* TLS1.0& 1.1:Released in 1999 and 2006 (now deprecated).
+
+* TLS 1.2 & 1.3: The only secure, active standards used on the web today.
+
+TLS or SSL Certificate:
+
+* Digital certificates (technically called X.509 Certificates) do not care about protocol versions.
+
+* A certificate contains a public key and identity info.
+
+* It works identically whether the server uses TLS 1.2, TLS 1.3, or legacy SSL.
+
+* The term "SSL Certificate" persists purely because of 30 years of marketing and consumer familiarity.
+Modern security tools and web browsers actually run on TLS.
+
+COMPUTER NETWORKS %% PES
+Transport Layer Security (TLS) Protocol
+
+= |In older versions (TLS 1.2 and SSL), the server sent its certificate out in plain text.
+Anyone monitoring your Wi-Fi network could see exactly which website certificate
+was being sent down to your computer.
+
+= |n TLS 1.3:
+
+* The browser and server establish a temporary secret key BEFORE the certificate is sent.
+
+* The Certificate itself is encrypted! An eavesdropper on public Wi-Fi can no longer read the
+certificate as it travels across the wire.
+
+A server's SSL/TLS Certificate acts like a digital passport. It contains:
+
+= Domain Name (e.g., bank.com).
+
+= Server's Public Key.
+
+= |ssuer Information (Certificate Authority details).
+
+= Expiration Date.
+
+= CA Digital Signature (Encrypted hash created by a trusted CA's private key).
+COMPUTER NETWORKS
+
+Transport Layer
+
+Security (TLS)
+
+= TLS provides an API that any application can use
+
+An HTTP view of TLS:
+
+Application
+
+Network
+
+PES
+
+UNIVERSITY
+
+@
+
+HTTP 1.0 HTTP/2 HTTP/2 (slimmed)
+LS Quic
+[ e | [ e | [ wr ]
+"""""" e | [ e | [ e
+HTTP/2 over TCP HTTP/2 over TCP HTTP/2 over QUIC
+
+(which incorporates TLS)
+
+over UDP
+COMPUTER NETWORKS %% PES
+What Actually Changed Under the Hood?
+
+Handshake & Performance
+
+= SSL Handshake: Required multiple back-and-forth round trips (2-RTT). Connection setup
+was slow, creating noticeable lag for users.
+
+= TLS Handshake: Streamlined the negotiation. TLS 1.3 cuts handshake latency in half by
+allowing key exchange parameters to be sent in the very first message (1-RTT).
+
+Security & Cryptography
+
+= Weak Cryptography Excised: SSL allowed insecure encryption algorithms like RC4 stream
+ciphers, RSA key transport, and MD5 hashing, which hackers easily broke. TLS removed
+all of these in favor of authenticated encryption (AEAD) like AES-GCM and ChaCha20.
+
+= Mandatory Forward Secrecy: Under SSL, if an attacker recorded encrypted web traffic
+
+and stole the server's private key 5 years later, they could retroactively decrypt all that
+past data. Modern TLS forces the use of temporary session keys (Ephemeral Diffie-
+Hellman) so stolen server keys can't decrypt past recordings.
+
+Note: Cryptographic algorithms will be dealt in courses like Applied Cryptography in detail.
+COMPUTER NETWORKS %% PES
+How Authentication Works
+
+= Certificate Presentation: The server sends its digital certificate containing its Public Key
+and the signature from a Certificate Authority (CA).
+
+= CA Trust Verification: The browser checks the digital signature against its built-in
+database of trusted Root Certificate Authorities (CAs) (like DigiCert or Let's Encrypt).
+
+= Proof of Ownership (CertificateVerify): To prove the server isn't an attacker using a
+stolen public certificate, the server encrypts/signs a unique handshake message using its
+secret Private Key.
+
+= Public Key Verification: The browser decrypts that signature using the Public Key from
+the certificate. If the message decrypts successfully, it proves the server holds the
+matching private key, confirming its identity.
+COMPUTER NETWORKS
+TLS 1.3 handshake: 1 RTT
+
+&) PES
+
+-
+:® client hello:
+= supported cipher suites
+= DH key agreement protocol,
+parameters
+
+server hello:
+
+= selected cipher suite
+
+= DH key agreement
+protocol, parameters
+
+i
+T
+O
+
+@4/
+
+client server
+
+“cipher suite”: a set of distinct cryptographic algorithms bundled
+
+together to secure a network connection. This cipher suite can be used
+for key generation, encryption, MAC (Message Authentication Code),
+
+digital signature.
+
+(O client TLS hello msg:
+= guesses key agreement
+protocol, parameters
+= indicates cipher suites it
+supports
+
+(») server TLS hello msg chooses
+= key agreement protocol,
+parameters
+= cipher suite
+= server-signed certificate
+
+() client:
+
+= checks server certificate
+
+= generates key
+
+= can now make application
+request (e.g.., HTTPS GET)
+COMPUTER NETWORKS %% PES
+TLS 1'3 UNIVERSITY
+
+TLS 1.3 optimizes the process by combining key negotiation into the very first
+packet.
+
+= Step 1 (ClientHello + Key Share): The browser sends supported ciphers AND
+proactively generates its ephemeral key parameters (Key Share), sending them in
+the first packet.
+
+= Step 2 (ServerHello & Encrypted Certificate): The server picks a cipher, generates
+its matching key share, and calculates the symmetric session key. All subsequent
+handshake messages—including the Server Certificate—are encrypted!
+
+= Step 3 (Data Transmission): The client verifies the certificate signature and
+derives the same symmetric key. Real HTTPS data flows immediately.
+
+For returning visitors, TLS 1.3 introduces 0-RTT (Zero Round-Trip Time) mode:
+= Uses a Pre-Shared Key (PSK) saved from the previous connection.
+
+= The browser can send encrypted HTTP requests (like GET /home) in the very first
+packet, eliminating latency entirely.
+COMPUTER NETWORKS %% PES
+TLS 1.3 handshake: 0 RTT oveRs
+g E - initial hello message contains
+o cllent hello: icati |
+~ g soher sutes encrypted application data!
+oy 2greement protocol, . “resuming” earlier connection
+« application data \ between client and server
+
+- application data encrypted using
+
+server hello: “resumption master secret”
+« selected cipher sui | — . ;
+s Dl roy aaeamont from earlier connection
+protocol, parameters
+«—| = application data (reply) . vulnerable to replay attacks!
+« maybe OK for get HTTP GET or
+client serfver client requests not modifying
+
+server state
+UNIVERST
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY

@@ -1,0 +1,405 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 4: Principles of Network Applications (Architectures, Sockets, Transport Requirements)
+Source Deck: Slides_Unit_1_Part_2.pdf (Slides 1 to 16)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 16
+================================================================================
+
+================================================================================
+SLIDE 1: Course Title & Department Information
+================================================================================
+
+COMPUTER NETWORKS
+Application Layer
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+
+================================================================================
+SLIDE 2: Application Layer Unit Title
+================================================================================
+
+COMPUTER NETWORKS
+Application Layer
+
+Department of Computer Science and Engineering
+PES University
+
+================================================================================
+SLIDE 3: Unit 1 Application Layer Agenda
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 1 Application Layer
+
+Outline:
+2.1 Principles of Network Applications
+2.2 Web, HTTP and HTTPS
+
+================================================================================
+SLIDE 4: Application Layer: Overview & Goals
+================================================================================
+
+COMPUTER NETWORKS: Application Layer Overview
+
+Our Goals:
+• Conceptual and implementation aspects of application-layer protocols:
+  - Transport-layer service models
+  - Client-server paradigm
+  - Peer-to-peer (P2P) paradigm
+• Learn about protocols by examining popular application-layer protocols:
+  - HTTP (Hypertext Transfer Protocol)
+  - HTTPS (HTTP Secure / TLS)
+
+================================================================================
+SLIDE 5: Examples of Network Applications
+================================================================================
+
+COMPUTER NETWORKS: Some Network Apps
+
+Examples of modern network applications:
+• Social Networking: TikTok, Facebook, Instagram, X (Twitter), WeChat
+• Web: Browsing, search engines, web portals
+• Text Messaging: WhatsApp, iMessage, Signal
+• E-mail: Gmail, Yahoo Mail, Outlook
+• Multi-user Network Games: World of Warcraft, Fortnite, First-Person Shooters
+• Streaming Stored Video: YouTube, Hulu, Netflix
+• P2P File Sharing: BitTorrent
+• Voice over IP (VoIP): Skype, Vonage
+• Real-time Video Conferencing: Zoom, Microsoft Teams, Google Meet, Skype
+• Internet Search: Google, Bing, DuckDuckGo
+• Remote Login: SSH, Telnet
+• Generative AI: Large Language Model chatbots (ChatGPT, Claude, Gemini), text-to-image/video generation
+• ...and many more emerging every day.
+
+================================================================================
+SLIDE 6: Creating a Network Application
+================================================================================
+
+COMPUTER NETWORKS: Creating a Network App
+
+Application Architecture Principle:
+• Write programs that:
+  - Run on (different) end systems (hosts)
+  - Communicate over the network (e.g., Web server software communicates with browser software)
+• No need to write software for network-core devices:
+  - Network-core devices (routers, switches) do not run user applications
+  - Applications reside strictly on end systems, which allows for rapid application development and rapid propagation without needing upgrades to network core infrastructure
+
+Architecture Diagram:
++-----------------------------------------------------------------------------+
+|                            END SYSTEM ARCHITECTURE                          |
+|                                                                             |
+|   [ Mobile Network ]                [ Home Network ]                        |
+|   +---------------+                 +---------------+                       |
+|   |  Application  |                 |  Application  |                       |
+|   |  Transport    |                 |  Transport    |                       |
+|   |  Network      |                 |  Network      |                       |
+|   |  Data Link    |                 |  Data Link    |                       |
+|   |  Physical     |                 |  Physical     |                       |
+|   +-------+-------+                 +-------+-------+                       |
+|           \                                 /                               |
+|            \     +--------------------+    /                                |
+|             +--->| Regional/Local ISP |<--+                                 |
+|                  +---------+----------+                                     |
+|                            |                                                |
+|                  +---------+----------+                                     |
+|                  | National/Global ISP|<---------+                          |
+|                  +---------+----------+          |                          |
+|                            |                     |                          |
+|                  +---------+----------+   +------+-------+                  |
+|                  | Content Provider   |   |  Enterprise  |                  |
+|                  |     Network        |   |   Network    |                  |
+|                  +---------+----------+   +--------------+                  |
+|                            |                                                |
+|                     [ Datacenter ]                                          |
+|                  +---------------+                                          |
+|                  |  Application  |                                          |
+|                  |  Transport    |                                          |
+|                  |  Network      |                                          |
+|                  |  Data Link    |                                          |
+|                  |  Physical     |                                          |
+|                  +---------------+                                          |
++-----------------------------------------------------------------------------+
+
+================================================================================
+SLIDE 7: Application Architectures: Client-Server Paradigm
+================================================================================
+
+COMPUTER NETWORKS: Client-Server Paradigm
+
+Server:
+• Always-on host
+• Permanent (fixed) IP address
+• Often housed in data centers for high availability and elastic scaling
+
+Clients:
+• Contact and communicate with the server
+• May be intermittently connected
+• May have dynamic IP addresses assigned dynamically by DHCP
+• Do not communicate directly with each other
+
+Examples of Client-Server Applications:
+• HTTP (Web)
+• IMAP / POP3 / SMTP (Email)
+• FTP (File Transfer Protocol)
+
+ASCII Diagram of Client-Server Paradigm:
+                +------------------------+
+                |     Always-on Server   |
+                | (Fixed IP, Data Center)|
+                +-----------+------------+
+                            |
+           +----------------+----------------+
+           |                |                |
+           v                v                v
+      +--------+       +--------+       +--------+
+      | Client |       | Client |       | Client |
+      | (Host) |       | (Host) |       | (Host) |
+      +--------+       +--------+       +--------+
+    (Intermittent, dynamic IP, no direct client-client links)
+
+================================================================================
+SLIDE 8: Application Architectures: Peer-to-Peer (P2P) Architecture
+================================================================================
+
+COMPUTER NETWORKS: Peer-to-Peer Architecture
+
+Characteristics:
+• No always-on centralized server required
+• Arbitrary pairs of end systems (peers) directly communicate with each other
+• Peers request service from other peers, and provide service in return to other peers
+• Self-Scalability:
+  - New peers bring new service capacity (upload bandwidth, storage) as well as new service demands (downloads)
+• Challenges:
+  - Peers are intermittently connected and frequently change IP addresses
+  - Complex management, churn handling, and security coordination
+
+Example:
+• P2P file sharing: BitTorrent
+
+ASCII Diagram of Peer-to-Peer (P2P) Architecture:
+               +---------+
+               |  Peer   |<-----------------+
+               +----+----+                  |
+                   / \                      |
+                  /   \                     |
+                 v     v                    v
+           +--------+   +--------+     +--------+
+           |  Peer  |<->|  Peer  |<--->|  Peer  |
+           +--------+   +--------+     +--------+
+                 \         /
+                  v       v
+                  +-------+
+                  |  Peer |
+                  +-------+
+    (Direct communication between peers; highly decentralized)
+
+================================================================================
+SLIDE 9: Processes Communicating
+================================================================================
+
+COMPUTER NETWORKS: Processes Communicating
+
+Process:
+• A program running within an operating system host.
+
+Inter-Process Communication (IPC):
+• Within the same host: Two processes communicate using inter-process communication mechanisms defined by the operating system (pipes, message queues, shared memory, UNIX domain sockets).
+• Across different hosts: Processes running on different hosts communicate by exchanging messages across the computer network.
+
+Client and Server Processes:
+• Client Process: The process that initiates the communication.
+• Server Process: The process that waits to be contacted by an incoming request.
+• Note on P2P: In P2P architectures, an application process acts as both a client process (when downloading/requesting) and a server process (when uploading/serving).
+
+================================================================================
+SLIDE 10: Sockets - The Application/Transport Interface
+================================================================================
+
+COMPUTER NETWORKS: Sockets
+
+Definition:
+• A process sends and receives messages to and from the network through its socket.
+• Socket Analogy: A socket is analogous to a door.
+  - The sending process shoves a message out of its door (socket).
+  - The sending process relies on the underlying transport infrastructure on the other side of the door to deliver the message to the socket at the receiving process.
+  - Two sockets are involved in any network communication: one at each communicating endpoint.
+
+Boundary of Control:
+• The application layer and socket interface are controlled by the application developer.
+• The transport, network, link, and physical layers below the socket interface are controlled by the Operating System (OS) and network protocol stack.
+
+ASCII Diagram of Sockets Interface:
+   HOST A (Client)                                HOST B (Server)
++-------------------+                          +-------------------+
+| Application Layer |                          | Application Layer |
+|   +-----------+   |                          |   +-----------+   |
+|   |  Process  |   |                          |   |  Process  |   |
+|   +-----+-----+   |                          |   +-----+-----+   |
+|         |         |                          |         |         |
+|      [Socket] <---+--- Controlled by dev --->+---> [Socket]      |
++---------|---------+                          +---------|---------+
+==========|==============================================|========== (OS Boundary)
+|         v         |                          |         v         |
+|  Transport Layer  |                          |  Transport Layer  |
+|  (TCP / UDP)      |                          |  (TCP / UDP)      |
+|         |         |                          |         |         |
+|   Network Layer   |                          |   Network Layer   |
+|       (IP)        |                          |       (IP)        |
+|         |         |                          |         |         |
+|    Link Layer     |                          |    Link Layer     |
+|         |         |                          |         |         |
+|  Physical Layer   |                          |  Physical Layer   |
++---------+---------+                          +---------+---------+
+          |                                              |
+          +============== Internet Cloud ================+
+
+================================================================================
+SLIDE 11: Addressing Processes
+================================================================================
+
+COMPUTER NETWORKS: Addressing Processes
+
+Identifying Receiving Processes:
+• To receive messages, a process must have a unique identifier.
+• Each host device has a unique 32-bit IP address (in IPv4) or 128-bit IP address (in IPv6).
+
+Question: Does the IP address of the host on which a process runs suffice for identifying the process?
+Answer: NO. Many processes can be running simultaneously on the same host!
+
+Process Identifier:
+• An identifier includes BOTH:
+  1. The IP address of the destination host
+  2. The Port Number associated with the destination process on that host
+
+Common Standard Port Numbers:
+• HTTP Server (Web): Port 80
+• HTTPS Server: Port 443
+• Mail Server (SMTP): Port 25
+• DNS Server: Port 53
+• SSH Server: Port 22
+
+Example:
+• To send an HTTP request to the `gaia.cs.umass.edu` web server:
+  - Host IP Address: 128.119.245.12
+  - Port Number: 80
+
+================================================================================
+SLIDE 12: An Application-Layer Protocol Defines
+================================================================================
+
+COMPUTER NETWORKS: An Application-layer Protocol Defines
+
+An Application-Layer Protocol defines:
+1. Types of messages exchanged:
+   - e.g., Request messages, Response messages
+2. Message syntax:
+   - What fields are in the message and how the fields are delineated (structure, spacing, CRLF separators)
+3. Message semantics:
+   - The meaning of the information contained in the respective fields
+4. Rules for when and how processes send and respond to messages:
+   - Action triggers, error handling, state transitions
+
+Protocol Categories:
+• Open Protocols:
+  - Defined in publicly available RFCs (Request for Comments) by IETF.
+  - Everyone has access to the protocol definition, promoting vendor neutrality and widespread interoperability.
+  - Examples: HTTP, SMTP, FTP, DNS, SIP
+• Proprietary Protocols:
+  - Proprietary / closed specifications developed privately by organizations.
+  - Examples: Skype (original protocol), Zoom proprietary streams
+
+================================================================================
+SLIDE 13: Transport Service Requirements of Applications
+================================================================================
+
+COMPUTER NETWORKS: What Transport Service Does an App Need?
+
+Applications have diverse requirements along four fundamental dimensions:
+
+1. Data Integrity:
+   - Some applications require 100% reliable data transfer where no bit loss is permitted (e.g., file transfer, web transactions, financial transfers).
+   - Other applications can tolerate some packet loss without catastrophic degradation (e.g., streaming audio/video, conversational VoIP).
+
+2. Timing (Delay Sensitivity):
+   - Some applications require low end-to-end delay (latency) and low jitter to be effective and usable (e.g., Internet telephony / VoIP, interactive multiplayer gaming, tele-surgery).
+   - Other applications are non-time-critical (e.g., email, file transfer).
+
+3. Throughput:
+   - Bandwidth-sensitive applications require a guaranteed minimum amount of throughput to be effective (e.g., high-definition video streaming requires 5-25 Mbps).
+   - Elastic applications make use of whatever throughput is available, running faster with more bandwidth and slower with less (e.g., file downloads, web browsing, email).
+
+4. Security:
+   - Confidentiality: Encryption of application data crossing the wire.
+   - Data Integrity: Protection against undetected packet tampering.
+   - Authentication: Verification of sender and receiver identity.
+
+================================================================================
+SLIDE 14: Transport Service Requirements of Common Applications
+================================================================================
+
+COMPUTER NETWORKS: Transport Service Requirements of Common Apps
+
++-----------------------+---------------+-------------------------+--------------------+
+| Application           | Data Loss?    | Throughput              | Time Sensitive?    |
++-----------------------+---------------+-------------------------+--------------------+
+| File transfer/download| No loss       | Elastic                 | No                 |
+| E-mail                | No loss       | Elastic                 | No                 |
+| Web documents         | No loss       | Elastic                 | No                 |
+| Real-time audio/video | Loss-tolerant | Audio: 5 Kbps - 1 Mbps  | Yes, 10's of msec  |
+|                       |               | Video: 10 Kbps - 5 Mbps |                    |
+| Streaming audio/video | Loss-tolerant | Same as above           | Yes, a few seconds |
+| Interactive games     | Loss-tolerant | Few Kbps and up         | Yes, 10's of msec  |
+| Text messaging        | No loss       | Elastic                 | Yes and no         |
++-----------------------+---------------+-------------------------+--------------------+
+
+================================================================================
+SLIDE 15: Internet Transport Protocol Services: TCP vs. UDP
+================================================================================
+
+COMPUTER NETWORKS: Internet Transport Protocol Services
+
+TCP Service (Transmission Control Protocol):
+• Reliable Transport: Guarantees in-order, error-free delivery of byte streams between sending and receiving processes.
+• Flow Control: Sender will not overwhelm the receiver's buffer.
+• Congestion Control: Throttles the sender's transmission rate when the network links or router buffers become overloaded.
+• Connection-Oriented: Requires explicit connection setup (3-way handshake) between client and server processes before application data can flow.
+• Does NOT Provide:
+  - Timing guarantees (no upper bound on delay)
+  - Minimum throughput guarantees
+  - Inherent security/encryption (must run TLS over TCP)
+
+UDP Service (User Datagram Protocol):
+• Unreliable Data Transfer: Lightweight, "best-effort" data transfer between sending and receiving processes without retransmissions.
+• No Connection Setup: Connectionless protocol; send messages immediately without preliminary handshaking.
+• Does NOT Provide:
+  - Reliability / packet recovery
+  - Flow control
+  - Congestion control
+  - Timing guarantees
+  - Minimum throughput guarantees
+  - Security
+
+================================================================================
+SLIDE 16: Internet Applications, Application Protocols & Underlying Transport
+================================================================================
+
+COMPUTER NETWORKS: Internet Transport Protocol Services
+
++-----------------------+----------------------------------+--------------------+
+| Application           | Application-Layer Protocol       | Underlying Transport|
++-----------------------+----------------------------------+--------------------+
+| File transfer/download| FTP [RFC 959]                    | TCP                |
+| E-mail                | SMTP [RFC 5321]                  | TCP                |
+| Web documents         | HTTP 1.1 [RFC 7230], HTTP/2      | TCP                |
+| Internet telephony    | SIP [RFC 3261], RTP [RFC 3550],  | TCP or UDP         |
+|                       | or proprietary (Skype)           |                    |
+| Streaming audio/video | DASH (Dynamic Adaptive Streaming | TCP                |
+|                       | over HTTP), HLS                  |                    |
+| Interactive games     | WOW, FPS (proprietary protocols) | UDP or TCP         |
++-----------------------+----------------------------------+--------------------+

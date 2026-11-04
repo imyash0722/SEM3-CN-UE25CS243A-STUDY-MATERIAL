@@ -1,0 +1,705 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 2: Protocol Layers, OSI vs TCP/IP Stack & Network Devices
+Source Deck: Slides_Unit_1_Part_1.pdf (Slides 70 to 106)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 37
+================================================================================
+
+================================================================================
+SLIDE 70: Topic Transition: Protocol Layers
+================================================================================
+
+COMPUTER NETWORKS
+Computer Networks and the Internet: Protocol Layers
+
+Team Networks
+Department of Computer Science and Engineering
+
+================================================================================
+SLIDE 71: Protocol Layers and Reference Models
+================================================================================
+
+COMPUTER NETWORKS: Managing Network Complexity
+
+The Challenge of Computer Networks:
+• Networks are extraordinarily complex, with diverse components:
+  - End hosts (phones, laptops, servers).
+  - Routers, switches, modems.
+  - Physical media (copper, fiber, radio, satellite).
+  - Network applications (web, email, streaming, P2P).
+  - Complex protocols and hardware/software stacks.
+
+The Architectural Question:
+• Is there any hope of organizing the structure of networks, or at least our discussion and design of networks?
+• Answer: Modular, layered protocol architectures!
+
+================================================================================
+SLIDE 72: Layering Analogy: Organization of Air Travel
+================================================================================
+
+COMPUTER NETWORKS: Airline Analogy
+
+A commercial flight involves a series of independent steps and services:
+
+Departure Airport Action                                Destination Airport Action
+----------------------------------------------------------------------------------
+Ticket Purchase (Agent / Online)                      Ticket Complaint / Reward Claim
+      |                                                     ^
+      V                                                     |
+Baggage Check-in                                      Baggage Claim
+      |                                                     ^
+      V                                                     |
+Gate Boarding (Load passengers)                       Gate Deplaning (Unload passengers)
+      |                                                     ^
+      V                                                     |
+Runway Takeoff                                        Runway Landing
+      |                                                     ^
+      V                                                     |
+Airplane Routing (Air Traffic Control) -------------> Airplane Routing (En-route Flight)
+
+================================================================================
+SLIDE 73: Layering of Airline Functionality
+================================================================================
+
+COMPUTER NETWORKS: Layering Principles in Air Travel
+
+Hierarchical Service Layers:
+1. Ticketing Service: Handles ticketing at departure and customer relations at destination.
+2. Baggage Service: Handles baggage drop-off and baggage recovery.
+3. Gate Service: Handles passenger loading and unloading at gates.
+4. Runway Service: Handles takeoff and landing clearance on physical runways.
+5. Airplane Routing Service: Pilots and air traffic controllers guide the aircraft through airspace.
+
+Core Rules of Layering:
+• Each layer implements a specific service via its own internal-layer actions.
+• Each layer RELIES ON the services provided by the layer immediately below it.
+• Each layer provides services to the layer immediately above it.
+
+================================================================================
+SLIDE 74: Why Layering? Benefits and Discussion
+================================================================================
+
+COMPUTER NETWORKS: Advantages of Layered Architecture
+
+Key Benefits:
+1. Explicit Structure:
+   • Breaks a monolithic, intractable system into manageable, well-defined modules.
+   • Allows identification and understanding of relationships among system components.
+2. Modularity & Maintainability:
+   • Updating or replacing the implementation of a layer's service is completely transparent to the rest of the system.
+   • Example: Changing gate boarding procedures does NOT require changing airplane flight routes or ticketing systems.
+   • Upgrading from IPv4 to IPv6 does not break application code using HTTP or TCP.
+
+Potential Drawbacks (Is Layering Harmful?):
+• Layer duplication: Functionality might be duplicated across layers (e.g., error detection in Link, Network, and Transport layers).
+• Performance overhead: Header overhead added at each layer; context switching between layers.
+• Lack of cross-layer information sharing: Lower layers cannot easily pass link status to higher layers.
+
+================================================================================
+SLIDE 75: The Internet Protocol Stack (5-Layer Model)
+================================================================================
+
+COMPUTER NETWORKS: The 5-Layer Internet Stack
+
+The 5 Layers (from Top to Bottom):
+
+1. APPLICATION LAYER:
+   • Role: Supporting network applications, user interface, accessing network resources.
+   • Protocols: HTTP, SMTP, IMAP, DNS, FTP, SSH.
+   • PDU (Protocol Data Unit): Message.
+
+2. TRANSPORT LAYER:
+   • Role: Process-to-process data transfer, segmentation & reassembly, port addressing, flow control, error control, connection management.
+   • Protocols: TCP, UDP.
+   • PDU: Segment (TCP) / Datagram (UDP).
+
+3. NETWORK LAYER:
+   • Role: Routing datagrams from source host to destination host across intermediate routers, logical addressing (IP).
+   • Protocols: IP (IPv4, IPv6), ICMP, routing protocols (OSPF, BGP).
+   • PDU: Datagram / Packet.
+
+4. DATA LINK LAYER:
+   • Role: Data transfer between neighboring network elements over a physical link, framing, physical (MAC) addressing, link-level error control.
+   • Protocols: Ethernet (802.3), WiFi (802.11), PPP.
+   • PDU: Frame.
+
+5. PHYSICAL LAYER:
+   • Role: Moving individual raw bits across the physical transmission medium ("bits on the wire").
+   • Media: Twisted pair, coaxial cable, optical fiber, wireless radio.
+   • PDU: Bit.
+
+================================================================================
+SLIDE 76: The OSI Reference Model (7-Layer Model)
+================================================================================
+
+COMPUTER NETWORKS: The 7-Layer OSI Reference Model
+
+Open Systems Interconnection (OSI) Model:
+• Developed in the late 1970s by the International Organization for Standardization (ISO).
+• Contains 7 distinct layers:
+  7. Application
+  6. Presentation
+  5. Session
+  4. Transport
+  3. Network
+  2. Data Link
+  1. Physical
+
+The Two "Extra" Layers in OSI (Absent from Internet Stack):
+1. PRESENTATION LAYER (Layer 6):
+   • Allows applications to interpret the meaning of exchanged data.
+   • Functions: Data translation (ASCII/EBCDIC), data compression, cryptography/encryption.
+2. SESSION LAYER (Layer 5):
+   • Manages sessions between processes.
+   • Functions: Dialog control (half/full duplex), synchronization, checkpointing, recovery of data exchange.
+
+Internet Stack Approach:
+• The Internet stack omits dedicated Presentation and Session layers!
+• If an application needs encryption, compression, or checkpointing, the application developer implements it directly inside the Application Layer (e.g., TLS/HTTPS in user space).
+
+================================================================================
+SLIDE 77: OSI Reference Model Architecture: Layer Groupings
+================================================================================
+
+COMPUTER NETWORKS: OSI Functional Groupings & Communication
+
+Three Groupings of OSI Layers:
+
+1. User Support Layers (Layers 7, 6, 5):
+   • Application (7), Presentation (6), Session (5).
+   • Deal with user interface, data formatting, encryption, and dialogue control.
+   • Implemented in software in end systems.
+
+2. The Heart of OSI (Layer 4):
+   • Transport Layer (4).
+   • Bridges user support layers and network support layers.
+   • Ensures reliable end-to-end transmission independent of physical network.
+
+3. Network Support Layers (Layers 3, 2, 1):
+   • Network (3), Data Link (2), Physical (1).
+   • Deal with physical transmission of data, addressing, and routing across intermediate hops.
+   • Implemented in hardware and software across routers, switches, and hosts.
+
+Intermediate Node Architecture:
+• End Hosts (Device A & B): Implement all 7 layers.
+• Intermediate Nodes (Routers): Implement only Layers 1, 2, and 3 (Physical, Data Link, Network).
+• Intermediate Nodes (Switches): Implement only Layers 1 and 2 (Physical, Data Link).
+
+================================================================================
+SLIDE 78: TCP/IP vs. OSI Reference Model Mapping
+================================================================================
+
+COMPUTER NETWORKS: Layer-by-Layer Architecture Comparison
+
+OSI 7-Layer Model                     TCP/IP 5-Layer Protocol Suite
+---------------------------------     ---------------------------------
+[ 7. Application  ] --\
+[ 6. Presentation ] ----+===========> [ Application Layer ]
+[ 5. Session      ] --/               (HTTP, DNS, SMTP, FTP, SSH...)
+---------------------------------     ---------------------------------
+[ 4. Transport    ] ================> [ Transport Layer ]
+                                      (TCP, UDP)
+---------------------------------     ---------------------------------
+[ 3. Network      ] ================> [ Network / Internet Layer ]
+                                      (IP: IPv4, IPv6, ICMP, Routing)
+---------------------------------     ---------------------------------
+[ 2. Data Link    ] ================> [ Data Link Layer ]
+                                      (Ethernet, WiFi, MAC framing)
+---------------------------------     ---------------------------------
+[ 1. Physical     ] ================> [ Physical Layer ]
+                                      (Bits, copper, optical, radio)
+
+================================================================================
+SLIDE 79: Layers in the TCP/IP Protocol Suite: Private Internet Example
+================================================================================
+
+COMPUTER NETWORKS: Multi-Hop Internet Routing
+
+Private Internet Topology:
+  [Host A] 
+     | (Link 1)
+  [Router R1] <---(Link 2)---> [Router R2] <---(Link 6)---> [Router R4]
+     |                                                         | (Link 7)
+  (Link 3)                                                 [Host B]
+     |                                                         |
+  [Router R3] <------------------(Link 5)----------------------+
+
+Path Traversal:
+• Host A sends packets to Host B.
+• Packets may traverse: Link 1 -> R1 -> Link 2 -> R2 -> Link 6 -> R4 -> Link 7 -> Host B.
+• At each intermediate router, packets ascend from Physical -> Data Link -> Network layer to make routing decisions, then descend Network -> Data Link -> Physical onto the next link.
+
+================================================================================
+SLIDE 80: Layer Units: Physical Layer (Bits)
+================================================================================
+
+COMPUTER NETWORKS: Physical Layer Communication Unit
+
+• Role: Moving individual raw bits across physical media.
+• Unit of Communication: BIT (0 or 1).
+• Deals with: Electrical voltage levels, light pulse timing, radio signal modulation, pinouts, and physical connectors.
+
+================================================================================
+SLIDE 81: Layer Units: Data Link Layer (Frames)
+================================================================================
+
+COMPUTER NETWORKS: Data Link Layer Communication Unit
+
+• Role: Reliable node-to-node transfer between adjacent network devices.
+• Unit of Communication: FRAME.
+• Encapsulation: Adds Link-layer header (Hl) containing Source and Destination MAC addresses, frame type, and a trailer (FCS/CRC) for error detection.
+
+================================================================================
+SLIDE 82: Layer Units: Network Layer (Datagrams)
+================================================================================
+
+COMPUTER NETWORKS: Network Layer Communication Unit
+
+• Role: Host-to-host delivery and routing across multiple heterogeneous networks.
+• Unit of Communication: DATAGRAM (or Packet).
+• Encapsulation: Adds Network-layer header (Hn) containing Source IP address, Destination IP address, TTL, Protocol ID, and checksum.
+
+================================================================================
+SLIDE 83: Layer Units: Transport Layer (Segments)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer Communication Unit
+
+• Role: Process-to-process delivery, flow control, reliability, connection tracking.
+• Unit of Communication: SEGMENT (TCP) or DATAGRAM / PACKET (UDP).
+• Encapsulation: Adds Transport-layer header (Ht) containing Source Port, Destination Port, Sequence Numbers, Acknowledgments, and Window size.
+
+================================================================================
+SLIDE 84: Layer Units: Application Layer (Messages)
+================================================================================
+
+COMPUTER NETWORKS: Application Layer Communication Unit
+
+• Role: Providing network services directly to end-user software applications.
+• Unit of Communication: MESSAGE.
+• Examples: HTTP Request/Response message, SMTP mail message, DNS query/reply message.
+
+================================================================================
+SLIDE 85: Layer Encapsulation Step 1: Transport Layer
+================================================================================
+
+COMPUTER NETWORKS: Encapsulation – Application to Transport
+
+1. Application Layer:
+   • Application process generates message M.
+   • Passes message M down to the Transport layer via socket.
+
+2. Transport Layer:
+   • Receives message M.
+   • Adds Transport header Ht (ports, sequence number, flags).
+   • Produces Transport Layer Segment: [ Ht | M ].
+   • Provides process-to-process communication service.
+
+================================================================================
+SLIDE 86: Layer Encapsulation Step 2: Network Layer
+================================================================================
+
+COMPUTER NETWORKS: Encapsulation – Transport to Network
+
+3. Network Layer:
+   • Receives transport segment [ Ht | M ] from Transport layer.
+   • Adds Network header Hn (Source & Destination IP addresses, TTL, TOS).
+   • Produces Network Layer Datagram: [ Hn | Ht | M ].
+   • Responsible for routing datagram across the Internet to destination host.
+
+================================================================================
+SLIDE 87: Layer Encapsulation Step 3: Data Link Layer
+================================================================================
+
+COMPUTER NETWORKS: Encapsulation – Network to Data Link
+
+4. Data Link Layer:
+   • Receives datagram [ Hn | Ht | M ] from Network layer.
+   • Adds Data Link header Hl (Source & Destination MAC addresses) and optional trailer.
+   • Produces Link Layer Frame: [ Hl | Hn | Ht | M ].
+   • Passes frame down to Physical layer to be transmitted as individual raw bits.
+
+================================================================================
+SLIDE 88: OSI vs. TCP/IP Summary Matrix (Protocols & PDUs)
+================================================================================
+
+COMPUTER NETWORKS: OSI vs. TCP/IP Protocol Suite Comparison Table
+
+| OSI Layer         | TCP/IP Layer    | Protocols at this Layer                | PDU (Unit)      | Addressing Used      |
+| :---------------- | :-------------- | :------------------------------------- | :-------------- | :------------------- |
+| 7. Application    | Application     | HTTP, HTTPS, DNS, DHCP, FTP, SMTP, SSH | Message / Data  | Process / URL / FQDN |
+| 6. Presentation   | (In Application)| TLS/SSL, JPEG, MPEG, ASCII             | Data            | N/A                  |
+| 5. Session        | (In Application)| RPC, NetBIOS, Sockets                  | Data            | Port / Session ID    |
+| 4. Transport      | Transport       | TCP, UDP                               | Segment         | Port Numbers (16-bit)|
+| 3. Network        | Internet        | IPv4, IPv6, ICMP, ARP, OSPF, BGP       | Datagram/Packet | IP Address (32/128b) |
+| 2. Data Link      | Network Access  | Ethernet (802.3), WiFi (802.11), PPP   | Frame           | MAC Address (48-bit) |
+| 1. Physical       | Network Access  | 1000BASE-T, V.90, SONET, Radio         | Bits            | Electrical / Optical |
+
+================================================================================
+SLIDE 89: Encapsulation: The Matryoshka Doll Analogy
+================================================================================
+
+COMPUTER NETWORKS: Stacking Dolls Analogy
+
+Concept:
+• Encapsulation is directly analogous to Russian Matryoshka (nesting) dolls:
+  - Innermost doll: The raw user MESSAGE (M) from Application Layer.
+  - Second doll: The Transport SEGMENT [ Ht | M ] wrapping the message.
+  - Third doll: The Network DATAGRAM [ Hn | Ht | M ] wrapping the segment.
+  - Outermost doll: The Link FRAME [ Hl | Hn | Ht | M ] wrapping the datagram.
+• Each layer treats everything received from the layer above as pure opaque data (payload), simply prepending its own protocol header.
+
+================================================================================
+SLIDE 90: Encapsulation & Decapsulation (Source to Destination)
+================================================================================
+
+COMPUTER NETWORKS: End-to-End Encapsulation Flow
+
+Source Host (Encapsulation):
+  Application: [ Message M ]
+       | (add Ht)
+  Transport:   [ Ht | M ]  (Segment)
+       | (add Hn)
+  Network:     [ Hn | Ht | M ]  (Datagram)
+       | (add Hl)
+  Link:        [ Hl | Hn | Ht | M ]  (Frame)
+       |
+  Physical:    1 0 1 1 0 1 0 0 1 1 0 1 ... (Bits onto Wire)
+
+Destination Host (Decapsulation):
+  Physical:    Receives bits, reconstructs frame.
+       | (strip Hl)
+  Link:        Validates MAC, strips Hl, passes datagram up.
+       | (strip Hn)
+  Network:     Validates IP, strips Hn, passes segment up.
+       | (strip Ht)
+  Transport:   Reassembles, validates port, strips Ht, delivers M.
+       |
+  Application: Receives original [ Message M ].
+
+================================================================================
+SLIDE 91: Encapsulation: End-to-End Multi-Hop View
+================================================================================
+
+COMPUTER NETWORKS: Intermediate Node Layer Traversal
+
+Layer Stacks across Path:
+
+[Source Host]               [Link Switch]              [Router]                  [Destination Host]
++-------------+                                     +-------------+              +-------------+
+| Application |                                     |             |              | Application |
+| Transport   |                                     |             |              | Transport   |
+| Network     |                                     | Network     |              | Network     |
+| Link        | ----------> +-------------+ ------> | Link        | -----------> | Link        |
+| Physical    |             | Link        |         | Physical    |              | Physical    |
++-------------+             | Physical    |         +-------------+              +-------------+
+                            +-------------+
+
+What Each Device Inspects:
+• End Hosts: Process all 5 layers (Application down to Physical).
+• Link-Layer Switch: Only processes Layers 1 and 2 (Physical & Data Link). Does NOT look inside the IP datagram or modify IP/TCP headers.
+• Router: Processes Layers 1, 2, and 3 (Physical, Data Link, Network). Strips incoming link header Hl, examines IP header Hn to make forwarding decision, and adds a NEW link header Hl' for the outbound link.
+
+================================================================================
+SLIDE 92: Detailed Encapsulation & Decapsulation Architecture
+================================================================================
+
+COMPUTER NETWORKS: Packet Structure at Each Layer
+
+Protocol Header Breakdown:
+• Ht (Transport Header): Source Port, Destination Port, Seq #, Ack #, Checksum.
+• Hn (Network Header): Source IP, Destination IP, TTL, Protocol (TCP/UDP), Checksum.
+• Hl (Link Header): Source MAC, Destination MAC, EtherType.
+
+Diagram:
+  Source Host:
+    App:                       [             Message M             ]
+    Transport:                 [ Ht ][       Message M             ]
+    Network:             [ Hn ][ Ht ][       Message M             ]
+    Data Link:     [ Hl ][ Hn ][ Ht ][       Message M             ]
+                         |
+                         V
+                  (Bits transmitted)
+                         |
+  Router:
+    Inspects:            [ Hn ] (reads destination IP)
+    Re-encapsulates:     [Hl' ][ Hn ][ Ht ][ Message M             ]
+                         |
+                         V
+  Destination Host:
+    Data Link strips Hl' ----> [ Hn ][ Ht ][ Message M ]
+    Network strips Hn -------> [ Ht ][ Message M ]
+    Transport strips Ht -----> [ Message M ]
+    Application receives Message M!
+
+================================================================================
+SLIDE 93: Introduction to Network Devices (Overview)
+================================================================================
+
+COMPUTER NETWORKS
+Introduction to Network Devices
+
+Connecting, amplifying, routing, and securing network traffic across physical and logical domains.
+Key Devices Covered:
+• Layer 1 (Physical): Repeater, Hub, Modem
+• Layer 2 (Data Link): Bridge, Switch, Network Interface Card (NIC)
+• Layer 3 (Network): Router
+• Layer 4-7 / Multi-layer: Gateway, Firewall, L3 Switch, Wireless LAN Controller (WLC)
+
+================================================================================
+SLIDE 94: Network Devices: Repeater
+================================================================================
+
+COMPUTER NETWORKS: Repeater
+
+Definition:
+• An electronic device that operates at the PHYSICAL LAYER (Layer 1) of the OSI model.
+• Purpose: Amplifies or regenerates incoming electrical, optical, or wireless signals before they become too weak (attenuated) or corrupted by noise.
+• Extends the physical length of a network cable beyond standard attenuation limits (e.g., beyond 100 meters for copper Ethernet).
+
+Key Features:
+1. Signal Regeneration: Unlike a simple amplifier that amplifies both signal and noise, a repeater cleans the signal, regenerates fresh square-wave pulses, and retransmits them at original strength.
+2. Two-Port Device: Has one input port and one output port.
+3. No Intelligence: Does not examine MAC addresses, IP addresses, or packet contents; operates purely on raw electrical bits.
+4. Single Collision & Broadcast Domain: Does not segment or filter traffic.
+
+================================================================================
+SLIDE 95: Network Devices: Hub
+================================================================================
+
+COMPUTER NETWORKS: Hub
+
+Definition:
+• A multiport device that connects multiple computers together in a local area network (Star topology physically, Bus logically).
+• Operates strictly at the PHYSICAL LAYER (Layer 1).
+• Essentially a "multiport repeater."
+
+Key Limitations of a Hub:
+1. Broadcasts All Traffic: When a packet arrives at one port, the hub copies and broadcasts it out to ALL other connected ports, regardless of intended destination.
+2. Single Collision Domain: All connected devices share the exact same physical medium and compete for bandwidth. If two devices transmit at the same instant, a collision occurs.
+3. Half-Duplex Only: Devices cannot send and receive simultaneously.
+4. Cannot Store MAC Addresses: Hubs possess zero intelligence; they cannot maintain MAC address tables.
+5. No Data Filtering: Cannot filter, inspect, or direct traffic.
+
+================================================================================
+SLIDE 96: Network Devices: Modem
+================================================================================
+
+COMPUTER NETWORKS: Modem (Modulator - Demodulator)
+
+Definition:
+• A hardware device that enables a computer to transmit data over telephone lines, coaxial cables, or optical systems.
+• Operates at the PHYSICAL LAYER (Layer 1).
+• Name derivation: MOdulator - DEModulator.
+
+Conversion Functions:
+1. Modulation (Sender Side):
+   • Converts digital signals (binary 0s and 1s) from a computer into analog signals (audio/radio waves) suitable for transmission over telephone or cable lines.
+2. Transmission:
+   • The modulated analog signal travels over the physical communication medium.
+3. Demodulation (Receiver Side):
+   • The receiving modem captures the analog waveform and converts it back into digital binary data.
+4. Decoding:
+   • The recovered digital data is delivered to the receiving computer for processing.
+
+================================================================================
+SLIDE 97: Network Devices: Bridge
+================================================================================
+
+COMPUTER NETWORKS: Bridge
+
+Definition:
+• A 2-port (or small port-count) device that joins two or more network segments and selectively routes data between them.
+• Operates at the DATA LINK LAYER (Layer 2).
+• Uses physical MAC addresses to make forwarding decisions.
+
+Four Core Functions of a Bridge:
+1. Segmentation:
+   • Divides a single large, congested collision domain into two smaller, isolated collision domains.
+2. Filtering:
+   • Reads the destination MAC address. If both sender and receiver are on Segment A, the bridge filters (drops) the frame, preventing unnecessary traffic on Segment B.
+3. Learning:
+   • Dynamically inspects source MAC addresses of incoming frames to build and update its MAC-to-port mapping table.
+4. Forwarding:
+   • If the destination MAC address resides on the other segment, the bridge forwards the frame across.
+
+================================================================================
+SLIDE 98: Network Devices: Switch
+================================================================================
+
+COMPUTER NETWORKS: Switch
+
+Definition:
+• An intelligent network device that functions as a high-speed, MULTIPORT BRIDGE.
+• Operates at the DATA LINK LAYER (Layer 2).
+• Inspects hardware MAC addresses in incoming frames and forwards them ONLY to the specific port connected to the destination device.
+
+Features of a Modern Switch:
+1. Micro-Segmentation: Every individual switch port constitutes its OWN isolated COLLISION DOMAIN. Collisions are completely eliminated.
+2. Full-Duplex Operation: Each connected device can transmit and receive data simultaneously at full port speed (e.g., 1 Gbps up + 1 Gbps down).
+3. Dedicated Bandwidth: Unlike a hub, bandwidth is not shared; each port enjoys dedicated line-rate throughput.
+4. MAC Address Table (CAM Table): Automatically learns MAC addresses by inspecting incoming source MACs; uses hardware ASICs for wire-speed lookup.
+5. Error Checking: Performs CRC frame check before forwarding (Store-and-Forward or Cut-Through switching).
+
+================================================================================
+SLIDE 99: Network Devices: Network Interface Card (NIC)
+================================================================================
+
+COMPUTER NETWORKS: Network Interface Card (NIC)
+
+Definition:
+• An internal hardware component (expansion card or integrated motherboard chip) that physically connects a computing device to a network.
+• Operates at both the PHYSICAL LAYER and the DATA LINK LAYER (Layer 1 & 2).
+• Contains a permanently hardcoded, globally unique 48-bit MAC address (e.g., `00:1A:2B:3C:4D:5E`).
+
+Core Functions of a NIC:
+1. Physical Connectivity: Provides the physical port (RJ-45 Ethernet jack or wireless antenna).
+2. Data Conversion: Converts parallel data from the computer bus into serial bitstreams for transmission, and vice versa.
+3. Framing & Addressing: Generates link-layer frames, attaches MAC headers, and parses incoming frames.
+4. Error Handling: Computes and validates the Cyclic Redundancy Check (CRC/FCS) to detect corrupted frames.
+5. Filtering: Inspects destination MAC of incoming frames; discards frames meant for other machines unless operating in promiscuous mode (used by packet sniffers).
+
+================================================================================
+SLIDE 100: Network Devices: Router (Part 1: Forwarding & Routing)
+================================================================================
+
+COMPUTER NETWORKS: Router – Core Responsibilities
+
+Definition:
+• An intelligent network-layer device that connects multiple logically separate networks (e.g., connecting a LAN to a WAN or connecting disparate IP subnets).
+• Operates at the NETWORK LAYER (Layer 3).
+• Forwards packets based on logical IP ADDRESSES.
+
+Primary Functions of a Router:
+1. Routing (Control Plane):
+   • Runs routing protocols (OSPF, BGP, RIP) to communicate with neighbor routers.
+   • Dynamically calculates the most optimal path across the network topology to build the ROUTING TABLE.
+2. Forwarding (Data Plane):
+   • Receives incoming IP datagrams, inspects the destination IP address, searches the forwarding table for the longest prefix match, and switches the datagram to the appropriate outbound interface.
+3. Broadcast Domain Separation:
+   • Routers do NOT forward broadcast frames by default. Each router interface creates a completely separate BROADCAST DOMAIN, preventing broadcast storms from overwhelming networks.
+
+================================================================================
+SLIDE 101: Network Devices: Router (Part 2: Network Address Translation)
+================================================================================
+
+COMPUTER NETWORKS: Router – NAT Functionality
+
+Network Address Translation (NAT):
+• Role: Translates private, non-routable IP addresses within a local network (e.g., `192.168.1.0/24`, `10.0.0.0/8`) into a single globally routable public IP address assigned by the ISP.
+• Motivation:
+  - Conserves scarce IPv4 public address space.
+  - Enhances home/corporate security: Internal private host IP addresses are hidden from the outside public Internet.
+• NAT Table Operation:
+  - Router maps (Internal IP + Internal Port) <---> (External Public IP + External NAT Port).
+  - Outgoing packets have source IP replaced with router's public IP.
+  - Incoming response packets have destination IP/port mapped back to internal host.
+
+================================================================================
+SLIDE 102: Network Devices: Gateway
+================================================================================
+
+COMPUTER NETWORKS: Gateway
+
+Definition:
+• A network connectivity device or software system that connects two DIFFERENT, INCOMPATIBLE network architectures or protocols.
+• Acts as a "protocol converter" / translator that allows systems using different communication protocols to exchange data.
+• Operates at ANY layer of the OSI model (often Application Layer, Layer 7).
+
+Types of Gateways:
+1. Unidirectional Gateway:
+   • Data flows in one direction only.
+   • Changes and updates are replicated from source network to destination network, but no return traffic is permitted (used in ultra-secure military / financial environments).
+2. Bidirectional Gateway:
+   • Data flows in both directions with two-way protocol translation.
+   • Used for full synchronization and inter-application communication.
+
+Examples:
+• Email Gateway (translates between X.400 and SMTP).
+• VoIP Gateway (translates between analog voice telephony PSTN and IP SIP packets).
+• Payment Gateway (translates e-commerce web requests into secure banking financial networks).
+
+================================================================================
+SLIDE 103: Network Devices: Firewall
+================================================================================
+
+COMPUTER NETWORKS: Firewall
+
+Definition:
+• A dedicated network security device or software program that monitors and controls incoming and outgoing network traffic.
+• Decides whether to ALLOW or BLOCK specific traffic based on a defined set of security rules (Access Control Lists - ACLs).
+• Establishes a protective barrier between a trusted internal network and untrusted external networks (e.g., the Internet).
+
+Operational Layers:
+• Packet-Filtering Firewall (Layer 3 & 4):
+  - Inspects individual packets based on Source IP, Destination IP, Protocol (TCP/UDP/ICMP), Source Port, and Destination Port (e.g., blocking port 23 Telnet).
+• Stateful Inspection Firewall (Layer 4):
+  - Tracks the state of active TCP connections (handshake, sequence numbers) to ensure incoming packets belong to established, authorized sessions.
+• Application-Layer Gateway / Proxy Firewall (Layer 7):
+  - Inspects the actual payload content of application protocols (e.g., scanning HTTP requests for SQL injection or malware).
+
+================================================================================
+SLIDE 104: Beyond the Basics: Wireless AP, WLC, and Layer-3 Switch
+================================================================================
+
+COMPUTER NETWORKS: Modern Enterprise Network Devices
+
+1. Wireless Access Point (AP):
+   • Layer 2 (Data Link) device that bridges wireless client frames (802.11) onto the wired Ethernet network (802.3).
+   • Functionally acts as a transparent wireless bridge.
+
+2. Wireless LAN Controller (WLC):
+   • Management-layer hardware / software appliance that centrally configures, monitors, and manages hundreds of lightweight APs across a campus.
+   • Handles seamless client roaming between APs, dynamic RF channel allocation, and centralized security.
+
+3. Layer-3 Switch (L3 Switch):
+   • Combines the high port density and hardware wire-speed ASIC forwarding of a Layer-2 Switch with the IP routing capabilities of a Layer-3 Router into a single chassis.
+   • Role: Switches packets within a VLAN at Layer 2; routes packets between different VLANs (Inter-VLAN routing) at Layer 3 with gigabit/terabit line rates.
+
+Device Role Summary:
++-------------------------------+---------------------+--------------------------------------------------------+
+| Device Name                   | Operating OSI Layer | Primary Enterprise Role                                |
++-------------------------------+---------------------+--------------------------------------------------------+
+| Access Point (AP)             | Layer 2 (Data Link) | Bridges wireless radio clients to wired Ethernet LAN   |
+| Wireless Controller (WLC)     | Management Plane    | Centrally manages AP channels, power, and roaming      |
+| Layer-3 Switch (L3 Switch)    | Layer 2 + Layer 3   | High-speed switching inside VLANs + inter-VLAN routing |
++-------------------------------+---------------------+--------------------------------------------------------+
+
+================================================================================
+SLIDE 105: Comprehensive Comparison: Hub vs. Switch
+================================================================================
+
+COMPUTER NETWORKS: Hub vs. Switch Detailed Comparison Table
+
+| Feature / Metric       | Network Hub                            | Network Switch                         |
+| :--------------------- | :------------------------------------- | :------------------------------------- |
+| Operating OSI Layer    | Layer 1 (Physical Layer)               | Layer 2 (Data Link Layer)              |
+| Forwarding Logic       | Broadcasts incoming data to ALL ports  | Unicasts to destination MAC port       |
+| Collision Domains      | ONE single shared collision domain     | Multiple collision domains (1 per port)|
+| Broadcast Domains      | Single broadcast domain                | Single broadcast domain (unless VLANs) |
+| Bandwidth Allocation   | SHARED among all connected devices     | DEDICATED line rate on every port      |
+| Duplex Mode            | Half-Duplex only (collisions possible) | Full-Duplex (simultaneous send/receive)|
+| Device Intelligence    | None (Dumb repeater)                   | Intelligent (maintains MAC CAM table)  |
+| Data Filtering         | No filtering; all data is repeated     | Filters frames based on destination MAC|
+| Error Checking         | None                                   | Performs CRC frame error checking      |
+| Network Performance    | Low (degrades as users increase)       | High (eliminates collisions entirely)  |
+
+================================================================================
+SLIDE 106: Comprehensive Comparison: Switch vs. Router
+================================================================================
+
+COMPUTER NETWORKS: Switch vs. Router Detailed Comparison Table
+
+| Feature / Metric       | Layer-2 Switch                         | Layer-3 Router                         |
+| :--------------------- | :------------------------------------- | :------------------------------------- |
+| Operating OSI Layer    | Layer 2 (Data Link Layer)              | Layer 3 (Network Layer)                |
+| Addressing Used        | Physical MAC Addresses (48-bit)        | Logical IP Addresses (32-bit / 128-bit)|
+| Scope of Operation     | Connects devices WITHIN the same subnet| Connects MULTIPLE DIFFERENT networks   |
+| Collision Domains      | Creates separate collision domains     | Creates separate collision domains     |
+| Broadcast Domains      | Resides within ONE broadcast domain    | BREAKS UP and separates broadcast domains|
+| Routing Table          | Does not have a routing table          | Maintains dynamic IP routing table     |
+| Forwarding Table       | MAC Table (CAM Table)                  | Forwarding Table (FIB / Routing Table) |
+| Typical Deployment     | Local Area Networks (LANs)             | WANs, Internet Edge, Campus Core       |
+| Hardware Architecture  | Custom ASICs for wire-speed switching  | High-performance network processors   |
+| NAT Support            | Not supported                          | Supported (Translates private/public IP)|

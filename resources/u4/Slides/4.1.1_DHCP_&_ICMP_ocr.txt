@@ -1,0 +1,334 @@
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.6 Introduction to Network Layer Protocols
+» DHCP
+
+* ICMP
+4.7 IPv6 Addressing
+
+4.8 Introduction to Routing Algorithms
+COMPUTER NETWORKS PE
+
+UNIVERSITY
+e ccorie v s
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer Protocols
+« DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+eg PES
+IP addresses: how to get one?
+
+UNIVERSITY
+
+That’s actually two questions:
+1. Q: How does a host get IP address within its network (host part of address)?
+2. Q: How does a network get IP address for itself (network part of address)
+
+How does host get IP address?
+hard-coded by sysadmin in config file (e.g., /etc/rc.config in UNIX)
+DHCP: Dynamic Host Configuration Protocol: dynamically get address
+from as server
+e “plug-and-play”
+COMPUTER NETWORKS
+DHCP: Dynamic Host Configuration Protocol
+
+goal: host dynamically obtains IP address from network server
+when it “joins” network
+
+can renew its lease on address in use
+
+allows reuse of addresses (only hold address while
+connected/on)
+
+support for mobile users who join/leave network
+
+DHCP overview:
+host broadcasts DHCP discover msg [optional]
+DHCP server responds with DHCP offer msg [optional]
+host requests IP address: DHCP request msg
+DHCP server sends address: DHCP ack msg
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+DHCP client-server scenario
+
+DHCP server
+
+223.1.21
+
+223.1.2.5
+223.1.1.2
+
+€
+
+223.1.3.27 =
+2231.2.2
+
+s
+223.1.3.2
+
+223.1.31
+
+51
+
+Typically, DHCP server will be
+co-located in router, serving
+all subnets to which router is
+attached
+
+@
+
+arriving DHCP client needs
+address in this network
+COMPUTER NETWORKS
+
+DHCP client-server scenario (DORA)
+
+@ UNIVERSITY
+
+DHCP server: 223.1.2.5
+
+DHCP discover
+
+Arriving client
+
+Broadcast: is there a
+DHCP server out there?
+
+==y
+
+/’:;P offer
+
+\
+
+Broadcast: I'm a DHCP
+server! Here's an IP
+address you can use
+
+The two steps above can
+
+Broadcast: OK. You've
+got that IP address!
+
+-
+DHCP request be skipped “if a client
+remembers and wishes to
+Broadcast: OK. Twould | | "3 ZFGV;OUS'K ddrece”
+like t this IP ress! allocated network address
+e to use this IP address [RFC 2131]
+—
+DHCP ACK
+
+—~—
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+DHCP: more than IP addresses
+
+DHCP can return more than just allocated IP address on
+subnet:
+address of first-hop router for client
+name and IP address of DNS sever
+
+network mask (indicating network versus host portion of
+address)
+COMPUTER NETWORKS
+DHCP: example
+
+UNIVERSITY
+
+ieE | DHCP
+[ IDHCP] UDP
+[IHCP| IP
+[ [ TToHcH] Eth
+Phy /
+DHCP
+[ IoHcP UDP
+[ [CIoHCH] 1P
+EEel| Eth rou HCP
+Phy server built into
+router
+
+= Connecting laptop will use DHCP
+to get IP address, address of first-
+hop router, address of DNS server.
+
+= DHCP REQUEST message encapsulated
+
+in UDP, encapsulated in IP, encapsulated
+in Ethernet
+
+= Ethernet frame broadcast (dest:
+
+FFFFFFFFFFFF) on LAN, received at router
+running DHCP server
+
+Ethernet de-mux’ed to IP de-mux’ed,
+UDP de-mux’ed to DHCP
+COMPUTER NETWORKS —
+DHCP: example
+
+= DCP server formulates DHCP ACK
+containing client’ s IP address, IP
+address of first-hop router for client,
+name & IP address of DNS server
+
+= encapsulated DHCP server reply
+forwarded to client, de-muxing up to
+DHCP at client
+
+| [ ETonce |
+[ T ICToxce]
+
+Phy server built into = client now knows its IP address, name
+router and IP address of DNS server, IP
+address of its first-hop router
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+ICMP: Internet Control Message Protocol
+
+Used by hosts and routers to
+communicate network-layer
+information.
+
+Typical use of ICMP is for error
+reporting: unreachable host, networks,
+port, protocol
+
+Eg: “Destination network unreachable”
+Echo request/reply (used by ping)
+
+ICMP messages — carried as IP
+payloads. (network-layer “above” IP)
+
+ICMP is often considered part of IP, but
+architecturally it lies just above IP.
+
+ICMP messages have a type and a code
+field.
+
+dest. network unreachable
+dest host unreachable
+dest protocol unreachable
+dest port unreachable
+
+dest network unknown
+dest host unknown
+
+source quench (congestion
+
+echo request (ping)
+route advertisement
+
+Type Code description
+0 0 echo reply (ping)
+3 0
+3 1
+3 2
+3 3
+3 6
+3 7
+4 0
+control - not used)
+8 0
+9 0
+10 O router discovery
+1 0 TTL expired
+12 0 bad IP header
+
+A
+&) FPES
+COMPUTER NETWORKS
+ICMP: Internet Control Message Protocol
+
+Perform — Network diagnostics
+
+Utilities traceroute and ping — use ICMP.
+
+Other examples of ICMP messages:
+
+Source quench message (congestion)
+Parameter problem (bad IP header)
+Time exceeded message (TTL)
+Destination unreachable
+
+@ UNIVERSITY
+
+Redirection message
+
+ICMP Dest Unreach
+
+MP TTL Ex
+
+v ICMP TTL Exceed ‘ e
+TTL 1
+
+SRC
+
+Router 1
+
+TTL=2
+
+Router 2
+
+Router 3
+
+ICMP TTL Exceed
+
+ICMP TTL Exceed
+ceed |
+
+Router 4
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY

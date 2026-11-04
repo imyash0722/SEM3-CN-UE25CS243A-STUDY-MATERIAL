@@ -1,0 +1,369 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 6: Connectionless Transport: UDP & The Internet Checksum (5-Step Algorithm & Problems)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 46 to 69)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 24
+================================================================================
+
+================================================================================
+SLIDE 46: Roadmap: Connectionless Transport (UDP)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.3 Connectionless Transport: UDP
+• Mechanics, header structure, and error detection with the Internet Checksum.
+
+================================================================================
+SLIDE 47: UDP: User Datagram Protocol Overview
+================================================================================
+
+COMPUTER NETWORKS: UDP: User Datagram Protocol
+
+Key Characteristics:
+• "No frills," "bare bones" Internet transport protocol.
+• Best-effort service: UDP segments may be lost, duplicated, or delivered out-of-order.
+• Connectionless: No handshake between sender and receiver; each segment is handled independently.
+
+Why Use UDP?
+1. No Connection Establishment Delay: Does not introduce the 1 RTT setup penalty of TCP.
+2. Simple State: No connection state (no sequence numbers, buffers, or timer state) at sender or receiver.
+3. Small Header Overhead: Only 8 bytes (vs. 20 bytes minimum for TCP).
+4. No Congestion Control: UDP can blast data at any rate desired, without throttling during network congestion.
+
+================================================================================
+SLIDE 48: UDP Use Cases & Application-Layer Reliability
+================================================================================
+
+COMPUTER NETWORKS: UDP: User Datagram Protocol [RFC 768]
+
+Typical Applications:
+• Streaming multimedia applications (loss-tolerant, rate-sensitive)
+• DNS (Domain Name System)
+• SNMP (Simple Network Management Protocol)
+• HTTP/3 (QUIC runs over UDP)
+
+Reliability over UDP:
+• If an application running over UDP requires reliability (such as HTTP/3), reliability and congestion control mechanisms must be implemented explicitly at the APPLICATION LAYER.
+
+================================================================================
+SLIDE 49: Popular Internet Applications Using TCP vs. UDP
+================================================================================
+
+COMPUTER NETWORKS: Popular Internet Applications using TCP/UDP
+
++---------------------------+-------------------------------+-------------------------------+
+| Application               | Application-Layer Protocol    | Underlying Transport Protocol |
++---------------------------+-------------------------------+-------------------------------+
+| Electronic Mail           | SMTP                          | TCP                           |
+| Remote Terminal Access    | Telnet / SSH                  | TCP                           |
+| Web                       | HTTP 1.1 / HTTP/2             | TCP                           |
+| File Transfer             | FTP                           | TCP                           |
+| Remote File Server        | NFS                           | Typically UDP                 |
+| Streaming Multimedia      | Proprietary, DASH, HLS        | UDP or TCP                    |
+| Internet Telephony        | SIP, RTP, Skype               | Typically UDP                 |
+| Network Management        | SNMP                          | UDP                           |
+| Name Translation          | DNS                           | UDP (mostly)                  |
++---------------------------+-------------------------------+-------------------------------+
+
+================================================================================
+SLIDE 50: RFC 768 - User Datagram Protocol Specification
+================================================================================
+
+COMPUTER NETWORKS: UDP: User Datagram Protocol [RFC 768]
+
+Historical Standard:
+• RFC 768, authored by J. Postel, published on August 28, 1980.
+• Preamble: Defines a datagram mode of packet-switched computer communication in the environment of an interconnected set of computer networks.
+
+================================================================================
+SLIDE 51: UDP Transport Layer Actions: Client & Server Setup
+================================================================================
+
+COMPUTER NETWORKS: UDP: Transport Layer Actions
+
+Scenario:
+• SNMP Client communicating with SNMP Server over UDP.
+
+================================================================================
+SLIDE 52: UDP Transport Layer Actions: Protocol Stacks
+================================================================================
+
+COMPUTER NETWORKS: UDP: Transport Layer Actions
+
+Layer Alignment:
+• Application -> Transport (UDP) -> Network (IP) -> Link -> Physical.
+
+================================================================================
+SLIDE 53: UDP Transport Layer Actions at Sender
+================================================================================
+
+COMPUTER NETWORKS: UDP: Transport Layer Actions
+
+Sender Actions:
+1. Receives application message from process.
+2. Formats UDP header fields: Source Port, Destination Port, Length, Checksum.
+3. Constructs UDP segment.
+4. Passes segment to network layer (IP).
+
+================================================================================
+SLIDE 54: UDP Transport Layer Actions at Receiver
+================================================================================
+
+COMPUTER NETWORKS: UDP: Transport Layer Actions
+
+Receiver Actions:
+1. Receives segment from IP layer.
+2. Checks UDP checksum header value to verify integrity.
+3. Extracts application-layer message.
+4. Demultiplexes message up to application process via socket.
+
+================================================================================
+SLIDE 55: UDP Segment Header Structure
+================================================================================
+
+COMPUTER NETWORKS: UDP: segment header
+
+Header Layout (Strictly 8 Bytes = 64 Bits):
+ 0                   15 16                  31
++----------------------+----------------------+
+|  Source Port Number  | Destination Port Num |  <-- 32 bits (4 bytes)
++----------------------+----------------------+
+|        Length        |       Checksum       |  <-- 32 bits (4 bytes)
++----------------------+----------------------+
+|                 Application Data            |
+|                     (Payload)               |
++---------------------------------------------+
+
+Field Definitions:
+• Source Port Number (16 bits): Port of sending process.
+• Destination Port Number (16 bits): Port of receiving process.
+• Length (16 bits): Length of the entire UDP segment in bytes (Header + Payload). Minimum value = 8.
+• Checksum (16 bits): 1's complement sum of segment contents used for error detection.
+
+================================================================================
+SLIDE 56: UDP Checksum: Concept & Error Detection Goal
+================================================================================
+
+COMPUTER NETWORKS: UDP Checksum
+
+Goal:
+• Detect bit errors (e.g., bits flipped due to noise or hardware glitches) in transmitted segments.
+
+Intuitive Number Analogy:
+Transmitted:
+  Word 1 = 5, Word 2 = 6, Checksum = 11.
+Received:
+  Word 1 = 4 (flipped bit!), Word 2 = 6, Checksum = 11.
+Receiver compares: 4 + 6 = 10 != 11. Error detected!
+
+================================================================================
+SLIDE 57: UDP Checksum Computation Principles
+================================================================================
+
+COMPUTER NETWORKS: UDP Checksum
+
+Sender Side:
+• Treats segment contents (including UDP header, data, and pseudo-header containing IP addresses) as a sequence of 16-bit integers.
+• Checksum: Addition (one's complement sum) of all 16-bit words.
+• Inverts all bits (one's complement) and stores the result in the UDP Checksum field.
+
+Receiver Side:
+• Adds all 16-bit words received, INCLUDING the checksum field.
+• If all bits are 1 (`1111 1111 1111 1111`), no error is detected.
+• If any bit is 0, an error has occurred!
+
+================================================================================
+SLIDE 58: Computing UDP Checksum – 5-Step Algorithm
+================================================================================
+
+COMPUTER NETWORKS: Computing UDP Checksum – 5 Steps
+
+Step 1: Split the segment into 16-bit words.
+Step 2: Add the 16-bit words together using standard binary addition.
+Step 3: Handle the wraparound carry: Any carry-out from the most significant bit (17th bit) is added back into the least significant bit.
+Step 4: The resulting 16-bit value is the SUM.
+Step 5: Flip every bit (one's complement) — this is the CHECKSUM stored in the header.
+
+================================================================================
+SLIDE 59: Internet Checksum: Basic Calculation Example
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example
+
+Example: Adding two 16-bit integers:
+    1 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0
+  + 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+  ---------------------------------
+  1 1 0 1 1 1 0 1 1 1 0 1 1 1 0 1 1   <-- 17-bit intermediate result (Carry out = 1)
+  
+  Add wraparound carry:
+    1 0 1 1 1 0 1 1 1 0 1 1 1 0 1 1
+  +                               1
+  ---------------------------------
+  Sum:      1 0 1 1 1 0 1 1 1 0 1 1 1 1 0 0
+  Checksum: 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 1  (Bitwise NOT of Sum)
+
+================================================================================
+SLIDE 60: Internet Checksum: Vulnerability to Offsetting Bit Errors
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: Weak protection!
+
+Weak Protection Limitation:
+• Suppose two bits in DIFFERENT words flip in OPPOSITE directions:
+  - In Word 1: Bit changes from 1 to 0 (-1)
+  - In Word 2: Bit changes from 0 to 1 (+1)
+• The sum remains completely identical!
+• The checksum calculation yields the exact same checksum, and the bit corruption goes undetected!
+
+================================================================================
+SLIDE 61: What the Checksum Catches vs. What It Misses
+================================================================================
+
+COMPUTER NETWORKS: What the Checksum Catches – What it Misses
+
+Always Caught:
+• Any single bit flip anywhere in the segment.
+• Any pattern of 1 to 15 bit flips confined within a single 16-bit word.
+• Any burst error shorter than 16 bits.
+• Most multi-word errors (unless they happen to cancel out).
+
+Can Slip Through:
+• Two bits flipping in opposite directions in different words (offsetting errors).
+• Any set of multi-word errors whose algebraic sum delta is zero.
+• Degenerate case: Flipping all 16 bits of a word that was all zeros or all ones.
+
+Summary:
+The checksum is STRONG within a single word and WEAK across multiple words.
+
+================================================================================
+SLIDE 62: Internet Checksum Numerical Example 1: Problem Statement
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example
+
+Problem Statement:
+What will be the checksum value if the following 3 words are sent as data in a UDP segment?
+Word 1: `0010 0101 1010 1100`
+Word 2: `1010 1010 1010 1010`
+Word 3: `0010 1011 1010 1000`
+
+================================================================================
+SLIDE 63: Internet Checksum Numerical Example 1: Step-by-Step Solution
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example (Solution 1)
+
+Step-by-Step Calculation:
+1. Add Word 1 and Word 2:
+     0010 0101 1010 1100
+   + 1010 1010 1010 1010
+   ---------------------
+     1101 0000 0101 0110
+
+2. Add Word 3:
+     1101 0000 0101 0110
+   + 0010 1011 1010 1000
+   ---------------------
+   1 1111 1011 1111 1101   <-- Sum = 1111 1011 1111 1110 (with carry wrapped)
+
+   Wraparound Sum = `1111 1011 1111 1110`
+3. Compute One's Complement (Flip Bits):
+   Checksum = `0000 0100 0000 0001`
+
+Answer: `0000 0100 0000 0001`
+
+================================================================================
+SLIDE 64: Internet Checksum Numerical Example 2: Problem Statement
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example
+
+Problem Statement:
+What will be the checksum value if the following 3 words are sent as data in a UDP segment?
+Word 1: `0000 1011 1111 0011`
+Word 2: `1010 1010 1010 1010`
+Word 3: `0100 0011 1100 1010`
+
+================================================================================
+SLIDE 65: Internet Checksum Numerical Example 2: Step-by-Step Solution
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example (Solution 2)
+
+Step-by-Step Calculation:
+1. Add Word 1 and Word 2:
+     0000 1011 1111 0011
+   + 1010 1010 1010 1010
+   ---------------------
+     1011 0110 1001 1101
+
+2. Add Word 3:
+     1011 0110 1001 1101
+   + 0100 0011 1100 1010
+   ---------------------
+     1111 1010 0110 0111   <-- Wraparound Sum
+
+3. Compute One's Complement:
+   Checksum = `0000 0101 1001 1000`
+
+Answer: `0000 0101 1001 1000`
+
+================================================================================
+SLIDE 66: Internet Checksum Numerical Example 3: Verification Problem
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example
+
+Problem Statement:
+If the data words received are:
+Word 1: `1011 0101 1001 1000`
+Word 2: `0100 0100 0100 0100`
+Word 3: `0011 0011 1011 0011`
+And the checksum received in the header is:
+Checksum: `1101 0010 0110 1111`
+
+Question: Is the delivered data correct or corrupted?
+
+================================================================================
+SLIDE 67: Internet Checksum Numerical Example 3: Verification Solution
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example (Verification Solution)
+
+Receiver Verification:
+1. Add all 3 data words and the received checksum:
+     1011 0101 1001 1000
+   + 0100 0100 0100 0100
+   + 0011 0011 1011 0011
+   + 1101 0010 0110 1111
+2. Performing addition with wraparound carry gives:
+   Total Sum = `1111 1111 1111 1111` (All 1s!)
+
+Conclusion:
+Since the sum of all words and the checksum equals all 1s, NO errors were detected.
+Answer: Yes, the delivered data is correct!
+
+================================================================================
+SLIDE 68: Internet Checksum: Sender vs. Receiver Bit Arithmetic Walkthrough
+================================================================================
+
+COMPUTER NETWORKS: Internet Checksum: example
+
+Visual Addition at Sender & Receiver:
+• Sender adds 16-bit values and folds carry-out into low-order bit.
+• Receiver performs the same addition on received words plus checksum.
+• If any 0 bit appears, receiver discards packet or notifies application of error.
+
+================================================================================
+SLIDE 69: Suggested Readings: UDP
+================================================================================
+
+COMPUTER NETWORKS: Suggested Readings
+
+Resources:
+• UDP Specification – RFC 768: https://tools.ietf.org/html/rfc768
+• Networking – DNS and UDP: https://youtu.be/vuyQ1PW6AwY

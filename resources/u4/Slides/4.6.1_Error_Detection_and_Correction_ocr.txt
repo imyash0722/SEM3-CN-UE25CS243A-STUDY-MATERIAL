@@ -1,0 +1,437 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Error detection, correction
+COMPUTER NETWORKS
+
+Error detection
+
+@ UNIVERSITY
+
+EDC: error detection and correction bits (e.g., redundancy)
+D: data protected by error checking, may include header fields
+
+datagram
+
+l— d data bits —|
+
+4
+
+datagram
+
+otherwise I
+
+all
+
+OK
+
+bits in D’
+
+detected
+error
+
+D
+
+EDC
+
+Error detection not 100%
+reliable!
+protocol may miss some
+errors, but rarely
+larger EDC field yields
+better detection and
+correction
+COMPUTER NETWORKS @ —
+Parity checking
+
+single bit parity: two-dimensional bit parity:
+detect single bit detect and correct single bit
+0111000110101011 | 1 errors g :W—vpamy
+. R 1,1 T 1,j dl,j+1
+— d data bits —| ‘ dy, dy; | dyja
+parity
+bit column diy sy | dijir
+Even parity: set parity bit so there parity [ 4. oo da d
+is an even number of 1’s i L Tiin
+At receiver:
+= compute parity of d received g g
+. tect
+bits . . . noerrors: 101011 ¢ ecaﬁd i )12(‘1; é parity
+* compare with received parity correctable o T 7 ol
+bit — if different than error single-bit - 45 1To
+
+detected
+
+v
+parity
+error
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Parity checking
+
+We send 1011 0110 with an even-parity bit. Two bits flip on the way. What does the receiver
+conclude?
+
+a Error detected, and the frame is dropped b Error detected, and the bad bit is fixed
+
+¢ No error detected: the parity still matches d Error detected, but only if the flips are adjacent
+
+Step 1 Data has 5 ones - parity bit = 1 = 6 ones in total (even).
+
+Step 2 Two flips change the count by -2, 0 or +2 - still even = check passes.
+
+Answer: (c). One parity bit catches any odd number of flips and misses any even number.
+
+COMPUTER NETWORKS @a PES
+Two dimensional bit parity check - Example
+
+Original data
+1100111 1011101 0111001 0101001
+
+Row parities
+
+Column parities
+
+C 1
+
+~—— 11001111 10111011 01110010 01010011 01010101
+Data and parity bits
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Internet checksum (review)
+
+Goal: detect errors (i.e., flipped bits) in transmitted segment
+
+Sender:
+
+Receiver:
+treat contents of UDP segment .
+(including UDP header fields and compute checksum of received segment
+IP addresses) as sequence of 16- check if computed checksum equals
+bit integers checksum field value:
+checl|<sum: additionf(one's * not equal - error detected
+complement sum) of segment * equal - no error detected. But maybe errors
+content
+
+] nonetheless? More later ....
+checksum value put into UDP
+
+checksum field
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Two dimensional bit parity check - Example
+
+0110011001100110
+
+0101010101010101 }Threelébitsworﬂs
+0000111100001111
+
+The sum of first of iwo 16-bit words is:
+
+0110011001100110
+0101010101010101
+
+1011101110111011 = Surm of 1% two 16 bit words.
+
+Adding the third word io the ahove sum gives:
+
+1011101110111011 = Sum of 1% two 16 bit words.
+0000111100001111 - Third 16 bits word
+
+1100101011001010 - Sum ofall three 16 bit wards.
+
+Taking 1’s complement for the final sum:
+
+1100101011001010 - Sum ofall three 16 bit words.
+0011010100110101 = 1I's complement for the final sum.
+
+The 1's camplement value is called as Checksun
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Cyclic Redundancy Check (CRC Codes)
+
+more powerful error-detection coding
+D: data bits (given, think of these as a binary number)
+G: bit pattern (generator), of r+1 bits (given)
+
+r CRC bits
+I+ d data bits ﬁ
+D R ) ——— bit pattern
+N\ _
+<D,R>=D*2" XOR R —— formula for bit pattern
+
+goal: compute r CRC bits, R, such that <D,R> exactly divisible by G (mod 2)
+* receiver knows G, divides <D,R> by G. If non-zero remainder: error detected!
+* can detect all burst errors less than r+1 bits
+* widely used in practice (Ethernet, 802.11 WiFi)
+COMPUTER NETWORKS
+Sender Side — Calculation of CRC
+
+@ UNIVERSITY
+
+A string of n Q’s is appended to the
+data unit to be transmitted.
+
+Here, n is one less than the number
+of bits in CRC generator.
+
+Binary division is performed of the
+resultant string with the CRC
+generator.
+
+After division, the remainder so
+obtained is called as CRC.
+
+It may be noted that CRC also
+consists of n bits.
+
+Sender
+
+< nbitn
+
+Division
+w1 bits
+remainder
+«—— abis——>
+CRC Generator at sender side
+
+COMPUTER NETWORKS @9 —
+Receiver Side — Check
+
+The received code word is divided
+
+with the same CRC generator.
+
+On division, the remainder so LE;J__M
+obtained is checked.
+Case-1: Remainder =0, orain abis
+* No error
+
+* Receiver accepts the data
+
+Case-2: Remainder #0
+
+* Receiver assumes that some error « A
+occurred
+* Receiver rejects the data and asks a0 cor S
+
+the sender for retransmission. £ hocher at Recicoridy
+
+COMPUTER NETWORKS
+CRC Generator
+
+an algebraic polynomial represented as a bit pattern
+
+Rule - The power of each term gives the position of the
+bit and the coefficient gives the value of the bit.
+
+Consider the CRC generatoris x” + x® + x* + x3 + x + 1.
+
+1x7 + 1x8 + 0x5 + 1x4 + 1x3 + 0x2 +1x1 + 1x°
+
+AN
+
+1 1 0 1 1 0 1 1
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ —
+Cyclic Redundancy Check (CRC): Example
+
+Calculation for the case of: G
+D=101110,d =6, —t— 101011
+G=1001,andr=3. 1001)101110000)
+100 1N
+Sender wants to compute R such that: 101 D*2r
+D-2" XOR R=nG 000
+. . 1010
+... or equivalently (XOR R both sides): 1001
+D-2"=nG XOR R
+] 110
+... Which says: 000
+if we divide D -2" by G, we want remainder R 1100
+to satisfy: 1001
+. 1010
+R=remainder[D'2r] algorlth_mfor 1001
+G computing R 011
+l_'_J
+
+* Check out the online interactive exercises for more examples: http:/gaia.cs.umass.edu/kurose_ross/interactive/ R
+COMPUTER NETWORKS
+CRC — Numerical Example
+
+1100001010
+
+10011[ 1
+
+A bit stream 1101011011 is
+transmitted using the standard
+CRC method. The generator
+
+polynomial is x*+x+1.
+
+What is the actual bit string
+transmitted?
+
+10011
+
+Solution
+Generator polynomial G(x) =x*+x + 1 is
+encoded as 10011.
+G(x) consists of 5 bits. So, a string of 4 zeroes is
+appended to the bit stream to be transmitted.
+The resulting bit stream is 11010110111110.
+
+10011
+
+1010110110000
+
+10011
+
+00001
+00000
+
+00010
+00000
+
+00101
+00000
+
+01011
+00000
+
+10110
+10011
+
+01010
+00000
+
+10100
+10011
+
+01110
+00000
+1110
+
+Remainder
+
+@ UNIVERSITY
+
+,
+
+.-
+
+v
+Q
+—
+|
+’\_/p
+COMPUTER NETWORKS
+
+CRC — Numerical Example
+
+@ UNIVERSITY
+
+10001100
+A bit stream 10011101 is transmitted using the 1001 10011101000
+standard CRC method. The generator
+polynomial is x>+1.
+
+1001
+00001
+* What is the actual bit string transmitted? 0000
+* Suppose the third bit from the left is inverted during 00011
+transmission. How will receiver detect this error? 0000 ‘
+Solution 00110
+Generator polynomial G(x) = x3 + 1 is encoded as 1001. 2‘1"1’21 -
+G(x) consists of 4 bits. 4 zeroes is appended now. 001 =
+The resulting bit stream is 10011101100. 01000 [
+1001
+Solution (Part-l) 00010
+Code word to be transmitted is obtained by replacing 0000
+the last 3 zeroes of 10011101000 with the CRC. 00100
+Code word transmitted to the receiver = 10011101100.
+
+0000
+
+—
+
+0100 «<— crC
+COMPUTER NETWORKS @
+CRC — Numerical Example
+
+PES
+
+UNIVERSITY
+
+10101000
+
+Solution (Part-z) 1001 |10111101100
+According to the question, 1001
+
+|
+
+00101
+0000
+
+The bit stream received by the receiver = 01011
+10111101100. 1001
+Receiver performs the binary division witk oono0
+
+0000
+
+the same G(x). —
+
+1001
+Remainder obtained on division is a hon- 00001
+zero value. 0000
+00010
+
+Error occurred
+0000
+
+00100
+0000
+
+—_—
+0100
+
+—t
+
+\
+1 €— Remainder
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

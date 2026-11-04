@@ -1,0 +1,207 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 10: Connection-Oriented Transport: TCP Fundamentals (Segment Structure, Seq/ACK, RTT Estimation)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 102 to 111)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 10
+================================================================================
+
+================================================================================
+SLIDE 102: Roadmap: Connection-Oriented Transport (TCP)
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topics Covered in Section 3.5:
+• TCP Segment Structure
+• Reliable Data Transfer & Timeout Estimation
+• Flow Control
+• Connection Management (3-Way Handshake & Teardown)
+
+================================================================================
+SLIDE 103: TCP Overview
+================================================================================
+
+COMPUTER NETWORKS: TCP: Overview RFCs: 793, 1122, 1323, 2018, 2581
+
+Key Properties:
+• Point-to-Point: Exactly one sender and one receiver per connection.
+• Reliable, In-Order Byte Stream: No message boundaries or packet delineations in the data stream.
+• Full Duplex Data: Bi-directional simultaneous data flow over the same connection.
+• Maximum Segment Size (MSS): Maximum amount of application data that can be placed in a single segment (typically 1460 bytes for Ethernet MTU of 1500 bytes).
+• Connection-Oriented: Handshake initializes sender and receiver state before data transfer.
+• Flow Controlled: Sender will not overflow receiver buffers.
+• Cumulative Acknowledgments: ACK number indicates the next expected byte.
+
+Is TCP GBN or SR?
+TCP is a HYBRID!
+• Like GBN: Uses cumulative ACKs and maintains a single retransmission timer.
+• Like SR: Retransmits only a single segment on timeout, buffers out-of-order segments in practice, and supports SACK (Selective Acknowledgment, RFC 2018).
+
+================================================================================
+SLIDE 104: GBN vs. Selective Repeat vs. Real TCP
+================================================================================
+
+COMPUTER NETWORKS: Go-Back-N vs Selective Repeat vs Real TCP
+
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| Feature               | Go-Back-N             | Selective Repeat      | Real TCP                              |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| ACK Style             | Cumulative            | Individual            | Cumulative (+ SACK option)            |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| Out-of-Order Packets  | Discarded (no buffer) | Buffered              | Buffered in practice                  |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| Retransmission Timers | One timer for oldest  | One timer per packet  | One timer for oldest unACKed segment  |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| Action on Timeout     | Resend entire window  | Resend single packet  | Resend single oldest segment          |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+| Extra Recovery        | None                  | None                  | Fast Retransmit on 3 duplicate ACKs   |
++-----------------------+-----------------------+-----------------------+---------------------------------------+
+
+================================================================================
+SLIDE 105: TCP Segment Structure
+================================================================================
+
+COMPUTER NETWORKS: TCP segment structure
+
+ASCII TCP Header Format (Minimum 20 Bytes):
+ 0                   15 16                  31
++----------------------+----------------------+
+|  Source Port Number  | Destination Port Num |  <-- 32 bits (4 bytes)
++----------------------+----------------------+
+|                Sequence Number              |  <-- 32 bits (4 bytes)
++---------------------------------------------+
+|             Acknowledgment Number           |  <-- 32 bits (4 bytes)
++------+--------+------+----------------------+
+| Data | Reserved|Flags |    Receive Window    |  <-- 32 bits (4 bytes)
+|Offset|        |C E U |                      |
+| (4b) | (4b)   |A P R |                      |
+|      |        |S F   |                      |
++------+--------+------+----------------------+
+|       Checksum       | Urgent Data Pointer  |  <-- 32 bits (4 bytes)
++----------------------+----------------------+
+|          Options (Variable 0 to 40 bytes)   |
++---------------------------------------------+
+|                 Payload Data                |
+|           (Application byte stream)         |
++---------------------------------------------+
+
+Detailed Field Descriptions:
+• Source & Destination Ports (16 bits each): Demultiplexing to sockets.
+• Sequence Number (32 bits): Byte-stream number of the first byte of data in this segment.
+• Acknowledgment Number (32 bits): Cumulative byte sequence number of the NEXT byte expected from the other side.
+• Data Offset / Header Length (4 bits): Number of 32-bit words in the TCP header (minimum 5 words = 20 bytes).
+• Flags (6 + 2 bits):
+  - CWR, ECE: Explicit Congestion Notification (RFC 3168).
+  - URG: Urgent Pointer field is valid.
+  - ACK: Acknowledgment field is valid (always set after handshake).
+  - PSH: Push data immediately to application.
+  - RST: Reset the connection.
+  - SYN: Synchronize sequence numbers during connection establishment.
+  - FIN: Terminate the connection.
+• Receive Window (`rwnd`, 16 bits): Flow control advertisement (number of bytes receiver is willing to accept).
+• Checksum (16 bits): Mandatory Internet checksum over TCP header, data, and IP pseudo-header.
+• Urgent Pointer (16 bits): Offset to urgent data if URG flag is set.
+
+================================================================================
+SLIDE 106: TCP Sequence Numbers and Cumulative ACKs
+================================================================================
+
+COMPUTER NETWORKS: TCP sequence numbers and ACKs
+
+Sequence Numbers:
+• Count individual BYTES of data in the stream, NOT segment numbers!
+• If a segment carries 1,000 bytes starting at byte offset 500, its Sequence Number is 500.
+
+Acknowledgment Numbers:
+• Sequence number of the NEXT byte expected from the remote endpoint.
+• Cumulative: An ACK of 500 implies all bytes from 0 through 499 have been successfully received.
+
+================================================================================
+SLIDE 107: TCP Sequence Numbers & ACKs: Telnet Piggybacking Example
+================================================================================
+
+COMPUTER NETWORKS: TCP sequence numbers and ACKs
+
+Telnet Character Echo Exchange:
+• Host A (Client) initiates connection to Host B (Server).
+• Initial State: Host A sequence number = 42; Host B sequence number = 79.
+
+Exchange Flow:
+1. Host A sends typed character 'C':
+   `Seq = 42, ACK = 79, Data = 'C' (1 byte)`
+2. Host B acknowledges 'C' and echoes character 'C' back:
+   `Seq = 79, ACK = 43, Data = 'C' (1 byte)`
+   - `ACK = 43`: Host B has received byte 42 and now expects byte 43.
+3. Host A acknowledges the echoed character 'C':
+   `Seq = 43, ACK = 80, Data = None (0 bytes)`
+   - `ACK = 80`: Host A has received byte 79 and now expects byte 80.
+
+ASCII Sequence Diagram:
+   Host A (Client)                                Host B (Server)
+         |                                               |
+         | ----- Seq=42, ACK=79, Data='C' -------------> | (User types 'C')
+         |                                               |
+         | <---- Seq=79, ACK=43, Data='C' -------------- | (Server acks 'C', echoes 'C')
+         |                                               |
+         | ----- Seq=43, ACK=80 -----------------------> | (Client acks echoed 'C')
+         v                                               v
+
+================================================================================
+SLIDE 108: TCP Round-Trip Time (RTT) and Timeout Interval Estimation
+================================================================================
+
+COMPUTER NETWORKS: TCP round trip time, time out
+
+The Timeout Dilemma:
+• How long should TCP set its retransmission timeout?
+• Must be longer than RTT, but RTT fluctuates continuously!
+  - If timeout is too short: Premature timeouts cause unnecessary retransmissions, worsening congestion.
+  - If timeout is too long: TCP reacts too slowly to genuine packet loss, degrading throughput.
+
+Measuring RTT:
+• SampleRTT: Measured time from when a segment is transmitted until its ACK is received.
+• Karn's Algorithm: Ignore SampleRTT measurements for retransmitted segments!
+
+================================================================================
+SLIDE 109: Exponential Weighted Moving Average (EWMA) for EstimatedRTT
+================================================================================
+
+COMPUTER NETWORKS: TCP round trip time, time out
+
+EstimatedRTT Formula:
+$$\text{EstimatedRTT} = (1 - \alpha) \times \text{EstimatedRTT} + \alpha \times \text{SampleRTT}$$
+
+Properties:
+• Exponential Weighted Moving Average (EWMA).
+• Past samples decay exponentially fast.
+• Standard recommended value: $\alpha = 0.125$ (1/8).
+$$\text{EstimatedRTT} = 0.875 \times \text{EstimatedRTT} + 0.125 \times \text{SampleRTT}$$
+
+================================================================================
+SLIDE 110: Estimating RTT Variation (DevRTT) & TimeoutInterval
+================================================================================
+
+COMPUTER NETWORKS: TCP round trip time, time out
+
+DevRTT (SampleRTT Deviation from EstimatedRTT):
+$$\text{DevRTT} = (1 - \beta) \times \text{DevRTT} + \beta \times |\text{SampleRTT} - \text{EstimatedRTT}|$$
+• Standard recommended value: $\beta = 0.25$ (1/4).
+
+TimeoutInterval Formula:
+$$\text{TimeoutInterval} = \text{EstimatedRTT} + 4 \times \text{DevRTT}$$
+• $4 \times \text{DevRTT}$ provides a dynamic "safety margin":
+  - When network jitter is small, DevRTT is small, and timeout is tight.
+  - When network jitter is volatile, DevRTT expands, widening the safety margin to avoid false alarms.
+
+================================================================================
+SLIDE 111: RTT & Timeout Design Questions
+================================================================================
+
+COMPUTER NETWORKS: TCP round trip time, time out
+
+Question 1: Why not just set the timeout to the measured RTT?
+Answer: RTT fluctuates constantly due to queueing delays. Setting timeout to exact RTT causes constant premature timeouts. The $4 \times \text{DevRTT}$ margin provides an essential safety cushion.
+
+Question 2: Why 4 times the deviation rather than 1 or 2?
+Answer: 4 is an empirically determined engineering constant that keeps false timeout probabilities below 1% under normal distribution assumptions.

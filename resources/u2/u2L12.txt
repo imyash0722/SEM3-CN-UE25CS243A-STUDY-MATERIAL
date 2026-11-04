@@ -1,0 +1,79 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 12: TCP Flow Control (Socket Buffer Overflow, rwnd Formula & Header Advertisement)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 118 to 123)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 6
+================================================================================
+
+================================================================================
+SLIDE 118: Roadmap: TCP Flow Control
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.5 Connection-Oriented Transport: TCP
+• TCP Flow Control: Mechanics, formulas, and buffer management.
+
+================================================================================
+SLIDE 119: TCP Flow Control: The Problem of Buffer Overflow (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: TCP flow control
+
+The Core Problem:
+• What happens if the network layer delivers data into the TCP socket buffers faster than the application process reads and removes data from those buffers?
+
+================================================================================
+SLIDE 120: TCP Flow Control: Socket Buffer Architecture (Part 2)
+================================================================================
+
+COMPUTER NETWORKS: TCP flow control
+
+Architecture:
+• Sender TCP pushes bytes across network into Receiver TCP socket buffer.
+• Application process reads bytes from socket buffer at its own pace.
+• If receiver application is slow, buffer fills up!
+
+================================================================================
+SLIDE 121: TCP Flow Control: Definition & Objective (Part 3)
+================================================================================
+
+COMPUTER NETWORKS: TCP flow control
+
+Definition of Flow Control:
+• A speed-matching service that matches the sender's transmission rate to the receiving application's reading rate.
+• Guarantees that the sender will not overflow the receiver's socket buffer by transmitting too much data too fast.
+
+================================================================================
+SLIDE 122: TCP Flow Control: Receive Window (rwnd) Mathematical Formula
+================================================================================
+
+COMPUTER NETWORKS: TCP flow control
+
+Receiver Buffer Variables:
+• `RcvBuffer`: Total allocated size of the TCP receive socket buffer (typically 4,096 bytes or autotuned by OS).
+• `LastByteRcvd`: Sequence number of the last byte arrived and placed in the receive buffer.
+• `LastByteRead`: Sequence number of the last byte read by the local application process.
+
+Buffer Occupancy Constraint:
+$$\text{LastByteRcvd} - \text{LastByteRead} \le \text{RcvBuffer}$$
+
+Receive Window (`rwnd`) Formula:
+$$\text{rwnd} = \text{RcvBuffer} - [\text{LastByteRcvd} - \text{LastByteRead}]$$
+
+Sender Throttling Rule:
+• Sender ensures that unACKed in-flight data never exceeds the advertised `rwnd`:
+$$\text{LastByteSent} - \text{LastByteAcked} \le \text{rwnd}$$
+
+================================================================================
+SLIDE 123: TCP Flow Control: The Receive Window Field in TCP Header
+================================================================================
+
+COMPUTER NETWORKS: TCP flow control
+
+Header Advertisement:
+• The receiver continuously advertises its current spare buffer space in the 16-bit `Receive Window` field of every returning TCP segment.
+• What if `rwnd == 0`?
+  - Sender stops sending data, but periodically sends 1-byte probe segments to force the receiver to return an updated `rwnd` when buffer space frees up!

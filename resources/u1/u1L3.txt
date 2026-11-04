@@ -1,0 +1,524 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 1 – Lecture 3: Interactive Exercises & Numerical Problems (Delays, Bottlenecks, Queueing)
+Source Deck: Slides_Unit_1_Part_1.pdf (Slides 107 to 131)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 25
+================================================================================
+
+================================================================================
+SLIDE 107: Topic Transition: Interactive Exercises & Numerical Problems
+================================================================================
+
+COMPUTER NETWORKS
+Computer Networks and the Internet: Interactive Exercises
+
+Team Networks
+Department of Computer Science and Engineering
+
+================================================================================
+SLIDE 108: Interactive Exercise 1: Three-Link End-to-End Delay (Problem)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 1 – End-to-End Delay
+
+Problem Statement:
+Consider the network shown below with three links connecting a Host on the left to a Server on the right through two intermediate routers. Each link has a specified transmission rate (R) and physical length (d).
+
+Network Topology:
+  [Host] =====(Link 1)=====> [Router 1] =====(Link 2)=====> [Router 2] =====(Link 3)=====> [Server]
+
+Parameters:
+• Packet length: L = 8,000 bits.
+• Propagation speed on all links: s = 3 * 10^8 m/sec (speed of light).
+• Link 1: Rate R1 = 100 Mbps, Length d1 = 3 km.
+• Link 2: Rate R2 = 1,000 Mbps (1 Gbps), Length d2 = 500 km.
+• Link 3: Rate R3 = 10 Mbps, Length d3 = 3 km.
+
+Task:
+Find the total end-to-end delay (including transmission and propagation delays on all three links, ignoring queuing and nodal processing delays) from when the left host begins transmitting the first bit of the packet until the last bit is received at the server.
+Give your final answer in milliseconds (ms).
+
+================================================================================
+SLIDE 109: Interactive Exercise 1: Three-Link End-to-End Delay (Step-by-Step Solution)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 1 – Solution
+
+Calculations per Link:
+
+1. Link 1:
+   • Transmission Delay: d_trans,1 = L / R1 = 8,000 bits / (100 * 10^6 bps) = 8 * 10^-5 s = 80 microseconds (µs).
+   • Propagation Delay: d_prop,1 = d1 / s = (3 * 10^3 m) / (3 * 10^8 m/s) = 10^-5 s = 10 µs.
+   • Total Link 1 Delay = 80 µs + 10 µs = 90 µs.
+
+2. Link 2:
+   • Transmission Delay: d_trans,2 = L / R2 = 8,000 bits / (1,000 * 10^6 bps) = 8 * 10^-6 s = 8 µs.
+   • Propagation Delay: d_prop,2 = d2 / s = (500 * 10^3 m) / (3 * 10^8 m/s) = 1,666.67 * 10^-6 s ≈ 1,670 µs (1.67 ms).
+   • Total Link 2 Delay = 8 µs + 1,670 µs = 1,678 µs.
+
+3. Link 3:
+   • Transmission Delay: d_trans,3 = L / R3 = 8,000 bits / (10 * 10^6 bps) = 8 * 10^-4 s = 800 µs.
+   • Propagation Delay: d_prop,3 = d3 / s = (3 * 10^3 m) / (3 * 10^8 m/s) = 10^-5 s = 10 µs.
+   • Total Link 3 Delay = 800 µs + 10 µs = 810 µs.
+
+Total End-to-End Delay:
+  Total Delay = Total Link 1 + Total Link 2 + Total Link 3
+              = 90 µs + 1,678 µs + 810 µs
+              = 2,578 microseconds = 2.578 milliseconds (ms).
+
+================================================================================
+SLIDE 110: Interactive Exercise 2: Queuing Delay & Buffer Drops (Problem Statement)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 2 – Queuing Delay & Buffer Dynamics
+
+Problem Setup:
+Consider the queuing delay in a router buffer.
+Assume:
+• Link transmission rate: R = 1,800,000 bps (1.8 Mbps).
+• Constant packet length: L = 7,300 bits.
+• a = Average packet arrival rate (packets/second).
+• Traffic Intensity formula: I = (L * a) / R.
+• Queuing Delay formula:
+  
+                I * L
+  d_queue = -------------   (for I < 1)
+              R * (1 - I)
+
+Note: Use the specified queuing delay formula from the slide.
+
+================================================================================
+SLIDE 111: Interactive Exercise 2: Queuing Delay & Buffer Drops (Questions)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 2 – Questions
+
+Question List:
+1. In practice, does the queuing delay tend to vary a lot? Answer Yes or No.
+2. Assuming that arrival rate a = 30 packets/sec, what is the queuing delay in milliseconds (ms)?
+3. Assuming that arrival rate a = 76 packets/sec, what is the queuing delay in milliseconds (ms)?
+4. Assuming the router's buffer is infinite, and 1,762 packets arrive over a one-second interval. How many packets will remain in the buffer 1 second later?
+5. If the buffer has a maximum finite size of 956 packets, how many of the 1,762 arriving packets will be dropped?
+
+================================================================================
+SLIDE 112: Interactive Exercise 2: Queuing Delay & Buffer Drops (Detailed Solution)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 2 – Solutions
+
+1. Question 1 Answer:
+   • Yes. In practice, queuing delay varies significantly due to bursty packet arrivals.
+
+2. Question 2 (a = 30 packets/sec):
+   • Traffic Intensity: I = (L * a) / R = (7,300 * 30) / 1,800,000 = 219,000 / 1,800,000 = 0.12167.
+   • d_queue = [ I * L / (R * (1 - I)) ] * 1,000 ms
+             = [ 0.12167 * 7,300 / (1,800,000 * (1 - 0.12167)) ] * 1,000
+             = [ 888.17 / (1,800,000 * 0.87833) ] * 1,000
+             = [ 888.17 / 1,581,000 ] * 1,000 ≈ 0.561 ms.
+
+3. Question 3 (a = 76 packets/sec):
+   • Traffic Intensity: I = (L * a) / R = (7,300 * 76) / 1,800,000 = 554,800 / 1,800,000 = 0.30822.
+   • d_queue = [ 0.30822 * 7,300 / (1,800,000 * (1 - 0.30822)) ] * 1,000
+             = [ 2,250.0 / (1,800,000 * 0.69178) ] * 1,000
+             = [ 2,250.0 / 1,245,200 ] * 1,000 ≈ 1.806 ms.
+
+4. Question 4 (Buffer fill rate with infinite buffer, a = 1,762 pkt/s):
+   • Service rate = R / L = 1,800,000 bps / 7,300 bits ≈ 246.57 packets/sec transmitted.
+   • Packets serviced in 1 second = 246 packets.
+   • Buffer fill rate = a - (R / L) = 1,762 - 246.57 ≈ 1,515 packets remaining in buffer.
+
+5. Question 5 (Finite buffer of size 956 packets):
+   • Total capacity accommodated in 1 second = Packets serviced (246) + Max buffer slots (956) = 1,202 packets.
+   • Packets dropped = Total arrived - (Packets serviced + Max buffer capacity)
+     = 1,762 - (246 + 956) = 1,762 - 1,202 = 560 (or 559) packets dropped upon arrival.
+
+================================================================================
+SLIDE 113: Interactive Exercise 3: Throughput & Bottleneck Links (Problem Setup)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 3 – Throughput and Bottleneck Links
+
+Scenario:
+• Four independent servers (S1, S2, S3, S4) connected to four independent clients (C1, C2, C3, C4) over four 3-hop paths.
+• All four pairs share a common middle backbone hop with total transmission capacity R = 300 Mbps.
+• Each server connects to the shared link via a dedicated link of capacity RS = 50 Mbps.
+• Each client connects from the shared link via a dedicated link of capacity RC = 90 Mbps.
+• The shared middle link is shared equally and fairly among the four pairs.
+
+Diagram:
+  [Server 1] --(Rs=50)--> \                                      /--(Rc=90)--> [Client 1]
+  [Server 2] --(Rs=50)----> +===[ Shared Middle Link: R=300 ]===+ --(Rc=90)--> [Client 2]
+  [Server 3] --(Rs=50)----> |           (Fair share)            | --(Rc=90)--> [Client 3]
+  [Server 4] --(Rs=50)--> /                                      \--(Rc=90)--> [Client 4]
+
+================================================================================
+SLIDE 114: Interactive Exercise 3: Throughput & Bottleneck Links (Questions)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 3 – Questions
+
+Answer the following questions:
+1. What is the maximum achievable end-end throughput (in Mbps) for each of the four client-to-server pairs, assuming the middle link divides its transmission rate equally?
+2. Which link is the bottleneck link? (Format as Rc, Rs, or R).
+3. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the server links (RS)? (Answer as a decimal).
+4. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the client links (RC)? (Answer as a decimal).
+5. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the shared link (R)? (Answer as a decimal).
+
+================================================================================
+SLIDE 115: Interactive Exercise 3: Throughput & Bottleneck Links (Solutions)
+================================================================================
+
+COMPUTER NETWORKS: Interactive Exercise 3 – Step-by-Step Solutions
+
+1. Maximum Achievable End-to-End Throughput:
+   • Fair share of shared middle link = R / 4 = 300 Mbps / 4 = 75 Mbps.
+   • Throughput per pair = min(RS, RC, R/4) = min(50 Mbps, 90 Mbps, 75 Mbps) = 50 Mbps.
+
+2. Identification of Bottleneck Link:
+   • The link with the minimum transmission capacity along the path is RS (50 Mbps < 75 Mbps < 90 Mbps).
+   • Bottleneck Link = Rs.
+
+3. Server Link Utilization (RS):
+   • Utilization = Actual Throughput / Link Capacity = 50 Mbps / 50 Mbps = 1.0 (100% saturated).
+
+4. Client Link Utilization (RC):
+   • Utilization = Actual Throughput / Link Capacity = 50 Mbps / 90 Mbps ≈ 0.56 (56% utilized).
+
+5. Shared Link Utilization (R):
+   • Total traffic traversing shared link = 4 pairs * 50 Mbps = 200 Mbps.
+   • Shared Link Utilization = Total Throughput / Total Capacity = 200 Mbps / 300 Mbps = 50 / 75 ≈ 0.67 (67% utilized).
+
+================================================================================
+SLIDE 116: Car - Caravan Analogy: Comprehensive Problem Setup
+================================================================================
+
+COMPUTER NETWORKS: Car - Caravan Analogy (Detailed Problem)
+
+Analogy Context (Kurose & Ross Figure 1.17):
+• Analogy between store-and-forward link transmission (servicing cars at a toll booth) and bit propagation along a link (cars driving along a highway).
+
+Problem Parameters:
+• Caravan size: 10 cars (represents an entire 10-bit packet).
+• Toll booth service rate: 1 car every 2 seconds (Transmission rate = 1 bit per 2 seconds).
+• Distance between Toll Booth 1 and Toll Booth 2: d = 500 kilometers.
+• Car travel speed along highway: s = 10 kilometers per second.
+• Store-and-Forward Constraint:
+  Whenever the first car arrives at a toll booth, it MUST WAIT at the entrance until ALL other 9 cars in its caravan have arrived and lined up behind it before ANY car can begin paying its toll and drive to the next booth. (The entire caravan must be stored at the toll booth before forwarding starts).
+
+================================================================================
+SLIDE 117: Car - Caravan Analogy: 7 Analytical Questions
+================================================================================
+
+COMPUTER NETWORKS: Car - Caravan Analogy – Questions
+
+1. What is the service time for a single car at the toll booth?
+2. How long does it take for the first toll booth to service every car in the caravan?
+3. How long does it take for a car to travel from the first toll booth to the second toll booth?
+4. How long does it take for the second car in the caravan to travel from the first toll booth to the second toll booth?
+5. How much time elapses from when the caravan begins service at the first toll booth until the first car begins service at the second toll booth?
+6. Are there ever two cars in service at the same time, one at the first toll booth and one at the second toll booth? (Answer Yes or No).
+7. Are there ever zero cars in service at the same time (i.e., the entire caravan has finished service at the first toll booth but not yet arrived at the second toll booth)? (Answer Yes or No).
+
+================================================================================
+SLIDE 118: Car - Caravan Analogy: Solutions & Explanations
+================================================================================
+
+COMPUTER NETWORKS: Car - Caravan Analogy – Step-by-Step Solutions
+
+1. Question 1 (Service time per car):
+   • 2 seconds (given directly: 1 car per 2 seconds).
+
+2. Question 2 (Time to service entire caravan at Booth 1):
+   • 10 cars * 2 seconds/car = 20 seconds. (This is the Packet Transmission Delay!).
+
+3. Question 3 (Travel time from Booth 1 to Booth 2):
+   • Time = Distance / Speed = 500 km / (10 km/s) = 50 seconds. (This is the Propagation Delay!).
+
+4. Question 4 (Travel time for the second car):
+   • 50 seconds. Regardless of which car it is, the speed and distance are identical.
+
+5. Question 5 (Elapsed time until 1st car begins service at Booth 2):
+   • At t = 0: Service begins at Booth 1.
+   • At t = 2s: 1st car departs Booth 1, but must wait at Booth 2 until the entire caravan arrives!
+   • At t = 20s: The 10th (last) car finishes service at Booth 1 and departs.
+   • The 10th car takes 50 seconds to travel to Booth 2, arriving at t = 20s + 50s = 70s.
+   • Wait! By formula: The last car is serviced after (10 - 1) * 2 = 18 seconds, plus 50 seconds travel = 68 seconds until the caravan is fully assembled at the entrance!
+   • Elapsed time = 68 seconds.
+
+6. Question 6 (Are two cars ever in service simultaneously at both booths?):
+   • NO. Due to the strict store-and-forward constraint, no car can be serviced at Booth 2 until ALL 10 cars have arrived at Booth 2. Thus, Booth 1 is completely empty long before Booth 2 begins servicing.
+
+7. Question 7 (Are zero cars ever in service simultaneously?):
+   • YES. For example, between t = 20s (when the last car finishes at Booth 1) and t = 68s/70s (when all cars arrive at Booth 2), all cars are on the highway; zero cars are in service at either booth.
+
+================================================================================
+SLIDE 119: Computing One-Hop Transmission Delay (Problem)
+================================================================================
+
+COMPUTER NETWORKS: One-Hop Transmission Delay Calculation
+
+Problem Statement:
+Consider a single router transmitting packets over a single link to another router at the other end of the link.
+• Packet length: L = 8,000 bits.
+• Link transmission rate: R = 1 Mbps = 1,000,000 bps.
+
+Diagram:
+  [Router 1] ==================(Link: R=1 Mbps)==================> [Router 2]
+    Packet: L = 8,000 bits
+
+Round your answers to two decimal places after leading zeros.
+
+================================================================================
+SLIDE 120: Computing One-Hop Transmission Delay (Questions & Solutions)
+================================================================================
+
+COMPUTER NETWORKS: One-Hop Transmission Delay – Solutions
+
+Questions & Worked Solutions:
+
+1. Question 1: What is the transmission delay?
+   • d_trans = L / R
+   • d_trans = 8,000 bits / 1,000,000 bits/sec
+   • d_trans = 0.008 seconds = 8.0 milliseconds (ms).
+
+2. Question 2: What is the maximum number of packets per second that can be transmitted by this link?
+   • Packet Transmission Rate = R / L
+   • Packets/sec = 1,000,000 bps / 8,000 bits
+   • Packets/sec = 125 packets per second.
+
+================================================================================
+SLIDE 121: Queuing Delay: Traffic Intensity & Variance (Problem Setup)
+================================================================================
+
+COMPUTER NETWORKS: Queuing Delay Problem Setup
+
+Context:
+• Packets experience queuing delay as they wait in router buffers to be transmitted onto the link.
+• If the queue is empty, delay is zero; if traffic is heavy, delay is long.
+
+Parameters:
+• Constant transmission rate: R = 1,900,000 bps (1.9 Mbps).
+• Constant packet length: L = 4,700 bits.
+• a = Average packet arrival rate (packets/second).
+• Traffic Intensity: I = (L * a) / R.
+• Queuing Delay formula:
+  
+                I * L
+  d_queue = -------------    (for I < 1)
+              R * (1 - I)
+
+================================================================================
+SLIDE 122: Queuing Delay: Traffic Intensity & Variance (Questions)
+================================================================================
+
+COMPUTER NETWORKS: Queuing Delay – Question List
+
+1. In practice, does the queuing delay tend to vary a lot? (Answer with Yes or No).
+2. Assuming that arrival rate a = 35 packets/sec, what is the queuing delay in milliseconds (ms)?
+3. Assuming that arrival rate a = 77 packets/sec, what is the queuing delay in milliseconds (ms)?
+4. Assuming the router's buffer is infinite and 613 packets arrive over a one-second interval, how many packets will remain in the buffer 1 second later?
+5. If the buffer has a maximum finite capacity of 627 packets, how many of the 613 arriving packets would be dropped upon arrival?
+
+================================================================================
+SLIDE 123: Queuing Delay: Traffic Intensity & Variance (Solutions)
+================================================================================
+
+COMPUTER NETWORKS: Queuing Delay – Solutions
+
+1. Question 1 Answer:
+   • Yes. In practice, queuing delay varies substantially from packet to packet because packets arrive in bursts.
+
+2. Question 2 (a = 35 packets/sec):
+   • Intensity: I = (4,700 * 35) / 1,900,000 = 164,500 / 1,900,000 = 0.08658.
+   • d_queue = [ I * L / (R * (1 - I)) ] * 1,000 ms
+             = [ 0.08658 * 4,700 / (1,900,000 * (1 - 0.08658)) ] * 1,000
+             = [ 406.92 / (1,900,000 * 0.91342) ] * 1,000
+             = [ 406.92 / 1,735,500 ] * 1,000 ≈ 0.23 ms.
+
+3. Question 3 (a = 77 packets/sec):
+   • Intensity: I = (4,700 * 77) / 1,900,000 = 361,900 / 1,900,000 = 0.19047.
+   • d_queue = [ 0.19047 * 4,700 / (1,900,000 * (1 - 0.19047)) ] * 1,000
+             = [ 895.23 / (1,900,000 * 0.80953) ] * 1,000
+             = [ 895.23 / 1,538,100 ] * 1,000 ≈ 0.58 ms.
+
+4. Question 4 (Buffer fill rate with infinite buffer, a = 613 pkt/s):
+   • Service rate = R / L = 1,900,000 / 4,700 ≈ 404.25 packets/sec.
+   • Packets serviced in 1 second = 404 packets.
+   • Remaining in buffer = 613 - 404 = 209 packets.
+
+5. Question 5 (Finite buffer capacity = 627 packets):
+   • Accommodated packets = Packets serviced (404) + Buffer capacity (627) = 1,031 packets.
+   • Since 613 packets < 1,031 packets capacity, ALL packets fit!
+   • Packets dropped = 0 packets.
+
+================================================================================
+SLIDE 124: Computing End-End Delay: Three-Link Path (Problem Setup)
+================================================================================
+
+COMPUTER NETWORKS: End-to-End Delay Problem 2
+
+Problem Setup:
+Consider a three-link path connecting two end systems via two routers:
+  [Host A] =====(Link 1)=====> [Router 1] =====(Link 2)=====> [Router 2] =====(Link 3)=====> [Host B]
+
+Parameters:
+• Packet length: L = 12,000 bits.
+• Propagation speed on all links: s = 3 * 10^8 m/sec.
+• Link 1: Transmission rate R1 = 100 Mbps, Length d1 = 3 km.
+• Link 2: Transmission rate R2 = 1 Mbps, Length d2 = 5,000 km.
+• Link 3: Transmission rate R3 = 10 Mbps, Length d3 = 1 km.
+
+Round all answers to two decimal places after leading zeros.
+
+================================================================================
+SLIDE 125: Computing End-End Delay: Three-Link Path (10 Questions)
+================================================================================
+
+COMPUTER NETWORKS: End-to-End Delay – Question List
+
+1. What is the transmission delay of Link 1?
+2. What is the propagation delay of Link 1?
+3. What is the total delay of Link 1?
+4. What is the transmission delay of Link 2?
+5. What is the propagation delay of Link 2?
+6. What is the total delay of Link 2?
+7. What is the transmission delay of Link 3?
+8. What is the propagation delay of Link 3?
+9. What is the total delay of Link 3?
+10. What is the overall total end-to-end delay?
+
+================================================================================
+SLIDE 126: Computing End-End Delay: Three-Link Path (Full Solutions)
+================================================================================
+
+COMPUTER NETWORKS: End-to-End Delay – Solutions
+
+Step-by-Step Calculations:
+
+Link 1:
+1. Transmission delay: d_trans,1 = L / R1 = 12,000 bits / (100 * 10^6 bps) = 0.00012 seconds (120 µs).
+2. Propagation delay: d_prop,1 = d1 / s = (3 * 10^3 m) / (3 * 10^8 m/s) = 0.000010 seconds = 1.00 * 10^-5 s (10 µs).
+3. Total delay Link 1 = 0.00012 s + 0.00001 s = 0.00013 seconds.
+
+Link 2:
+4. Transmission delay: d_trans,2 = L / R2 = 12,000 bits / (1 * 10^6 bps) = 0.012 seconds (12 ms).
+5. Propagation delay: d_prop,2 = d2 / s = (5,000 * 10^3 m) / (3 * 10^8 m/s) = 5 / 300 ≈ 0.01667 seconds ≈ 0.017 seconds (16.7 ms).
+6. Total delay Link 2 = 0.012 s + 0.01667 s = 0.02867 seconds ≈ 0.029 seconds.
+
+Link 3:
+7. Transmission delay: d_trans,3 = L / R3 = 12,000 bits / (10 * 10^6 bps) = 0.0012 seconds (1.2 ms).
+8. Propagation delay: d_prop,3 = d3 / s = (1 * 10^3 m) / (3 * 10^8 m/s) = 3.33 * 10^-6 seconds (3.33 µs).
+9. Total delay Link 3 = 0.0012 s + 0.0000033 s ≈ 0.0012 seconds.
+
+Total End-to-End Delay:
+10. Total Delay = Delay(Link 1) + Delay(Link 2) + Delay(Link 3)
+    = 0.00013 s + 0.02867 s + 0.00120 s
+    = 0.03000 seconds = 0.03 seconds (30 ms).
+
+================================================================================
+SLIDE 127: End-to-End Throughput & Bottleneck Links (Problem Setup 2)
+================================================================================
+
+COMPUTER NETWORKS: Throughput Problem Setup 2
+
+Scenario:
+• Four different servers connected to four different clients over four 3-hop paths.
+• Common shared middle hop capacity: R = 300 Mbps.
+• Server access links: RS = 50 Mbps each.
+• Client access links: RC = 60 Mbps each.
+• The shared link capacity is divided equally among the 4 pairs (R / 4).
+
+Diagram:
+  [Server 1] --(Rs=50)--> \                                      /--(Rc=60)--> [Client 1]
+  [Server 2] --(Rs=50)----> +===[ Shared Middle Link: R=300 ]===+ --(Rc=60)--> [Client 2]
+  [Server 3] --(Rs=50)----> |                                   | --(Rc=60)--> [Client 3]
+  [Server 4] --(Rs=50)--> /                                      \--(Rc=60)--> [Client 4]
+
+================================================================================
+SLIDE 128: End-to-End Throughput & Bottleneck Links (Questions 2)
+================================================================================
+
+COMPUTER NETWORKS: Throughput Problem 2 – Question List
+
+1. What is the maximum achievable end-end throughput (in Mbps) for each of four client-to-server pairs, assuming that the middle link is fairly shared?
+2. Which link is the bottleneck link? Format as Rc, Rs, or R.
+3. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the server links (RS)? Answer as a decimal.
+4. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the client links (RC)? Answer as a decimal.
+5. Assuming that the servers are sending at the maximum rate possible, what is the link utilization for the shared link (R)? Answer as a decimal.
+
+================================================================================
+SLIDE 129: End-to-End Throughput & Bottleneck Links (Solutions 2)
+================================================================================
+
+COMPUTER NETWORKS: Throughput Problem 2 – Solutions
+
+1. Question 1 (Maximum End-to-End Throughput):
+   • Shared link share = R / 4 = 300 Mbps / 4 = 75 Mbps.
+   • Throughput = min(RS, RC, R/4) = min(50 Mbps, 60 Mbps, 75 Mbps) = 50 Mbps.
+
+2. Question 2 (Bottleneck Link):
+   • Smallest capacity on path is RS (50 Mbps).
+   • Bottleneck Link = Rs.
+
+3. Question 3 (Server Link Utilization):
+   • Utilization = Rbottleneck / RS = 50 Mbps / 50 Mbps = 1.0 (100%).
+
+4. Question 4 (Client Link Utilization):
+   • Utilization = Rbottleneck / RC = 50 Mbps / 60 Mbps ≈ 0.83 (83%).
+
+5. Question 5 (Shared Link Utilization):
+   • Utilization = (4 * 50 Mbps) / 300 Mbps = 200 / 300 ≈ 0.67 (67%).
+
+================================================================================
+SLIDE 130: Wireshark: Network Protocol Analyzer Architecture
+================================================================================
+
+COMPUTER NETWORKS: Wireshark Packet Sniffer
+
+What is Wireshark?
+• An open-source, industry-standard packet analyzer (packet sniffer) used for network troubleshooting, analysis, software and communications protocol development, and education.
+
+Architecture & Operation:
+• Two Main Components:
+  1. Packet Capture Library (libpcap / WinPcap / Npcap):
+     - Interfaces with OS kernel.
+     - Puts the Network Interface Card (NIC) into PROMISCUOUS MODE.
+     - Captures a raw binary copy of every Ethernet frame transmitted or received by the host, bypassing upper-layer filtering.
+  2. Packet Analyzer (Wireshark GUI / Dissector Engine):
+     - Displays captured packets in a structured format.
+     - Parses and dissects protocol headers at all layers:
+       * Application Layer (HTTP, DNS, TLS)
+       * Transport Layer (TCP, UDP)
+       * Network Layer (IP)
+       * Link Layer (Ethernet frame)
+       * Physical Layer (frame metadata)
+
+Architecture Diagram:
+  +-------------------------------------------------------------+
+  | Application Layer (Browser, Mail Client, etc.)              |
+  +-------------------------------------------------------------+
+         |
+  +-------------------------------------+      +----------------+
+  | Operating System Network Stack:     |      | Wireshark GUI  |
+  | [ Transport (TCP / UDP) ]           |      | Packet         |
+  | [ Network (IP) ]                    |      | Analyzer       |
+  | [ Link (Ethernet) ]                 |      +----------------+
+  | [ Physical ]                        |              ^
+  +-------------------------------------+              |
+         |                                             |
+         +==== Copy of all Ethernet frames ===========>+
+               captured via pcap
+
+================================================================================
+SLIDE 131: Unit 1 Part 1 Conclusion
+================================================================================
+
+COMPUTER NETWORKS
+Unit 1 – Part 1 Complete
+
+THANK YOU!
+
+Team Networks
+Department of Computer Science and Engineering
+PES University

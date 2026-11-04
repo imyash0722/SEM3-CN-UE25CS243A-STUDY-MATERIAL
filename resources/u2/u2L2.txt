@@ -1,0 +1,233 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 2: Other Application Layer Protocols (FTP, SMTP, DHCP, SNMP, Telnet, SSH)
+Source Deck: Slides_Unit_2_Part_1.pdf (Slides 31 to 41)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 11
+================================================================================
+
+================================================================================
+SLIDE 31: Unit 2 Application Layer: Agenda Note
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 2 Application Layer
+
+Topics:
+2.3 The Domain Name System
+2.4 P2P Applications
+2.5 Socket Programming with TCP & UDP
+    *(Note: Socket Programming concepts will be integrated and dealt with in detail following the introduction of Transport Layer functions)
+2.6 Other Application Layer Protocols
+
+================================================================================
+SLIDE 32: Unit 2 Application Layer: Section Overview
+================================================================================
+
+COMPUTER NETWORKS
+Unit – 2 Application Layer
+
+Section Focus:
+2.6 Other Application Layer Protocols
+• FTP (File Transfer Protocol)
+• SMTP (Simple Mail Transfer Protocol)
+• DHCP (Dynamic Host Configuration Protocol)
+• SNMP (Simple Network Management Protocol)
+• Telnet & SSH (Secure Shell)
+
+================================================================================
+SLIDE 33: Other Application Layer Protocols: FTP
+================================================================================
+
+COMPUTER NETWORKS: Other Application Layer Protocols - FTP
+
+File Transfer Protocol (FTP):
+• Primary Purpose: Transferring files reliably between a local client and a remote server.
+• Transport: Operates over TCP.
+• Invocation: Command line terminal (`ftp host`) or graphical FTP clients (FileZilla, Cyberduck).
+• Server File Operations: Allows clients to list, upload, download, delete, rename, move, and copy files on the remote server.
+
+Out-of-Band Control Architecture (Two Separate Connections):
+• Control Connection (Port 21):
+  - Used strictly for sending control commands (USER, PASS, LIST, RETR, STOR) and receiving status codes.
+  - Remains open throughout the session ("out-of-band" control).
+• Data Connection (Port 20):
+  - Used strictly for transferring raw file data.
+  - Opened dynamically for each file transfer and closed immediately upon transfer completion.
+
+ASCII FTP Architecture:
+   [ FTP Client ] ===== TCP Control Connection (Port 21) =====> [ FTP Server ]
+   [            ] <==== TCP Data Connection (Port 20) ========> [            ]
+
+================================================================================
+SLIDE 34: Other Application Layer Protocols: SMTP
+================================================================================
+
+COMPUTER NETWORKS: Other Application Layer Protocols - SMTP
+
+Simple Mail Transfer Protocol (SMTP):
+• Primary Purpose: Standard protocol for transmitting email messages across the Internet.
+• Transport: Operates over TCP on Port 25 (or port 587 for message submission).
+• Push Protocol: SMTP is strictly a push mechanism:
+  - Sending mail server pushes mail to receiving mail server.
+  - (Retrieval by end users uses pull protocols: IMAP on port 143/993 or POP3 on port 110/995).
+• Store-and-Forward Relay:
+  - Messages travel hop-by-hop across mail servers until reaching the destination mailbox.
+• Security:
+  - Connections are encrypted and secured using TLS/SSL (STARTTLS).
+• Text-Based Commands:
+  - Uses human-readable 7-bit ASCII command/response pairs: `HELO`, `MAIL FROM:`, `RCPT TO:`, `DATA`, `QUIT`.
+
+================================================================================
+SLIDE 35: Other Application Layer Protocols: DHCP
+================================================================================
+
+COMPUTER NETWORKS: Other Application Layer Protocols - DHCP
+
+Dynamic Host Configuration Protocol (DHCP):
+• Primary Purpose: Automatically and dynamically assigns IP addresses and network configuration parameters to client hosts joining a local network.
+• Dynamic IP Leases: IP addresses are leased for a finite duration; addresses can be renewed or change over time.
+• Transport: Operates over UDP:
+  - DHCP Server listens on Port 67.
+  - DHCP Client listens on Port 68.
+
+Network Configuration Parameters Provided:
+1. Assigned Host IPv4 Address
+2. Subnet Mask (network prefix)
+3. Default Gateway Router IP Address
+4. Local DNS Server IP Address(es)
+
+Four-Step DORA Protocol Exchange:
+1. Discover (DHCPDISCOVER): Client broadcasts (`255.255.255.255:67`) to locate available DHCP servers.
+2. Offer (DHCPOFFER): DHCP server broadcasts proposed IP address and configuration.
+3. Request (DHCPREQUEST): Client broadcasts acceptance of the offered configuration.
+4. Acknowledge (DHCPACK): Server confirms assignment and starts lease timer.
+
+================================================================================
+SLIDE 36: Other Application Layer Protocols: SNMP
+================================================================================
+
+COMPUTER NETWORKS: Other Application Layer Protocols - SNMP
+
+Simple Network Management Protocol (SNMP):
+• Primary Purpose: Exchanging management information and monitoring the performance and health of networked devices (routers, switches, firewalls, servers).
+• Transport: Operates over UDP:
+  - Port 161: Polling / request-response messages.
+  - Port 162: Asynchronous notifications (SNMP Traps).
+
+Four Fundamental Components:
+1. SNMP Manager (Managing Entity):
+   - Central console / application monitoring network devices.
+2. Managed Devices:
+   - Network hardware running SNMP agent software (switches, routers).
+3. SNMP Agents:
+   - Software running inside managed devices that reads/modifies hardware state.
+4. MIB (Management Information Base):
+   - Hierarchical database of manageable object variables (e.g., interface packet counters, CPU temperature, bandwidth utilization).
+
+================================================================================
+SLIDE 37: Other Application Layer Protocols: Telnet & SSH
+================================================================================
+
+COMPUTER NETWORKS: Other Application Layer Protocols – Telnet & SSH
+
+Remote Terminal Access:
+• Enables administrators and users to log in remotely and execute commands on network equipment and remote servers.
+
+Telnet (Telecommunication Network):
+• Port: TCP Port 23.
+• Flaw: Transmits everything — including passwords, usernames, and commands — in completely unencrypted clear text!
+• Security Risk: Extremely vulnerable to packet sniffing on local networks.
+• Status: Obsolete; replaced by SSH.
+
+SSH (Secure Shell):
+• Port: TCP Port 22.
+• Security: All communications are strongly encrypted using symmetric session keys.
+• Authentication: Supports robust public-key cryptography (SSH key pairs) and password authentication.
+• Functionality: Secure terminal shell, remote file transfer (SCP, SFTP), and secure port forwarding / tunneling.
+
+================================================================================
+SLIDE 38: Summary of Application Layer Protocols
+================================================================================
+
+COMPUTER NETWORKS: Summary of Application Layer Protocols
+
++----------+-------------------+-----------------+-------------------------------------------------------------+
+| Port No. | Protocol          | Transport Layer | Purpose / Primary Function                                  |
++----------+-------------------+-----------------+-------------------------------------------------------------+
+| 20       | FTP (Data)        | TCP             | File Transfer Protocol — data transmission channel          |
+| 21       | FTP (Control)     | TCP             | File Transfer Protocol — command / control channel          |
+| 22       | SSH               | TCP (UDP)       | Secure Shell — encrypted remote administration & login      |
+| 23       | Telnet            | TCP             | Unencrypted remote terminal login (insecure)                |
+| 25       | SMTP              | TCP             | Simple Mail Transfer Protocol — email transmission          |
+| 53       | DNS               | UDP & TCP       | Domain Name System — hostname to IP resolution              |
+| 67, 68   | DHCP              | UDP             | Dynamic Host Configuration Protocol (Server: 67, Client: 68)|
+| 80       | HTTP              | TCP             | HyperText Transfer Protocol — unencrypted World Wide Web    |
+| 123      | NTP               | UDP             | Network Time Protocol — clock synchronization               |
+| 161, 162 | SNMP              | UDP (TCP)       | Simple Network Management Protocol (Poll: 161, Trap: 162)   |
+| 389      | LDAP              | TCP & UDP       | Lightweight Directory Access Protocol — directory services  |
+| 443      | HTTPS             | TCP (UDP/QUIC)  | HTTP Secure — encrypted Web traffic over TLS                |
++----------+-------------------+-----------------+-------------------------------------------------------------+
+
+================================================================================
+SLIDE 39: Application Layer Summary (Part 1)
+================================================================================
+
+COMPUTER NETWORKS: Summary
+
+Our study of the network application layer is now complete!
+
+Application Architectures:
+• Client-Server Architecture
+• Peer-to-Peer (P2P) Architecture
+
+Application Service Requirements:
+• Reliability & Data Integrity (loss-tolerant vs. 100% loss-free)
+• Throughput & Bandwidth (elastic vs. minimum rate guarantees)
+• Timing & Delay (time-sensitive vs. delay-tolerant)
+• Security (confidentiality, authentication, message integrity)
+
+Internet Transport Service Models:
+• Connection-oriented, reliable, byte-stream service: TCP
+• Lightweight, connectionless, unreliable datagram service: UDP
+
+Specific Protocols Studied:
+• HTTP & HTTPS (Web)
+• DNS (Domain Name System)
+• P2P: BitTorrent
+• Ancillary protocols: FTP, SMTP, DHCP, SNMP, SSH, Telnet
+
+Socket Programming:
+• TCP sockets (stream-oriented, connection setup)
+• UDP sockets (datagram-oriented, connectionless)
+
+================================================================================
+SLIDE 40: Application Layer Summary (Part 2) - Core Principles
+================================================================================
+
+COMPUTER NETWORKS: Summary (more)
+
+Most Importantly: What We Learned About Protocols!
+• Typical Request / Reply Message Exchanges:
+  - Client requests information or service.
+  - Server responds with requested data and appropriate status code.
+• Message Formats & Delineation:
+  - Headers: Standardized fields providing metadata about the data.
+  - Data / Payload: The actual information being communicated.
+
+Fundamental Enduring Themes:
+• Centralized vs. Decentralized Architectures
+• Stateless vs. Stateful Protocol Designs
+• Scalability & Hierarchy (e.g., DNS tree structure)
+• Reliable vs. Unreliable Message Transfer
+• "Complexity at the Network Edge" (End-to-End Principle): The intelligence and applications live on end systems; the core network remains simple and transparent.
+
+================================================================================
+SLIDE 41: Conclusion & Department Closing Slide
+================================================================================
+
+THANK YOU
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+PES University

@@ -1,0 +1,122 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 11: TCP Reliability Mechanics (Receiver ACK Rules Table, Retransmissions & Fast Retransmit)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 112 to 117)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 6
+================================================================================
+
+================================================================================
+SLIDE 112: Roadmap: TCP Sender and Receiver Operations
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.5 Connection-Oriented Transport: TCP
+• TCP Sender FSM, Receiver ACK Generation, and Retransmission Scenarios.
+
+================================================================================
+SLIDE 113: TCP Sender Mechanics (Simplified)
+================================================================================
+
+COMPUTER NETWORKS: TCP Sender (simplified)
+
+Event-Driven Sender Logic:
+1. Data Received from Application:
+   - Create TCP segment with sequence number = byte-stream offset of first data byte.
+   - Start timer if not already running (timer tracks oldest unACKed segment).
+   - Set expiration interval = `TimeoutInterval`.
+2. Timeout Occurs:
+   - Retransmit the segment that caused the timeout (the oldest unACKed segment).
+   - Restart the timer.
+3. Valid ACK Received:
+   - If ACK acknowledges previously unACKed bytes:
+     * Advance `SendBase`.
+     * If there are remaining unACKed segments, restart the timer; otherwise, stop the timer.
+
+================================================================================
+SLIDE 114: TCP Receiver: ACK Generation Rules [RFC 1122, RFC 5681]
+================================================================================
+
+COMPUTER NETWORKS: TCP Receiver: ACK Generation
+
++-------------------------------------------------------+-------------------------------------------------------+
+| Event at Receiver                                     | TCP Receiver Action                                   |
++-------------------------------------------------------+-------------------------------------------------------+
+| Arrival of in-order segment with expected seq #.      | Delayed ACK: Wait up to 500 ms for next segment. If   |
+| All data up to expected seq # already ACKed.          | no second segment arrives, transmit ACK.              |
++-------------------------------------------------------+-------------------------------------------------------+
+| Arrival of in-order segment with expected seq #.      | Immediately send single cumulative ACK, acknowledging |
+| One other segment has ACK pending.                    | both in-order segments!                               |
++-------------------------------------------------------+-------------------------------------------------------+
+| Arrival of out-of-order segment with higher-than-     | Immediately send DUPLICATE ACK, indicating the seq #  |
+| expected seq # (Gap detected!).                       | of the next expected byte.                            |
++-------------------------------------------------------+-------------------------------------------------------+
+| Arrival of segment that partially or completely fills | Immediately send cumulative ACK, provided segment     |
+| the gap.                                              | starts at lower end of gap.                           |
++-------------------------------------------------------+-------------------------------------------------------+
+
+================================================================================
+SLIDE 115: TCP Retransmission Scenarios: Lost ACK & Premature Timeout
+================================================================================
+
+COMPUTER NETWORKS: TCP: retransmission scenarios
+
+Scenario 1: Lost ACK:
+• Host A sends `Seq = 92, 8 bytes`.
+• Host B receives and returns `ACK = 100`.
+• `ACK = 100` is LOST in transit.
+• Host A times out, retransmits `Seq = 92, 8 bytes`.
+• Host B detects duplicate bytes 92–99, discards data, and re-sends `ACK = 100`.
+
+Scenario 2: Premature Timeout (Cumulative ACK Recovery):
+• Host A sends `Seq = 92, 8 bytes` and `Seq = 100, 20 bytes`.
+• Timeout for segment 92 fires before either ACK arrives!
+• Host A retransmits `Seq = 92, 8 bytes`.
+• Host B receives duplicate 92, but meanwhile sends cumulative `ACK = 120`.
+• When `ACK = 120` arrives at Host A, it advances `SendBase` all the way to 120, avoiding retransmitting segment 100!
+
+================================================================================
+SLIDE 116: TCP Retransmission Scenarios: Cumulative ACK Covers Lost ACK
+================================================================================
+
+COMPUTER NETWORKS: TCP: retransmission scenarios
+
+Scenario 3: Cumulative ACK Covers Earlier Lost ACK:
+• Host A sends `Seq = 92, 8 bytes` and `Seq = 100, 20 bytes`.
+• Host B sends `ACK = 100`, which is LOST.
+• Host B then sends `ACK = 120`, which arrives at Host A before the timer for segment 92 expires!
+• Result: Host A sees `ACK = 120`, which cumulatively acknowledges all bytes up to 119.
+• Host A does NOT retransmit segment 92 at all! The cumulative nature of TCP ACKs naturally heals lost ACKs without retransmissions.
+
+================================================================================
+SLIDE 117: TCP Fast Retransmit (Triple Duplicate ACKs)
+================================================================================
+
+COMPUTER NETWORKS: TCP fast retransmit
+
+Motivation:
+• Retransmission timeouts can be relatively long (hundreds of milliseconds).
+• Waiting for a timeout severely stalls throughput.
+
+Triple Duplicate ACKs Rule:
+• If the sender receives 3 duplicate ACKs (i.e., 4 identical ACKs total for the same byte), it triggers Fast Retransmit:
+  - Immediately retransmits the missing segment WITHOUT waiting for the timeout timer to expire!
+
+Why 3 Duplicate ACKs?
+• An out-of-order packet generates a duplicate ACK. If packets are slightly reordered by the network, 1 or 2 duplicate ACKs may occur naturally.
+• Receiving THREE duplicate ACKs strongly indicates that subsequent packets have arrived while one specific packet was genuinely lost.
+
+ASCII Fast Retransmit Flow:
+   Host A (Sender)                                Host B (Receiver)
+         |                                               |
+         | ----- Seq=92, 8 bytes ----------------------> | (Received, ACK=100)
+         | ----- Seq=100, 20 bytes ---X (LOST!)          |
+         | ----- Seq=120, 15 bytes --------------------> | (Out of order -> Duplicate ACK=100 #1)
+         | ----- Seq=135, 15 bytes --------------------> | (Out of order -> Duplicate ACK=100 #2)
+         | ----- Seq=150, 15 bytes --------------------> | (Out of order -> Duplicate ACK=100 #3)
+         |                                               |
+         | [3 Duplicate ACKs Received!]                  |
+         | ===== FAST RETRANSMIT: Seq=100 =============> | (Sent without waiting for timeout!)
+         v                                               v

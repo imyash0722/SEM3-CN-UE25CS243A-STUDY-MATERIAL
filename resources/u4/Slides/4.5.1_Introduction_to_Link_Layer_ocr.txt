@@ -1,0 +1,227 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+COMPUTER NETWORKS
+
+Link Layer and LAN
+
+TEAM NETWORKS
+Department of Computer Science and Engineering
+
+@ UNIVERSITY
+COMPUTER NETWORKS
+Unit — 4 Link Layer and LAN Roadmap
+
+Introduction
+Error detection, correction
+Multiple access protocols
+
+LANs
+addressing, ARP
+Ethernet
+Switches
+VLANSs
+A day in the life of a web request
+Physical layer
+Wireless LANs: IEEE 802.11
+
+@ UNIVERSITY
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Introduction
+COMPUTER NETWORKS
+Introduction to Link layer
+
+mobile network
+
+al or global ISP
+
+datacenter
+network
+
+Terminology:
+
+Hosts, routers, switches, WiFi access points:
+Nodes
+
+communication channels that connect adjacent
+nodes along communication path: Links
+
+* wired
+
+* wireless
+
+layer-2 packet: frame, encapsulates datagram
+
+enterprise
+network
+
+link layer has responsibility of
+transferring datagram from one node to
+physically adjacent node over a link
+
+COMPUTER NETWORKS
+Link Layer: Context
+
+@ UNIVERSITY
+
+Datagram transferred by
+different link protocols over
+different links:
+
+* e.g., WiFi on first link,
+
+Ethernet on next link
+
+Each link protocol provides
+different services
+* e.g., may or may not provide
+reliable data transfer over
+link
+
+transportation analogy:
+
+trip from Princeton to Lausanne
+
+* limousine: Princeton to JFK airport
+* plane: JFK to Geneva
+
+* train: Geneva to Lausanne
+
+tourist = datagram
+transport segment = communication link
+transportation mode = link-layer protocol
+
+travel agent = routing algorithm
+COMPUTER NETWORKS
+Link Layer: Services
+
+@ UNIVERSITY
+
+framing, link access:
+
+* encapsulate datagram into frame, adding
+header, trailer
+
+e channel access if shared medium
+
+* “MAC” addresses in frame headers identify
+source, destination (different from IP
+address!)
+
+reliable delivery between adjacent
+nodes
+
+* we already know how to do this!
+
+* rarely used on low bit-error links (coax, fiber,
+etc)
+
+* wireless links: high error rates
+COMPUTER NETWORKS
+Link Layer: Services
+
+@ UNIVERSITY
+
+cellular e q
+e
+
+pe 55> v
+. i Ethernet LANs
+[ / e 55>
+// T
+éf WiFi g
+
+flow control:
+* pacing between adjacent sending and
+receiving nodes
+error detection:
+* errors caused by signal attenuation, noise.
+* receiver detects errors, signals
+retransmission, or drops frame
+error correction:
+* receiver identifies and corrects bit error(s)
+without retransmission
+half-duplex and full-duplex:
+
+* with half duplex, nodes at both ends of
+link can transmit, but not at same time
+COMPUTER NETWORKS
+Where is the link layer implemented?
+
+In each-and-every host
+
+Link layer implemented in network
+interface card (NIC) or on a chip
+
+* Ethernet, WiFi card or chip
+* implements link, physical layer
+Attaches into host’s system buses
+
+Combination of hardware, software,
+firmware
+
+i
+
+application
+
+cpu
+
+4
+
+control
+
+¥
+
+physical
+
+<
+
+e
+
+P
+
+network interface
+
+(e.g., PCl)
+
+COMPUTER NETWORKS @ -
+Interfaces communicating
+
+application application
+
+ransport transport
+
+datagram hetwork cpu memory memory | CPU network
+[ tink | v link
+
+= —=
+
+i v iy
+. . 1 1 , |
+|I|nkh datagram Flink Cor}troller | | contrfoller i datagram
+physical ¥ 1 1 V- physical
+. physical | | physical
+Sending side: Receiving side:
+encapsulates datagram in frame looks for errors, reliable data transfer,
+adds error checking bits, reliable flow control, etc.
+data transfer, flow control, etc. extracts datagram, passes to upper layer
+
+at receiving side
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

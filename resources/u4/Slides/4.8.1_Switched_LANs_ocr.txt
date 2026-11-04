@@ -1,0 +1,1475 @@
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+L
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+LL addressing, ARP
+COMPUTER NETWORKS @ —
+MAC Addresses
+
+32-bit IP address:
+* network-layer address for interface
+
+* used for layer 3 (network layer) forwarding
+* e.8.:128.119.40.136
+
+MAC (or LAN or physical or Ethernet) address:
+
+* function: used “locally” to get frame from one interface to another physically-
+connected interface (same subnet, in IP-addressing sense)
+
+* 48-bit MAC address (for most LANs) burned in NIC ROM; usually unique; often
+
+software-assigned on Wi-Fi (private addresses); also sometimes software
+settable
+
+* e.g.: 1A-2F-BB-76-09-AD
+T~ hexadecimal (base 16) notation
+(each “numeral” represents 4 bits)
+COMPUTER NETWORKS
+MAC Addresses
+
+Each interface on LAN
+has unique 48-bit MAC address
+has a locally unique 32-bit IP address (as we’ve seen)
+
+- q 137.196.7.78
+«—1A-2F-BB-76-09-AD
+I =
+
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-53
+137.196.7.23
+
+]«— oc-c4-11-6F-E3-98
+137.196.7.88
+
+——
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ —
+MAC Addresses
+
+MAC address allocation administered by IEEE
+
+manufacturer buys portion of MAC address space (to assure
+uniqueness)
+
+analogy:
+* MAC address: like Aadhar number
+* |P address: like postal address
+
+MAC flat address: portability
+* can move interface from one LAN to another
+
+* recall IP address not portable: depends on IP subnet to
+which node is attached
+COMPUTER NETWORKS
+Private Wi-Fi addresses
+
+@ UNIVERSITY
+
+Factory address: the same everywhere
+
+Mall Airport
+58-23-D7-FA-20-BO 58-23-D7-FA-20-BO
+
+Campus
+58-23-D7-FA-20-BO
+
+X same ID at every place - visits can be linked to one phone
+
+Private address: made up, one per network
+
+Mall Airport
+6A-41-9C-0E-77-15 3E-D0-52-B8-19-A4
+
+Campus
+D2-7B-E3-46-0F-C9
+
+v adifferent ID at each place -> the visits don't match
+
+= Anyone nearby can read it
+The address travels unscrambled in every Wi-Fi frame, even while a
+phone searches for networks.
+
+m A fixed address is a tracking ID
+Shops, malls and venues can spot the same phone across days and
+places.
+
+u The fix: invent one per network
+
+Each network sees a different address. Some phones also change it
+every two weeks. The second hex digit: 2, 6, A or E means locally
+assigned — second lowest bit indicated “locally assigned” flag.
+
+= The cost
+Sign-ins tied to an address, fixed IP bookings and device allow-lists
+can break.
+
+A MAC address only has to be unique on one LAN, so a phone can safely invent one for each network.
+
+COMPUTER NETWORKS @ PES
+ARP: Address Resolution Protocol "
+
+Question: how to determine interface’s MAC address, knowing its IP address?
+
+ARP table: each IP node (host, router)
+on LAN has table
+
+* IP/MAC address mappings for some
+
+137.196.7.78 LAN nodes:
+<« 1A-2F-BB-76-09-AD
+
+iARP < IP address; MAC address; TTL>
+%T * TTL (Time To Live): time after which
+S L65-F7.28.08. £8.93.07-FA20.80 address mapping will be forgotten
+
+137.196.7.23 137.196.7.14 (typlca”y minutes, va rieS)
+
+rplH<— oc-ca-11-6F-£3-98
+137.196.7.88
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+* B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+A broadcasts ARP query, containing B's IP addr
+
+@ + destination MAC address = FF-FF-FF-FF-FF-FF Ethernet frame (sent to FF-FF-FF-FF-FF-FF)
+* all nodes on LAN receive ARP query q C Source MAC: 71-65-F7-2B-08-53
+
+Source IP: 137.196.7.23
+
+ARP table in A Target IP address: 137.196.7.14
+
+IP addr MAC addr TTL
+
+r=
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-
+137.196.7.23
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+* B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+ARP message into Ethernet frame
+(sent to 71-65-F7-2B-08-53)
+
+C Target IP address: 137.196.7.14
+Target MAC address:
+) 58-23-D7-FA-20-B0
+=3
+T =
+58-23-D7-FA-20-BO
+137.196.7.14
+
+ARP table in A
+IP addr MAC addr TTL
+
+71-65-F7-2B-08-
+137.196.7.23
+
+B replies to A with ARP response,
+giving its MAC address
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+ARP Protocol in action
+
+Example: A wants to send datagram to B
+e B’s MAC address not in A’s ARP table, so A uses ARP to find B’s MAC address
+
+ARP table in A
+IP addr MAC addr TTL
+137.196.7.14 58-23-D7-FA-20-B0 500
+
+58-23-D7-FA-20-B0
+137.196.7.14
+
+71-65-F7-2B-08-
+137.196.7.23
+
+A receives B’s reply, adds B entry
+into its local ARP table
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Asking everyone on the LAN
+
+A asks “who has B's IP address?” in a frame sent to FF-FF-FF-FF-FF-FF. Who receives it, and who
+answers?
+
+a Only Breceives it, and B then answers A b All nodes receive it; only B answers, to A
+
+¢ All nodes receive it, and all of them answer A d Only the router receives it and answers for B
+
+Answer: (b). All ones means 'everyone on this LAN', so B, C and D all read it. Only B's IP matches, and B replies to A alone.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+After the exchange
+
+A asked, B answered. Whose ARP table now has a new entry?
+
+a Only A's (B's address) b A's and B's (each other's)
+
+¢ Every node's on the LAN d Only the switch's table
+
+Answer: (b). A stores B's MAC from the reply. B stored A's from the question, so it could answer without asking back. C
+and D usually ignore it.
+
+[ Anyone can send a reply that claims an IP address. ARP trusts what it hears. ]
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+Walkthrough: sending a datagram from Ato Bvia R
+Focus on addressing — at IP (datagram) and MAC layer (frame) levels
+Assume that:
+* A knows B’s IP address
+
+* A knows IP address of first hop router, R (how?)
+* Aknows R’s MAC address (how?)
+
+ALY B
+111.111.111.111T r%
+74-29-9C-E8-FF-55
+3 49-BD-D2-C7-56-2A
+
+222.222.222.222
+
+222.222.222.220
+%f 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T%‘
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+IP and MAC addresses given according to the diagram
+
+Device IP Address MAC Address
+
+A (upper-left host) 111.111.111.111 74-29-9C-E8-FF-55
+Left lower host 111.111.111.112 CC-49-DE-D0-AB-7D
+R —left interface 111.111.111.110 E6-E9-00-17-BB-4B
+R —right interface 222.222.222.220 1A-23-F9-CD-06-9B
+Right lower host 222.222.222.221 88-B2-2F-54-1A-0F
+B (upper-right host) 222.222.222.222 49-BD-D2-C7-56-2A
+
+Left subnet (111.111.111.0/24)
+
+@ UNIVERSITY
+
+Step 1 — Only these four
+entries (left and right subnet)
+actually get created by an
+A->B transmission — A never
+learns B's MAC and B never
+learns A's MAC, because ARP
+can't cross the router. (The
+other two hosts, .112 and
+.221, aren't involved unless
+they generate traffic
+themselves.)
+
+Right subnet (222.222.222.0/24)
+
+Device
+
+ARP table entries
+
+Device
+
+ARP table entries
+
+A(111.111.111.111)
+
+111.111.111.110 -> E6-E9-00-17-BB-4B
+
+R, left interface
+(111.111.111.110)
+
+111.111.111.111 -> 74-29-9C-E8-FF-55
+
+R, right interface
+(222.222.222.220)
+
+222.222.222.222 - 49-BD-D2-C7-56-2A
+
+B (222.222.222.222)
+
+222.222.222.220 -> 1A-23-F9-CD-06-9B
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+Step 2 — Why Riis involved at all
+
+A compares its own IP (111.111.111.111) against B's IP (222.222.222.222) using the subnet mask.
+Different network portion = B is not on A's LAN. So A doesn't try to resolve B's MAC directly — it sends
+the datagram to its default gateway, router R, and lets R forward it. This decision happens once, before
+any ARP request is sent.
+
+Step 3 — Hop 1: A resolves R's MAC (ARP on the left LAN)
+
+Assume A's ARP cache is empty.
+
+ARP request (broadcast): A broadcasts a frame to FF-FF-FF-FF-FF-FF on the left LAN: "Who has
+111.111.111.110?Tell 111.111.111.111." Every device on that LAN's cloud receives it (including the .112
+host), but only R recognizes the target IP as its own.
+
+ARP reply (unicast): R replies directly to A: "111.111.111.110 is at E6-E9-00-17-BB-4B.”
+
+Host A caches this mapping.
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+A creates IP datagram with IP source A, destination B
+A creates link-layer frame containing A-to-B IP datagram
+
+¢ R's MAC address is frame’s destination
+
+MAC src: 74-29-9C-E8-FF-55
+MAC dest: E6-E9-00-17-BB-4B
+
+IP src: 111.111.111.111
+IP dest: 222.222.222.222
+
+IP
+Eth
+Phy
+
+e
+
+111.111.111.111
+74-29-9C-E8-FF-55 — T —
+
+%/ 222.222.222.220
+=
+
+1 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B
+
+222.222.222.222
+49-BD-D2-C7-56-2A
+/™
+T\o’
+
+222222.222.221
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+frame sent from Ato R
+frame received at R, datagram removed, passed up to IP
+
+MAC src: 74-29-9C-E8-FF-55
+
+MAC dest: E6-E9-00lP7AmRI4.111.111.111
+IP src: 111.111.11 f4get 222.222.222.222
+
+1P 1P
+Eth Eth
+Phy Phy
+
+A
+
+111. 111 111 111
+
+74-29-9C-E8-FF-55 — —— 222.222.222.222
+T 49-BD-D2-C7-56-2A
+%/ 222.222.222.220 \
+%f 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T%
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+Step 4 — A sends the frame (Frame 1: A >
+R)
+
+A now encapsulates the IP datagram in an
+Ethernet frame addressed at the link layer to
+R, even though the datagram itself is
+addressed to B:
+
+The key idea is : IP addresses stay the same
+end-to-end; MAC addresses only get you to
+the next hop.
+
+Field Value
+
+74-29-9C-E8-FF-55
+(A)
+
+E6-E9-00-17-BB-4B
+(R, left interface)
+
+IP src 111.111.111.111 (A)
+IP dst 222.222.222.222 (B)
+
+Frame src MAC
+
+Frame dst MAC
+
+Step 5 — R receives, strips the frame, checks the
+routing decision
+
+R's left interface receives the frame, strips the
+Ethernet header, and hands the IP datagram up to
+the network layer. R looks at the destination IP
+(222.222.222.222), consults its routing table, and
+determines it should go out the right interface onto
+the 222.222.222.0/24 subnet.
+
+Step 6 — Hop 2: R resolves B's MAC (ARP on the
+right LAN)
+
+R's right-interface ARP cache is also empty initially.
+ARP request (broadcast): R broadcasts on the right
+LAN: "Who has 222.222.222.2227? Tell
+222.222.222.220."
+
+ARP reply (unicast): B replies: "222.222.222.222 is
+at 49-BD-D2-C7-56-2A."
+
+R caches this.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+R determines outgoing interface, passes datagram with IP source A, destination B
+to link layer
+
+R creates link-layer frame containing A-to-B IP datagram. Frame destination
+address: B's MAC address
+
+MAC src: 1A-23-F9-CD-06-9B
+MAC dest: 49-BD-D2-C7-56-2A
+
+IP src: 111.111.111.111
+IP dest: 222.222.222.222
+
+1P
+Eth
+Phy
+111.111.111.111 > 4
+74-29-9C-E8-FF-55 — I 222.222.222.222
+- + 49-BD-D2-C7-56-2A
+%/ 222.222.222.220 N/
+>3 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T\l
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+R determines outgoing interface, passes datagram with IP source A,
+destination B to link layer
+
+R creates link-layer frame containing A-to-B IP datagram. Frame
+destination address: B's MAC address
+
+MAC src: 1A-23-F9-CD-06-9B
+
+Transmits link-layer frame MAGC dest: 49-BD-D2-C7-56-2A
+IP src: 111.111.111.111
+
+IP dest: 222.222.222.222
+
+1P
+P Eth
+Eth Phy
+Phy
+éé\ /:Q
+111.111.111.111 > g
+74-29-9C-E8-FF-55 — I 222.222.222.222
+- + 49-BD-D2-C7-56-2A
+¥/ 222.222.222.220 /™
+>3 1A-23-F9-CD-06-9B
+111.111.111.112 111.111.111.110 T\l’
+CC-49-DE-DO-AB-7D E6-E9-00-17-BB-4B 222.222.222.221
+
+88-B2-2F-54-1A-0F
+COMPUTER NETWORKS
+Routing to another Subnet : Addressing
+
+@ UNIVERSITY
+
+Step 7 — R re-encapsulates and sends (Frame 2:
+
+R - B)
+
+R builds a brand-new Ethernet frame — different
+source and destination MACs than Frame 1, but
+the same IP datagram, unmodified:
+
+Field
+
+Value
+
+Frame src MAC
+
+1A-23-F9-CD-06-9B (R, right
+interface)
+
+Frame dst MAC
+
+49-BD-D2-C7-56-2A (B)
+
+IP src
+
+111.111.111.111 (A) — unchanged
+
+IP dst
+
+222.222.222.222 (B) — unchanged
+
+Step 8 — B receives
+
+B's NIC sees its own MAC as the destination,
+accepts the frame, strips the Ethernet
+header, and passes the IP datagram up. B
+checks the destination IP matches its own —
+it does — and delivery is complete.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+B receives frame, extracts IP datagram destination B
+
+B passes datagram up protocol stack to IP
+
+IP src: 111111411711
+IP dest: 222.222.222.222
+
+IP
+P Eth
+Eth Phy
+
+Phy
+
+AL B
+D]
+' T~
+i 49-BD-D2-C7-56-2A
+f
+
+222.222.222.220
+e —— 1A-23-F9-CD-06-9B
+e
+
+111.111.111.112 111.111.111.110
+CCa0 DE BrAnTe 1.111.111.110 222.222.222.221
+E6-£9-00-17-BB-4B 88-B2-2F-54-1A-0F
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Routing to another Subnet : Addressing
+
+B receives frame, extracts IP datagram destination B
+
+B passes datagram up protocol stack to IP
+
+IP src: 111111411711
+IP dest: 222.222.222.222
+
+IP
+P Eth
+Eth Phy
+
+Phy
+
+AL B
+D]
+' T~
+i 49-BD-D2-C7-56-2A
+f
+
+222.222.222.220
+e —— 1A-23-F9-CD-06-9B
+e
+
+111.111.111.112 111.111.111.110
+CCa0 DE BrAnTe 1.111.111.110 222.222.222.221
+E6-£9-00-17-BB-4B 88-B2-2F-54-1A-0F
+
+COMPUTER NETWORKS
+Routing to another Subnet : frame-by-frame sequence.
+
+PES
+
+UNIVERSITY
+
+@
+
+Step | Sender | Receiver Message / Action Source MAC Destination MAC Type
+(internal A compares its subnet (111.111.111.0/24) with Internal (routin
+1 A decision) B's IP (222.222.222.222) — different network > |— — decision) g
+send to default gateway R, not directly to B
+All devices |ARP Request—"Who has 111.111.111.110? Tell |74-29-9C-E8-FF-55
+2 A on left LAN |111.111.111.111" (A) FF-FF-FF-FF-FF-FF  [Broadcast
+ARP Reply —"111.111.111.110 is at E6-E9-00-17- |E6-E9-00-17-BB-4B |74-29-9C-E8-FF-55 .
+3 Router R |A BB-4B" (R, left) (A) Unicast
+4 A R Data frame (1) — IP datagram (src 74-29-9C-E8-FF-55 |E6-E9-00-17-BB-4B Unicast
+111.111.111.111, dst 222.222.222.222) (A) (R, left)
+. R strips the frame, reads dst IP 222.222.222.222, .
+(internal . ; Internal (routing
+5 R - checks routing table - forward out right — — L.
+decision) |. decision)
+interface
+All devices
+. ARP Request — "Who has 222.222.222.222? Tell |1A-23-F9-CD-06-9B
+6 R on right 222.222.222.220" (R, right) FF-FF-FF-FF-FF-FF  |Broadcast
+LAN
+ARP Reply — "222.222.222.222 is at 49-BD-D2-C7-|49-BD-D2-C7-56-2A |1A-23-F9-CD-06-9B .
+7 B R " . Unicast
+56-2A (B) (R, right)
+Data frame (2) — same IP datagram (src
+8 R B 111.111.111.111, dst 222.222.222.222), re- 1A-23-F9-CD-06-9B  [49-BD-D2-C7-56-2A,; 5o
+
+encapsulated
+
+(R, right)
+
+(B)
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+
+Ethernet
+
+
+COMPUTER NETWORKS @ PES
+Ethernet
+
+“dominant” wired LAN technology:
+first widely used LAN technology
+simpler, cheap
+kept up with speed race: 10 Mbps — 800 Gbps with 1.6Tbps on the way
+single chip, multiple speeds
+Ethernet’ Success
+* First widely deployed high-speed LAN
+
+* Token ring, FDDI, and ATM were more complex and expensive than Ethernet
+* Operated at equal data rates or higher.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @9
+Ethernet : Physical Topology
+
+Bus: popular through mid 90s
+* all nodes in same collision domain (can collide with each other)
+
+Switched: prevails today
+* active link-layer 2 switch in center
+
+* each “spoke” runs a (separate) Ethernet protocol (nodes do not
+collide with each other)
+
+i
+
+bus: coaxial cable Q_ E‘g switched
+
+g
+
+<4
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Hub or switch?
+
+Eight PCs are plugged into one hub. Another eight are plugged into one switch. How many
+separate collision domains does each have?
+
+a Hub: 1; switch: 8 b Hub: 8; switch: 1
+
+¢ Hub: 1; switch: 1 d Hub: 8; switch: 8
+
+Answer: (a). A hub repeats every bit to every port, so all eight share one channel. A switch gives each port its own. With
+full-duplex links nothing collides at all.
+
+COMPUTER NETWORKS e@ PES
+
+UNIVERSITY
+
+Ethernet Frame Structure
+
+Sending interface encapsulates IP datagram (or other network
+layer protocol packet) in Ethernet frame
+
+type
+
+Preamble:
+Used to synchronize receiver, sender clock rates
+7 bytes of 10101010 followed by one byte of 10101011
+COMPUTER NETWORKS @ PES
+Ethernet Frame Structure ( more)
+
+dest. source data (payload)
+
+preamble ! address | addreis
+
+Addresses: 6 byte source, destination MAC addresses
+
+* if adapter receives frame with matching destination address, or with broadcast
+address (e.g., ARP packet), it passes data in frame to network layer protocol
+
+* otherwise, adapter discards frame
+* Destination comes first so a card can decide "is this for me?" as early as possible.
+
+Type: indicates higher layer protocol
+* mostly IP but others possible, e.g., Novell IPX, AppleTalk
+
+* used to demultiplex up at receiver
+
+CRC: cyclic redundancy check at receiver
+* error detected: frame is dropped
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+Smallest and largest frame
+
+Worked solution
+
+Destination 6 bytes, source 6, type 2, data 46 to 1500, CRC 4. What is the smallest frame, and
+the largest?
+
+dest. source type data CRC
+6 bytes 6 bytes 2 bytes 46 — 1500 bytes 4 bytes
+
+Smallest 6 +6 + 2 + 46 + 4 = 64 bytes (=512 bits, Session 2's collision budget)
+Largest 6+ 6+ 2+ 1500 + 4 = 1518 bytes (1500 is the MTU from Unit 3)
+
+Short data 20 bytes of data = 26 bytes of padding added to reach 46
+
+Answer: 64 bytes and 1518 bytes. The preamble (8 bytes) is not counted in either.
+
+COMPUTER NETWORKS
+Ethernet : Unreliable Connectionless
+
+Connectionless: no handshaking between sending and receiving
+NICs
+
+Unreliable: receiving NIC doesn’t send ACKs or NAKs to sending
+NIC
+
+* data in dropped frames recovered only if initial sender uses
+higher layer rdt (e.g., TCP), otherwise dropped data lost
+
+Ethernet’s MAC protocol: unslotted CSMA/CD with binary
+backoff on shared links
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Unreliable, by design
+
+A frame carrying part of your download fails its CRC check at the second router. Who notices,
+and who sends the data again?
+
+a The second router asks the first one to resend b TCP at the sender notices the gap and resends
+
+¢ The first router resends after a short timeout d Nobody: the file arrives with a hole in it
+
+Answer: (b). Ethernet drops the frame silently: no acknowledgements, no resends. TCP sees the missing bytes and resends
+the segment end to end.
+
+COMPUTER NETWORKS
+
+802.3 Ethernet Standards: Link and Physical Layers
+
+Many different Ethernet standards
+* Common MAC protocol and frame format
+* Different speeds: 2 Mbps, 10 Mbps, 100 Mbps, 1Gbps, 10 Gbps, 40 Gbps, ...
+
+* Different physical layer media: fiber, cable
+
+application
+
+transport
+
+network
+
+link
+
+physical
+
+copper (twisted pair) physical layer
+
+MAC protocol
+
+and frame format
+
+100BASE-TX
+
+100BASE-T2 I 100BASE-FX
+
+100BASE-T4
+
+100BASE-SX 100BASE-BX
+
+/
+
+fiber physical layer
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Reading an Ethernet name
+
+Decode the two names: what speed, and what kind of cable?
+
+100 BASE -TX / -FX
+speed in Mb/s one signal on the wire the medium
+Name Speed and cable
+100BASE-TX [ 100 Mb/s over twisted-pair copper
+100BASE-FX [ 100 Mb/s over optical fibre
+
+Different cables, same frames: the frame format and addresses never change.
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Unit — 4 Link Layer and LAN Roadmap
+
+Switched LANs
+
+Switches
+COMPUTER NETWORKS @ PES
+Ethernet switch
+
+Switch is a link-layer device: takes an active role
+* Stores and forwards Ethernet frames
+
+* Examine incoming frame’s MAC address, selectively forward frame to one-or-
+
+more outgoing links when frame is to be forwarded on segment, uses CSMA/CD
+to access segment
+
+Transparent: hosts unaware of presence of switches
+Plug-and-play, self-learning
+
+* Switches do not need to be configured manually for forward function, hence Plug-
+and-play. Managed switches are configured for VLANs and security".
+
+* Self-learning — forwarding information is learned automatically.
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Switch : Multiple Simultaneous Transmissions
+
+Hosts have dedicated, direct connection
+to switch
+
+Switches buffer packets
+
+Ethernet protocol used on each incoming
+link, so:
+
+* no collisions; full duplex
+* each link is its own collision domain
+
+Switching: A-to-A’ and B-to-B’ can transmit
+
+simultaneously, without collisions switch with six
+
+interfaces (1,2,3,4,5,6)
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS @
+Switch: Multiple Simultaneous Transmissions
+
+Hosts have dedicated, direct connection
+to switch
+
+Switches buffer packets
+
+Ethernet protocol used on each incoming
+link, so:
+
+* No collisions; full duplex
+* Each link is its own collision domain
+
+Switching: A-to-A’ and B-to-B’ can transmit
+simultaneously, without collisions switch with six
+
+* but A-to-A’ and Cto A’ can not happen interfaces (1,2,3,4,5,6)
+simultaneously
+COMPUTER NETWORKS
+Switch Forwarding Table
+
+@ UNIVERSITY
+
+Q: How does switch know A’ reachable via interface 4,
+
+B’ reachable via interface 5?
+
+A: Each switch has a switch table, each entry:
+
+g[A
+C’ i
+"s% 1 5
+
+Wz
+(MAC address of host, interface to reach 6T
+host, time stamp) L 2_ 5 g
+looks like a routing table! \E’?/ %
+Q: How are entries created, maintained in - N
+switch table?
+something like a routing protocol? MAC Interface | A€INE/TiMe
+Address Information
+A 1 60s
+A 4 60s
+B 2 60s
+
+COMPUTER NETWORKS
+Switch: Self-learning
+
+@ UNIVERSITY
+
+Switch /learns which hosts can be
+reached through which interfaces
+
+* When frame received, switch
+“learns” location of sender:
+incoming LAN segment
+
+* Records sender/location pair in
+
+switch table
+
+Switch table
+(initially empty)
+
+Source: A
+// Dest: A’
+
+MAC addr
+
+interface
+
+TTL
+
+A
+
+1
+
+60
+
+COMPUTER NETWORKS
+Switch: Frame Filtering / Forwarding
+
+When frame received at switch:
+
+1. Record incoming link, MAC address of sending host
+2. Index switch table using MAC destination address
+
+3. If entry found for destination
+then {
+
+If destination on segment from which frame arrived
+then drop frame
+
+else forward frame on interface indicated by entry
+
+}
+
+else flood /* forward on all interfaces except arriving interface */
+
+frames sent to the broadcast address (FF-FF-FF-FF-FF-FF) are always
+flooded, because no device "lives" at that address
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Self-learning, Forwarding: Example
+
+@ UNIVERSITY
+
+Source: A
+
+Frame destination, A’, location
+unknown: Flood
+
+Destination A location
+
+known: Selectively send on just
+
+one link
+MAC addr |interface |TTL
+A 1 60
+A’ 4 60
+
+/ Dest: A’
+
+switch table
+(initially empty)
+
+BI
+
+COMPUTER NETWORKS @ e
+Interconnecting Switches
+
+Self-learning switches can be connected together:
+
+Q: sending from A to G - how does S, know to
+forward frame destined to G via S, and S;?
+A: self learning! (works exactly the same as in
+single-switch case!)
+COMPUTER NETWORKS e@ PES
+
+UNIVERSITY
+
+Self-learning Multi-switch Example
+
+Suppose C sends frame to |, | responds to C m
+
+Address Port
+C 1
+
+| 4 | switcha
+
+Address Port
+
+g | C 1
+| 3
+
+Address Port
+
+Q: show switch tables and packet
+
+forwardinginS;, S,, S5, S, ¢ ¢ m
+
+Address Port
+
+C 4
+| 3
+COMPUTER NETWORKS @ PES
+Why doesn't S2 learn I?
+
+On previous slide, C sends a frame to |, and | replies to C. Switch 2 ends up knowing where C is,
+but not I. Why?
+
+a S4 knew C was toward S1, so I's reply skipped S2 b S2's table was full, so it ignored I's address
+
+d I's reply was a broadcast; switches don't learn
+
+¢ S2 learns only from frames addressed to it
+those
+
+Answer: (a). C's first frame was flooded everywhere, so every switch learned C. I's reply was addressed to C, and S4 sent it
+only toward S1.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Small Institutional Network
+
+I mail server
+to externa —
+network = =
+ol web server
+>
+IP subnet
+[ ==
+= [ == =<
+COMPUTER NETWORKS
+Switches Vs Routers
+
+Both are usually store-and-forward:
+
+Routers: network-layer devices (examine
+network-layer headers)
+
+Switches: link-layer devices (examine link-
+layer headers)
+
+Both have forwarding tables:
+
+Routers: compute tables using routing
+algorithms, IP addresses
+
+Switches: learn forwarding table using
+flooding, learning, MAC addresses
+
+application
+ransport -
+datagram | [network
+frame link i
+. [
+physical link frame
+1P G hysical
+switch
+| T |
+nei'we*k_ ldiat?gram
+@ Iink frame
+I physical
+lapplication
+transport
+network
+link
+—physieat 17 o
+
+A
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+How far does a broadcast go?
+
+In slide 71's network (many switches, one router to the outside), a laptop sends an ARP
+broadcast. Which devices receive it?
+
+a Only devices on the laptop's own switch b Only the router, which answers for everyone
+
+¢ Every device on every switch, up to the router d Every device, including networks outside
+
+stops it.
+
+Answer: (c). Every switch floods broadcasts on all its ports, so the whole building is one broadcast domain. Only the router ]
+
+[ One building, one broadcast domain: every ARP and every unknown frame reaches everyone. VLANs fix this. ]
+
+COMPUTER NETWORKS @ —
+Virtual LANs (VLANS)
+
+What is a VLAN?
+
+A Virtual Local Area Network (VLAN) is a method of dividing a single physical switched
+network into multiple logical LANs. Devices belonging to the same VLAN can communicate
+as if they are connected to the same physical network, even if they are connected to
+different switches or different locations.
+
+Why Do We Need VLANs?
+
+A traditional switched LAN can form a single broadcast domain.
+
+As the LAN grows:
+
+* Layer-2 broadcast traffic increases.
+
+* Broadcast traffic such as ARP, DHCP, and unknown-destination MAC frames can reach a
+large number of hosts.
+
+* This can create scaling and efficiency problems.
+
+* Alarge common broadcast domain can also create security and privacy concerns.
+
+
+COMPUTER NETWORKS @ —
+Virtual LANs (VLANS) - Motivation ounveRsITY
+
+Q: What happens as LAN sizes scale, users change point of attachment?
+
+single broadcast domain:
+
+= scaling: all layer-2 broadcast traffic
+(ARP, DHCP, unknown MAC) must
+cross entire LAN
+
+= efficiency, security, privacy, efficiency
+issues
+
+administrative issues:
+
+= CS user moves office to EE - physically
+attached to EE switch, but wants to
+remain logically attached to CS
+switch
+
+Without VLANSs: A broadcast can potentially reach hosts throughout the LAN.
+With VLANs: Forms a separate logical Layer-2 network.
+
+COMPUTER NETWORKS @ =
+Inside the 4-byte VLAN tag
+
+dest. address source address VLAN tag type data CRC
+6 bytes 6 bytes 4 bytes 2 bytes 46 — 1500 bytes 4 bytes (recomputed)
+T T e
+et T
+ettt =T =P
+tag marker: 81-00 priority drop VLAN number
+16 bits 3 bits 1 bit 12 bits
+
+m Tag marker 81-00 m Priority, 0to 7
+
+Sits where the type field was, so any switch knows a tag follows. Which frames leave first when a queue fills. Voice is usually 5.
+
+m Drop flag u VLAN number: 4,094 usable
+
+Which frames to throw away first if the switch is overloaded. 12 bits give 4,096 values; 0 and 4,095 are reserved.
+
+Four bytes after the source address tell every switch the frame's VLAN. The largest frame grows from 1,518 to
+1,522 bytes.
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Access ports, trunk ports, and the untagged VLAN
+
+access: no tag access: no tag
+
+PC . i he
+
+(VLAN 10) Switch A Switch B (VLAN 20)
+trunk: VLAN 10 and 20 tagged; one VLAN untagged
+
+:I'::ebpelrcl):: Desk phone one wall port: PC untagged (data VLAN), phone tagged (voice VLAN, priority 5)
+
+m Access port = Trunk port
+
+One VLAN only. Frames to and from the device carry no tag. Many VLANSs on one cable, each frame tagged.
+
+m The untagged (native) VLAN = Allowed list
+
+One VLAN crosses each trunk untagged. Both ends must agree on which. A trunk should carry only the VLANs needed on the far side.
+
+= Voice VLAN
+
+Phone and PC share one port; the phone's tagged frames get priority.
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+How a VLAN-aware switch forwards
+
+VLAN MAC Port 1 Note the frame's VLAN
+From the port it arrived on, or from its tag if it came in on a trunk.
+10 A 1
+10 B 2 2 Learn
+Record (VLAN, source MAC) - port.
+20 C 5
+20 D 6 3 Look up (VLAN, destination)
+Known: send on that one port. Unknown or broadcast: flood, but only to ports in the
+10,20 (trunk) 8 same VLAN and trunks that carry it.
+
+Switch table, with a VLAN column
+4 Tag or untag on the way out
+
+Add the tag on trunk ports; remove it on access ports.
+
+[ Same learning rule, but every lookup and every flood stays inside one VLAN. ]
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Where does the broadcast go?
+
+A PC on access port 5 (VLAN 20) sends a broadcast. Ports 1-2 are VLAN 10, ports 5-6 are VLAN
+20, port 8 is a trunk carrying 10 and 20.
+
+a To every port: broadcasts ignore VLANs b To port 6 untagged, and port 8 tagged 20
+
+¢ Only to port 8, the trunk, tagged 20 d Only to the router, which handles broadcasts
+
+Answer: (b). Flooding stays inside VLAN 20: its other access port gets it without a tag, and the trunk carries it tagged 20.
+Ports 1-2 never see it.
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Port-Based VLANs port-based VIAN: switch ports grouped (by
+
+switch management software) so that
+
+Switch(es) supporting VLAN capabilities can be single physical switch ......
+
+configured to define multiple virtual LANS
+over single physical LAN infrastructure.
+Access ports / Port-based VLANS provides:
+
+1) traffic isolation: frames to/from ports 1-8
+can only reach ports 1-8
+
+* can also define VLAN based on MAC EE (VLA pors 19 €S (VLAN ports $-19)
+addresses of endpoints, rather than ... operates as multiple virtual switches
+switch port
+
+2) dynamic membership: ports can be
+dynamically assigned among VLANs
+
+3) forwarding between VLANS: done via
+routing (just as with separate switches)
+
+* in practice vendors sell combined
+switches plus routers
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Getting from one VLAN to another
+
+A router on one trunk A switch that can also route
+
+Router
+
+Switch
+
+one trunk: up in VLAN 10, back down in
+VLAN 20
+
+routing inside, one gateway per
+VLAN
+
+PC - VLAN 10 PC - VLAN 20 PC - VLAN 10 PC - VLAN 20
+m Each VLAN is its own IP network m Crossing means routing m Rules live here
+With its own gateway address: the router's side The frame goes up to the router and comes Which VLAN may reach which is decided at this
+facing that VLAN. back as a new frame in the other VLAN. router or firewall.
+
+A switch keeps VLANs apart; only a router can join them. Small sites use one trunk to a router; campuses use
+switches that route.
+
+COMPUTER NETWORKS @ PES
+Trunk port VLANs
+
+VLANS spanning multiple switches
+
+—
+
+=
+f/ 4 6 8
+
+//
+
+Ports 2,3,5 belong to EE VLAN
+Ports 4,6,7,8 belong to CS VLAN
+
+Trunk port: carries frames of several VLANs between switches
+
+= frames forwarded within VLAN between switches can’t be untagged Ethernet
+frames (must carry VLAN ID info)
+
+= 802.1Q adds/removes additional header fields for frames forwarded between
+trunk ports
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+VLANSs on a real campus
+
+Example plan How a device lands in its VLAN
+
+The lab desk socket is set to VLAN 30, whoever plugs in.
+10 Staff Staff systems, internet
+
+20 Students Learning portal, internet
+m By Wi-Fi network name
+
+30 Teaching labs Lab servers Each network name is tied to one VLAN: Staff Wi-Fi - 10,
+Guest Wi-Fi = 50.
+
+40 Cameras, loT Video recorder only
+50 Guest Wi-Fi Internet only = By login
+
+The network checks your username first, then puts you in your
+99 Switch management Network admins only VLAN, from any port.
+
+Group by who you are and what you may reach, not by where you sit.
+
+@ UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+PE Department of Computer Science and Engineering
+UNIVERSITY

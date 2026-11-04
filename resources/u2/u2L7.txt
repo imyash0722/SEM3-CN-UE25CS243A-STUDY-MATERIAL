@@ -1,0 +1,246 @@
+================================================================================
+COMPUTER NETWORKS (UE25CS243A)
+Unit 2 – Lecture 7: Principles of Reliable Data Transfer (RDT 1.0 to 3.0, Stop-and-Wait & Pipelining)
+Source Deck: Slides_Unit_2_Part_2.pdf (Slides 70 to 84)
+Prescribed Text: Computer Networking: A Top-Down Approach (Kurose & Ross, 8th Ed.)
+Total Slides in Lecture: 15
+================================================================================
+
+================================================================================
+SLIDE 70: Roadmap: Principles of Reliable Data Transfer
+================================================================================
+
+COMPUTER NETWORKS: Transport Layer - Roadmap
+
+Topic:
+3.4 Principles of Reliable Data Transfer (RDT)
+• Building reliable communication over an unreliable underlying channel.
+
+================================================================================
+SLIDE 71: Why Do We Need Reliable Data Transfer?
+================================================================================
+
+COMPUTER NETWORKS: Why do we need reliable data transfer?
+
+Objective:
+• Deliver application data correctly and reliably even when the underlying network is inherently unreliable.
+
+Challenges Encountered in Unreliable Channels:
+1. Bit Errors: Packets get corrupted in flight (bits flip).
+2. Packet Loss: Routers drop packets when buffer queues overflow.
+3. ACK Loss: Acknowledgments get lost on the return path.
+4. Packet Duplication: Retransmissions cause duplicate packets to arrive.
+5. Unknown Receiver State: Senders cannot know what happened without explicit feedback messages.
+
+================================================================================
+SLIDE 72: Principles of RDT: Service Abstraction
+================================================================================
+
+COMPUTER NETWORKS: Principles of reliable data transfer
+
+Service Abstraction:
+• To the application layer, the transport layer provides a Reliable Channel abstraction:
+  - Sending process pushes data into the channel; receiving process receives identical, uncorrupted data in order.
+
+================================================================================
+SLIDE 73: Principles of RDT: Implementation Reality
+================================================================================
+
+COMPUTER NETWORKS: Principles of reliable data transfer
+
+Implementation Reality:
+• Beneath the transport layer sits an Unreliable Channel (IP network).
+• Reliable Data Transfer protocols implement sender-side and receiver-side mechanisms to bridge this gap.
+
+================================================================================
+SLIDE 74: Principles of RDT: Protocol Complexity
+================================================================================
+
+COMPUTER NETWORKS: Principles of reliable data transfer
+
+Core Design Principle:
+• The complexity of a reliable data transfer protocol depends entirely on the characteristics and failure modes of the underlying unreliable channel:
+  - Can packets be corrupted? -> Requires Checksums.
+  - Can packets be lost? -> Requires Timers and Retransmissions.
+  - Can ACKs be corrupted or delayed? -> Requires Sequence Numbers.
+
+================================================================================
+SLIDE 75: Principles of RDT: State Asynchrony
+================================================================================
+
+COMPUTER NETWORKS: Principles of reliable data transfer
+
+Asynchronous State:
+• The sender and receiver cannot read each other's memory or internal state directly!
+• State can ONLY be communicated via messages traversing the unreliable network.
+
+================================================================================
+SLIDE 76: Principles of RDT: The Evolution of RDT Protocols
+================================================================================
+
+COMPUTER NETWORKS: Why do we need reliable data transfer?
+
+Evolutionary Protocol Steps:
+• rdt 1.0: Transfer over a completely reliable channel.
+• rdt 2.0: Channel with bit errors (Checksum, ACKs, NAKs).
+• rdt 2.1: Handling corrupted ACKs/NAKs (Sequence numbers 0 and 1).
+• rdt 2.2: NAK-free protocol using duplicate ACKs.
+• rdt 3.0: Channels with bit errors AND packet loss (Timers & timeout retransmissions).
+
+================================================================================
+SLIDE 77: Summary of Reliable Data Transfer (RDT) Foundations
+================================================================================
+
+COMPUTER NETWORKS: Summary of Reliable Data Transfer (RDT) Foundations
+
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| Version | Problems Addressed        | Key Mechanisms Introduced         | What It Handles                     |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| RDT 1.0 | Perfect channel           | None (Direct transmission, simple | Baseline functionality              |
+|         |                           | send & receive)                   |                                     |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| RDT 2.0 | Bit errors                | Checksums, ACKs, NAKs             | Detects & recovers corrupted data   |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| RDT 2.1 | Corrupted ACKs / NAKs     | Sequence Numbers (0, 1)           | Handles duplicate packets safely    |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| RDT 2.2 | Bit errors without NAKs   | NAK-free (Duplicate ACKs)         | Simplified feedback protocol        |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+| RDT 3.0 | Bit errors AND packet     | Countdown Timers & Timeout        | Recovers lost packets and lost ACKs |
+|         | loss                      | Retransmissions                   |                                     |
++---------+---------------------------+-----------------------------------+-------------------------------------+
+
+================================================================================
+SLIDE 78: Operation of RDT 3.0 (Alternating Bit Protocol): No Loss & Packet Loss
+================================================================================
+
+COMPUTER NETWORKS: Operation of RDT3.0, Alternating Protocol
+
+Scenario (a): Normal Operation (No Loss):
+• Sender sends `pkt0`, starts timer.
+• Receiver receives `pkt0`, delivers data, returns `ack0`.
+• Sender receives `ack0`, stops timer, sends `pkt1`.
+• Receiver receives `pkt1`, delivers data, returns `ack1`.
+
+Scenario (b): Lost Packet:
+• Sender sends `pkt1`, starts timer.
+• `pkt1` is LOST in the channel!
+• Receiver receives nothing, sends nothing.
+• Sender timer expires (TIMEOUT)!
+• Sender retransmits `pkt1`, restarts timer.
+• Receiver receives `pkt1`, delivers data, returns `ack1`.
+
+ASCII Diagram of Scenarios (a) and (b):
+       (a) Normal Operation                      (b) Packet Loss
+   Sender                Receiver           Sender                Receiver
+     |                     |                  |                     |
+     | ---- pkt 0 -------->|                  | ---- pkt 0 -------->|
+     | <--- ack 0 ---------|                  | <--- ack 0 ---------|
+     | ---- pkt 1 -------->|                  | ---- pkt 1 ---X (Lost)
+     | <--- ack 1 ---------|                  | [Timer Timeout!]    |
+     | ---- pkt 0 -------->|                  | ---- pkt 1 -------->|
+     | <--- ack 0 ---------|                  | <--- ack 1 ---------|
+     v                     v                  v                     v
+
+================================================================================
+SLIDE 79: Operation of RDT 3.0: Lost ACK & Premature Timeout
+================================================================================
+
+COMPUTER NETWORKS: Operation of RDT3.0, Alternating Protocol
+
+Scenario (c): Lost ACK:
+• Sender sends `pkt1`.
+• Receiver receives `pkt1`, sends `ack1`.
+• `ack1` is LOST in transit!
+• Sender timer expires (TIMEOUT).
+• Sender retransmits `pkt1`.
+• Receiver detects DUPLICATE `pkt1` (using seq #1), discards data, but re-sends `ack1`!
+• Sender receives `ack1`, proceeds to `pkt0`.
+
+Scenario (d): Premature Timeout (Delayed ACK):
+• Sender sends `pkt1`, timer interval is too short.
+• Timer expires before `ack1` arrives.
+• Sender retransmits `pkt1`.
+• Delayed `ack1` arrives; sender transitions to sending `pkt0`.
+• Duplicate `pkt1` arrives at receiver; receiver re-sends `ack1`.
+• Sender receives redundant `ack1` and safely ignores it.
+
+Alternating Bit Protocol:
+Because sequence numbers alternate between 0 and 1, rdt 3.0 is commonly known as the Alternating Bit Protocol.
+
+================================================================================
+SLIDE 80: Performance of RDT 3.0: Stop-and-Wait Setup
+================================================================================
+
+COMPUTER NETWORKS: Performance of rdt3.0 (stop-and-wait)
+
+Sender Utilization Definition:
+• Utilization ($U_{sender}$): Fraction of total time the sender is actively transmitting bits into the physical channel.
+
+Example Scenario Parameters:
+• Transmission Rate ($R$): 1 Gbps ($10^9$ bits/sec)
+• Propagation Delay ($d_{prop}$): 15 ms
+• Round-Trip Time ($RTT$): $2 \times d_{prop} = 30$ ms
+• Packet Length ($L$): 8,000 bits (1,000 bytes)
+
+Transmission Time ($D_{trans}$):
+$$D_{trans} = \frac{L}{R} = \frac{8000 \text{ bits}}{10^9 \text{ bits/sec}} = 8 \times 10^{-6} \text{ sec} = 8 \ \mu\text{s} = 0.008 \text{ ms}$$
+
+================================================================================
+SLIDE 81: RDT 3.0 Stop-and-Wait Operation Timeline
+================================================================================
+
+COMPUTER NETWORKS: rdt3.0: stop-and-wait operation
+
+Timeline Breakdown:
+• $t = 0$: First packet bit transmitted.
+• $t = L/R = 0.008$ ms: Last packet bit transmitted; sender must now IDLE and WAIT!
+• $t = RTT/2 = 15$ ms: First bit arrives at receiver.
+• $t = 15.008$ ms: Last bit arrives; receiver transmits small ACK.
+• $t = RTT + L/R = 30.008$ ms: ACK arrives at sender; sender can finally transmit next packet.
+
+================================================================================
+SLIDE 82: Performance Calculation: The Disaster of Stop-and-Wait
+================================================================================
+
+COMPUTER NETWORKS: rdt3.0: stop-and-wait operation
+
+Sender Utilization Formula:
+$$U_{sender} = \frac{L / R}{RTT + L / R} = \frac{0.008 \text{ ms}}{30.008 \text{ ms}} = 0.000267 \approx 0.027\%$$
+
+Throughput Achieved:
+$$\text{Throughput} = U_{sender} \times R = 0.00027 \times 1 \text{ Gbps} = 270 \text{ Kbps!}$$
+
+Conclusion:
+• RDT 3.0 performance stinks!
+• On a massive 1 Gbps gigabit link, the stop-and-wait protocol limits effective throughput to a meager 270 Kbps!
+• The protocol catastrophically throttles the underlying physical network infrastructure.
+
+================================================================================
+SLIDE 83: The Solution: Pipelining
+================================================================================
+
+COMPUTER NETWORKS: rdt3.0: pipelined protocol operations
+
+Pipelining Principle:
+• Rather than operating in stop-and-wait mode, the sender is allowed to transmit multiple packets back-to-back without waiting for acknowledgments.
+• Packets in flight fill the network "pipe," keeping transmission lines busy.
+
+Architectural Requirements of Pipelining:
+1. Increased Sequence Number Range: Sequence numbers must be expanded beyond {0, 1} because multiple unacknowledged packets are in flight simultaneously.
+2. Buffering: Sender must buffer transmitted packets that have not yet been acknowledged; receiver may buffer out-of-order packets.
+
+Two Core Pipelining Protocols:
+• Go-Back-N (GBN)
+• Selective Repeat (SR)
+
+================================================================================
+SLIDE 84: Pipelining: Dramatic Utilization Increase
+================================================================================
+
+COMPUTER NETWORKS: Pipelining: increased utilization
+
+3-Packet Pipelining Example:
+• If the sender transmits 3 packets back-to-back before waiting for ACKs:
+$$U_{sender} = \frac{3 \times (L / R)}{RTT + L / R} = \frac{3 \times 0.008}{30.008} = 0.0008$$
+• A 3-packet pipeline increases channel utilization by a factor of 3!
+• With a window size of $N = 1000$ packets, utilization approaches nearly 100%!

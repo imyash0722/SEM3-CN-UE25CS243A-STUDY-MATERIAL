@@ -1,0 +1,3229 @@
+PES
+%% UNIVERST
+
+COMPUTER NETWORKS
+
+Computer Networks
+and the Internet
+
+I Es Team Networks
+
+UNIVERSITY Department of Computer Science and Engineering
+
+Acknowledgement: Prior year material, Author’s website of the prescribed textbook and materials sourced online.
+COMPUTER NETWORKS
+
+Text Book
+
+NETWORKING
+
+@ ATOP-DOWN APPROACH
+
+== ~ enwnedion —_—
+_‘gg;'; 3
+
+Computer Networking: A Top-Down
+Approach
+
+James Kurose, Keith Ross
+Pearson, 2020
+
+8th, Edition
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Do's:-
+
+« Students should be on time for every lecture.
+
+« Students are advised to show due respect to all faculty members.
+
+« Students must maintain absolute discipline and decorum in the class.
+Don't s:-
+
+« Students must not use their cell phones/laptops during the lecture hours. If any
+
+student is found using their cell phone during class hours it will be confiscated.
+
+« No sleeping in the class.
+COMPUTER NETWORKS: Honor Code @@ PES
+
+UNIVERSITY
+
+w The Honour Code is PESU statement on academic integrity.
+
+w |t articulates our expectations of students and faculty in
+establishing and maintaining the highest standards in academic
+work.
+COMPUTER NETWORKS: Honor Code @ PES
+
+UNIVERSITY
+
+= The Honour Code is an undertaking of the students, individually and
+collectively:
+
+- Students will not give or receive aid in examinations and class
+work, labs and assignments;
+
+- Students will not give or receive unpermitted aid in class work, in
+the preparation of reports, or in any other work that is to be used
+by the instructor as the basis of grading;
+
+- Students will do their share and take an active part in seeing to it
+that others as well as themselves uphold the spirit and letter of the
+Honour Code.
+COMPUTER NETWORKS: Academy Honesty @ PES
+
+UNIVERSITY
+
+= Academic honesty is expected from each student participating in
+the course.
+
+& No sharing (willing, unwilling, knowing, unknowing) of assignment
+code or solutions between students;
+
+w Labs and Assignments must be done by each student
+independently.
+
+= No submission of downloaded code (from the Internet, Campus
+LAN, or anywhere else) is accepted.
+UNIVERSITY
+
+COMPUTER NETWORKS: Academy Honesty @@ PES
+
+w  Any dishonesty will result in Zero marks for the assignment/work
+
+And in addition, downgrade of final subject result by ONE grade!
+This applies for both students giving and students taking
+e.g. B grade will downgrade to C
+COMPUTER NETWORKS
+
+Industry-relevant Roles
+
+* Network Engineer
+
+* SDN Engineer
+
+* Network Automation Engineer
+
+* Network Security Engineer
+
+* Cloud Network Engineer
+
+* Network Software Engineer
+
+* Systems Engineer
+
+* Infrastructure Engineer
+
+* DevOps Engineer
+
+* Site Reliability Engineer (SRE)
+
+* SDN Application Developer
+
+* Cybersecurity Analyst
+
+* Security Operations Center (SOC) Analyst
+* Infrastructure Automation Engineer
+* Wireless Network Engineer
+
+@ UNIVERSITY
+
+Companies Hiring these skills
+
+* Cisco
+
+* Juniper Networks
+
+* Arista Networks
+
+* HPE (Hewlett Packard)
+* Extreme Networks
+
+* Nokia
+
+* Ericsson
+
+* IBM
+
+* Vmware (Broadcom)
+* RedHat
+
+* OQOracle
+
+* Microsoft
+
+Google
+
+Amazon
+
+Accenture
+
+Palo Alto Networks
+Fortinet
+
+F5
+
+Broadcom
+
+Intel
+
+Qualcomm
+COMPUTER NETWORKS
+
+Computer Networks and the Internet
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Unit — 1 Computer Networks and the Internet
+
+1.1 Introduction to Computer Networks
+1.2 What is the Internet?
+
+* A nuts-and-bolts and Services description, Protocol
+1.3 Network edge
+
+* End systems, Access networks, Physical media
+1.4 Network core
+
+* Packet switching, Circuit switching, Network structure
+1.5 Delay, Loss & Throughput in networks
+1.6 Protocol layers, Service models
+
+* OSI model and TCP/IP protocol suite
+COMPUTER NETWORKS
+Introduction to Computer Networks
+
+Router/Firewall
+
+Internet
+
+> iPhone
+Workstation y‘i’ Laptop Computer
+i
+I. I | l I | Smartphone
+) amm——a )
+Desktop PC Desktop PC Desktop PC
+
+* Two or more devices are connected together.
+* Communicate with each other, share data or resources
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+What is the Internet? UNIVERSITY
+
+* A massive network of networks.
+
+* A computer network that interconnects billions of computing
+devices throughout the world.
+
+* Traditional devices — PCs, Workstations, Servers — web pages,
+emails, etc.
+
+* Internet “things” — laptops, PDAs, TVs, gaming consoles, home
+security systems, home appliances, watches, cars, traffic control
+systems, etc.,
+COMPUTER NETWORKS
+
+The Internet: A “Nuts and Bolts” View
+
+- @ “p=, Billions of connected
+-g c. <§ computing devices:
+o g hosts = end systems
+n I m running ,nelgwork apps at
+
+Internet’s “edge”
+
+Packet switches: forward
+= = packets (chunks of data)
+
+routers, switches
+
+e ) %)3 Communication links
+
+fiber, copper, radio, satellite
+transmission rate: bandwidth
+
+Networks
+collection of devices, routers, links:
+
+managed by an organization
+
+mobile network
+
+datacenter
+network
+
+enterprise
+network
+UNIVERSITY
+
+COMPUTER NETWORKS @ PES
+“Fun” Inter-connected Devices
+
+Tweet-a-watt:
+monitor energy use Oth ers ?
+Web-enabled toaster +
+
+weather forecaster )
+There will be 41
+Billion loT devices by
+
+9 2027
+
+&J
+
+Amazon Echo .
+IP picture frame
+
+-
+
+a Slingbox: remote
+(o, " i control cable TV
+- Security Camera
+
+AR devices
+sensorized,
+bed
+Internet phones gg mattress
+Fitbit
+
+* https://www.businessinsider.com/internet-of-things-report?IR=T
+
+COMPUTER NETWORKS @ PES
+The Internet: A “Nuts and Bolts” View UhGEras
+
+mobile network
+
+. Internet: “network of networks”
+* Interconnected ISPs
+
+Protocols are everywhere
+. .. Skype
+- control sending, receiving of messages
+
+* e.g., HTTP (Web), streaming video, Skype,
+TCP, IP, WiFi, 4G/5G, Ethernet
+
+Internet standards
+* RFC: Request for Comments Ethernet
+* IETF: Internet Engineering Task Force
+
+enterprise
+network
+COMPUTER NETWORKS @9 PES
+The Internet: A “Service” View UNIVERSITY
+
+« Infrastructure that provides services to mobile network
+applications: 2
+
+* Web, streaming video, multimedia
+teleconferencing, email, games, e-
+commerce, social media, inter-connected
+appliances, ... Skype
+
+al or global ISP
+
+provides programming interface to
+distributed applications:
+* “hooks” allowing sending/receiving apps
+
+to “connect” to, use Internet transport
+service
+
+* provides service options, analogous to
+postal service
+
+datacenter
+network
+
+enterprise
+network
+COMPUTER NETWORKS
+What is a Protocol?
+
+Human protocols:
+“what’s the time?”
+“I have a question”
+
+introductions
+
+... specific messages sent
+
+... specific actions taken when
+message received, or other
+events
+
+Network protocols:
+computers (devices) rather than humans
+
+all communication activity in Internet
+governed by protocols
+
+Protocols define the format, order of
+messages sent and received among
+network entities, and actions taken
+
+on msg transmission, receipt.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+What’s a Protocol?
+
+A human protocol and a computer network protocol:
+
+Q\ TCP connection
+
+request ——,
+
+Hi =
+TCP connection
+< response
+
+T Got the _
+time? GET -
+http://gaia.cs.umass.edu/kurose_ross
+<file>
+—
+
+time
+
+Q: other human protocols?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Network Edge: A closer look at network structure orvERSITY
+
+Network edge:
+* Referred as End systems
+* Hosts: clients & servers
+
+* Servers in data centers
+End systems are also referred to as hosts
+because they application programs such as
+a Web browser program, a Web server
+program, an e-mail client program, or an e-
+mail server program.
+
+COMPUTER NETWORKS
+Network Edge: A closer look at network structure il
+PES
+
+UNIVERSITY
+CELEBRATING 80 YEARS
+
+ACcCess networks, pnhysical media: (pO="
+The network that physically connects T
+an end system to the first router (also = —
+known as the “edge router”) on a path
+from the end system to any other
+distant end system.
+
+* wired, wireless communication links
+
+COMPUTER NETWORKS
+
+Network Edge: A closer look at network structure
+
+* Hosts: clients and servers
+
+* Servers in data centers
+
+* wired, wireless communication
+links
+
+Network core:
+¢ interconnected routers
+¢ network of networks
+
+mobile network
+
+datacenter
+network
+
+4
+il
+=m
+
+enterprise
+network
+
+PES
+
+UNIVERSITY
+
+©
+COMPUTER NETWORKS @@ PES
+Network Edge: Access networks and Physical media e
+
+Q: How to connect end systems
+to edge router?
+- Residential access networks
+
+- Institutional access networks (school,
+company)
+
+« Mobile access networks (WiFi, 4G/5G)
+
+What to look for:
+
+Transmission rate (bits per second)
+of access network
+
+Shared or dedicated access among
+users
+
+COMPUTER NETWORKS @@ PES
+Network Edge: Access Networks — Home access onvERSITY
+
+wireless
+devices «<+>> <¢ -
+<T>
+
+I ‘
+
+S u N SR
+
+=~
+
+- » to/from headend or
+= — =" central office
+often combined | Tttt Ao
+in single box q
+%y
+
+WiFi wireless access router, firewall, NAT
+
+‘ Fiber optics
+point (54, 450 Mbps)
+
+wired Ethernet (1 Gbps)
+COMPUTER NETWORKS
+Network Edge: Access Networks — Enterprise networks
+
+5 45 é7 Enterprise link
+, --=--to
+ISP (Internet)
+
+— T institutional
+router
+
+#  institutional
+
+il mail,
+
+web servers
+
+companies, universities, etc.
+
+mix of wired, wireless link technologies, connecting a mix of
+switches and routers (we’ll cover differences shortly)
+
+Ethernet: wired access at 100Mbps, 1Gbps, 10Gbps
+WiFi: wireless access points at 11, 54, 450 Mbps
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @ PES
+Network Edge: Wireless Access Networks
+
+Shared wireless access network connects end system to router
+
+via base station aka “access point”
+
+Wireless local area networks (WLANs) Wide-area cellular access networks
+typically within or around building (~100 ft) provided by anb"e, cellular network
+802.11b/g/n (WiFi): 11, 54, 450 Mbps operator (10’s km)
+
+transmission rate 10’s Mbps
+4G/5G cellular networks (6G coming)
+
+to Internet to Internet
+
+
+
+COMPUTER NETWORKS
+Network Edge: Data Center Networks
+
+= high-bandwidth links (10s to 100s
+Gbps) connect hundreds to thousands
+of servers together, and to Internet
+
+Courtesy: Massachusetts Green High Performance Computing
+Center (mghpcc.org)
+
+@
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Network Edge: Physical media
+
+bit: propagates between
+transmitter/receiver pairs
+
+physical link: what lies between
+transmitter & receiver
+guided media:
+* signals propagate in solid
+media: copper, fiber, coax
+unguided media:
+
+* signals propagate freely, e.g.,
+radio
+
+Twisted pair (TP)
+
+two insulated copper
+wires (STP & UTP)
+
+* Category 5: 100 Mbps, 1 Gbps
+Ethernet
+
+* Category 6: 10Gbps Ethernet
+
+@
+
+PES
+
+UNIVERSITY
+
+COMPUTER NETWORKS
+Network Edge: Physical media
+
+Coaxial cable:
+
+two concentric copper
+conductors
+
+concentric rather than parallel
+bidirectional
+broadband:
+
+* multiple frequency channels on
+cable
+
+* 100’s Mbps per channel
+
+Protective Plastic Cover
+Inner Insulator
+
+—
+
+Inner Conducting Core
+Braided Outer Conductor
+
+Fiber optic cable:
+
+glass fiber carrying light pulses,
+each pulse a bit
+
+high-speed operation:
+* high-speed point-to-point
+transmission (10’s-100’s Gbps)
+low error rate:
+* repeaters spaced far apart
+
+* immune to electromagnetic
+noise
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Network Edge: Physical media
+
+@ UNIVERSITY
+
+Wireless radio
+
+signal carried in
+electromagnetic spectrum
+
+Ill
+
+no physical “wire”
+
+broadcast and “half-duplex”
+(sender to receiver)
+propagation environment
+effects:
+
+* reflection
+
+* obstruction by objects
+
+* interference
+
+Radio link types:
+
+terrestrial microwave Tonmestial Microuave
+* up to 45 Mbps channels
+
+Wireless LAN (WiFi) ?(ﬁ?\
+« Up to 100’s Mbps (%’ | —— \?)
+
+wide-area (e.g., cellular)
+1
+
+* 4G cellular: ~ 10’s Mbps
+/X Satellite Microwave
+
+satellite
+* up to 45 Mbps per channel
+» 280 msec end-end delay
+
+* geosynchronous vs. low-
+earth-orbit
+
+Earth
+
+Half-duplex: - Data can only be transmitted in one direction at a time. The sender and receiver take
+turns using a single communication channel to send and receive data.
+
+Full-duplex: - Data can be transmitted and received simultaneously in both directions. Full-duplex uses
+two separate communication channels, one for sending and one for receiving.
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core
+
+* mesh of interconnected routers
+
+* packet-switching: hosts break
+application-layer messages into
+packets
+
+» forward packets from one router
+
+to the next, across links on path
+from source to destination
+
+* each packet transmitted at full link
+capacity
+
+COMPUTER NETWORKS
+Hosts: Send packets of data
+Host sending function: / ‘/ two packets,
+takes application message TE— /L bits each
+breaks into smaller chunks, “ -
+known as packets, of length L 51 -
+bits =SSO
+transmits packet into access host
+network at transmission rate R R: link transmission rate
+* link transmission rate, aka
+link capacity, aka link
+bandwidth
+packet time needed to L (bits)
+transmission = transmit L-bit = —
+
+delay packet into link R (bits/sec)
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core: Packet Switching: store-and-forward
+
+' V ==
+
+.
+BN
+
+L bits
+per packet
+
+321
+
+source _— q destination
+T~ R bps S R bps \\/"I
+
+* Transmission delay: takes L/R seconds to
+
+transmit (push out) L-bit packet into link at OIS0} FUIEHSE) Selie:
+
+R bps L =10 Kbits
+
+« Store and forward: entire packet must R= 1:0 Mbps N
+arrive at router before it can be dor;e- _08 ';ransm|55|on
+transmitted on next link elay = 0.1 msec
+
+* End-end delay: 2L/R (above), assuming
+zero propagation delay (more on delay
+shortly)
+COMPUTER NETWORKS
+Network Core: Packet Switching: queuing delay, loss
+
+I|~? =100 Mb/s
+
+queue of packets
+waiting for output link
+
+Packet queuing and loss: if arrival rate (in bps) to link exceeds
+transmission rate (bps) of link for a period of time:
+
+* packets will queue, waiting to be transmitted on output link
+* packets can be dropped (lost) if memory (buffer) in router fills up
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+
+Network Core: Two Key Network Core Functions
+
+routing algorithm
+
+Routing:
+
+global action:
+
+Forwardingi—— - N RNEIC e .
+orward local forwarding table determine source-
+
+. header value joutput link . .
+* local action: move 0100 | 3 destination paths
+arriving packets otot | 2 taken by packets
+from router’s 1001 | 1
+
+input link to routing algorithms
+
+appropriate
+router output link
+
+destination address in arriving
+packet’s header
+
+COMPUTER NETWORKS
+Network Core: Circuit Switching
+
+end-end resources allocated to,
+reserved for “call” between source
+and destination (eg: telephone) e
+
+* in diagram, each link has four circuits.
+* call gets 2" circuit in top link and 15t
+
+=
+circuit in right link. = =
+* dedicated resources: no sharing H:
+
+* circuit-like (guaranteed) performance
+
+* circuit segment idle if not used by call (no
+sharing)
+
+* commonly used in traditional telephone
+
+networks >
+
+. . . . . — f——
+* In-circuit switching, each data unit knows g
+the entire path address which is provided H
+
+by the source.
+
+* In Packet switching, each data unit just q
+knows the final destination address g
+intermediate path is decided by the
+routers.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Multiplexing in Circuit Switched Networks: FDM & TDM
+
+Frequency Division Multiplexing
+
+(FDM) 4 users BECH
+
+* optical, electromagnetic frequencies
+divided into (narrow) frequency
+bands
+
+* each call allocated its own band, can
+transmit at max rate of that narrow
+
+band time
+
+frequency
+
+Time Division Multiplexing
+(TDM)
+time divided into frames -> slots
+
+each call allocated periodic
+slot(s), can transmit at maximum
+
+rate of (wider) frequency band, .
+but only during its time slot(s) time
+
+frequency
+
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Why Packet Switching Won: Statistical Multiplexing
+
+Circuit | switchinﬁ reserves a fixed slice of
+bandwidth for the entire call — even during Worked example
+silence
+
+. . . . Link capacity: 1 Gbps
+In a typical voice call, 50-60% of the time is .
+silence (pauses, listening) — a dedicated Each active user needs: 1 Mbps
+
+circuit wastes that idle capacity Users active at any instant: ~10%
+Packet switching lets many idle users share
+
+one link; bandwidth is consumed only when
+someone actually sends data Circuit Switching Packet Switching
+
+~5000+ users
+(statistically, low
+blocking)
+
+}'hisd is clalled statli(sticalf multiplexing — no 1000 users MAX
+ixed “slots,” packets from many sources .
+interleave on demand (guaranteed, fixed)
+
+It's the reason internet backbone links are
+provisioned in shared Gbps/Tbps trunks, not
+divided per-subscriber
+COMPUTER NETWORKS
+
+Network Core: Packet Switching vs Circuit Switching
+
+Is packet switching a “slam dunk winner”?
+
+great for “bursty” data — sometimes has data to send, but at other times
+not
+
+* resource sharing
+* simpler, no call setup
+
+excessive congestion possible: packet delay and loss due to buffer overflow
+* protocols needed for reliable data transfer, congestion control
+
+Q: How to provide circuit-like behavior?
+* bandwidth guarantees traditionally used for audio/video applications
+
+Q: human analogies of reserved resources (circuit switching) versus
+on-demand allocation (packet switching)?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Network Core: Packet Switching vs Circuit Switching
+
+Connectionless
+
+Connection oriented
+
+Designed for data Designed for voice
+
+* Flexible * Inflexible
+ Out of order, assembled at * Message received in same
+the dest order
+* FDM & TDM
+
+Forward, Store & Fwd
+
+Physical layer
+
+Network layer
+
+dith | ‘
+* Bandwidth is saved gcfxr;%")‘”d is wasted
+
+(dynamic) * Transmission of data —
+
+* Transmission of data — source
+
+Source, routers « Call setup delay
+
+* Transmission delay
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+End systems connect to Internet via access ISPs (Internet Service
+Providers)
+
+Residential, company and university ISPs
+Access ISPs in turn must be interconnected.
+< So that any two hosts can send packets to each other
+Resulting network of networks is very complex
+< Evolution was driven by economics and national policies
+
+Let’s take a stepwise approach to describe current Internet
+structure
+
+kY
+L4
+
+kY
+L4
+
+kY
+L4
+
+kY
+L4
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+Question: given millions of access ISPs, how to connect them together?
+
+P <
+s &5
+o e
+e
+
+@ UNIVERSITY
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+Question: given millions of access ISPs, how to connect them together?
+
+connecting each access ISP to
+each other directly doesn’t scale: '
+O(N?) connections.
+
+COMPUTER NETWORKS @3 PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+Option: connect each access ISP to one global transit ISP?
+Customer and provider ISPs have economic agreement.
+
+Network
+Structure 1
+
+UNIVERSITY
+
+COMPUTER NETWORKS @3 PES
+
+Internet Structure: a “network of networks”
+
+But if one global ISP is viable business, there will be competitors ....
+
+Network
+Structure 2
+
+UNIVERSITY
+
+COMPUTER NETWORKS @5 PES
+
+Internet Structure: a “network of networks”
+
+But if one global ISP is viable business, there will be competitors ....
+
+who will want to be connected .
+Internet exchange point
+
+Network
+Structure 3
+
+https://ix.nixi.in/page/What_IX
+
+COMPUTER NETWORKS
+
+Peering at Scale: NIXI, India's Internet Exchange
+
+NIXI (National Internet Exchange of India) — non-
+profit under MeitY, established 2003
+
+About 77 operational exchange nodes across India:
+Delhi/Noida, Mumbai, Chennai, Kolkata,
+Bengaluru, Hyderabad, Ahmedabad, and more
+
+Purpose: let Indian ISPs exchange India-to-India
+traffic locally, instead of routing it abroad and back
+
+Before widespread local peering, a request from
+Bengaluru to Chennai could round-trip through
+Singapore or the US — real, avoidable delay and
+cost
+
+Peak traffic NIXI now handles: over 1.5 Tbps
+
+@ UNIVERSITY
+Before local peering
+
+-------- g SrampereUs
+1
+1
+1
+1
+‘
+
+long international detour for domestic traffic
+
+H NIXI (local IXP) H Chennai
+
+traffic stays within India — lower latency, lower cost
+
+With NIXI
+
+Bengaluru
+
+Try it: run a traceroute from a campus machine to another Indian site — see if it
+stays within India or takes a detour.
+
+UNIVERSITY
+
+COMPUTER NETWORKS @5 PES
+
+Internet Structure: a “network of networks”
+
+.. and regional networks may arise to connect access nets to ISPs
+
+Network
+Structure 4
+
+regional ISP
+
+N W
+
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+Internet Structure: a “network of networks”
+
+.. and content provider networks (e.g., Google, Microsoft, Akamai)
+may run their own network, to bring services, content close to end
+
+users
+
+(= IXP
+
+Network
+', Structure 5
+6 =)
+
+= = ,
+
+regional ISP
+
+e
+
+COMPUTER NETWORKS
+
+Internet Structure: a “network of networks”
+
+Regional
+
+Regional
+
+acce acce acce acce acce acce acce acce
+ss ss ss ss ss ss ss ss
+ISP ISP ISP ISP ISP ISP ISP ISP
+
+At “center”: small # of well-connected large networks
+
+“tier-1” commercial ISPs (e.g., AT&T, NTT, T-Mobile, Tata Communications), national &
+international coverage
+
+content provider networks (e.g., Google, Facebook/Meta, Amazon): private network that
+connects its data centers to Internet, often bypassing tier-1, regional ISPs
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+
+CDNs: Why Netflix Doesn’t Stream From California
+
+In practice, the access network — not the
+backbone — is almost always the end-to-end delay
+bottleneck
+
+A Content Delivery Network (CDN) places copies of
+popular content at the network's edge, close to
+access ISPs
+
+Netflix Open Connect, Akamai, Cloudflare, Google
+Global Cache — physical appliances installed inside
+ISP data centers, including inside Jio's and Airtel's
+networks in India
+
+Result: a Bengaluru user's Netflix stream is served
+from a box a few km away, not a data center in the
+us
+
+UNIVERSITY
+Without a CDN
+
+Origin server e :230Lns_n£m_d r_np_ - You
+(USA) (Bengaluru)
+
+With a CDN
+
+Origin server
+(USA)
+
+CDN edge You
+(inside Jio/Airtel) (Bengaluru)
+
+~8 ms round trip
+
+Numbers are illustrative: actual round-trip
+times vary by route and network conditions —
+the point is the order-of-magnitude drop from
+crossing an ocean to hopping to a nearby edge
+cache.
+
+
+
+COMPUTER NETWORKS @@ PES
+Network Core: Tier 1 ISP Network Map: Sprint 2019
+
+L s CANADA POP: point-of-presence
+e to/from other Sprint PoPS
+
+links to peering
+
+B
+Kansas “
+UNITED STATES  tene ——
+
+Sprint Node
+
+Sprint Ethernet POP or
+Sprint Virtual POP
+
+Landing Station
+Sprint Network Backbone
+
+Sprint Network Coverage
+COMPUTER NETWORKS @@ PES
+Performance: Delay, Loss & Throughput i
+
+How do packet loss and delay occurs?
+
+packets queue in router buffers
+
+packets queue, wait for turn
+
+arrival rate to link (temporarily) exceeds output link capacity: packet loss
+packet being transmitted (transmission delay)
+
+i packets in buffers (queueing delay)
+
+free (available) buffers: arriving packets
+dropped (loss) if no free buffers
+COMPUTER NETWORKS
+Performance: Packet Delay — 4 Sources
+
+transmission
+
+ALY - ion —»
+= gropagatlon
+B q —
+L nodal
+processing queueing
+dnodal = dproc + dqueue + dtrans + dprop
+dproc: NOdal processing dgueve: queueing delay
+check bit errors time waiting at output link for transmission
+determine output link depends on congestion level of router
+
+typically < microsec microseconds to milliseconds
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+Performance: Packet Delay — 4 Sources Ly
+
+transmission
+
+«— propagation —
+
+nodal
+
+pFOCESSI ng q UEUEI ng * Check out the online interactive exercises:
+http://gaia.cs.umass.edu/kurose_ross
+dnodal = dproc + dqueue + dtrans + dprop
+Oirans: transmission delay: d,rop: Propagation delay:
+L: packet length (bits) d: length of physical link
+R: link transmission rate (bps) s: propagation speed (~2x108 m/sec)
+d,..,=d/s
+Clom=lR >~
+dtransand dprop
+
+very different
+COMPUTER NETWORKS 6{@ PES
+Transmission Delay vs Propagation Delay RSy
+
+Transmission Delay Propagation Delay
+
+Time required for the router to Time it takes a bit to propagate
+push out the packet. from one router to the next.
+
+A function of the packet’s A function of the distance
+length and the transmission between the two routers.
+rate of the link.
+
+Nothing to do with the Nothing to do with the
+distance between packet’s length or the
+
+the two routers. transmission rate of the link.
+COMPUTER NETWORKS
+Performance: Delay — Caravan Analogy
+
+iRz R ;mf_-,g<— 100 km
+
+ten-car caravan toll booth
+(aka 10-bit (aka router)
+packet)
+
+cars “propagate” at 100 km/hr
+
+toll booth takes 12 sec to service
+car (bit transmission time)
+
+car ~ bit; caravan ~ packet
+
+Q: How long until caravan is lined
+up before 2nd toll booth?
+
+toll booth
+
+time to “push” entire caravan
+through toll booth onto
+highway = 12*10 = 120 sec
+
+time for last car to propagate
+from 1st to 2nd toll both:
+100km/(100km/hr) =1 hr
+
+A: 62 minutes
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Performance: Delay — Caravan Analogy (more)
+
+ten-car c‘aravan toll booth toll booth
+(aka 10-bit (aka router)
+packet)
+
+suppose cars now “propagate” at 1000 km/hr
+and suppose toll booth now takes one min to service a car
+
+Q: Will cars arrive to 2nd booth before all cars serviced at first
+booth?
+
+A: Yes! after 7 min, first car arrives at second
+booth; three cars still at first booth
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @@ PES
+WhiCh Delay Wins? UNIVERSITY
+
+You are downloading a 5-Megabyte image.
+Scenario A: Downloading over a fast 1 Gbps fiber link from a server 12,000 km away.
+
+Scenario B: Downloading over a slow 1 Mb?ps dial-up link from a server next door. Which delay component
+dominates in Scenario A versus Scenario B®
+
+Answer - In Scenario A, the message is short relative to the massive bandwidth, so propagation delay dominates.
+For example, assuming propagation speed = 2x108m/s:
+
+_ 12000000 _ o
+) o prop = TosqeE oo D ovms
+The 5 MB image transmission time is only about:
+5%10°%8
+dirans = —109 = 0.04s = 40ms
+So propagation is a major/dominant component.
+In Scenario B, transmission delay dominates.
+The distance is tiny, so propagation delay is negligible.
+Fora 5 MB image:
+5x10°x8 20
+_— S
+trans 106
+
+So the transmission delay is approximately 40 seconds, while propagation is extremely small.
+COMPUTER NETWORKS @@ PES
+Performance: Packet Queueing Delay revisited UNTVERSITY
+
+Unlike other delays (dproc, dtrans, dprop), dqueue is interesting.
+* Canvary from packet to packet.
+
+* Characterize dg,q, -> average, variance, probability that it
+exceeds some specified value.
+
+When is the queuing delay large and when is it insignificant?
+* Rate at which traffic arrives at the queue,
+
+* Transmission rate of the link,
+
+* Nature of the arriving traffic — periodically or in bursts
+
+L-a , arrival rate of bits “traffic
+
+R service rate of bits Intensity”
+COMPUTER NETWORKS @@ PES
+Performance: Packet Queueing Delay revisited UNTVERSITY
+
+R: link bandwidth (bps)
+
+>
+o
+L: packet length (bits) L
+a: average packet arrival rate (pps) %ﬁ
+La: avg. rate at which bits arrive at § Design your system so
+the queue g that the traffic intensity is
+« ” .o . 20 no greater than 1.
+La/R > 1: more “work” arriving is g g
+more than can be serviced - average 3 i
+delay infinite! traffic intensity = La/R 1
+
+La/R <= 1: nature of arriving traffic La/R~0
+
+La/R ~ 0: avg. queueing delay small
+
+Queuing delay is
+calculated as:
+IL/(R(1-1)) for 1< 1.
+
+La/R > 1: Average rate at which bits arrive at
+the queue exceeds the rate at which the bits
+can be transmitted from the queue (delay is
+
+large) La/R -> 1
+@ UNIVERSITY
+
+no wait
+
+delay = 1 transmission time
+delay = 4 transmission times
+delay = 9 transmission times
+
+delay = 99 transmission
+times
+
+COMPUTER NETWORKS
+Queuing Delay Formula: Why It Blows Up Near =1
+Full formula: d_queue = I'L / (R(1-1)), for I < 1 Congestion multiplier 1/(1-1)
+Regroup it: d_queue = (L/R) x I/(1-1) = d_trans x I (intensity) | l/(1-1) m
+1/(1-1) 0 0
+L/R is exactly transmission delay — so queuing 0.5 1x
+delay is transmission delay, scaled by a 0.8 4%
+congestion multiplier
+0.9 9x
+The multiplier 1/(1-1) depends only on traffic
+intensity, not on packet size or link rate directly 0.99 99x
+“La/R >1 -> average delay infinite” 1 o
+
+delay blows up
+
+pkt/s, 1=0.1 > d_queue = 11.1 ps.
+
+A 9% increase in arrivals produced an 81x increase in delay
+
+Worked example: R =10 Mbps, L = 1000 bits - d_trans = 100 ps. At a = 1000
+
+Raise arrival rate 9% to a = 9000 pkt/s (I =0.9) - d_queue =900 ps.
+
+COMPUTER NETWORKS
+“Real” Internet Delays and Routes
+
+what do “real” Internet delay & loss look like?
+
+traceroute program: provides delay measurement from source
+to router along end-end Internet path towards destination.
+For all i:
+
+* sends three packets that will reach router i on path towards
+destination (with time-to-live field value of i)
+
+* router i will return packets to sender
+
+* sender measures time interval between transmission and
+reply
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+“Real” Internet Delays and Routes
+
+traceroute: gaia.cs.umass.edu to www.eurecom.fr
+
+3 delay measurements from
+gaia.cs.umass.edu to cs-gw.cs.umass.edu
+
+1 128.119.240.254) 1ms 1 ms 2ms
+2 125.110.3.145) 1ms 1 ms 2 ms<>.0€lay measurements
+3 cht-vbns.gw.umass.edu .119.3.130) 6 ms 5 ms 5 ms to borderl-rt-fa5-1-0.gw.umass.edu
+
+4 jn1-at1-0-0-19.wor.vbns.net (204.147.132.129) 16 ms 11 ms 13 ms
+
+5 Jn1-s07-0-0-0.wae.vbns.net (204.147.136.136) 21 ms 18 ms 18 ms
+
+6 abilene-vbns.abilene.ucaid.edth(gg%g%1416.9)252 m52;8 ms 22 ms link
+.32.8. ms 22 ms 22ms trans-oceanic lin
+
+740.103.253) 104 ms 109 ms )
+
+de2-1.de1.de.geant.net (62.40.96.129) 109 ms 102 ms 104 ms
+
+de.fr1.fr.geant.net (62.40.96.50) 113 ms 121 ms 114 ms ;
+
+renater-gw fr1 fr.geant.net (62.40.103.54) 112 ms 114 ms 112 ms«100ks like delays
+
+0
+1
+2 nio-n2.cssi.renater.fr (193.51.206.13) 111 ms 114 ms 116 ms decrease! Why?
+3 nice.cssi.renater.fr (195.220.98.102) 123 ms 125 ms 124 ms
+4 r3t2-nice.cssi.renater.fr (195.220.98.110) 126 ms 126 ms 124 ms
+5 eurecom-valbonne.r3t2.ft.net (193.48.50.54) 135 ms 128 ms 133 ms
+
+(75 194.214.211.25 (194.214.211.25) 126 ms 128 ms 126 ms
+8
+
+* Kk ok
+
+— :
+* ok x means no response (probe lost, router not replying)
+19 fantasia.eurecom.fr (193.55.113.142) 132 ms 128 ms 136 ms
+
+* Do some traceroutes from exotic countries at www.traceroute.org
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS @S PES
+How Traceroute works? UNIVERSITY
+
+ICMP Dest
+ICMP TTL Unreach
+ICMP TTL Exceed
+
+Exceed
+
+Exceed
+LI —&—L],
+z_ 77 TIL= TTL=2 TTL=3 TTL=4 TIL=5 /)
+SRC Router 1 Router 2 Router 3 Router 4 DST
+
+Refer RFC 1393, Traceroute Using an IP Option
+
+Don’t Trust Traceroute (Completely)
+COMPUTER NETWORKS @@ PES
+Performance: Packet loss UNIVERSITY
+
+gueue (aka buffer) preceding link in buffer has finite capacity
+packet arriving to full queue dropped (aka lost)
+
+lost packet may be retransmitted by previous node, by source end system, or
+not at all
+
+buffer . .
+A/ (waiting area)  Packet being transmitted
+= N~
+
+B >
+B [ 2
+e — \packet arriving to
+
+Ind full buffer is lost
+
+* Check out the Java applet for an interactive animation on queuing and loss
+COMPUTER NETWORKS
+Performance: Throughput
+
+throughput: rate (bits/time unit) at which bits are being sent from
+sender to receiver
+
+* instantaneous: rate at given point in time
+* average: rate over longer period of time
+
+‘ pipe that can carry pipe that can carry -
+. fluid at rate fluid at rate
+server sends bits (Rs bits/sec) (R, bits/sec)
+
+(fluid) into pipe
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS e{@ PES
+Performance: Throughput (more) UNIVERSTTY
+
+R, < R, What is average end-end throughput?
+
+@&) R, bits/sec w R bits/sec )»5
+g
+
+Rs > R. What is average end-end throughput? Throughput = min{Rs Rc}
+9
+) R, bits/sec )@ R¢bits/sec Q
+; e
+—  bottleneck link
+
+link on end-end path that constrains end-end throughput.
+
+COMPUTER NETWORKS @ PES
+
+Suppose you are downloading an MP3 file of F = 32 million bits.
+
+The server has a transmission rate of Rs = 2 Mbps and you have an
+access link of Rc =1 Mbps.
+
+What is the time needed to transfer the file?
+
+Let’s work it out!
+Solution:
+
+Throughput — Numerical Example
+
+The end-to-end transfer rate is limited by the slowest link: g
+Transfer Rate = min(Ry’ R,) = min(2,1) = 1 Mbps P
+.
+. S sl 32x10° a
+Time=Transfer Rate/ File Size = TX10° g
+
+32 seconds!
+COMPUTER NETWORKS @ PES
+Performance: Throughput — Network Scenario onveRsITY
+
+per-connection end-end
+throughput: min(R,R,, R/10)
+
+. . . * Check out the online interactive
+in practice: R. or Ry is often  exercises for more examples:
+
+bott I enec k http://gaia.cs.umass.edu/kurose_ross/
+
+Suppose Rs =2 Mbps, Re=1
+Mbps, R =5 Mbps
+
+10 clients from 10 servers =
+10 downloads
+
+10 connections (fairly) share End-to-end throughput for .
+each download is now
+
+backbone bottleneck link R bits/sec reduced to 500 kbps.
+
+@ UNIVERSITY
+
+Computer Networks and the Internet
+
+Protocol Layers
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+
+“Protocol Layers” and reference models
+
+Networks are complex,
+with many “pieces”:
+hosts
+routers
+links of various media
+applications
+protocols
+hardware, software
+
+Question:
+
+is there any hope of
+organizing structure of
+network?
+
+.. or at least our discussion
+
+of networks?
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Example: Organization of Air Travel
+
+e
+
+ticket (purchase) ticket (complain)
+baggage (check) baggage (claim)
+gates (load) gates (unload)
+runway takeoff runway landing
+airplane routing airplane routing
+
+airplane routing
+
+airline travel: a series of steps, involving many services
+
+PES
+
+UNIVERSITY
+Layering of Airline functionality
+
+ticketing service
+baggage service
+gate service
+
+runway service
+
+routing service
+
+layers: each layer implements a service Q: describe in words
+via its own internal-layer actions the service provided
+relying on services provided by layer in each layer above
+
+below
+
+aa
+&) PES
+COMPUTER NETWORKS @ PES
+Why Iayering? UNIVERSITY
+
+Approach to designing/discussing with complex systems:
+
+explicit structure allows identification, relationship of complex system’s
+pieces
+* layered reference model for discussion
+
+modularization eases maintenance, updating of system
+* change in layer's service implementation: transparent to rest of system
+* e.g., change in gate procedure doesn’t affect rest of system
+
+Is layering considered harmful?
+layering in other complex systems?
+COMPUTER NETWORKS
+Internet Protocol Stack
+
+application: supporting network applications (access
+to network resources)
+* IMAP, SMTP, HTTP
+
+transport: process-process data transfer (segmentation
+& reassembly, sockets, connection, flow and error control)
+* TCP, UDP
+
+network: routing of datagrams from source to
+destination (addressing, routing)
+
+* |P, routing protocols
+
+link: data transfer between neighboring network
+elements (framing, addressing, flow & error control)
+* Ethernet, 802.11 (WiFi), PPP
+
+physical: bits “on the wire”
+
+application
+
+transport
+
+network
+
+link
+
+physical
+
+@
+
+PES
+
+UNIVERSITY
+
+
+COMPUTER NETWORKS
+OSI reference model
+
+* presentation: allow applications to —
+interpret meaning of data, (e.g., encryption, application
+
+compression, machine-specific conventions)
+
+. . . presentation
+* session: synchronization, checkpointing, -
+recovery of data exchange session
+* Internet stack “missing” these layers! transport
+* these services, if needed, must be
+implemented in application network
+* needed? link
+physical
+
+Open Systems Interconnection (OSI) model — introduced
+in late 1970s by ISO.
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+OSl reference model (more)
+
+Device A
+
+Intermediate Intermediate
+node node
+
+— <
+
+Device B
+
+%
+b
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+4-3 interface
+Network
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Layer-to-layer communication (7th layer)
+
+Application
+7-6 interface
+Presentation
+6-5 interface
+Session
+5-4 interface
+Transport
+
+4-3 interface
+Network
+
+3-2 interface
+Data link
+2-1 interface
+
+Physical
+
+Physical communication
+
+N
+
+[y
+
+UNIVERSITY
+
+User support
+layers
+
+‘ Heart
+
+Network
+support layers
+COMPUTER NETWORKS
+TCP/IP vs OSI reference model
+
+Application
+
+Presentation
+
+Session
+
+Application
+
+Transport
+
+Transport |
+
+Network
+
+Network |
+
+Data link
+
+Data link |
+
+Physical
+
+e el
+
+OSI Model
+
+Physical |
+
+TCP/IP Protocol Suite
+
+Several application
+protocols
+
+Several transport
+protocols
+
+Internet Protocol
+and some helping
+protocols
+
+Underlying
+LAN and WAN
+technology
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+A Link 2
+@& =
+@ ]
+Link 3 Link 4
+Link 5
+R3 - R4
+
+R2
+
+A private internet
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Legend [ ©Q Source @ Destination
+
+A R1 R3 R4 B
+Physical Physical
+layer @ ® @ Igyer
+Link 1 Link 3 Link 5 Link 6
+Link 1
+Link 2
+R2
+Link 4 Link 6
+Link 5 :
+R4
+— e
+M
+
+011... 101 011... 101
+
+@ UNIVERSITY
+
+Communication at
+the physical layer
+
+Unit of Communication
+- bit
+COMPUTER NETWORKS @@ PES
+Layers in the TCP/IP Protocol Suite (more) L
+
+Legend [ ©Q Source @ Destination D Data H Header
+
+A R1 R3 R4 B
+Data link Data link
+Physical Physical Communication at the
+Link 1 Link 3 Link 5 Link 6 data link layer
+Link 1
+A Unit of Communication —
+frame
+‘e
+Mo
+[ D2 [H2
+
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Legend | O Source @ Destination D Data H Header
+
+A R1 R3 R4
+Network E zl Network
+Data link J _J _J _J Data link
+Physical -|J -'J -|J Physical
+Link 1
+A Link 2
+> a & :
+@1 1
+Link 3 Link 4
+Datagram
+»3 Link 5 R4 ‘
+
+UNIVERSITY
+
+Communication at the
+network layer
+
+Unit of Communication —
+datagram
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+A Legend | ©Q Source @ Destination D Data H Header B
+Transport ﬂ RI R3 R1 Transport
+Network J Network
+Data link J J J Data link
+Physical Physical
+
+Link 1
+
+A
+@
+
+UNIVERSITY
+
+Communication at the
+transport layer
+
+Unit of Communication
+— segment/packet
+COMPUTER NETWORKS
+Layers in the TCP/IP Protocol Suite (more)
+
+Application
+Transport
+
+Data link
+Physical
+
+A B
+Application Legend | O Source @ Destination D Data H Header
+Trans|
+port R1 R3 R4
+Network -J
+Data link
+Physical
+Link 1
+A Link 2
+R1 R2
+@
+<1 1
+
+Link 3
+
+R3
+
+UNIVERSITY
+
+Communication at the
+application layer
+
+Unit of Communication
+— message
+COMPUTER NETWORKS
+
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+
+physical
+
+g8
+source
+
+Application exchanges messa
+
+M
+
+>
+
+ges 1o implement some application
+
+service using services of transport layer
+
+M
+
+Ht
+
+>
+
+Transport-layer protocol transfers M (e.g., reliably) from one process
+to another, using services of network layer
+
+= transport-layer protocol encapsulates
+application-layer message, M, with
+transport layer-layer header H; to
+create a transport-layer segment
+
+* H; used by transport layer protocol to
+implement its service
+
+PES
+
+UNIVERSITY
+
+@
+
+application
+
+transport
+
+network
+
+link
+
+physical E
+
+destination
+
+COMPUTER NETWORKS
+
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+
+physical
+
+g8
+source
+
+Hi| M >
+
+Transport-layer protocol transfers M (e.g., reliably) from one process
+to another, using services of network layer
+
+Hp[Hi| M >
+
+Network-layer protocol transfers transport-layer segment [H, | M] from
+one host to another, using link layer services
+
+= network-layer protocol encapsulates
+transport-layer segment [H, | M] with
+network layer-layer header H,, to
+create a network-layer datagram
+* H, used by network layer protocol to
+implement its service
+
+@ UNIVERSITY
+
+application
+
+transport
+
+network
+
+physical
+
+destination
+
+COMPUTER NETWORKS
+Services, Layers in the TCP/IP Protocol Suite (more)
+
+application
+transport
+network
+link
+- physical
+i
+source
+
+Hp|Ht| M
+
+>
+
+Network-layer protocol transfers transport-layer segment [H, | M] from
+one host to another, using link layer services
+
+—
+
+Link-layer protocol transfers datagram [H,| [H; [M] from host to
+
+Hi|Hh|Ht| M
+
+neighboring host, using network-layer services
+
+= link-layer protocol encapsulates
+network datagram [H,| [H, [M], with link-
+
+layer header H, to create a link-layer
+
+frame
+
+@ UNIVERSITY
+
+application
+
+transport
+
+network
+
+physical
+
+destination
+
+COMPUTER NETWORKS PES
+OSl vs TCP/IP Protocol Suite UNIVERSITY
+
+The OSI Model The TCP/IP Model
+
+Application
+
+DHCP, DNS, FTP, HTTP, HTTPS,
+POP, SMTP, SSH, etc...
+
+Application
+
+Presentation
+
+Session bata
+
+Segment
+
+Transport TCP UDP Transport
+
+Datagram
+Network IP Address: IPv4, IPv6 Internet
+F
+Link MAC Address o
+1 Network Access
+
+Ethernet cable, fibre, wireless,
+
+Phisical coax, etc... Bits
+
+COMPUTER NETWORKS @@ PES
+Enca pSUlatiOn UNIVERSITY
+
+Matryoshka dolls (stacking dolls)
+
+message  segment datagram frame
+
+Credit: https:/dribbble.com/shots/7182188-Babushka-Boi
+
+COMPUTER NETWORKS e{@ PES
+Encapsulation & Decapsulation UNIVERSITY
+
+application
+
+application a message M v
+
+transport 8 segment He| M A M transport
+network a datagram  [Hn|Hy| M Ha[Hy \ network
+&
+link frame Hi[Hp|H | M Hi| Hn|H:
+
+physical ¥_/ physical E
+
+source destination
+COMPUTER NETWORKS @@ PES
+Encapsulation — End-to-End view UNIVERSITY
+message M appligation
+segment |[Hy| M trangport
+datagram [Hy| Hi| M netvyork .
+frame |Hj|Hp| Hi| M ligk -
+physical
+link
+physical o
+| .
+switch
+destination il e Retwork
+M Qpplication Hi | Hnl He Iin|.< v
+H] ™ | | fransport physical
+Hp| Hi| M network
+H[Ho H] ™ link router
+
+COMPUTER NETWORKS PES
+
+. - UNIVERSITY
+Encapsulation & Decapsulation
+
+. Header at transport layer
+Legend [B] Header at network layer
+[B] Header at data-link layer T Decapsulate
+
+l Encapsulate
+
+Source host Destination host
+
+COMPUTER NETWORKS PES
+
+Introduction to Network Devices e
+
+M—» Application Gateways
+
+! TRANSPORT LAYER }—b Transport Gateways
+NETWORKLAYER '—* Router
+
+: DATA LINK LAYER }——b Bridge, NIC, and Switch
+
+: PHYSICAL LAYER ]—D Repeaterand Hub
+
+COMPUTER NETWORKS @ PES
+Introduction to Network Devices : Repeater UNIE
+
+Repeater
+
+hPownN -~
+
+Regenerate the signal over the same network before the signal becomes too weak or corrupted
+to extend the length to which the signal can be transmitted over the same network
+Works at the Physical Layer
+
+|——Week Signalﬁ
+
+Strong Signal ‘ Strong Signal
+
+Repeater
+
+Working of a Repeater:-
+
+Signal Reception: Captures incoming data signal (electrical voltages or electromagnetic waves).
+Signal Amplification: Strengthens weakened signals due to attenuation and interference.
+
+Signal Regeneration: Reconstructs the signal to ensure data integrity and network compliance.
+Signal Transmission: Sends the amplified and regenerated signal to its target, minimizing further
+deterioration.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Hub ey
+
+Hub
+
+e Basic networking device that is used to connect multiple devices together on a local network.
+
+e |t shares bandwidth among all connected devices and broadcasts data sent by one device to all
+others, giving each device equal access to the network
+
+e Operates at Physical Layer
+
+Features of a Hub:-
+
+= HUB
+. Always Broadcast: Hubs broadcast data to = 9.‘\\D s i
+all connected devices, regardless of the =—=o
+intended recipient.
+2. Half-duplex Communication: Only one device i
+can transmit at once. i =
+
+3. Cannot Store MAC Addresses: Hubs lack
+intelligence and cannot store MAC
+addresses or maintain tables.
+
+4. No Data Filtering: Hubs transmit all data to all connected devices without filtering.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Modem ARSI
+
+Modem
+
+»ow
+
+Device that connects a computer to the internet by converting digital signals to analog and vice
+
+versa for data transmission.
+Operates at the Physical Layer e erssgecr] -
+
+Modem Modem
+
+Modem Data Transmission Process:-
+
+. Modulation: The modem converts digital data from the computer into an analog signal
+
+for transmission.
+
+Transmission: The modulated signal is sent over the communication line to the
+receiving modem.
+
+Demodulation: The receiving modem converts the analog signal back into digital data.
+Decoding: The digital data is then sent to the computer for use.
+COMPUTER NETWORKS @ PES
+Introduction to Network Devices : Bridge ey
+
+Bridge
+
+o
+
+A 2-port device that joins two or more network segments and routes data between them
+
+according to MAC addresses D
+Operates at the Data Link Layer E==
+
+HUB Bridge HUB
+Functions :- .—»;- H
+
+. Segmentation: Divides a large network into smaller segments to reduce congestion
+
+and improve performance.
+
+Filtering: Uses MAC addresses to selectively forward packets, enhancing security and bandwidth
+usage.
+
+Learning: Tracks MAC addresses and port mappings to optimize packet forwarding.
+
+Forwarding: Directs packets between segments, reducing unnecessary traffic and ensuring proper
+delivery.
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Switch UN T
+
+Switch
+
+e An intelligent network device, functioning as a multiport bridge, uses MAC addresses to forward
+data packets to the appropriate destination ports.
+e Operates at Data Link Layer
+
+Features of a Switch:-
+
+1. Employs packet switching to receive and route
+data from source to destination.
+
+2. Can perform some error checking before
+forwarding data to the destined port.
+
+3. Can operate in full-duplex mode, enabling Ppe>
+simultaneous data transmission & reception in network —
+
+4. Store MAC addresses of connected devices,
+routing communication only to the intended destination, reducing collisions and eliminating
+broadcast domains.
+
+COMPUTER NETWORKS e[@ PES
+Introduction to Network Devices : NIC UG e
+
+NIC - Network Interface Card
+
+e ltis a physical card or chip, which contains MAC addresses, helps to identify the device on the
+network.
+e Used at the Data Link Layer Types of NIC
+
+Internal NIC External NIC
+
+Functions of a NIC:-
+
+1. Connectivity: Links the device to the WP S .
+network (wired or wireless). @ l - =
+2. Data Transmission: Sends and receives ~ "
+
+data between devices. ' \\’ qb
+
+3. Data Conversion: Converts data for
+transmission and reception.
+
+Error Handling: Detects and corrects transmission errors.
+
+Traffic Management: Prioritizes or limits data to avoid congestion.
+Security: Provides encryption and authentication for protection.
+
+ook
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Router RSy
+
+Router
+
+e Device that routes/forwards data packets based on their IP addresses and have a dynamically
+updating routing table based on which they make decisions on routing the incoming packets.
+
+e Operates at the Network Layer S ——
+LAN %" = = = LAN
+Functions of a Router:- \‘D\M/ﬂ 4:) N ,\”>@,9D
+poiofofoq . 7 pelolelc
+1. Forwarding: Receives packets, phw
+checks headers, performs basic V| -
+functions, and forwards packets to @ @ X = *T m oo
+the appropriate output port. - \ / L \‘B\M/m
+RLLE pui & |sgea
+1. Routing: Determines the best path for ’7EQ\E‘ = Q' 6 L B
+S oo <
+
+a packet to reach its destination using a
+routing table built with algorithms.
+
+
+COMPUTER NETWORKS @@ PES
+Introduction to Network Devices : Router et
+
+Router
+
+Functions of a Router:-
+3. Network Address Translation (NAT): Translates between private and public IP
+addresses, enabling devices on a private network to access the internet.
+
+©1213.14.15 © 40.30.20.10
+
+--Lml
+
+©192168.1.5 19216811
+COMPUTER NETWORKS e{@ PES
+Introduction to Network Devices : Gateway L
+
+Gateway
+
+e Network connectivity device that connects two different configuration networks
+
+e The gateway acts as a portal between two applications via protocol communications, allowing
+them to share data on the same or other systems. Hence, a gateway is also a protocol converter
+that can operate at any OSI model layer.
+
+Types of Gateway:- s
+1. Unidirectional Gateway: Data flows in
+one direction, with changes replicated m
+
+from source to destination only.
+2. Bidirectional Gateway: Data flows in
+both directions, used for GATEWAY
+
+. . INTERNET
+synchronization.
+
+Introduction of Gateways ee
+
+COMPUTER NETWORKS
+
+Introduction to Network Devices : Firewall
+
+Firewall
+
+e Network security device that
+monitors incoming and outgoing
+network traffic and decides
+whether to allow or block specific
+traffic based on a defined set of
+security rules
+
+e [t can used in the transport layer
+or the application layer
+
+P
+
+Internet
+
+Firewall
+
+et
+
+c
+"
+* .Il o
+2
+
+User 2
+
+Ll
+
+User 3
+
+@
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS PES
+
+Beyond the Basics: Wireless AP, WLC, and L3 Switch
+Access Point (AP): a Layer-2 device that bridges wireless clients onto the wired LAN — functionally a
+‘wireless hub/bridge
+
+Wireless LAN Controller (WLC): centrally manages many APs across an office or campus — handles roaming
+and channel planning
+
+L3 Switch: combines Switch (Layer 2) + Router (Layer 3) in one box — the modern default in real campus
+and data-center networks
+
+Access Point (AP) Layer 2 (Data Link) Bridges wireless clients to the wired LAN
+
+Wireless LAN Controller (WLC) Management layer Centrally manages many APs
+
+L3 Switch Layer 2 + Layer 3 Switches within a VLAN, routes between VLANs
+COMPUTER NETWORKS
+Introduction to Network Devices
+
+@
+
+Function Broadcasts data to all devices Forwards data to the specific destination device
+based on MAC address
+Layer Operates at Physical Layer Operates at Data Link Layer
+
+Data Handling
+
+Sends data to all connected devices
+
+Sends data only to the intended device
+
+Collision Single collision domain Multiple collision domains (one per port)
+Domain
+
+Bandwidth Shared bandwidth among all devices Dedicated bandwidth for each device
+Intelligence Basic, no intelligence More intelligent, stores MAC addresses and
+
+makes forwarding decisions
+
+Data Filtering
+
+No filtering, all data is broadcasted
+
+Filters data based on MAC addresses
+
+Usage
+
+Suitable for small networks
+
+Suitable for larger, more complex networks
+
+Performance
+
+Lower performance due to collisions
+
+Higher performance with reduced collisions
+
+PES
+
+UNIVERSITY
+COMPUTER NETWORKS
+Introduction to Network Devices
+
+@
+
+Transmission
+
+the network.
+
+Definition A network device that connects multiple A network device that connects multiple
+devices within the same network. networks and routes data between them.
+Data Uses MAC addresses to forward data within | Uses IP addresses to route data between
+
+networks.
+
+network.
+
+Function Operates at Data Link Layer Operates at Network Layer
+
+Broadcast Typically operates within a single broadcast | Breaks up broadcast domains and creates
+
+Domain domain. separate ones.
+
+Usage Used in LANs to expand network capacity. | Used to connect LANSs to the internet or other
+LANSs.
+
+Speed High-speed data transfer within the Typically slower due to complex routing
+
+processes.
+
+PES
+
+UNIVERSITY
+@ UNIVERSITY
+
+Computer Networks and the Internet
+
+Interactive Exercises
+
+Team Networks
+Department of Computer Science and Engineering
+COMPUTER NETWORKS
+Interactive Exercise
+
+@ UNIVERSITY
+
+Computing end-end delay (transmission and
+propagation delay)
+
+Consider the figure below, with three links, each
+with the specified transmission rate and link
+length.
+
+«—Link 1—
+|
+
+Transmission rate: 100 Mbps
+Link Length: 3 Km
+
+Transmission rate: 10 Mbps
+Link Length: 3 Km
+
+Transmission rate: 1000 Mbps
+Link Length: S00 Km
+
+Find the end-to-end delay (including the
+transmission delays and propagation delays on
+each of the three links, but ignoring queueing
+delays and processing delays) from when the left
+host begins transmitting the first bit of a packet to
+the time when the last bit of that packet is
+received at the server at the right.
+
+The speed of light propagation delay on each link is
+3x10**8 m/sec.
+
+Note that the transmission rates are in Mbps and
+the link distances are in Km.
+
+Assume a packet length of 8000 bits. Give your
+answer in milliseconds.
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+Link 1 transmission delay = L/R = 8000 bits / 100 Mbps = 80 microsec
+
+Link 1 propagation delay = d/s = 3 Km / 3*10**8 m/sec = 10 microsec
+
+Link 1 total delay = 80+10 = 90 microsec
+
+Link 2 transmission delay = L/R = 8000 bits / 1000 Mbps = 8 microsec
+
+Link 2 propagation delay = d/s = 500 Km / 3*10**8 m/sec = 1670 microsec.
+Link 2 total delay = 8 + 1670 = 1678 microsec
+
+Link 3 transmission delay = L/R = 8000 bits / 10 Mbps = 800 microsec
+
+Link 3 propagation delay = d/s =3 Km / 3*10**8 m/sec = 10 microsec
+
+Link 3 total delay = 800 + 10 = 810 microsec
+
+Total end-to-end delay is the sum of these six delays: 90 + 1678 + 810 = 2.578 ms
+COMPUTER NETWORKS Note: Please use the formulas for @@ PES
+Interactive Exercise Queuing Delay from the slide only UNIVERSITY
+
+Computing Queuing Delay Assume:
+
+Consider the queuing delay in a router buffer. a constant transmission rate of
+
+R = 1800000 bps,
+
+a constant packet-length L = 7300 bits, and
+ais the average rate of packets/second.
+
+A
+
+Traffic intensity | = La/R, and
+Queuing delay is calculated as:
+IL/(R(1-1)) forI<1.
+
+Average queuing delay
+
+- ————— e —— ——————
+
+La/R
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+1. In practice, does the queuing delay tend to vary a lot? Answer with Yes or No
+2. Assuming that a = 30, what is the queuing delay?
+
+3. Assuming that a = 76, what is the queuing delay?
+
+4. Assuming the router's buffer is infinite, 1762 packets arrive over a second. How
+many packets will be in the buffer 1 second later?
+
+5. If the buffer has a maximum size of 956 packets, how many of the packets
+would be dropped upon arrival from the previous question?
+COMPUTER NETWORKS @ PES
+Interactive Exercise UNTVERSITY
+
+1. Yes, in practice, queuing delay can vary significantly. We use the above formulas as a way to give
+a rough estimate, but in a real-life scenario it is much more complicated.
+
+2. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.1217*7300/(1800000*(1-0.1217)) * 1000 = 0.561 ms.
+
+3. Queuing Delay = IL/(R*(1 - 1)) * 1000 = 0.3082*7300/(1800000*(1-0.3082)) * 1000 = 1.806 ms.
+4. Buffer fill rate = a — R/L = 1762 packets/sec - 1800000/7300 = 1515 packets/sec.
+
+[packet arrived — packets transmitted]
+
+5. Packets dropped = packets arrived — (packets serviced (R/L) + packets in buffer) = 1762 — (956 +
+246) = 559 packets
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+END TO END THROUGHPUT AND
+BOTTLENECK LINKS
+
+Consider the scenario shown below, with
+four different servers connected to four
+different clients over four three-hop paths.
+
+The four pairs share a common middle
+
+hop with a transmission capacity of R =
+300 Mbps.
+
+The four links from the servers to the
+shared link have a transmission capacity
+of Rg = 50 Mbps.
+
+Each of the four links from the shared
+middle link to a client has a transmission
+capacity of Rc = 90 Mbps.
+
+COMPUTER NETWORKS @ PES
+Interactive Exercise UNTVERSITY
+
+Answer the following questions:
+
+1. What is the maximum achievable end-end throughput (in Mbps) for each of four
+client-to-server pairs, assuming that the middle link is fairly shared (divides its
+transmission rate equally)?
+
+2. Which link is the bottleneck link? Format as Rc, Rs, or R
+
+3. Assuming that the servers are sending at the maximum rate possible, what are
+the link utilizations for the server links (R¢)? Answer as a decimal
+
+4. Assuming that the servers are sending at the maximum rate possible, what are
+the link utilizations for the client links (R.)? Answer as a decimal
+
+5. Assuming that the servers are sending at the maximum rate possible, what is the
+link utilizations for the shared link (R)? Answer as a decimal
+COMPUTER NETWORKS @@ PES
+Interactive Exercise UNTVERSITY
+
+Solutions:
+
+1. The maximum achievable end-end throughput is the capacity of the link with
+the minimum capacity, which is 50 Mbps
+
+2. The bottleneck link is the link with the smallest capacity between R¢, R¢, and
+R/4. The bottleneck link is Rs.
+
+3. The server's utilization = Ryoieneck / Rs = 50/50 = 1
+4. The client's utilization = Ry ieneck / Rc = 50/ 90 = 0.56
+
+5. The shared link's utilization = Rygeneck / (R/ 4) =50/ (300/ 4) = 0.67
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Car - Caravan Analogy
+
+Consider the figure below, adapted from Figure 1.17 in the text, which draws the analogy between
+store-and-forward link transmission and propagation of bits in packet along a link, and cars in a caravan
+being serviced at a toll booth and then driving along a road to the next tollbooth.
+
+W o o o Wiaww ey || 500 km - - S00 km .
+=l = -
+10 car caravan toll booth toll booth toll booth
+
+(aka 10-bit packet) (akalink)
+
+Suppose the caravan has 10 cars, and that the tollbooth services (that is, transmits) a car at a rate of one
+car per 2 seconds. Once receiving serving a car proceeds to the next tool both, which is 500 kilometers
+away at a rate of 10 kilometers per second. Also assume that whenever the first car of the caravan arrives
+at a tollbooth, it must wait at the entrance to the tollbooth until all of the other cars in its caravan have
+arrived, and lined up behind it before being serviced at the toll booth. (That is, the entire caravan must be
+stored at the tollbooth before the first car in the caravan can pay its toll and begin driving towards the next ?
+tollbooth). . f:’
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Car - Caravan Analogy
+
+Question List
+
+1. Once a car enters service at the tollbooth, how long does it take until it leaves service?
+
+2. How long does it take for the entire caravan to receive service at the tollbooth (that is the time from when the
+first car enters service until the last car leaves the tollbooth)?
+
+3. Once the first car leaves the tollbooth, how long does it take until it arrives at the next tollbooth? ’
+4. Once the last car leaves the tollbooth, how long does it take until it arrives at the next tollbooth? . N
+
+)
+
+5. Once the first car leaves the tollbooth, how long does it take until it enters service at the next tollbooth?
+
+6. Are there ever two cars in service at the same time, one at the first toll booth and one at the second toll booth?
+Answer Yes or No
+
+7. Are there ever zero cars in service at the same time, i.e., the caravan of cars has finished at the first toll both but
+not yet arrived at the second tollbooth? Answer Yes or No
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Car - Caravan Analogy
+
+Solution
+
+1. Service time is 2 seconds
+
+2. It takes 20 seconds to service every car, (10 cars * 2 seconds per car)
+
+3. It takes 50 seconds to travel to the next toll booth (500 km / 10 km/s)
+
+4. Just like in the previous question, it takes 50 seconds, regardless of the car
+
+5. It takes 68 seconds until the first car gets serviced at the next toll booth (10-1 cars * 2 seconds per car + 500
+km/ 10 km/s)
+
+6. No, because cars can't get service at the next tollbooth until all cars have arrived
+
+7. Yes, one notable example is when the last car in the caravan is serviced but is still travelling to the next toll ,
+booth; all other cars have to wait until it arrives, thus no cars are being serviced o ~
+
+W
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Computing the one-hop transmission delay
+
+Consider the figure below, in which a single router is transmitting packets, each of length L bits, over a
+single link with transmission rate R Mbps to another router at the other end of the link.
+
+L: packet length (in bits)
+
+@ ‘ F’i link transm|55|on rates(Mbps)
+
+Queue of packets
+waiting for output link
+
+Suppose that the packet length is L= 8000 bits, and that the link transmission rate along the link to
+router on the right is R = 1 Mbps.
+
+Round your answer to two decimals after leading zeros
+
+\,/\'
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing the one-hop transmission delay
+
+Question List
+
+1. What is the transmission delay?
+
+2. What is the maximum number of packets per second that can be transmitted by
+
+this link? ,
+
+Solution »
+
+—V N
+1. The transmission delay = L/R = 8000 bits / 1000000 bps = 0.008 seconds
+
+1. The number of packets that can be transmitted in a second into the link =R / L = 1000000 bps / 8000 bits
+=125 packets
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+Queuing Delay
+
+Consider the queuing delay in a router buffer, where the packet experiences a delay as it waits to be transmitted
+onto the link. The length of the queuing delay of a specific packet will depend on the number of earlier-arriving
+packets that are queued and waiting for transmission onto the link. If the queue is empty and no other packet is
+currently being transmitted, then our packet’s queuing delay will be zero. On the other hand, if the traffic is
+
+@
+e
+
+heavy and many other packets are also waiting to be transmitted, the queuing delay will be long.
+
+Average queuing delay
+
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+|
+|
+1
+
+La/lR
+
+Assume a constant transmission rate of R = 1900000 bps, a constant packet-length L = 4700 bits, and a is the average
+rate of packets/second. Traffic intensity | = La/R, and the queuing delay is calculated as IL/(R(1 - 1)) for | < 1.
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+Queuing Delay
+
+Question List
+
+1. In practice, does the queuing delay tend to vary a lot? Answer with Yes or No
+
+2. Assuming that a = 35, what is the queuing delay? Give your answer in milliseconds (ms)
+3. Assuming that a = 77, what is the queuing delay? Give your answer in milliseconds (ms)
+
+4. Assuming the router's buffer is infinite and 613 packets arrive over a second. How many packets will be in the
+buffer 1 second later?
+
+5. If the buffer has a maximum size of 627 packets, how many of the 613 packets would be dropped upon arrival
+from the previous question?
+
+o
+.“
+e
+COMPUTER NETWORKS @@ PES
+Queuing Delay
+
+Solution
+
+1. Yes, in practice, queuing delay can vary significantly. We use the above formulas as a way to give a
+rough estimate, but in a real-life scenario it is much more complicated.
+
+| = La/R =4700*35/1900000 = 0.0865
+2. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.0865*4700/(1900000*(1-0.0865)) * 1000 = 0.23 ms.
+
+| = La/R =4700*77/1900000 = 0.19
+3. Queuing Delay = IL/(R(1 - 1)) * 1000 = 0.19*4700/(1900000%(1-0.19)) * 1000 = 0.58 ms.
+
+4. Buffer fill rate = a— R/L = 613 packets/sec - 1900000/4700 = 209 packets/sec. ,
+5. Packets dropped = packets arrived — (packets serviced (R/L) + packets in buffer) = 613 — (404 + 209) = 0 packets . !
+
+—h_
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing end-end delay (transmission and propagation delay)
+
+Consider the figure below, with three links, each with the specified transmission rate and link length.
+
+‘"i..%' - =
+<«—Link 1— +——Link2 —» <«—Link 3—
+Transmission rate: 100 Mbps Transmission rate: 10 Mbps
+Link Length: 3 Km Link Length: 1 Km &
+—
+~
+| |’
+Transmission rate: 1 Mbps —rAhl
+
+Link Length: S000 Km
+
+Assume the length of a packet is 12000 bits. The speed of light propagation delay on each link is 3x1078 m/sec
+
+Round your answer to two decimals after leading zeros
+COMPUTER NETWORKS
+
+Computing end-end delay (transmission and propagation delay)
+
+Question List
+
+9.
+
+. What is the transmission delay of link 1?
+. What is the propagation delay of link 17?
+. What is the total delay of link 1?
+
+. What is the transmission delay of link 2?
+. What is the propagation delay of link 2?
+. What is the total delay of link 2?
+
+. What is the transmission delay of link 3?
+
+. What is the propagation delay of link 3?
+
+What is the total delay of link 3?
+
+10. What is the total delay?
+
+@ UNIVERSITY
+
+
+
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+
+Computing end-end delay (transmission and propagation delay)
+
+Solution
+
+1. Link 1 transmission delay = L/R = 12000 bits / 100 Mbps = 0.00012 seconds
+
+2. Link 1 propagation delay = d/s = ()3 Km) * 1000 / 3*10*8 m/sec = 1.00E-5 seconds
+
+3. Link 1 total delay =d_t + d_p = 0.00012 seconds + 1.00E-5 seconds = 0.00013 seconds
+
+4. Link 2 transmission delay = L/R = 12000 bits / 1 Mbps = 0.012 seconds
+
+5. Link 2 propagation delay = d/s = ()5000 Km) * 1000 / 3*10*8 m/sec = 0.017 seconds
+
+6. Link 2 total delay =d_t + d_p = 0.012 seconds + 0.017 seconds = 0.029 seconds
+
+7. Link 3 transmission delay = L/R = 12000 bits / 10 Mbps = 0.0012 seconds
+
+8. Link 3 propagation delay = d/s = ()1 Km) * 1000 / 3*10"8 m/sec = 3.33E-6 seconds
+
+9. Link 3 total delay =d_t + d_p = 0.0012 seconds + 3.33E-6 seconds = 0.0012 seconds
+
+10. The total delay =d_L1 +d_L2 + d_L3 = 0.00013 seconds + 0.029 seconds + 0.0012 seconds = 0.03 seconds ,
+' ‘?
+COMPUTER NETWORKS @ PES
+
+UNIVERSITY
+
+End to End Throughput and Bottleneck Links
+
+Consider the scenario shown below, with four different servers connected to four different clients over four
+three-hop paths. The four pairs share a common middle hop with a transmission capacity of R =300 Mbps. The
+four links from the servers to the shared link have a transmission capacity of Rg = 50 Mbps. Each of the four
+links from the shared middle link to a client has a transmission capacity of R. = 60 Mbps.
+
+@
+COMPUTER NETWORKS @@ PES
+
+UNIVERSITY
+
+End to End Throughput and Bottleneck Links
+
+Question List
+
+1. What is the maximum achievable end-end throughput (in Mbps) for each of four client-to-server
+pairs, assuming that the middle link is fairly shared (divides its transmission rate equally)?
+2. Which link is the bottleneck link? Format as R, R, or R
+
+3. Assuming that the servers are sending at the maximum rate possible, what are the link utilizations
+for the server links (Rs)? Answer as a decimal
+
+4. Assuming that the servers are sending at the maximum rate possible, what are the link utilizations
+for the client links (Rc)? Answer as a decimal
+
+5. Assuming that the servers are sending at the maximum rate possible, what is the link utilizations
+
+for the shared link (R)? Answer as a decimal ?
+UNIVERSITY
+
+COMPUTER NETWORKS @@ PES
+End to End Throughput and Bottleneck Links
+
+Solution
+
+1. The maximum achievable end-end throughput is the capacity of the link with the minimum capacity, which is 50
+Mbps
+
+2. The bottleneck link is the link with the smallest capacity between Rs, R¢, and R/4. The bottleneck link is Rs.
+
+3. The server's utilization = Rygttjeneck / Rs=50/50 =1
+
+4. The client's utilization = Ryottieneck / Re= 50/ 60 = 0.83
+
+5. The shared link's utilization = Ryottieneck / (R/ 4) =50/ (300/ 4) =0.67
+COMPUTER NETWORKS @@ PES
+Wireshark UNIVERSITY
+
+r - """" 3
+
+1 1
+
+' ' application
+
+1
+
+| packet |1 (W""Wllbr‘l’.wssr'
+
+i | analyzer | | email clien
+L |
+
+1 1 application
+TR I N
+T L [e)
+
+1 1
+
+1| packet | Transport (TCP/UDP)
+1| capture || _ copyofall Network (IP)
+
+i Ethernet frames
+
+\ | sent/received
+
+UNIVERSHTY
+
+THANK YOU
+
+Team Networks
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY

@@ -1,0 +1,421 @@
+UNIVERSITY
+
+COMPUTER NETWORKS
+
+PE TEAM NETWORKS
+Department of Computer Science and Engineering
+
+UNIVERSITY
+
+COMPUTER NETWORKS PES
+
+UNIVERSITY
+
+Unit — 4 Network Layer and Internet Protocol
+
+4.5 Introduction to Network Layer
+Protocols
+* DHCP
+
+* ICMP
+4.6 IPv6 Addressing
+
+4.7 Introduction to Routing Algorithms
+COMPUTER NETWORKS
+
+Routing Protocols PES
+Routing protocol goal: determine “good” mobile network
+
+paths (equivalently, routes), from sending hosts < ) NS s s
+
+to receiving host, through network of routers —=re
+
+* path: sequence of routers packets
+traverse from given initial source host to
+
+application
+transport
+
+0
+link
+
+final destination host physica
+* “good”: least “cost”, “fastest”, “least
+congested” m I
+* routing: a “top-10” networking challenge! e P doceyer
+application
+transport
+enterprise
+network physical
+
+COMPUTER NETWORKS
+Routing Algorithms
+
+COMPUTER NETWORKS
+Routing Protocols PES
+
+vvvvvvvvvv
+
+Graph abstraction: link costs
+
+Cqp COSt Of direct link connecting a and b
+e.g., Cy,=5,C,,=°
+
+cost defined by network operator:
+could always be 1, or inversely related
+=X Sy to bandwidth, or inversely related to
+
+congestion
+
+graph: G = (N,E)
+
+N:setof routers={u, v, w, x, y,z}
+
+E: set of links ={ (u,v), (u,x), (v,x), (v,w), (x,w), (xy), (W,y), (W,2), (v,2) }
+
+Network Layer: 5-5
+COMPUTER NETWORKS
+Routing Protocols %% PES
+
+Routing algorithm classification t
+
+global: all routers have complete
+
+tcost info
+. dlgorithms i~
+How fast M dynamic: routes change
+
+doroutes Static: routes more quickly
+change?  change slowly over « periodic updates or in
+time response to link cost
+changes
+
+decentralized: iterative process of
+computation, exchange of info with neighbors
+
+* routers initially only know link costs to
+
+global or decentralized information?
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %% PES
+
+Dijkstra’s link-state routing algorithm
+
+centralized: network topology, link — notation
+costs known to all nodes _ _
+. s C, - direct link cost from
+* accomplished via “link state node x to v y; = oo if not direct
+broadcast neighbors
+
+* all nodes hav i .
+allnodes have same info D(v): current estimate of
+
+computes least cost paths from cost of least-cost-path from
+one node (“source”) to all other source to destination v
+nodes p(v): predecessor node
+
+along path from source to v
+
+iterative: after k iterati K N': set of nodes whose least-
+ative: atter k iterations, know cost-path definitively known
+
+least cost path to k destinations
+
+* gives forwarding table for that node
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %g PES
+
+UNIVERSITY
+
+1 Initialization:
+
+N'= {u} /* compute least cost path from u to all other nodes */
+for all nodes v
+
+ifv adjacent tou /* u initially knows direct-path-cost only to direct neighbors */
+
+2
+
+3
+
+4
+
+5 then D(v) = Cuv /* but may not be minimum cost! */
+6 else D(v)=o°
+7
+
+8
+
+9
+
+Loop
+find w not in N' such that D(w) is a minimum
+
+10 addwto N’
+11 update D(v) for all v adjacent to w and not in N':
+12 D(v) = min (D(v), D(w) +c,,, )
+13 /* new least-path-cost to v is either old least-cost-path to v or known
+14 least-cost-path to w plus direct-cost from wto v */
+15 until all nodes in N'
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+0 u 2,u 5.u 1,u o oo
+
+Initialization (step 0):
+For all a: if a adjacent to u then D(a) = ¢,
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w y z
+Step N' D(v),p(v) P(w) Dx).p(x) D(y).ply) D(z).p(z)
+0 5,u d,-lD oo oo
+
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v).p(v) D(w),p(w) D(x).p(x) D(y),p(y) D(z),p(z)
+
+0 u 2,u 5,u d-lD oo oo
+
+1 ux 2,u 4.x 2,X o
+
+2
+
+3
+
+4
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) +c,,)
+D(v) = min ( D(v), D(x) + ¢, ) = min(2, 1+2) = 2
+
+D(w) = min ( D(w), D(x) + c,,,) = min (5, 1+3) = 4
+D(y) = min ( D(y), D(x) + c,,,) = min(inf,1+1) =
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y w X z
+Step N' D(v).p(v) D(w),p(w) P(X) _D(y).py) D(z).p(z)
+
+0 u 2,u ; d-lD o oo
+
+1 ux 24— 4x @20 o0
+
+2 uy)—
+
+3
+
+4
+
+5
+
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+
+0 u 2,u 5,u d-lD o oo
+
+1 ux 2,u 4,x @2 o
+
+2 uxy 2,u 3y 4y
+
+3
+
+4
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(w) = min ( D(w), D(y) +c,,,) = min (4, 2+1) = 3
+D(z) = min ( D(z), D(y) + ¢,,) = min(inf,2+2) =
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+;/6/) w X y z
+Step N' (V).p(v) D(w),p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+0 u / 2u 5,u a,mn oo oo
+1 ux 2,u 4,x @2 had
+2 uy /  Quw 3y 4y
+3 uxyvy
+4
+5
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+Y} w X y z
+Step N' D(v),p(v) D(w),p(w) D(x),p(x) D(y).p(y) D(z).p(z)
+u 2,u 5,u d,-lD ) oo
+1 ux 2,u 4,x @x> b
+2 uxy Quw 3y 4y
+3 uxyv 3y 4y
+4
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(w) = min ( D(w), D(v) +c,,,) = min (3, 2+3) = 3
+
+Dijkstra’s algorithm: an example Ol
+
+v X y z
+Step N' D(v),p(v) D(w),p(w) D(x),p(x) D(y),p(y) D(z),p(z)
+0 u 2,u 5,u d-lb oo oo
+1 ux é/UD 4.x @x> o
+2 uxy 2,u 3, 4y
+3 uxyv 6}% 4y
+
+4 uxywy’
+5
+8 Loop
+
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+\Y; W X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+
+0 u 2,u 5,u d-lD o oo
+
+1 ux C2u> 4 x @O -
+
+2 uxy 2,u 3, 4y
+
+3 uxyv @5 4y
+
+4 UXyvw 4y
+
+5
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11 update D(b) for all b adjacent to a and notin N':
+D(b) = min ( D(b), D(a) + c,;)
+
+D(z) = min ( D(z), D(w) +c,,,) = min (4, 3+5) = 4
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PESW
+
+v w X y
+Step N' D(v).p(v) D(w).p(w) D(x)p(x) D D(2).p(2)
+0 u ’ s 1 ,u ) o
+
+2,u 5,u
+1 ux 2,u 4x @O -
+2 uxy Quw %5/ 4,y
+3 uxyv 3y 4y
+4 UXyvW D)
+5 uxywWzr
+
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+
+10 addatoN'’
+
+COMPUTER NETWORKS
+
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+\Y; w X y z
+Step N' D(v).p(v) D(w).p(w) D(x).p(x) D(y).p(y) D(z).p(z)
+u 2,u 5,u d,-lD ) oo
+1 ux 2,u 4.x @O oo
+2 uxy Quw 3, 4,y
+3 uxyv @% 4y
+4 uxyvw @
+5 uxyvwz
+8 Loop
+9 find a notin N'such that D(a) is a minimum
+10 addatoN'’
+
+11
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm PES
+
+UNIVERSITY
+
+Example contd..
+
+SVI——Cw3
+
+resulting least-cost-path tree from u:
+resulting forwarding table in u:
+
+@ destination | outgoing link
+Y (u,v) — route from u to v directly
+Q X (u,x)
+Yy (u,x) route from u to all
+w (u,x) other destinations
+X (u,x) via x
+
+COMPUTER NETWORKS
+Routing Protocols - Dijkstra’s link-state routing algorithm %% PES
+
+Another example:
+
+(x)
+D(x), ), z),
+p(x) p(y) p(z)
+
+,u
+
+o
+
+vy 11w 14
+uwxv) 14,x
+
+notes:
+construct least-cost-path tree by tracing predecessor nodes
+
+ties can exist (can be broken arbitrarily)
+UNIVERSITY
+
+THANK YOU
+
+TEAM NETWORKS
+
+PES Department of Computer Science and Engineering
+
+UNIVERSITY
