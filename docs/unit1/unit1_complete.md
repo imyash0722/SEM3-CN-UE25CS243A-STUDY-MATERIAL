@@ -644,3 +644,102 @@ clientSocket.close()
 15. **UDP vs TCP socket programming?**
     - UDP: sendto/recvfrom with address; no connection
     - TCP: connect/accept; send/recv without address; welcoming + connection sockets
+
+---
+
+# Extra Problems (from Course Materials)
+
+## Delay Problems
+
+### Q1: Transmission Delay
+**Problem**: Packet length = 4000 bits, link rate = 10 MBps. What is the transmission delay?
+- L = 4000 bits
+- R = 10 MBps = 10 × 8 × 10⁶ bps = 80 Mbps
+- **Answer**: Transmission Delay = L/R = 4000 / (10 × 8 × 10⁶) = 0.00005s = **50 microseconds**
+
+### Q2: Dedicated Link vs Courier
+**Problem**: Send 10 TB from Bengaluru to Chennai. Dedicated link: 100 Mbps. Courier: 1 day delivery.
+- 10 TB = 10 × 10¹² × 8 bits = 8×10¹³ bits
+- Link time: 8×10¹³ / (100 × 10⁶) = 800,000 seconds ≈ **9.26 days**
+- Courier: **1 day**
+- **Answer**: Courier is faster
+
+### Q3: Optical Fiber Distance
+**Problem**: Optical fiber at 70% speed of light, propagation time = 10 μs. What distance?
+- Speed = 0.7 × 3×10⁸ = 2.1×10⁸ m/s
+- Distance = Speed × Time = 2.1×10⁸ × 10×10⁻⁶ = **2100 m = 2.1 km**
+
+### Q4: Transmission vs Propagation Delay Ratio
+**Problem**: Propagation delay = 1000 × transmission delay. Total delay = 3 μs, distance = 2 km.
+- Total = d_trans + d_prop = d_trans + 1000×d_trans = 1001×d_trans = 3 μs
+- **Answer**: d_trans ≈ **3 ns**
+
+### Q5: Processing Delay Calculation
+**Problem**: One-hop d_trans = 0.003 ms, d_queue = 1 μs, distance = 3 km, total nodal delay = 0.04 ms. Find d_proc.
+- d_nodal = d_proc + d_queue + d_trans + d_prop
+- d_prop = 3000 / (3×10⁸) = 0.01 ms
+- 0.04 = d_proc + 0.001 + 0.003 + 0.01
+- **Answer**: d_proc = **0.026 ms**
+
+---
+
+## Throughput Problems
+
+### Q6: Actual Throughput with Efficiency
+**Problem**: Link bandwidth = 15 Mbps each direction, efficiency = 80%.
+- Ideal = min(15, 15) = 15 Mbps
+- **Answer**: Actual = 0.8 × 15 = **12 Mbps**
+
+### Q7: Circuit Switching Throughput
+**Problem**: 10 Mbps link, 7 users, circuit switching.
+- **Answer**: Per user = 10/7 ≈ **1.43 Mbps**
+
+### Q8: Transmission Delay
+**Problem**: 20 Mbps link, 1000-bit packet. What is transmission delay?
+- **Answer**: 1000 / (20×10⁶) = **50 μs**
+
+### Q9: Propagation & Transmission Delay Formulas
+**Problem**: Hosts A, B separated by m meters, link rate R bps, packet size L bits, prop speed s m/s.
+- d_prop = m/s
+- d_trans = L/R
+- End-to-end = d_trans + d_prop
+- At t = d_trans: last bit just leaving A
+- If d_prop > d_trans: first bit in link; if d_prop < d_trans: first bit arrived at B
+- For d_prop = d_trans: m = s × (L/R)
+- Example: s=2.5×10⁸, L=1500 bytes, R=10 Mbps → m = **300 km**
+
+### Q10: Bandwidth-Delay Product
+**Problem**: 20,000 km, R=5 Mbps, s=2.5×10⁸ m/s.
+- d_prop = 2×10⁷ / 2.5×10⁸ = 0.08 s
+- R×d_prop = (5×10⁶)×0.08 = **400,000 bits**
+- File = 800,000 bits > BDP → max bits in link = **400,000 bits**
+- Bit width = s/R = 2.5×10⁸/5×10⁶ = **50 meters** (half football field)
+- For R=1 Gbps: BDP = 80,000,000 bits, bit width = **0.25 meters**
+
+### Q11: ISP Delay Promise
+**Problem**: 10 Mbps, 10,000 km, 100 KB/s data, promised < 5 ms delay.
+- d_prop = 10⁷/2.5×10⁸ = 40 ms
+- d_trans = (100×1000×8)/10⁷ = 80 ms
+- Total = **120 ms** > 5 ms
+- **Answer**: **Cannot deliver on promise**
+
+### Q12: Transmission Speed for Packet Timing
+**Problem**: 5000 km, 2 packets of 4 MB, queue delay = 10 ms, s=2.5×10⁸. Find R so 2nd packet finishes when 1st arrives.
+- d_prop = 20 ms
+- 1st packet arrival = 10 + d_trans + 20 = 30 + d_trans
+- 2nd packet finish = 10 + 2×d_trans
+- Set equal: 10 + 2d_trans = 30 + d_trans → d_trans = 20 ms
+- R = L/d_trans = (4×10⁶×8)/0.02 = **1.6 Gbps**
+
+### Q13: 100 TB Transfer - Network vs Driving
+**Problem**: 100 TB, 350 km, 1 Gbps, s=2×10⁸, drive time = 7 hrs one way.
+- d_trans = 8×10¹³/10⁹ = 8×10⁴ sec = **222 hours (9.25 days)**
+- d_prop = 3.5×10⁵/2×10⁸ = 1.75 ms (negligible)
+- Drive round trip = 14 hours
+- **Answer**: **Driving is faster**; d_trans is dominant (99.99% of total)
+
+### Q14: Lossy vs Lossless Channel
+**Problem**: 100 packets × 16 MB. Path 1: lossless 10 Gbps. Path 2: 50% loss, 20 Gbps. Queue = 10 ms/packet.
+- Lossless: d_trans = 128/10000 = 12.8 ms → total = 22.8 ms/packet → 100 × 22.8 = **2.28 sec**
+- Lossy (50% loss): 2 transmissions/packet → 200 transmissions × (10+6.4) = **3.28 sec**
+- **Answer**: **Use lossless 10 Gbps channel**
