@@ -7,3 +7,8 @@ labs/
 *.ova
 *.vdi
 *.vmdk
+
+# Large PDF files
+*.pdf
+!zensical.yml
+!README.md
