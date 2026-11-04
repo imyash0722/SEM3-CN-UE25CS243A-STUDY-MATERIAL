@@ -58,6 +58,11 @@ Transfer datagram from one node to physically adjacent node over a link
 - Detects AND corrects single bit errors
 - Intersection of row/column parity error = error location
 
+**Example (from slides)**: Send 1011 0110 with even-parity bit
+- Data has 5 ones → parity bit = 1 → 6 ones total (even)
+- Two bits flip → count changes by −2, 0, or +2 → still even → check passes
+- **Answer**: No error detected (parity misses even number of flips)
+
 ### Internet Checksum (UDP/TCP)
 **Sender**:
 1. Treat segment (header + data + pseudo-header) as sequence of 16-bit integers
@@ -67,7 +72,7 @@ Transfer datagram from one node to physically adjacent node over a link
 **Receiver**:
 1. Compute 1's complement sum of received segment
 2. If equals checksum field → no error detected
-2. If not equal → error detected
+3. If not equal → error detected
 
 ### Cyclic Redundancy Check (CRC)
 **More powerful error-detection coding**
@@ -89,6 +94,16 @@ Transfer datagram from one node to physically adjacent node over a link
 
 **Common Generators**:
 - CRC-32 (Ethernet): x³² + x²⁶ + x²³ + x²² + x¹⁶ + x¹² + x¹¹ + x¹⁰ + x⁸ + x⁷ + x⁵ + x⁴ + x² + x + 1
+
+**Numerical Example (from slides)**:
+- D = 101110, d = 6, G = 1001, r = 3
+- Append 3 zeros: 101110000
+- Divide by 1001: remainder = 101
+- Transmitted: 101110101
+
+**Another Example**:
+- Bit stream 1101011011, generator x⁴+x+1 = 10011
+- Append 4 zeros, divide, remainder = CRC
 
 ---
 
@@ -199,6 +214,18 @@ Given: MAC channel of rate R bps
 - Both A and B update their ARP tables
 - ARP trusts replies → ARP spoofing possible
 
+**MCQ (from slides)**: A asks "who has B's IP?" in frame to FF-FF-FF-FF-FF-FF. Who receives/answers?
+- a) Only B receives, B answers → False
+- b) **All nodes receive; only B answers to A** → True
+- c) All receive, all answer → False
+- d) Only router receives → False
+
+**MCQ (from slides)**: After A asked, B answered. Whose ARP table has new entry?
+- a) Only A's → False
+- b) **A's and B's (each other's)** → True
+- c) Every node's → False
+- d) Only switch's → False
+
 ---
 
 ### Routing to Another Subnet (IP + MAC Addressing Walkthrough)
@@ -214,6 +241,18 @@ Given: MAC channel of rate R bps
 5. R resolves B's MAC via ARP on right LAN
 6. R re-encapsulates: new frame (src R-right, dst B), same IP datagram
 7. B receives, extracts IP datagram, delivers to transport layer
+
+**Frame-by-frame sequence (from slides)**:
+| Step | Sender | Receiver | Message | Src MAC | Dst MAC |
+|------|--------|----------|---------|---------|---------|
+| 1 | A | - | Compare subnets (different) → send to R | - | - |
+| 2 | A | All left LAN | ARP Request: "Who has R? Tell A" | A | FF-FF-FF-FF-FF-FF |
+| 3 | R | A | ARP Reply: "R is at MAC_R" | MAC_R | A |
+| 4 | A | R | Data frame (IP: A→B, MAC: A→R) | A | MAC_R |
+| 5 | R | - | Strip frame, route to right interface | - | - |
+| 6 | R | All right LAN | ARP Request: "Who has B? Tell R" | MAC_R | FF-FF-FF-FF-FF-FF |
+| 7 | B | R | ARP Reply: "B is at MAC_B" | MAC_B | MAC_R |
+| 8 | R | B | Data frame (IP: A→B, MAC: R→B) | MAC_R | MAC_B |
 
 ---
 
@@ -235,6 +274,12 @@ Given: MAC channel of rate R bps
 - **Hub**: Repeats every bit to every port → 1 collision domain
 - **Switch**: Each port own collision domain; full duplex → no collisions
 
+**MCQ (from slides)**: 8 PCs on hub, 8 on switch. How many collision domains?
+- a) **Hub: 1; switch: 8** → True
+- b) Hub: 8; switch: 1
+- c) Hub: 1; switch: 1
+- d) Hub: 8; switch: 8
+
 ### Ethernet Frame Structure
 ```
 Preamble (8 bytes) | Dest MAC (6) | Src MAC (6) | Type (2) | Data (46-1500) | CRC (4)
@@ -246,10 +291,19 @@ Preamble (8 bytes) | Dest MAC (6) | Src MAC (6) | Type (2) | Data (46-1500) | CR
 - **Min frame**: 64 bytes (512 bits = collision budget)
 - **Max frame**: 1518 bytes (1500 MTU + 18 header/CRC)
 
+**Smallest frame**: 6+6+2+46+4 = 64 bytes
+**Largest frame**: 6+6+2+1500+4 = 1518 bytes
+
 ### Ethernet: Unreliable, Connectionless
 - **Connectionless**: No handshaking between NICs
 - **Unreliable**: No ACKs/NAKs; dropped frames recovered only by higher layer (TCP)
 - **MAC Protocol**: Unslotted CSMA/CD with binary backoff (shared links)
+
+**MCQ (from slides)**: Frame fails CRC at second router. Who notices, who resends?
+- a) Second router asks first to resend → False
+- b) **TCP at sender notices gap and resends** → True
+- c) First router resends after timeout → False
+- d) Nobody: file arrives with hole → False
 
 ---
 
@@ -278,6 +332,18 @@ When frame received:
 ### Interconnecting Switches
 - Self-learning works across multiple switches
 - Switch learns which host reachable via which switch port
+
+**MCQ (from slides)**: C sends to I, I replies to C. Switch 2 learns C but not I. Why?
+- a) **S4 knew C was toward S1, so I's reply skipped S2** → True
+- b) S2's table was full
+- c) S2 learns only from frames addressed to it
+- d) I's reply was broadcast
+
+**MCQ (from slides)**: Laptop sends ARP broadcast. Which devices receive it?
+- a) Only devices on laptop's own switch
+- b) Only router
+- c) **Every device on every switch, up to router** → True
+- d) Every device, including outside networks
 
 ---
 
@@ -316,6 +382,12 @@ Tag marker (0x8100) | Priority (3) | Drop (1) | VLAN ID (12 bits)
    - Known: send on that port
    - Unknown/broadcast: flood **only to ports in same VLAN + trunks carrying it**
 4. Tag/untag on output: add tag on trunk, remove on access
+
+**MCQ (from slides)**: PC on access port 5 (VLAN 20) sends broadcast. Ports 1-2 VLAN 10, 5-6 VLAN 20, 8 trunk (10,20). Where does broadcast go?
+- a) Every port (broadcasts ignore VLANs)
+- b) **Port 6 untagged, port 8 tagged 20** → True
+- c) Only port 8 (trunk) tagged 20
+- d) Only router
 
 ### Inter-VLAN Routing
 - **Each VLAN = separate IP network**
@@ -456,7 +528,46 @@ All use **CSMA/CA** for multiple access
 
 ---
 
-## Review Questions
+## Complete Questions, Examples, and MCQs from Slides and Textbook
+
+### Numerical Problems (Exam Practice)
+
+**Q1. Parity Check**: Send 1011 0110 with even parity. Two bits flip. What does receiver conclude?
+- Data has 5 ones → parity = 1 (even total)
+- Two flips change count by ±2 or 0 → still even
+- **Answer**: No error detected
+
+**Q2. Two-Dimensional Parity**: Given matrix with row/column parity, detect and correct single-bit error
+- Row parity error on row 3, column parity error on column 2
+- Error at (3,2): flip bit
+
+**Q3. CRC Calculation**: D = 101110, G = 1001 (r=3)
+- Append 3 zeros: 101110000
+- Divide by 1001: remainder = 101
+- Transmitted: 101110101
+
+**Q4. CRC Numerical**: Bit stream 1101011011, generator x⁴+x+1 = 10011
+- Append 4 zeros, divide by 10011
+- Compute remainder → transmitted bit string
+
+**Q5. Ethernet Frame Size**: Dest 6B, Src 6B, Type 2B, Data 46-1500B, CRC 4B
+- Min frame = 6+6+2+46+4 = 64 bytes
+- Max frame = 6+6+2+1500+4 = 1518 bytes
+- Preamble (8B) not counted
+
+**Q6. Binary Exponential Backoff**: After 3 collisions
+- K ∈ {0, 1, ..., 2³⁻¹} = {0, 1, 2, 3, 4, 5, 6, 7}
+- Wait K × 512 bit times
+
+**Q7. VLAN Tag**: 4 bytes after source MAC
+- TPID: 0x8100
+- Priority: 3 bits (0-7)
+- Drop eligible: 1 bit
+- VLAN ID: 12 bits (4094 usable)
+
+---
+
+### Review Questions
 
 1. **Link layer services?**
    - Framing, link access, reliable delivery, error detection/correction, flow control
@@ -506,3 +617,180 @@ All use **CSMA/CA** for multiple access
 
 15. **Physical layer encoding?**
     - NRZ, Manchester, 4B/5B, 8B/10B for clock recovery, DC balance
+
+---
+
+## Multiple Choice Questions (from Slides)
+
+**Q1. Link layer services include:**
+- a) Framing, link access, MAC addressing
+- b) Reliable delivery, error detection, flow control
+- c) Half/full duplex
+- d) **All of the above**
+
+**Q2. Error detection framework:**
+- EDC not 100% reliable; larger EDC → better detection
+
+**Q3. Single bit parity - can detect:**
+- a) Single bit errors
+- b) **Odd number of bit flips** → True
+- c) Even number of bit flips → False (misses)
+
+**Q4. Two-dimensional parity:**
+- Detects AND corrects single-bit errors
+
+**Q5. CRC - can detect all burst errors of length:**
+- Less than r+1 bits
+
+**Q6. Multiple access links - shared wire:**
+- Old Ethernet, upstream HFC
+
+**Q7. Shared radio:**
+- 802.11 WiFi, 4G/5G, satellite
+
+**Q8. Ideal MAC protocol desiderata:**
+1. One node → rate R
+2. M nodes → R/M each
+3. Fully decentralized
+4. Simple
+
+**Q9. CSMA/CD - collision detection:**
+- Easy in wired, difficult in wireless
+- Colliding transmissions aborted (reduces wastage)
+
+**Q10. CSMA collisions still occur because:**
+- Propagation delay → two nodes may not hear each other's just-started transmission
+
+**Q11. Ethernet CSMA/CD backoff:**
+- After n collisions, K ∈ {0, ..., 2ⁿ⁻¹}, wait K×512 bit times
+
+**Q12. Modern Ethernet - collision detection:**
+- Switched OFF (full-duplex, no collisions)
+
+**Q13. Wi-Fi - still shared, uses:**
+- CSMA/CA
+
+**Q14. MAC address - 48-bit, format:**
+- Hexadecimal, 6 bytes (e.g., 1A-2F-BB-76-09-AD)
+
+**Q15. Private Wi-Fi addresses - second hex digit:**
+- 2, 6, A, E = locally assigned
+
+**Q16. ARP table entries:**
+- <IP address; MAC address; TTL>
+
+**Q17. ARP query destination MAC:**
+- FF-FF-FF-FF-FF-FF (broadcast)
+
+**Q18. ARP - who receives broadcast, who answers?**
+- All nodes receive; only target answers
+
+**Q19. After ARP exchange - whose table updated?**
+- Both A's and B's (each other's)
+
+**Q20. ARP trusts replies → ARP spoofing possible**
+
+**Q21. Routing to another subnet - key principle:**
+- IP addresses stay same end-to-end; MAC addresses only get you to next hop
+
+**Q22. Hub vs Switch collision domains:**
+- Hub: 1 collision domain; Switch: 1 per port (8 ports = 8 domains)
+
+**Q23. Ethernet frame - addresses order:**
+- Destination first (early filtering)
+
+**Q24. Smallest Ethernet frame (excluding preamble):**
+- 64 bytes (512 bits)
+
+**Q25. Largest Ethernet frame (excluding preamble):**
+- 1518 bytes
+
+**Q26. Ethernet unreliable, connectionless:**
+- No ACKs; dropped frames recovered by TCP
+
+**Q27. Frame fails CRC at router 2 - who resends?**
+- TCP at sender (end-to-end)
+
+**Q28. Switch self-learning:**
+- Record (src MAC, incoming port) on frame arrival
+
+**Q29. Switch forwarding:**
+- Known dest → forward on port; Unknown → flood (except arriving)
+
+**Q30. Switch interconnecting - self-learning works across switches**
+
+**Q31. Broadcast domain - ARP broadcast goes to:**
+- Every device on every switch, up to router
+
+**Q32. VLAN - divides single physical network into:**
+- Multiple logical LANs
+
+**Q33. VLAN tag - 4 bytes, fields:**
+- TPID (0x8100), Priority (3b), Drop (1b), VLAN ID (12b)
+
+**Q34. Access port:**
+- One VLAN, untagged frames
+
+**Q35. Trunk port:**
+- Multiple VLANs, tagged frames
+
+**Q36. Native VLAN:**
+- One VLAN crosses trunk untagged; both ends must agree
+
+**Q37. VLAN-aware forwarding:**
+- Lookup (VLAN, dest MAC); flood only within VLAN + trunks
+
+**Q38. Inter-VLAN routing:**
+- Router or L3 switch; each VLAN = separate IP network
+
+**Q38. Web request life - protocol stack journey:**
+- DHCP → ARP → DNS → TCP handshake → HTTP → Link layer
+
+**Q39. Physical layer encoding:**
+- NRZ, Manchester, 4B/5B, 8B/10B
+
+**Q40. Wireless taxonomy:**
+- Infrastructure single-hop: WiFi, 4G/5G
+- Infrastructure multi-hop: Mesh
+- Ad hoc single-hop: Bluetooth
+- Ad hoc multi-hop: MANET, VANET
+
+**Q41. 802.11 architecture:**
+- BSS: hosts + AP; SSID: network name; Channels: 2.4/5/6 GHz
+
+**Q42. 802.11 standards:**
+- b/g/n/ac/ax/be (WiFi 1 through 7)
+
+**Q43. CSMA/CA vs CSMA/CD:**
+- CD impossible in wireless (can't transmit+listen same frequency)
+- CA: DIFS → backoff → transmit → wait ACK
+
+**Q44. Hidden terminal:**
+- A and C can't hear, both send to B → collision
+- Solution: RTS/CTS
+
+**Q45. Exposed terminal:**
+- C hears B, defers; but C could send to D
+
+---
+
+## Textbook End-of-Chapter Problems (Chapter 6)
+
+**P1.** Explain the difference between error detection and error correction.
+**P2.** Calculate single-bit parity for a given data word.
+**P3.** Perform two-dimensional parity check and identify/correct single-bit error.
+**P4.** Compute Internet checksum for a given UDP segment.
+**P5.** Calculate CRC for given data and generator polynomial.
+**P6.** Compare CSMA/CD and CSMA/CA with timing diagrams.
+**P7.** Trace Ethernet CSMA/CD exponential backoff for n=3 collisions.
+**P8.** Explain why modern switched Ethernet doesn't use collision detection.
+**P9.** Describe ARP operation with a diagram showing request/reply.
+**P10.** Walk through IP+MAC addressing when sending to another subnet.
+**P11.** Calculate Ethernet frame sizes (min/max) and explain each field.
+**P12.** Trace switch self-learning and forwarding for a multi-switch topology.
+**P13.** Explain VLAN operation: tagging, access/trunk ports, inter-VLAN routing.
+**P14.** Describe the protocol stack journey of a web request.
+**P15.** Compare physical layer encoding schemes (NRZ, Manchester, 4B/5B, 8B/10B).
+**P16.** Explain 802.11 CSMA/CA with RTS/CTS for hidden terminal problem.
+**P17.** Compare infrastructure vs ad-hoc wireless network architectures.
+**P18.** Describe 802.11 frame structure and the purpose of each field.

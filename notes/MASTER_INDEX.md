@@ -39,175 +39,299 @@
 ## Quick Navigation
 
 ### Unit 1: Computer Networks & Internet + Application Layer
-[unit1/unit1_complete.md](unit1/unit1_complete.md)
-- **Chapter 1**: Internet architecture, delay/loss/throughput, protocol layers
-- **Chapter 2**: HTTP/HTTPS, DNS, Email, CDNs, Socket programming
+- [Overview & Syllabus](unit1/00_overview.md)
+- [Chapter 1: Computer Networks & the Internet](unit1/01_chapter1_network_fundamentals.md)
+- [Chapter 2: Application Layer](unit1/02_chapter2_application_layer.md)
+- [Complete Unit 1 Notes](unit1/unit1_complete.md)
 
 ### Unit 2: Transport Layer
-[unit2/unit2_complete.md](unit2/unit2_complete.md)
-- **Chapter 3**: UDP, Reliable data transfer (GBN/SR), TCP, Congestion control
+- [Overview](unit2/00_overview.md)
+- [Chapter 3: Transport Layer](unit2/03_chapter3_transport_layer.md)
+- [Complete Unit 2 Notes](unit2/unit2_complete.md)
 
 ### Unit 3: Network Layer
-[unit3/unit3_complete.md](unit3/unit3_complete.md)
-- **Chapter 4**: Router internals, IP, Fragmentation, Addressing, NAT, SDN
-- **Chapter 5**: Routing algorithms (Link State, Distance Vector), IPv6, ICMP, DHCP
+- [Overview](unit3/00_overview.md)
+- [Complete Unit 3 Notes](unit3/unit3_complete.md)
 
 ### Unit 4: Link Layer & LAN
-[unit4/unit4_complete.md](unit4/unit4_complete.md)
-- **Chapter 6**: Error detection, MAC protocols, Ethernet, Switches, VLANs, WiFi
+- [Overview](unit4/00_overview.md)
+- [Complete Unit 4 Notes](unit4/unit4_complete.md)
+
+### Reference
+- [Complete Formulae Sheet](formulae_sheet.md) — All formulas for exams
+- [Master Index & Study Checklist](MASTER_INDEX.md) — Full topic checklist
 
 ---
 
-## Key Formulae Reference (All Units)
+## 📚 Detailed Topic Index
 
-### Unit 1: Delay, Throughput, HTTP
-| Formula | Equation |
-|---------|----------|
-| Transmission Delay | `d_trans = L / R` |
-| Propagation Delay | `d_prop = d / s` |
-| Total Nodal Delay | `d_nodal = d_proc + d_queue + d_trans + d_prop` |
-| End-to-End (N links) | `d_end-end = N × (d_trans + d_prop)` |
-| Traffic Intensity | `ρ = (L × a) / R` |
-| Avg Queuing Delay (M/M/1) | `d_queue = (L/R) × (ρ / (1-ρ))` |
-| Store-and-Forward (P packets) | `d = (N + P - 1) × L / R` |
-| Bottleneck Throughput | `min(R₁, R₂, ..., R_N)` |
-| Non-persistent HTTP (K objects) | `K × (2×RTT + L/R)` |
-| Persistent HTTP | `2×RTT + K×L/R` |
+### Unit 1 (ISA-1)
 
-### Unit 2: Transport Layer
-| Formula | Equation |
-|---------|----------|
-| Stop-and-Wait Utilization | `U = (L/R) / (RTT + L/R)` |
-| Pipelined Utilization | `U = N × (L/R) / (RTT + L/R)` |
-| Optimal Window | `N_optimal = 1 + (RTT × R) / L` |
-| BDP | `BDP = R × RTT` |
-| GBN Window Bound | `N ≤ 2ᵏ - 1` |
-| SR Window Bound | `N ≤ 2ᵏ⁻¹` |
-| EstimatedRTT | `0.875 × EstRTT + 0.125 × SampleRTT` |
-| DevRTT | `0.75 × DevRTT + 0.25 × |SampleRTT - EstRTT|` |
-| TimeoutInterval | `EstimatedRTT + 4 × DevRTT` |
-| rwnd | `RcvBuffer - (LastByteRcvd - LastByteRead)` |
-| Sender Constraint | `LastByteSent - LastByteAcked ≤ min(cwnd, rwnd)` |
-| Slow Start | `cwnd += 1 MSS` per ACK |
-| Congestion Avoidance | `cwnd += 1 MSS` per RTT |
-| Timeout Reaction | `ssthresh = cwnd/2; cwnd = 1 MSS` |
-| 3 Dup ACKs | `ssthresh = cwnd/2; cwnd = ssthresh + 3 MSS` |
-| Macroscopic Throughput | `Throughput = 0.75 × W / RTT` |
-| Loss Rate (Padhye) | `Throughput ≈ 1.22 × MSS / (RTT × √L)` |
+#### Chapter 1: Computer Networks and the Internet
+- [ ] **1.1 What Is the Internet?**
+  - Nuts-and-bolts vs services view
+  - Protocol definition (syntax, semantics, timing)
+  - Human protocol analogy
+- [ ] **1.2 The Network Edge**
+  - Access networks: DSL, Cable, FTTH, 5G, Enterprise
+  - Physical media: Twisted pair, Coax, Fiber, Radio
+  - Dedicated vs shared access
+- [ ] **1.3 The Network Core**
+  - Packet switching vs circuit switching
+  - Store-and-forward, statistical multiplexing
+  - Network of networks: Tier-1/2/3 ISPs, IXPs, CDNs
+  - Peering vs transit
+- [ ] **1.4 Delay, Loss, and Throughput**
+  - Four delay components: processing, queuing, transmission, propagation
+  - Caravan analogy (tollbooth)
+  - Traffic intensity ρ = La/R, queuing delay formula
+  - End-to-end delay, traceroute
+  - Bottleneck throughput, M flows sharing
+- [ ] **1.5 Protocol Layers**
+  - 5-layer Internet model vs OSI 7-layer
+  - Encapsulation/decapsulation (Matryoshka dolls)
+- [ ] **1.6 Networks Under Attack**
+  - Malware, DoS/DDoS, sniffing, spoofing, MitM, DNS attacks
+- [ ] **1.7 History of Computer Networking**
+  - 1961-1972: ARPANET, NCP
+  - 1972-1980: TCP/IP, Ethernet
+  - 1980-1990: NSFNET, DNS, congestion control
+  - 1990s: Web, commercialization
+  - 2000s-present: Broadband, mobile, cloud, SDN, IoT, QUIC
 
-### Unit 3: Network Layer
-| Formula | Equation |
-|---------|----------|
-| IPv4 Header Checksum | 1's complement sum of 16-bit words |
-| Longest Prefix Match | Choose entry with longest matching prefix |
-| Subnet Address | IP AND Subnet Mask |
-| Broadcast Address | Subnet Address OR (NOT Subnet Mask) |
-| Hosts per Subnet | `2^(32 - prefix_length) - 2` |
-| Dijkstra Update | `D(v) = min(D(v), D(w) + c(w,v))` |
-| Bellman-Ford | `Dx(y) = minᵥ { c(x,v) + Dᵥ(y) }` |
-
-### Unit 4: Link Layer
-| Formula | Equation |
-|---------|----------|
-| CRC | Remainder of D × 2ʳ ÷ G (mod 2) |
-| Ethernet Min Frame | 64 bytes = 512 bits |
-| Ethernet Max Frame | 1518 bytes |
-| Binary Exponential Backoff | Wait K × 512 bit times, K ∈ {0, ..., 2ⁿ⁻¹} |
-
----
-
-## Important Concepts by Layer
-
-### Application Layer (Layer 5)
-- **Architectures**: Client-Server, P2P, Hybrid
-- **HTTP**: Non-persistent (2 RTT/object), Persistent (2 RTT + K×trans), Pipelined (2 RTT), HTTP/2 (multiplexing), HTTP/3 over QUIC (0-RTT, no HOL blocking)
-- **DNS**: Hierarchical distributed DB, recursive/iterative queries, caching (TTL), record types (A, AAAA, CNAME, MX, NS, TXT)
-- **Email**: SMTP (push, port 25/587), POP3/IMAP (pull), MIME for attachments
-- **CDNs**: Edge caching, GeoDNS/anycast routing, DASH adaptive streaming
-
-### Transport Layer (Layer 4)
-- **UDP**: 8-byte header, checksum (1's complement + pseudo-header), no reliability
-- **RDT**: Stop-and-wait → Pipelining (GBN: cumulative ACK, retransmit all; SR: selective ACK, retransmit one)
-- **TCP**: Reliable byte stream, 3-way handshake, flow control (rwnd), congestion control (cwnd)
-- **RTT Estimation**: EWMA (α=0.125), DevRTT (β=0.25), Timeout = EstRTT + 4×DevRTT
-- **Congestion Control**: Slow Start (exp) → CA (linear) → Fast Recovery; AIMD
-- **Modern**: CUBIC (cubic function), Vegas (delay-based), BBR (model-based), ECN
-
-### Network Layer (Layer 3)
-- **Forwarding vs Routing**: Local vs global; Data plane vs Control plane
-- **Router**: Input ports (lookup, queue), Switching fabric (memory/bus/crossbar), Output ports (queue, schedule)
-- **IPv4**: 20-byte header, fragmentation (ID, flags, offset), TTL, protocol field
-- **Addressing**: CIDR (a.b.c.d/x), subnets, hierarchical aggregation, NAT (private: 10/8, 172.16/12, 192.168/16)
-- **Routing**: Link State (Dijkstra, OSPF/IS-IS) vs Distance Vector (Bellman-Ford, RIP)
-- **SDN**: Control/data separation, OpenFlow, flow tables, P4 programmable data plane
-- **Datacenters**: Leaf-spine, ECMP, oversubscription, DCTCP/BBR, SDN control
-- **IPv6**: 128-bit, 40-byte fixed header, no fragmentation, extension headers, flow label
-- **ICMP**: Error reporting, ping (echo), traceroute (TTL expired)
-- **DHCP**: DORA (Discover, Offer, Request, ACK), lease, options
-
-### Link Layer (Layer 2)
-- **Error Detection**: Parity (1-bit), 2D parity (detect+correct), Checksum (1's complement), CRC (polynomial)
-- **MAC Protocols**: CSMA/CD (Ethernet), CSMA/CA (WiFi), TDMA/FDMA/CDMA
-- **Ethernet**: CSMA/CD (legacy), Switched full-duplex (modern), 64-1518 byte frames
-- **Switches**: Self-learning (src MAC → port), flooding, forwarding table with TTL
-- **VLANs**: 802.1Q tag (4 bytes, 12-bit VLAN ID), access/trunk ports, inter-VLAN routing
-- **ARP**: Broadcast query → unicast reply, ARP table with TTL
-- **WiFi (802.11)**: BSS/ESS, CSMA/CA, RTS/CTS (hidden terminal), association/authentication
-- **Physical Layer**: NRZ, Manchester, 4B/5B, 8B/10B; twisted pair, coax, fiber, wireless
+#### Chapter 2: Application Layer
+- [ ] **2.1 Principles of Network Applications**
+  - Client-server vs P2P architectures
+  - Processes, sockets (API), addressing (IP + port)
+  - Transport services: reliable, throughput, timing, security
+  - TCP vs UDP services
+  - Application-layer protocol definition
+- [ ] **2.2 The Web and HTTP**
+  - HTTP overview: stateless, URL format
+  - Non-persistent vs persistent vs pipelined (RTT calculations)
+  - HTTP message format (request/response)
+  - Cookies (Set-Cookie, Cookie headers)
+  - Browser caching (304 Not Modified)
+  - HTTP/2: binary framing, multiplexing, HPACK, server push
+  - HTTP/3 over QUIC: 0-RTT, connection migration, no HOL blocking
+- [ ] **2.3 Electronic Mail**
+  - SMTP (push, port 25/587, 7-bit ASCII)
+  - Mail formats (RFC 5322, MIME)
+  - POP3/IMAP/HTTP for mail access
+- [ ] **2.4 DNS**
+  - Hierarchical distributed DB: root → TLD → authoritative
+  - Recursive vs iterative queries
+  - Caching with TTL
+  - Record types: A, AAAA, CNAME, MX, NS, TXT, SRV
+  - DNSSEC, DoH/DoT
+- [ ] **2.5 Video Streaming and CDNs**
+  - Stored, live, interactive video
+  - DASH (MPD, adaptive streaming)
+  - CDN operation: request routing, content placement, delivery
+  - Netflix/YouTube case studies
+- [ ] **2.6 Socket Programming**
+  - UDP: sendto/recvfrom (address included)
+  - TCP: connect/accept (welcoming + connection sockets)
+  - Python examples for both
 
 ---
 
-## Study Tips
+### Unit 2 (ISA-1)
 
-### For Exams (ISA/ESA)
-1. **Numerical problems**: Practice delay/throughput calculations, subnetting, Dijkstra, Bellman-Ford, CRC
-2. **Protocol mechanisms**: Know exact header fields, state machines (TCP, ARP, DHCP)
-3. **Comparisons**: Link State vs Distance Vector, GBN vs SR, TCP vs UDP, CSMA/CD vs CSMA/CA
-4. **Diagrams**: Encapsulation, TCP state machine, 3-way handshake, 4-way teardown, DNS hierarchy
-
-### Key RFCs to Know
-- RFC 791: IPv4
-- RFC 793: TCP
-- RFC 768: UDP
-- RFC 792: ICMP
-- RFC 2131: DHCP
-- RFC 826: ARP
-- RFC 894: IP over Ethernet
-- RFC 2460: IPv6
-- RFC 3390: TCP initial window (10 MSS)
-- RFC 6298: TCP RTO calculation
-- RFC 7540: HTTP/2
-- RFC 9000: QUIC
-
-### Tools for Labs
-- **Wireshark**: Packet capture/analysis (HTTP, DNS, TCP, UDP, ARP, ICMP)
-- **Cisco Packet Tracer**: Network topology design, device configuration
-- **Python Sockets**: TCP/UDP client-server programming
-- **Mininet**: SDN/OpenFlow experimentation
-
----
-
-## File Structure
-```
-notes/
-├── MASTER_INDEX.md          (this file)
-├── formulae_sheet.md        (all formulae consolidated)
-├── unit1/
-│   └── unit1_complete.md    (Ch 1-2: Internet + Application Layer)
-├── unit2/
-│   └── unit2_complete.md    (Ch 3: Transport Layer)
-├── unit3/
-│   └── unit3_complete.md    (Ch 4-5: Network Layer)
-├── unit4/
-│   └── unit4_complete.md    (Ch 6: Link Layer & LAN)
-└── textbook/
-    ├── kurose_ross_9th.txt  (full textbook text)
-    └── kurose_ross_8th.txt  (8th edition)
-```
+#### Chapter 3: Transport Layer
+- [ ] **3.1 Introduction and Transport-Layer Services**
+  - Transport vs network layer (process-to-process vs host-to-host)
+  - TCP vs UDP feature comparison
+- [ ] **3.2 Multiplexing and Demultiplexing**
+  - UDP: 2-tuple (dst IP, dst port)
+  - TCP: 4-tuple (src IP, src port, dst IP, dst port)
+- [ ] **3.3 UDP**
+  - 8-byte header structure
+  - Checksum: 1's complement + pseudo-header
+- [ ] **3.4 Principles of Reliable Data Transfer**
+  - rdt 1.0 → 3.0 evolution
+  - Stop-and-wait utilization
+  - Pipelining: GBN vs SR
+- [ ] **3.4.3 Go-Back-N (GBN)**
+  - Sender/receiver window, cumulative ACK
+  - Window bound: N ≤ 2ᵏ - 1
+  - Retransmit ALL on timeout
+  - Example: 18 transmissions (N=10, every 5th lost)
+- [ ] **3.4.4 Selective Repeat (SR)**
+  - Per-packet timers, individual ACKs
+  - Window bound: N ≤ 2ᵏ⁻¹
+  - Retransmit only timed-out packet
+  - Example: 12 transmissions (same conditions)
+- [ ] **3.5 TCP**
+  - Segment structure: seq/ACK numbers, flags, window, options
+  - MSS = MTU - 40
+  - RTT estimation (EWMA α=0.125, DevRTT β=0.25)
+  - Timeout = EstRTT + 4×DevRTT, Karn's Algorithm
+  - Sender events, fast retransmit (3 dup ACKs), fast recovery
+  - Flow control (rwnd)
+  - 3-way handshake, 4-way teardown, TIME_WAIT
+- [ ] **3.6-3.7 Congestion Control**
+  - Causes/costs of congestion
+  - End-end vs network-assisted
+  - Slow Start, Congestion Avoidance, Fast Recovery
+  - AIMD sawtooth
+  - Tahoe, Reno, CUBIC comparison
+  - ECN (CE/ECE/CWR bits)
+  - Fairness (R/K)
+- [ ] **3.8 Evolution**
+  - TCP (kernel) vs QUIC (user-space)
+  - HTTP/3 over QUIC
 
 ---
 
-## Quick Revision Checklist
+### Unit 3 (ISA-2)
+
+#### Chapter 4: Network Layer - Data Plane
+- [ ] **4.1 Overview**
+  - Forwarding vs routing
+  - Data plane vs control plane
+  - Service models (best effort, CBR, ABR, Intserv, Diffserv)
+- [ ] **4.2 Router Internals**
+  - Routing processor (control plane, ms) vs switching fabric (data plane, ns)
+  - Input ports: physical → link → lookup (match+action) → queue
+  - Longest prefix matching (TCAM)
+  - Switching fabrics: memory, bus, crossbar/Clos
+  - HOL blocking at input queues
+  - Output port queueing, buffer sizing (RTT×C, RTT×C/√N)
+  - Buffer management: tail drop, priority, ECN/RED
+- [ ] **4.3 IPv4**
+  - Datagram format (20-byte header)
+  - Fragmentation: ID, flags (MF, DF), offset (8-byte units)
+  - Why avoid fragmentation
+- [ ] **4.4 IPv4 Addressing**
+  - CIDR (a.b.c.d/x), subnets
+  - Hierarchical addressing, route aggregation
+  - Classful vs classless
+  - ICANN, RIRs, NAT for exhaustion
+- [ ] **4.5 NAT**
+  - Private address spaces (10/8, 172.16/12, 192.168/16)
+  - Translation table, outgoing/incoming processing
+  - NAT traversal (static port forwarding)
+
+#### Chapter 5: Network Layer - Control Plane
+- [ ] **5.1 Routing Algorithms**
+  - Graph abstraction G=(N,E), c(x,y)
+  - Global (Link State) vs Decentralized (Distance Vector)
+  - Static vs Dynamic
+- [ ] **5.2 Link-State (Dijkstra)**
+  - Algorithm steps, initialization, loop
+  - Example with 6 nodes
+  - Forwarding table construction
+- [ ] **5.3 Distance Vector (Bellman-Ford)**
+  - BF equation: Dx(y) = minᵥ {c(x,v) + Dᵥ(y)}
+  - Iterative algorithm, convergence
+  - Count-to-infinity (bad news travels slow)
+  - DV vs LS comparison table
+- [ ] **5.4 SDN**
+  - Control/data separation, centralized controller
+  - OpenFlow: match+action, flow tables
+  - P4 programmable data plane
+- [ ] **5.5 Datacenter Networks**
+  - North-South vs East-West traffic
+  - 3-tier vs leaf-spine
+  - Oversubscription, ECMP (per-flow hashing)
+  - Protocol innovations: RoCE, DCTCP, hop-by-hop backpressure, SDN, locality-aware placement
+
+#### IPv6, ICMP, DHCP
+- [ ] **IPv6**: 128-bit, 40-byte fixed header, no checksum/fragmentation, flow label, extension headers, address types (unicast/multicast/anycast), transition (tunneling, dual stack)
+- [ ] **ICMP**: Error reporting, ping (Type 8/0), traceroute (Type 11)
+- [ ] **DHCP**: DORA (Discover/Offer/Request/ACK), lease, options (gateway, DNS, mask)
+
+---
+
+### Unit 4 (ISA-2)
+
+#### Chapter 6: Link Layer and LANs
+- [ ] **6.1 Introduction**
+  - Nodes, links, frames
+  - Services: framing, link access, MAC addressing, reliable delivery, error detection/correction, flow control, half/full duplex
+  - Implementation: NIC/on-chip
+- [ ] **6.2 Error Detection and Correction**
+  - Single-bit parity (even), 2D parity (detect+correct)
+  - Internet checksum (1's complement)
+  - CRC (polynomial division, D×2ʳ mod G)
+- [ ] **6.3 Multiple Access Protocols**
+  - Channel partitioning (TDMA/FDMA/CDMA)
+  - Random access (CSMA, CSMA/CD, CSMA/CA)
+  - Taking turns (polling, token)
+  - CSMA/CD: listen before transmit, binary exponential backoff
+  - CSMA/CA: DIFS, backoff, ACK, RTS/CTS
+  - Modern Ethernet: no collision detection
+- [ ] **6.4 Switched LANs**
+  - MAC addresses (48-bit, flat, portable) vs IP (32-bit, hierarchical)
+  - Private WiFi addresses
+  - ARP: broadcast query → unicast reply, ARP table with TTL
+  - Routing to another subnet (IP end-to-end, MAC per-hop)
+- [ ] **6.5 Ethernet**
+  - Bus vs switched topology
+  - Frame structure (preamble, addresses, type, data, CRC)
+  - Min 64B, max 1518B
+  - Unreliable, connectionless
+- [ ] **6.6 Ethernet Switches**
+  - Self-learning (src MAC → port), flooding, forwarding
+  - Interconnecting switches
+  - Switches vs routers (L2 vs L3)
+  - Broadcast domain, VLANs
+- [ ] **6.7 VLANs**
+  - 802.1Q tag (4 bytes: TPID, priority, DEI, VLAN ID 12b)
+  - Access vs trunk ports, native VLAN
+  - VLAN-aware forwarding, inter-VLAN routing
+- [ ] **6.8 A Day in the Life**
+  - DHCP → ARP → DNS → TCP handshake → HTTP → Link layer
+- [ ] **6.9 Physical Layer**
+  - Encoding: NRZ, Manchester, 4B/5B, 8B/10B
+  - Media: twisted pair, coax, fiber, wireless
+- [ ] **6.10 Wireless LANs (802.11)**
+  - BSS/ESS, channels, association
+  - Standards evolution (b/g/n/ac/ax/be)
+  - CSMA/CA, RTS/CTS, hidden/exposed terminal
+  - Power management
+
+---
+
+## 🧮 Key Formulae by Chapter
+
+### Chapter 1
+- `d_trans = L / R`, `d_prop = d / s`, `d_nodal = d_proc + d_queue + d_trans + d_prop`
+- `ρ = (L × a) / R`, `d_queue = (L/R) × (ρ / (1-ρ))`
+- `d = N × L / R`, `d = (N + P - 1) × L / R`
+- `Throughput = min(R₁, ..., R_N)`
+
+### Chapter 2
+- Non-persistent: `K × (2×RTT + L/R)`
+- Persistent: `2×RTT + K×L/R`
+
+### Chapter 3
+- Stop-and-Wait: `U = (L/R) / (RTT + L/R)`
+- GBN: `N ≤ 2ᵏ - 1`, SR: `N ≤ 2ᵏ⁻¹`
+- `EstRTT = 0.875×EstRTT + 0.125×SampleRTT`
+- `DevRTT = 0.75×DevRTT + 0.25×|SampleRTT-EstRTT|`
+- `Timeout = EstRTT + 4×DevRTT`
+- `rwnd = RcvBuffer - (LastByteRcvd - LastByteRead)`
+- `cwnd += 1 MSS` per ACK (SS), `cwnd += 1 MSS` per RTT (CA)
+- Timeout: `ssthresh=cwnd/2; cwnd=1 MSS`
+- 3 Dup ACKs: `ssthresh=cwnd/2; cwnd=ssthresh+3 MSS`
+- Throughput: `0.75×W/RTT`, `1.22×MSS/(RTT×√L)`
+
+### Chapters 4-5
+- Subnet: `IP AND Mask`, Broadcast: `Subnet OR (NOT Mask)`
+- Hosts: `2^(32-prefix) - 2`
+- Dijkstra: `D(v) = min(D(v), D(w) + c(w,v))`
+- Bellman-Ford: `Dx(y) = minᵥ {c(x,v) + Dᵥ(y)}`
+
+### Chapter 6
+- CRC: Remainder of `D × 2ʳ ÷ G`
+- Ethernet min: 64B, max: 1518B
+- Backoff: `K × 512 bit times`, `K ∈ {0, ..., 2ⁿ⁻¹}`
+
+---
+
+## ✅ Complete Study Checklist (All Units)
 
 ### Unit 1 ✓
 - [ ] 4 delay components + formulas
@@ -250,6 +374,86 @@ notes/
 - [ ] 802.11 architecture + CSMA/CA
 - [ ] Hidden/exposed terminal
 - [ ] Physical layer encoding
+
+---
+
+## 🎯 Exam-Relevant MCQ Patterns
+
+### Numerical
+- Delay/throughput calculations (given link rates, distances, packet size)
+- Traffic intensity and queuing delay
+- Subnetting (network/broadcast/host range)
+- Dijkstra/Bellman-Ford iterations
+- CRC calculation
+- RTT estimation (EstRTT, DevRTT, Timeout)
+
+### Conceptual
+- Identify delay component from scenario
+- HTTP connection type from timing
+- DNS query type from description
+- TCP state machine transitions
+- Congestion control phase from cwnd behavior
+- Longest prefix match from forwarding table
+
+### Code
+- Identify socket type (UDP/TCP) from Python snippet
+- ARP request/reply flow
+
+---
+
+## 🔧 Lab Components (10%)
+
+| Level | Labs | Topics |
+|-------|------|--------|
+| **Banana (L1)** | 3 | Cisco Packet Tracer, UDP/DNS, Ethernet/ARP |
+| **Orange (L2)** | 3 | HTTP Persistent/Non-persistent, TCP Congestion, Hardware |
+| **Jackfruit (L3)** | Group of 3 | 30+ projects, SDN + Socket Programming |
+
+---
+
+## 🔑 Key RFCs to Know
+
+| RFC | Protocol |
+|-----|----------|
+| 791 | IPv4 |
+| 793 | TCP |
+| 768 | UDP |
+| 792 | ICMP |
+| 2131 | DHCP |
+| 826 | ARP |
+| 894 | IP over Ethernet |
+| 2460 | IPv6 |
+| 3390 | TCP initial window (10 MSS) |
+| 6298 | TCP RTO calculation |
+| 7540 | HTTP/2 |
+| 9000 | QUIC |
+
+---
+
+## 📁 File Structure
+```
+notes/
+├── MASTER_INDEX.md          (this file)
+├── formulae_sheet.md        (all formulae consolidated)
+├── unit1/
+│   ├── 00_overview.md
+│   ├── 01_chapter1_network_fundamentals.md
+│   ├── 02_chapter2_application_layer.md
+│   └── unit1_complete.md
+├── unit2/
+│   ├── 00_overview.md
+│   ├── 03_chapter3_transport_layer.md
+│   └── unit2_complete.md
+├── unit3/
+│   ├── 00_overview.md
+│   └── unit3_complete.md
+├── unit4/
+│   ├── 00_overview.md
+│   └── unit4_complete.md
+└── textbook/
+    ├── kurose_ross_9th.txt  (full textbook text)
+    └── kurose_ross_8th.txt  (8th edition)
+```
 
 ---
 

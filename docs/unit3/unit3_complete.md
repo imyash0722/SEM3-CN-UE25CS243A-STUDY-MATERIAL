@@ -592,7 +592,91 @@ Host dynamically obtains IP address from network server when it "joins" network
 
 ---
 
-## Review Questions
+## Complete Questions, Examples, and MCQs from Slides and Textbook
+
+### Numerical Problems (Exam Practice)
+
+**Q1. Longest Prefix Matching**: Given forwarding table:
+```
+11001000 00010111 00010*** ******** → 0
+11001000 00010111 00011000 ******** → 1
+11001000 00010111 00011*** ******** → 2
+otherwise → 3
+```
+For destination 11001000 00010111 00010110 10100001 → **Interface 0** (matches /20)
+For destination 11001000 00010111 00011000 10101010 → **Interface 1** (matches /19)
+
+**Q2. IPv4 Fragmentation**: 4000 byte datagram, MTU = 1500 bytes
+- Data per fragment = 1500 - 20 = 1480 bytes
+- Fragments needed = 3 (4000/1480 = 2.7)
+- Fragment 1: len=1500, ID=x, MF=1, offset=0
+- Fragment 2: len=1500, ID=x, MF=1, offset=185
+- Fragment 3: len=1060, ID=x, MF=0, offset=370
+
+**Q3. Fragmentation Numerical Example**: MTU=200 bytes, IP packet=520 bytes, header=20 bytes
+- Max data per fragment = 180 bytes (must be multiple of 8 → 176 bytes = 22×8)
+- Fragments: 176, 176, 148 bytes data
+- Offsets: 0, 22, 44
+
+**Q4. Subnet Address Calculation**: IP=172.21.35.17, Class B
+- Default mask: 255.255.0.0
+- Network address = 172.21.0.0
+
+**Q5. Address Range in Blocks**:
+- 123.56.77.32/29: 8 total, 6 usable (33-38), broadcast=39
+- 180.34.64.64/30: 4 total, 2 usable (65-66), broadcast=67
+- 200.17.21.128/27: 32 total, 30 usable (129-158), broadcast=159
+
+**Q6. Subnet Design**: Network 175.200.0.0, need 4 subnets
+- Min host bits = 2 (2²=4 subnets)
+- Subnet mask: 255.255.192.0 (/26)
+
+**Q7. Dijkstra's Algorithm**: Compute shortest paths from u
+```
+Step 0: N'={u}, D(v)=2, D(x)=1, D(w)=5, D(y)=∞, D(z)=∞
+Step 1: Add x (D=1), update D(w)=4, D(y)=2
+Step 2: Add y (D=2), update D(w)=3, D(z)=4
+Step 3: Add v (D=2), no updates
+Step 4: Add w (D=3), update D(z)=4
+Step 5: Add z (D=4), done
+```
+
+**Q8. Bellman-Ford**: Given neighbors x,v,w with Dx(z)=3, Dv(z)=5, Dw(z)=3
+Du(z) = min{cu,x+Dx(z), cu,v+Dv(z), cu,w+Dw(z)} = min{1+3, 2+5, 5+3} = 4 (via x)
+
+**Q9. Distance Vector Iterations**: t=0,1,2,3,4 convergence
+- t=0: only direct neighbors
+- t=1: info propagates 1 hop
+- t=2: info propagates 2 hops
+- t=3: info propagates 3 hops
+- t=4: convergence
+
+**Q10. NAT Translation**: Host 10.0.0.2:4000 → Web 93.184.216.34:443, NAT 138.76.29.7:5002
+- ① Leaves host: S=10.0.0.2:4000, D=93.184.216.34:443
+- ② Leaves NAT: S=138.76.29.7:5002, D=93.184.216.34:443
+- ③ Reply to NAT: S=93.184.216.34:443, D=138.76.29.7:5002
+- ④ Reply to host: S=93.184.216.34:443, D=10.0.0.2:4000
+
+**Q11. SDN/OpenFlow**: Match IP Dst=51.6.0.8 → Action: forward port 6
+- Flow table: Match (header fields) → Action (forward/drop/modify/controller) → Stats
+
+**Q12. Datacenter Oversubscription**: 40 servers × 25 Gbps = 1000 Gbps, 4 uplinks × 100 Gbps = 400 Gbps
+- Oversubscription = 1000/400 = 2.5:1
+
+**Q13. ECMP**: Hash 5-tuple (src/dst IP, port, protocol) → pick spine
+- Per-flow hashing avoids packet reordering
+- Spine failure: re-hash onto remaining paths
+
+**Q14. IPv6 Address Compression**: 
+- 2001:0db8:0000:0000:0000:ff00:0042:8329 → 2001:db8::ff00:42:8329
+- ::1 = loopback, :: = unspecified
+
+**Q15. IPv6 Transition**: Tunneling = IPv6 payload in IPv4 datagram
+- Dual stack = run both IPv4 and IPv6
+
+---
+
+### Review Questions
 
 1. **Forwarding vs Routing?**
    - Forwarding: Local action moving packet from input to output link
@@ -628,11 +712,11 @@ Host dynamically obtains IP address from network server when it "joins" network
 10. **IPv6 improvements?**
     - 128-bit addresses, fixed 40-byte header, no checksum, no router fragmentation, flow label, extension headers
 
-11. **DHCP DORA?**
-    - Discover (broadcast) → Offer (broadcast) → Request (broadcast) → ACK (broadcast)
-
-12. **ICMP uses?**
+11. **ICMP uses?**
     - Error reporting (unreachable, TTL expired), ping, traceroute
+
+12. **DHCP DORA?**
+    - Discover (broadcast) → Offer (broadcast) → Request (broadcast) → ACK (broadcast)
 
 13. **Leaf-Spine vs 3-Tier?**
     - Leaf-spine: Every rack equal distance, all links used, scale by adding leaves/spines
@@ -644,3 +728,134 @@ Host dynamically obtains IP address from network server when it "joins" network
 15. **DCTCP/BBR in DCs?**
     - DCTCP: ECN marking fraction → proportional window cut
     - BBR: Model-based (BW × RTT_min), paces at BDP, ignores loss
+
+---
+
+## Multiple Choice Questions (from Slides)
+
+**Q1. Network-layer functions:**
+- Forwarding: move packets from input to output link
+- Routing: determine route from source to destination
+
+**Q2. Forwarding vs Routing analogy:**
+- Forwarding: process of getting through single interchange
+- Routing: process of planning trip from source to destination
+
+**Q3. Network service model - Internet best effort provides:**
+- No bandwidth guarantees, no loss guarantees, no order guarantees, no timing guarantees
+
+**Q4. Router architecture - which component operates in millisecond timeframe?**
+- Routing processor (control plane)
+
+**Q5. Longest prefix matching - if prefixes don't divide nicely?**
+- Use longest matching prefix
+
+**Q6. Switching fabric types:**
+- Memory (2 bus crossings), Bus (contention), Interconnection network (parallelism)
+
+**Q6. HOL blocking occurs at:**
+- Input port queues
+
+**Q7. Output port queuing - buffering required when:**
+- Datagrams arrive from fabric faster than link transmission rate
+
+**Q8. Buffer sizing (RFC 3439):**
+- Average buffering = RTT × link capacity C
+- Recent: RTT × C / √N
+
+**Q9. IPv4 header - which field is 16-bit identifier?**
+- Used for fragmentation/reassembly
+
+**Q10. IPv4 fragmentation - fragment offset units:**
+- 8-byte units
+
+**Q11. Why fragmentation avoided?**
+- One lost fragment loses all; TCP sizes segments; DF bit; IPv6 no router fragmentation
+
+**Q12. CIDR address format:**
+- a.b.c.d/x where x = bits in subnet portion
+
+**Q13. Classful addressing problem:**
+- Class A too large, Class C too small, Class B wasteful
+
+**Q14. Route aggregation example:**
+- 200.23.16.0/20 covers 8 /23 organizations
+
+**Q15. NAT advantages:**
+- Single IP from ISP, change local addresses without notifying outside, change ISP, security
+
+**Q16. Bellman-Ford equation:**
+- Dx(y) = minᵥ { c(x,v) + Dᵥ(y) }
+
+**Q17. Distance vector algorithm:**
+- Send DV to neighbors; update using B-F; notify neighbors if changed
+
+**Q18. Count-to-infinity problem:**
+- Bad news travels slow; y thinks path via z, z thinks path via y
+
+**Q19. Link State vs DV - advertisement:**
+- DV: periodic (30-90s) broadcast; LS: triggered (on change) multicast
+
+**Q20. SDN - OpenFlow port:**
+- 6653 (TCP)
+
+**Q21. OpenFlow message classes:**
+- Controller-to-switch, Switch-to-controller, Symmetric
+
+**Q22. Datacenter traffic types:**
+- North-South: user ↔ datacenter; East-West: server ↔ server
+
+**Q23. 3-tier limitation:**
+- Bottlenecks for east-west traffic; spanning tree blocks links
+
+**Q24. Leaf-spine - every leaf connects to:**
+- Every spine
+
+**Q25. Oversubscription ratio:**
+- Server-facing bandwidth / uplink bandwidth
+
+**Q26. ECMP hashing:**
+- 5-tuple hash → pick path; per-flow avoids reordering
+
+**Q27. IPv6 header - what's missing?**
+- No checksum, no fragmentation, no options in base header
+
+**Q28. IPv6 compression - double colon used:**
+- Only once per address
+
+**Q29. IPv6 address types:**
+- Unicast, Multicast, Anycast; No broadcast (use multicast)
+
+**Q30. DHCP DORA:**
+- Discover, Offer, Request, ACK
+
+**Q31. ICMP ping:**
+- Type 8 (echo request), Type 0 (echo reply)
+
+**Q32. Traceroute uses:**
+- ICMP Type 11 (TTL expired)
+
+---
+
+## Textbook End-of-Chapter Problems (Chapters 4-5)
+
+**P1.** Explain the difference between forwarding and routing with an analogy.
+**P2.** Describe the input port functions in a router.
+**P3.** Explain longest prefix matching with an example.
+**P4.** Compare memory, bus, and crossbar switching fabrics.
+**P5.** Describe IPv4 datagram format and the purpose of each field.
+**P6.** Walk through IPv4 fragmentation for a 4000-byte datagram with MTU=1500.
+**P7.** Calculate subnet address, broadcast address, and usable range for 123.56.77.32/29.
+**P8.** Explain NAT operation with a translation table example.
+**P9.** Trace Dijkstra's algorithm for a given network topology.
+**P10.** Trace Bellman-Ford distance vector algorithm iterations.
+**P11.** Explain count-to-infinity problem and why "good news travels fast, bad news travels slow."
+**P12.** Describe SDN architecture with control/data plane separation.
+**P13.** Explain OpenFlow flow table abstraction (match + action).
+**P14.** Compare 3-tier vs leaf-spine datacenter architectures.
+**P15.** Explain ECMP and why per-flow hashing is used.
+**P16.** Describe IPv6 header format and differences from IPv4.
+**P17.** Compress/decompress IPv6 addresses using zero compression rules.
+**P18.** Explain DHCP DORA process and what information is returned.
+**P19.** List common ICMP message types and their uses.
+**P20.** What are the protocol innovations for datacenters at each layer?

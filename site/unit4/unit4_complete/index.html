@@ -1746,10 +1746,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#complete-questions-examples-and-mcqs-from-slides-and-textbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete Questions, Examples, and MCQs from Slides and Textbook
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Questions, Examples, and MCQs from Slides and Textbook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#numerical-problems-exam-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Numerical Problems (Exam Practice)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#review-questions" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         Review Questions
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-choice-questions-from-slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Multiple Choice Questions (from Slides)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#textbook-end-of-chapter-problems-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Textbook End-of-Chapter Problems (Chapter 6)
       </span>
     </span>
   </a>
@@ -2619,10 +2669,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#complete-questions-examples-and-mcqs-from-slides-and-textbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete Questions, Examples, and MCQs from Slides and Textbook
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Questions, Examples, and MCQs from Slides and Textbook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#numerical-problems-exam-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Numerical Problems (Exam Practice)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#review-questions" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         Review Questions
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-choice-questions-from-slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Multiple Choice Questions (from Slides)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#textbook-end-of-chapter-problems-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Textbook End-of-Chapter Problems (Chapter 6)
       </span>
     </span>
   </a>
@@ -2733,6 +2833,10 @@
 - Row parity + column parity
 - Detects AND corrects single bit errors
 - Intersection of row/column parity error = error location</p>
+<p><strong>Example (from slides)</strong>: Send 1011 0110 with even-parity bit
+- Data has 5 ones → parity bit = 1 → 6 ones total (even)
+- Two bits flip → count changes by −2, 0, or +2 → still even → check passes
+- <strong>Answer</strong>: No error detected (parity misses even number of flips)</p>
 <h3 id="internet-checksum-udptcp">Internet Checksum (UDP/TCP)<a class="headerlink" href="#internet-checksum-udptcp" title="Permanent link">&para;</a></h3>
 <p><strong>Sender</strong>:
 1. Treat segment (header + data + pseudo-header) as sequence of 16-bit integers
@@ -2741,7 +2845,7 @@
 <p><strong>Receiver</strong>:
 1. Compute 1's complement sum of received segment
 2. If equals checksum field → no error detected
-2. If not equal → error detected</p>
+3. If not equal → error detected</p>
 <h3 id="cyclic-redundancy-check-crc">Cyclic Redundancy Check (CRC)<a class="headerlink" href="#cyclic-redundancy-check-crc" title="Permanent link">&para;</a></h3>
 <p><strong>More powerful error-detection coding</strong>
 - <strong>D</strong>: Data bits (binary number)
@@ -2759,6 +2863,14 @@
 4. Transmit D followed by R</p>
 <p><strong>Common Generators</strong>:
 - CRC-32 (Ethernet): x³² + x²⁶ + x²³ + x²² + x¹⁶ + x¹² + x¹¹ + x¹⁰ + x⁸ + x⁷ + x⁵ + x⁴ + x² + x + 1</p>
+<p><strong>Numerical Example (from slides)</strong>:
+- D = 101110, d = 6, G = 1001, r = 3
+- Append 3 zeros: 101110000
+- Divide by 1001: remainder = 101
+- Transmitted: 101110101</p>
+<p><strong>Another Example</strong>:
+- Bit stream 1101011011, generator x⁴+x+1 = 10011
+- Append 4 zeros, divide, remainder = CRC</p>
 <hr />
 <h2 id="63-multiple-access-protocols">6.3 Multiple Access Protocols<a class="headerlink" href="#63-multiple-access-protocols" title="Permanent link">&para;</a></h2>
 <h3 id="two-types-of-links">Two Types of Links<a class="headerlink" href="#two-types-of-links" title="Permanent link">&para;</a></h3>
@@ -2864,6 +2976,16 @@
 - All nodes receive broadcast; only target replies
 - Both A and B update their ARP tables
 - ARP trusts replies → ARP spoofing possible</p>
+<p><strong>MCQ (from slides)</strong>: A asks "who has B's IP?" in frame to FF-FF-FF-FF-FF-FF. Who receives/answers?
+- a) Only B receives, B answers → False
+- b) <strong>All nodes receive; only B answers to A</strong> → True
+- c) All receive, all answer → False
+- d) Only router receives → False</p>
+<p><strong>MCQ (from slides)</strong>: After A asked, B answered. Whose ARP table has new entry?
+- a) Only A's → False
+- b) <strong>A's and B's (each other's)</strong> → True
+- c) Every node's → False
+- d) Only switch's → False</p>
 <hr />
 <h3 id="routing-to-another-subnet-ip-mac-addressing-walkthrough">Routing to Another Subnet (IP + MAC Addressing Walkthrough)<a class="headerlink" href="#routing-to-another-subnet-ip-mac-addressing-walkthrough" title="Permanent link">&para;</a></h3>
 <p><strong>Scenario</strong>: A (111.111.111.111) → B (222.222.222.222) via Router R</p>
@@ -2876,6 +2998,17 @@
 5. R resolves B's MAC via ARP on right LAN
 6. R re-encapsulates: new frame (src R-right, dst B), same IP datagram
 7. B receives, extracts IP datagram, delivers to transport layer</p>
+<p><strong>Frame-by-frame sequence (from slides)</strong>:
+| Step | Sender | Receiver | Message | Src MAC | Dst MAC |
+|------|--------|----------|---------|---------|---------|
+| 1 | A | - | Compare subnets (different) → send to R | - | - |
+| 2 | A | All left LAN | ARP Request: "Who has R? Tell A" | A | FF-FF-FF-FF-FF-FF |
+| 3 | R | A | ARP Reply: "R is at MAC_R" | MAC_R | A |
+| 4 | A | R | Data frame (IP: A→B, MAC: A→R) | A | MAC_R |
+| 5 | R | - | Strip frame, route to right interface | - | - |
+| 6 | R | All right LAN | ARP Request: "Who has B? Tell R" | MAC_R | FF-FF-FF-FF-FF-FF |
+| 7 | B | R | ARP Reply: "B is at MAC_B" | MAC_B | MAC_R |
+| 8 | R | B | Data frame (IP: A→B, MAC: R→B) | MAC_R | MAC_B |</p>
 <hr />
 <h2 id="65-ethernet">6.5 Ethernet<a class="headerlink" href="#65-ethernet" title="Permanent link">&para;</a></h2>
 <h3 id="dominant-wired-lan-technology">Dominant Wired LAN Technology<a class="headerlink" href="#dominant-wired-lan-technology" title="Permanent link">&para;</a></h3>
@@ -2909,6 +3042,11 @@
 <li><strong>Hub</strong>: Repeats every bit to every port → 1 collision domain</li>
 <li><strong>Switch</strong>: Each port own collision domain; full duplex → no collisions</li>
 </ul>
+<p><strong>MCQ (from slides)</strong>: 8 PCs on hub, 8 on switch. How many collision domains?
+- a) <strong>Hub: 1; switch: 8</strong> → True
+- b) Hub: 8; switch: 1
+- c) Hub: 1; switch: 1
+- d) Hub: 8; switch: 8</p>
 <h3 id="ethernet-frame-structure">Ethernet Frame Structure<a class="headerlink" href="#ethernet-frame-structure" title="Permanent link">&para;</a></h3>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Preamble (8 bytes) | Dest MAC (6) | Src MAC (6) | Type (2) | Data (46-1500) | CRC (4)
 </span></code></pre></div>
@@ -2918,12 +3056,19 @@
 - <strong>CRC</strong>: Cyclic redundancy check
 - <strong>Min frame</strong>: 64 bytes (512 bits = collision budget)
 - <strong>Max frame</strong>: 1518 bytes (1500 MTU + 18 header/CRC)</p>
+<p><strong>Smallest frame</strong>: 6+6+2+46+4 = 64 bytes
+<strong>Largest frame</strong>: 6+6+2+1500+4 = 1518 bytes</p>
 <h3 id="ethernet-unreliable-connectionless">Ethernet: Unreliable, Connectionless<a class="headerlink" href="#ethernet-unreliable-connectionless" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Connectionless</strong>: No handshaking between NICs</li>
 <li><strong>Unreliable</strong>: No ACKs/NAKs; dropped frames recovered only by higher layer (TCP)</li>
 <li><strong>MAC Protocol</strong>: Unslotted CSMA/CD with binary backoff (shared links)</li>
 </ul>
+<p><strong>MCQ (from slides)</strong>: Frame fails CRC at second router. Who notices, who resends?
+- a) Second router asks first to resend → False
+- b) <strong>TCP at sender notices gap and resends</strong> → True
+- c) First router resends after timeout → False
+- d) Nobody: file arrives with hole → False</p>
 <hr />
 <h2 id="66-ethernet-switches">6.6 Ethernet Switches<a class="headerlink" href="#66-ethernet-switches" title="Permanent link">&para;</a></h2>
 <h3 id="switch-link-layer-device">Switch = Link-Layer Device<a class="headerlink" href="#switch-link-layer-device" title="Permanent link">&para;</a></h3>
@@ -2952,6 +3097,16 @@
 <li>Self-learning works across multiple switches</li>
 <li>Switch learns which host reachable via which switch port</li>
 </ul>
+<p><strong>MCQ (from slides)</strong>: C sends to I, I replies to C. Switch 2 learns C but not I. Why?
+- a) <strong>S4 knew C was toward S1, so I's reply skipped S2</strong> → True
+- b) S2's table was full
+- c) S2 learns only from frames addressed to it
+- d) I's reply was broadcast</p>
+<p><strong>MCQ (from slides)</strong>: Laptop sends ARP broadcast. Which devices receive it?
+- a) Only devices on laptop's own switch
+- b) Only router
+- c) <strong>Every device on every switch, up to router</strong> → True
+- d) Every device, including outside networks</p>
 <hr />
 <h2 id="67-vlans-virtual-lans">6.7 VLANs (Virtual LANs)<a class="headerlink" href="#67-vlans-virtual-lans" title="Permanent link">&para;</a></h2>
 <h3 id="problem-large-broadcast-domain">Problem: Large Broadcast Domain<a class="headerlink" href="#problem-large-broadcast-domain" title="Permanent link">&para;</a></h3>
@@ -3003,6 +3158,11 @@
 <li>Unknown/broadcast: flood <strong>only to ports in same VLAN + trunks carrying it</strong></li>
 <li>Tag/untag on output: add tag on trunk, remove on access</li>
 </ol>
+<p><strong>MCQ (from slides)</strong>: PC on access port 5 (VLAN 20) sends broadcast. Ports 1-2 VLAN 10, 5-6 VLAN 20, 8 trunk (10,20). Where does broadcast go?
+- a) Every port (broadcasts ignore VLANs)
+- b) <strong>Port 6 untagged, port 8 tagged 20</strong> → True
+- c) Only port 8 (trunk) tagged 20
+- d) Only router</p>
 <h3 id="inter-vlan-routing">Inter-VLAN Routing<a class="headerlink" href="#inter-vlan-routing" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Each VLAN = separate IP network</strong></li>
@@ -3264,7 +3424,36 @@
 </tbody>
 </table>
 <hr />
-<h2 id="review-questions">Review Questions<a class="headerlink" href="#review-questions" title="Permanent link">&para;</a></h2>
+<h2 id="complete-questions-examples-and-mcqs-from-slides-and-textbook">Complete Questions, Examples, and MCQs from Slides and Textbook<a class="headerlink" href="#complete-questions-examples-and-mcqs-from-slides-and-textbook" title="Permanent link">&para;</a></h2>
+<h3 id="numerical-problems-exam-practice">Numerical Problems (Exam Practice)<a class="headerlink" href="#numerical-problems-exam-practice" title="Permanent link">&para;</a></h3>
+<p><strong>Q1. Parity Check</strong>: Send 1011 0110 with even parity. Two bits flip. What does receiver conclude?
+- Data has 5 ones → parity = 1 (even total)
+- Two flips change count by ±2 or 0 → still even
+- <strong>Answer</strong>: No error detected</p>
+<p><strong>Q2. Two-Dimensional Parity</strong>: Given matrix with row/column parity, detect and correct single-bit error
+- Row parity error on row 3, column parity error on column 2
+- Error at (3,2): flip bit</p>
+<p><strong>Q3. CRC Calculation</strong>: D = 101110, G = 1001 (r=3)
+- Append 3 zeros: 101110000
+- Divide by 1001: remainder = 101
+- Transmitted: 101110101</p>
+<p><strong>Q4. CRC Numerical</strong>: Bit stream 1101011011, generator x⁴+x+1 = 10011
+- Append 4 zeros, divide by 10011
+- Compute remainder → transmitted bit string</p>
+<p><strong>Q5. Ethernet Frame Size</strong>: Dest 6B, Src 6B, Type 2B, Data 46-1500B, CRC 4B
+- Min frame = 6+6+2+46+4 = 64 bytes
+- Max frame = 6+6+2+1500+4 = 1518 bytes
+- Preamble (8B) not counted</p>
+<p><strong>Q6. Binary Exponential Backoff</strong>: After 3 collisions
+- K ∈ {0, 1, ..., 2³⁻¹} = {0, 1, 2, 3, 4, 5, 6, 7}
+- Wait K × 512 bit times</p>
+<p><strong>Q7. VLAN Tag</strong>: 4 bytes after source MAC
+- TPID: 0x8100
+- Priority: 3 bits (0-7)
+- Drop eligible: 1 bit
+- VLAN ID: 12 bits (4094 usable)</p>
+<hr />
+<h3 id="review-questions">Review Questions<a class="headerlink" href="#review-questions" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Link layer services?</strong></li>
 <li>
@@ -3359,6 +3548,132 @@
 </ul>
 </li>
 </ol>
+<hr />
+<h2 id="multiple-choice-questions-from-slides">Multiple Choice Questions (from Slides)<a class="headerlink" href="#multiple-choice-questions-from-slides" title="Permanent link">&para;</a></h2>
+<p><strong>Q1. Link layer services include:</strong>
+- a) Framing, link access, MAC addressing
+- b) Reliable delivery, error detection, flow control
+- c) Half/full duplex
+- d) <strong>All of the above</strong></p>
+<p><strong>Q2. Error detection framework:</strong>
+- EDC not 100% reliable; larger EDC → better detection</p>
+<p><strong>Q3. Single bit parity - can detect:</strong>
+- a) Single bit errors
+- b) <strong>Odd number of bit flips</strong> → True
+- c) Even number of bit flips → False (misses)</p>
+<p><strong>Q4. Two-dimensional parity:</strong>
+- Detects AND corrects single-bit errors</p>
+<p><strong>Q5. CRC - can detect all burst errors of length:</strong>
+- Less than r+1 bits</p>
+<p><strong>Q6. Multiple access links - shared wire:</strong>
+- Old Ethernet, upstream HFC</p>
+<p><strong>Q7. Shared radio:</strong>
+- 802.11 WiFi, 4G/5G, satellite</p>
+<p><strong>Q8. Ideal MAC protocol desiderata:</strong>
+1. One node → rate R
+2. M nodes → R/M each
+3. Fully decentralized
+4. Simple</p>
+<p><strong>Q9. CSMA/CD - collision detection:</strong>
+- Easy in wired, difficult in wireless
+- Colliding transmissions aborted (reduces wastage)</p>
+<p><strong>Q10. CSMA collisions still occur because:</strong>
+- Propagation delay → two nodes may not hear each other's just-started transmission</p>
+<p><strong>Q11. Ethernet CSMA/CD backoff:</strong>
+- After n collisions, K ∈ {0, ..., 2ⁿ⁻¹}, wait K×512 bit times</p>
+<p><strong>Q12. Modern Ethernet - collision detection:</strong>
+- Switched OFF (full-duplex, no collisions)</p>
+<p><strong>Q13. Wi-Fi - still shared, uses:</strong>
+- CSMA/CA</p>
+<p><strong>Q14. MAC address - 48-bit, format:</strong>
+- Hexadecimal, 6 bytes (e.g., 1A-2F-BB-76-09-AD)</p>
+<p><strong>Q15. Private Wi-Fi addresses - second hex digit:</strong>
+- 2, 6, A, E = locally assigned</p>
+<p><strong>Q16. ARP table entries:</strong>
+- <IP address; MAC address; TTL></p>
+<p><strong>Q17. ARP query destination MAC:</strong>
+- FF-FF-FF-FF-FF-FF (broadcast)</p>
+<p><strong>Q18. ARP - who receives broadcast, who answers?</strong>
+- All nodes receive; only target answers</p>
+<p><strong>Q19. After ARP exchange - whose table updated?</strong>
+- Both A's and B's (each other's)</p>
+<p><strong>Q20. ARP trusts replies → ARP spoofing possible</strong></p>
+<p><strong>Q21. Routing to another subnet - key principle:</strong>
+- IP addresses stay same end-to-end; MAC addresses only get you to next hop</p>
+<p><strong>Q22. Hub vs Switch collision domains:</strong>
+- Hub: 1 collision domain; Switch: 1 per port (8 ports = 8 domains)</p>
+<p><strong>Q23. Ethernet frame - addresses order:</strong>
+- Destination first (early filtering)</p>
+<p><strong>Q24. Smallest Ethernet frame (excluding preamble):</strong>
+- 64 bytes (512 bits)</p>
+<p><strong>Q25. Largest Ethernet frame (excluding preamble):</strong>
+- 1518 bytes</p>
+<p><strong>Q26. Ethernet unreliable, connectionless:</strong>
+- No ACKs; dropped frames recovered by TCP</p>
+<p><strong>Q27. Frame fails CRC at router 2 - who resends?</strong>
+- TCP at sender (end-to-end)</p>
+<p><strong>Q28. Switch self-learning:</strong>
+- Record (src MAC, incoming port) on frame arrival</p>
+<p><strong>Q29. Switch forwarding:</strong>
+- Known dest → forward on port; Unknown → flood (except arriving)</p>
+<p><strong>Q30. Switch interconnecting - self-learning works across switches</strong></p>
+<p><strong>Q31. Broadcast domain - ARP broadcast goes to:</strong>
+- Every device on every switch, up to router</p>
+<p><strong>Q32. VLAN - divides single physical network into:</strong>
+- Multiple logical LANs</p>
+<p><strong>Q33. VLAN tag - 4 bytes, fields:</strong>
+- TPID (0x8100), Priority (3b), Drop (1b), VLAN ID (12b)</p>
+<p><strong>Q34. Access port:</strong>
+- One VLAN, untagged frames</p>
+<p><strong>Q35. Trunk port:</strong>
+- Multiple VLANs, tagged frames</p>
+<p><strong>Q36. Native VLAN:</strong>
+- One VLAN crosses trunk untagged; both ends must agree</p>
+<p><strong>Q37. VLAN-aware forwarding:</strong>
+- Lookup (VLAN, dest MAC); flood only within VLAN + trunks</p>
+<p><strong>Q38. Inter-VLAN routing:</strong>
+- Router or L3 switch; each VLAN = separate IP network</p>
+<p><strong>Q38. Web request life - protocol stack journey:</strong>
+- DHCP → ARP → DNS → TCP handshake → HTTP → Link layer</p>
+<p><strong>Q39. Physical layer encoding:</strong>
+- NRZ, Manchester, 4B/5B, 8B/10B</p>
+<p><strong>Q40. Wireless taxonomy:</strong>
+- Infrastructure single-hop: WiFi, 4G/5G
+- Infrastructure multi-hop: Mesh
+- Ad hoc single-hop: Bluetooth
+- Ad hoc multi-hop: MANET, VANET</p>
+<p><strong>Q41. 802.11 architecture:</strong>
+- BSS: hosts + AP; SSID: network name; Channels: 2.4/5/6 GHz</p>
+<p><strong>Q42. 802.11 standards:</strong>
+- b/g/n/ac/ax/be (WiFi 1 through 7)</p>
+<p><strong>Q43. CSMA/CA vs CSMA/CD:</strong>
+- CD impossible in wireless (can't transmit+listen same frequency)
+- CA: DIFS → backoff → transmit → wait ACK</p>
+<p><strong>Q44. Hidden terminal:</strong>
+- A and C can't hear, both send to B → collision
+- Solution: RTS/CTS</p>
+<p><strong>Q45. Exposed terminal:</strong>
+- C hears B, defers; but C could send to D</p>
+<hr />
+<h2 id="textbook-end-of-chapter-problems-chapter-6">Textbook End-of-Chapter Problems (Chapter 6)<a class="headerlink" href="#textbook-end-of-chapter-problems-chapter-6" title="Permanent link">&para;</a></h2>
+<p><strong>P1.</strong> Explain the difference between error detection and error correction.
+<strong>P2.</strong> Calculate single-bit parity for a given data word.
+<strong>P3.</strong> Perform two-dimensional parity check and identify/correct single-bit error.
+<strong>P4.</strong> Compute Internet checksum for a given UDP segment.
+<strong>P5.</strong> Calculate CRC for given data and generator polynomial.
+<strong>P6.</strong> Compare CSMA/CD and CSMA/CA with timing diagrams.
+<strong>P7.</strong> Trace Ethernet CSMA/CD exponential backoff for n=3 collisions.
+<strong>P8.</strong> Explain why modern switched Ethernet doesn't use collision detection.
+<strong>P9.</strong> Describe ARP operation with a diagram showing request/reply.
+<strong>P10.</strong> Walk through IP+MAC addressing when sending to another subnet.
+<strong>P11.</strong> Calculate Ethernet frame sizes (min/max) and explain each field.
+<strong>P12.</strong> Trace switch self-learning and forwarding for a multi-switch topology.
+<strong>P13.</strong> Explain VLAN operation: tagging, access/trunk ports, inter-VLAN routing.
+<strong>P14.</strong> Describe the protocol stack journey of a web request.
+<strong>P15.</strong> Compare physical layer encoding schemes (NRZ, Manchester, 4B/5B, 8B/10B).
+<strong>P16.</strong> Explain 802.11 CSMA/CA with RTS/CTS for hidden terminal problem.
+<strong>P17.</strong> Compare infrastructure vs ad-hoc wireless network architectures.
+<strong>P18.</strong> Describe 802.11 frame structure and the purpose of each field.</p>
 
 
 
